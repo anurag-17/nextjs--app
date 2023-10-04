@@ -2,8 +2,13 @@ import { useState, useEffect, Fragment } from "react";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import { Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
+
+
+  const router = useRouter();
+  console.log("router", router.pathname)
   const [showNav, setShowNav] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -29,6 +34,10 @@ export default function Layout({ children }) {
 
   return (
     <>
+      {
+        router.pathname === "/admin-login" || router.pathname === "/signup" ?
+          null :
+      <>
       <TopBar showNav={showNav} setShowNav={setShowNav} />
       <Transition
         as={Fragment}
@@ -42,12 +51,13 @@ export default function Layout({ children }) {
       >
         <SideBar showNav={showNav} />
       </Transition>
+      </>
+      }
       <main
-        className={`pt-16 transition-all duration-[400ms] ${
-          showNav && !isMobile ? "pl-56" : ""
-        }`}
+        className={` transition-all duration-[400ms] ${(showNav  && !isMobile) && !(router.pathname === "/admin-login" || router.pathname === "/signup" )? "pt-16 pl-56" : ""
+          }`}
       >
-        <div className="px-4 md:px-16">{children}</div>
+        <div className={!(router.pathname === "/admin-login" || router.pathname === "/signup" ) && "px-4 md:px-16"}>{children}</div>
       </main>
     </>
   );
