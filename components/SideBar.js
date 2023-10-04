@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { Fragment, forwardRef, useState } from "react";
 import Link from "next/link";
 import { HomeIcon, CreditCardIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
@@ -133,7 +133,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
       <div className="flex flex-col">
         {
           menuList.map((items, inx) => (
-            <>
+            <Fragment key={inx}>
               <Link href={items.path?items.path:'#'}>
                 <div
                   className={`pl-6 py-3 mx-5 rounded justify-center cursor-pointer mb-3 flex items-center transition-colors font-semibold
@@ -191,7 +191,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                   </div>
                 )}
               </div>
-            </>
+            </Fragment>
           ))
         }
 
