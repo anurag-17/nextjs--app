@@ -174,9 +174,9 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                 {items.submenu && (
                   <div className="dropdown-content">
                     {items.subData.map((subOpt, subInx) => (
-                    <Link href={subOpt.path?subOpt.path:'#'}>
+                    <Link href={subOpt.path?subOpt.path:'#'} key={subInx}>
                       <div
-                        key={subInx}
+                        
                         className={`pl-6 py-3 mx-5 rounded max-w-[200px] justify-center text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
                          ${subOpt?.id === labelId
                             ? "bg-lightBlue-600 text-white"
