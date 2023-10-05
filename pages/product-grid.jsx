@@ -28,12 +28,17 @@ const dummyArr = [
   },
 ];
 
+
 const ProductGrid = () => {
+  
+  // const handleAddProduct = () => {
+  // }
+
   return (
     <section className="bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
         <h2 className="text-2xl font-semibold">Products Grid </h2>
-        <h2>Welcome Back, Clint</h2>
+        {/* <button className="primary-button" onClick={handleAddProduct}>Add Product</button> */}
       </div>
       <div className="grid lg:grid-cols-3 gap-5 my-16">
         {

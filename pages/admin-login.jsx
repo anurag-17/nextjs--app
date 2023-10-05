@@ -1,13 +1,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
-import { useState } from "react";
+import React, { useState }  from "react";
+import axios from "axios";
+
 
 const AdminLogin = () => {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState("");
   const router = useRouter()
   const ClearData = () => {
     setPassword("");
@@ -16,10 +18,37 @@ const AdminLogin = () => {
 
   const addFormHandler = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setLoading(true)
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // router.push("/")
+    // ClearData();
+
+const options = {
+  method: 'POST',
+  url: 'https://e-commerce-backend-brown.vercel.app/api/auth/adminLogin',
+  headers: {
+    'Content-Type': 'application/json',
+    'User-Agent': 'insomnia/2023.5.8'
+  },
+  data: {email: email, password: password}
+};
+
+axios.request(options).then(function (response) {
+  if (response?.status === 200) {
+    console.log(response.data);
+    sessionStorage.setItem("accessToken",JSON.stringify(response.data.token))
+    setLoading(false)
     router.push("/")
-    ClearData();
+  }
+  else{
+    setLoading(false)
+    return
+  }
+}).catch(function (error) {
+  setLoading(false)
+  console.error(error);
+});
   };
 
 
@@ -90,10 +119,15 @@ const AdminLogin = () => {
                   </span>
                 </div>
                 <div className="mt-5">
-                 <button type="submit" className="w-full bg-cyan-600 py-3 text-center text-white mb-2">
-                    Login
+                {isLoading ?
+                  <button type="submit" className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]">
+                   Loading...
                   </button>
-                
+                :
+                  <button type="submit" className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]">
+                   Login
+                  </button>
+                }
                  <Link href="/signup"><p className="text-center text-cyan-600  underline mt-2">Register Now</p></Link>
                 </div>
               </form>
