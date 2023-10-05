@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { commonPostApi, fetchDataFromApi } from "../utils/api";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
