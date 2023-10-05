@@ -16,9 +16,9 @@ const ProductGrid = () => {
     quantity: "",
     color: [],
   });
-  const [token, setToken] = useState(
-    JSON.parse(sessionStorage.getItem("accessToken"))
-  );
+  // const [token, setToken] = useState(
+  //   JSON.parse(sessionStorage.getItem("accessToken"))
+  // );
  const refreshData = () => {
   setProductDetails({
     title: "",
@@ -59,7 +59,7 @@ const options = {
     cookie: 'refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw',
     'Content-Type': 'application/json',
     'User-Agent': 'insomnia/2023.5.8',
-    Authorization: "Bearer " + token,
+    // Authorization: "Bearer " + token,
   },
   data: productDetails
 };

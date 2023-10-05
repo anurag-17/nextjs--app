@@ -39,11 +39,10 @@ const options = {
 axios.request(options).then(function (response) {
   if (response?.status === 200) {
     console.log(response.data);
-    sessionStorage.setItem("accessToken",JSON.stringify(response.data.token))
-    localStorage.setItem("accessToken",JSON.stringify(response.data.token))
-    // setCookie(null, 'access_token', response.data);
-    sessionStorage.setItem("userDetails",JSON.stringify(response?.data) ); 
-    localStorage.setItem("userDetails",JSON.stringify(response?.data) ); 
+    // sessionStorage.setItem("accessToken",JSON.stringify(response.data.token))
+    // localStorage.setItem("accessToken",JSON.stringify(response.data.token))
+    // sessionStorage.setItem("userDetails",JSON.stringify(response?.data) ); 
+    // localStorage.setItem("userDetails",JSON.stringify(response?.data) ); 
     setLoading(false)
     toast.success("Success. Login Successfully!", {
       position: "bottom-right",
