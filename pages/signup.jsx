@@ -1,6 +1,33 @@
 import React from "react";
+import { useState } from "react";
 
 const Signup = () => {
+
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const ClearData = () => {
+    setName("");
+    setSurname("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
+
+  const addFormHandler = async (e) => {
+    e.preventDefault();
+    console.log("name:", name);
+    console.log("surname:", surname);
+    console.log("email:", email);
+    console.log("password:", password);
+    console.log("confirmPassword:", confirmPassword);
+    
+    ClearData();
+  }
+
   return (
     <div>
       <div
@@ -17,7 +44,7 @@ const Signup = () => {
               <div>
                 <p className="text-white text-xl mt-4">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aenean suspendisse aliquam varius rutrum purus maecenas ac{" "}
+                  Aenean suspendisse aliquam varius rutrum purus maecenas ac
                   <a href="#" className="underline  font-bold">
                     Learn more
                   </a>
@@ -29,17 +56,23 @@ const Signup = () => {
               <p className="mb-4">
                 Create your account. It’s free and only take a minute
               </p>
-              <form action="#">
+              <form action="#" onSubmit={addFormHandler}>
                 <div className="grid grid-cols-2 gap-5">
                   <input
                     type="text"
                     placeholder="Firstname"
                     className="border border-gray-400 py-1 px-2"
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
+                    required
                   />
                   <input
                     type="text"
                     placeholder="Surname"
                     className="border border-gray-400 py-1 px-2"
+                    onChange={(e) => setSurname(e.target.value)}
+                    value={surname}
+                    required
                   />
                 </div>
                 <div className="mt-5">
@@ -47,6 +80,9 @@ const Signup = () => {
                     type="text"
                     placeholder="Email"
                     className="border border-gray-400 py-1 px-2 w-full"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    required
                   />
                 </div>
                 <div className="mt-5">
@@ -54,6 +90,9 @@ const Signup = () => {
                     type="password"
                     placeholder="Password"
                     className="border border-gray-400 py-1 px-2 w-full"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    required
                   />
                 </div>
                 <div className="mt-5">
@@ -61,16 +100,19 @@ const Signup = () => {
                     type="password"
                     placeholder="Confirm Password"
                     className="border border-gray-400 py-1 px-2 w-full"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={confirmPassword}
+                    required
                   />
                 </div>
                 <div className="mt-5">
                   <input type="checkbox" className="border border-gray-400 mr-2" />
                   <span>
-                    I accept the{" "}
+                    I accept the
                     <a href="#" className="text-lightBlue-600 font-semibold">
                       Terms of Use
-                    </a>{" "}
-                    &amp;{" "}
+                    </a>
+                    &amp;
                     <a href="#" className="text-lightBlue-600 font-semibold">
                       Privacy Policy
                     </a>
@@ -91,3 +133,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

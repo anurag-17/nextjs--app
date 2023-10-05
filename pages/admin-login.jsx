@@ -1,7 +1,28 @@
+
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { useState } from "react";
 
 const AdminLogin = () => {
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter()
+  const ClearData = () => {
+    setPassword("");
+    setEmail("");
+  };
+
+  const addFormHandler = async (e) => {
+    e.preventDefault();
+    console.log("Email:", email);
+    console.log("Password:", password);
+    router.push("/")
+    ClearData();
+  };
+
+
   return (
     <div>
       <div
@@ -20,7 +41,7 @@ const AdminLogin = () => {
               <div>
                 <p className="text-white">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aenean suspendisse aliquam varius rutrum purus maecenas ac{" "}
+                  Aenean suspendisse aliquam varius rutrum purus maecenas ac
                   <a href="#" className="text-cyan-600 font-semibold">
                     Learn more
                   </a>
@@ -32,59 +53,47 @@ const AdminLogin = () => {
               <p className="mb-4">
                 Create your account. It’s free and only take a minute
               </p>
-              <form action="#">
-                {/* <div className="grid grid-cols-2 gap-5">
-                  <input
-                    type="text"
-                    placeholder="Firstname"
-                    className="border border-gray-400 py-1 px-2"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Surname"
-                    className="border border-gray-400 py-1 px-2"
-                  />
-                </div> */}
+              <form onSubmit={addFormHandler}>
+        
                 <div className="mt-5">
                   <input
                     type="text"
                     placeholder="Email"
+                    value={email}
                     className="border border-gray-400 py-1 px-2 w-full"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="mt-5">
                   <input
                     type="password"
                     placeholder="Password"
+                    value={password}
                     className="border border-gray-400 py-1 px-2 w-full"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
-                {/* <div className="mt-5">
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    className="border border-gray-400 py-1 px-2 w-full"
-                  />
-                </div> */}
+             
                 <div className="mt-5">
                   <input type="checkbox" className="border border-gray-400 mr-2" />
                   <span>
-                    I accept the{" "}
+                    I accept the
                     <a href="#" className="text-cyan-600 font-semibold">
                       Terms of Use
-                    </a>{" "}
-                    &amp;{" "}
+                    </a>
+                    &amp;
                     <a href="#" className="text-cyan-600 font-semibold">
                       Privacy Policy
                     </a>
                   </span>
                 </div>
                 <div className="mt-5">
-                <Link href="/">
-                 <button className="w-full bg-cyan-600 py-3 text-center text-white mb-2">
+                 <button type="submit" className="w-full bg-cyan-600 py-3 text-center text-white mb-2">
                     Login
                   </button>
-                  </Link>
+                
                  <Link href="/signup"><p className="text-center text-cyan-600  underline mt-2">Register Now</p></Link>
                 </div>
               </form>

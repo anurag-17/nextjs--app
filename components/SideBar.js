@@ -35,13 +35,13 @@ const menuList = [
         id: 3,
         label: "product edit",
         component: <New />,
-        path:'/product-edit'
+        path:'/edit-product'
       },
       {
         id: 4,
-        label: "product add",
+        label: "product add", 
         component: <New />,
-        path:'/product-add'
+        path:'/add-product'
       },
       {
         id: 3,
