@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { commonPostApi, fetchDataFromApi } from "../utils/api";
+import axios from "axios";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductGrid = () => {
   const [isLoading, setLoading] = useState(false);
@@ -13,32 +17,100 @@ const ProductGrid = () => {
     quantity: "",
     color: [],
   });
+  const [token, setToken] = useState(
+    JSON.parse(sessionStorage.getItem("accessToken"))
+  );
+ const refreshData = () => {
+  setProductDetails({
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+    brand: "",
+    quantity: "",
+    color: [],
+  })
+ }
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
     if (name === "color") {
       setProductDetails({
-        ...productDetails,[name]: value.split(',') 
+        ...productDetails,
+        [name]: value.split(","),
       });
     } else {
       setProductDetails({
         ...productDetails,
-        [name]: value
+        [name]: value,
       });
     }
   };
 
+
   const handleFormSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setLoading(true);
-    // console.log("productDetails", productDetails);
-      const { data } = await commonPostApi("/createProduct",productDetails);
-      console.log("data", data);
+    
+const options = {
+  method: 'POST',
+  url: 'https://e-commerce-backend-brown.vercel.app/api/product/createProduct',
+  headers: {
+    cookie: 'refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw',
+    'Content-Type': 'application/json',
+    'User-Agent': 'insomnia/2023.5.8',
+    Authorization: "Bearer " + token,
+  },
+  data: productDetails
+};
+
+axios.request(options).then(function (response) {
+  console.log(response);
+  if(response.status === 200) {
+    notify()
+    setLoading(false);
+    refreshData()
+  }
+  else{
+    setLoading(false);
+    return
+  }
+}).catch(function (error) {
+  setLoading(false);
+  console.error(error);
+  toast.success("Failed. Can not repeat product name!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  });
+});
+
   };
+
+  const notify = () => {
+    toast.success("Success. Product added successfully!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+
 
   return (
     <section className="bg-gray-100 min-h-screen">
+      <ToastContainer/>
       <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
         <div className="">
           <h2 className="text-2xl font-semibold">Add Product </h2>
@@ -125,7 +197,9 @@ const ProductGrid = () => {
                     // max={32}
                   />
                 </div>
-                <span className="text-red-400 text-sm mt-2">Minimum value 1!</span>
+                {/* <span className="text-red-400 text-sm mt-2">
+                  Minimum value 1!
+                </span> */}
               </div>
             </div>
 
@@ -200,7 +274,7 @@ const ProductGrid = () => {
                   name="color"
                   placeholder="Enter colors separated by commas"
                   className="custom-input"
-                  value={productDetails.color} 
+                  value={productDetails.color}
                   onChange={inputHandler}
                   required
                 />
@@ -208,7 +282,7 @@ const ProductGrid = () => {
             </div>
 
             {/*------ Images -----*/}
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <label className="custom-input-label">Product Images</label>
               <div className="col-span-8 sm:col-span-4">
                 <div className="w-full text-center">
@@ -220,11 +294,8 @@ const ProductGrid = () => {
                       accept="image/*,.jpeg,.jpg,.png,.webp"
                       multiple=""
                       type="file"
-                      // style="display: none;"
-                      // className="hidden"
                     />
-                    {/* <button className=""> Upload image here</button> */}
-                    {/* <span className="mx-auto flex justify-center">
+                    <span className="mx-auto flex justify-center">
                       <svg
                         stroke="currentColor"
                         fill="none"
@@ -246,19 +317,18 @@ const ProductGrid = () => {
                     <p className="text-sm mt-2">Drag your images here</p>
                     <em className="text-xs text-gray-400">
                       (Only *.jpeg, *.webp and *.png images will be accepted)
-                    </em> */}
+                    </em>
                   </div>
                   <div className="text-green-500"></div>
                   <aside className="flex flex-row flex-wrap mt-4"></aside>
                 </div>
               </div>
-            </div>
-
+            </div> */}
             {/*------ submit button -----*/}
-            <div className="mt-5">
+            <div className="mt-8">
               {isLoading ? (
                 <button
-                  type="submit"
+                  type="button"
                   className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]"
                 >
                   Loading...
@@ -266,6 +336,7 @@ const ProductGrid = () => {
               ) : (
                 <button
                   type="submit"
+                  // onClick={handlesubmit}
                   className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
                 >
                   Add Product
@@ -274,7 +345,8 @@ const ProductGrid = () => {
             </div>
           </div>
         </form>
-        {/*---- form start here ----*/}
+        
+        {/*---- form end here ----*/}
       </div>
     </section>
   );

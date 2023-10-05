@@ -20,6 +20,12 @@ const menuList = [
     submenu: true,
     subData: [
       {
+        id: 0,
+        label: "product list",
+        component: <New />,
+        path:'/product-list'
+      },
+      {
         id: 1,
         label: "product grid",
         component: <New />,

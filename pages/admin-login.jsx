@@ -3,7 +3,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState }  from "react";
 import axios from "axios";
-
+import { setCookie } from 'cookie';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminLogin = () => {
   
@@ -38,7 +40,21 @@ axios.request(options).then(function (response) {
   if (response?.status === 200) {
     console.log(response.data);
     sessionStorage.setItem("accessToken",JSON.stringify(response.data.token))
+    localStorage.setItem("accessToken",JSON.stringify(response.data.token))
+    // setCookie(null, 'access_token', response.data);
+    sessionStorage.setItem("userDetails",JSON.stringify(response?.data) ); 
+    localStorage.setItem("userDetails",JSON.stringify(response?.data) ); 
     setLoading(false)
+    toast.success("Success. Login Successfully!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
     router.push("/")
   }
   else{
@@ -48,12 +64,23 @@ axios.request(options).then(function (response) {
 }).catch(function (error) {
   setLoading(false)
   console.error(error);
+  toast.error("Failed. Invalid Credentials!", {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  });
 });
   };
 
 
   return (
     <div>
+         <ToastContainer/>
       <div
         className="min-h-screen py-40"
         style={{  backgroundImage: "linear-gradient(115deg, #0284c7, #2193ce40)" }}
@@ -78,7 +105,7 @@ axios.request(options).then(function (response) {
               </div>
             </div>
             <div className="w-full lg:w-1/2 py-16 px-12 my-[20px]">
-              <h2 className="text-3xl mb-4">Login</h2>
+              <h2 className="text-3xl mb-4">Admin Login</h2>
               <p className="mb-4">
                 Create your account. It’s free and only take a minute
               </p>
@@ -89,7 +116,7 @@ axios.request(options).then(function (response) {
                     type="text"
                     placeholder="Email"
                     value={email}
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="custom-input"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
@@ -99,7 +126,7 @@ axios.request(options).then(function (response) {
                     type="password"
                     placeholder="Password"
                     value={password}
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="custom-input"
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
