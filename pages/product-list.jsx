@@ -16,7 +16,6 @@ const [allProduct, setAllProduct] = useState([])
   },[])
 
   const getAllProducts = async() => {
-
     const options = {
       method: 'GET',
       url: 'https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct',
@@ -25,7 +24,7 @@ const [allProduct, setAllProduct] = useState([])
         'User-Agent': 'insomnia/2023.5.8'
       }
     };
-    
+
     axios.request(options).then(function (response) {
       console.log(response.data);
       if(response.status===200){
@@ -64,13 +63,13 @@ const [allProduct, setAllProduct] = useState([])
             <option value="audi">Footwear's</option>
           </select>
           <select
-            name="cars"
-            id="cars"
+            name=""
+            id=""
             placeholder="Price"
             className="border border-gray-400 p-2 rounded-md bg-white w-3/12 cursor-pointer "
           >
-            <option value="volvo">Low to High</option>
-            <option value="saab">High to Low</option>
+            <option value="">Low to High</option>
+            <option value="">High to Low</option>
           </select>
         </div>
 
@@ -92,7 +91,7 @@ const [allProduct, setAllProduct] = useState([])
           {allProduct?.map((item, index) => (
             <tbody>
               <tr>
-             <td  className=""> <input type="checkbox" className="mx-3 mt-6 cursor-pointer " /></td>
+             <td  className=""> <input type="checkbox" className="mx-3 mt-2 cursor-pointer " /></td>
               <td className="py-5 text-[18px]">{item?.title}</td>
               <td className="py-5 text-[18px]"> {item?.category}</td>
               <td className="py-5 text-[18px]">{item?.price}</td>
@@ -113,10 +112,10 @@ const [allProduct, setAllProduct] = useState([])
               </td>
               <td className="flex justify-around">
                 <button>
-                  <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />
+                  <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 mt-2 " />
                 </button>
                 <button>
-                  <TrashIcon className="cursor-pointer h-6 w-6 text-gray-500" />
+                  <TrashIcon className="cursor-pointer h-6 w-6 text-red-800  "  />
                 </button>
                 </td>
               </tr>
