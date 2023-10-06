@@ -12,6 +12,7 @@ const menuList = [
     label: "Dashboard",
     component: '',
     icon: `fa fa-home`,
+    path:'/admin-dashboard'
   },
   {
     id: 2,
@@ -131,7 +132,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   };
 
   return (
-    <div ref={ref} className="fixed w-56 h-full bg-white shadow-sm">
+    <div ref={ref} className="fixed w-[250px] h-full bg-white shadow-sm">
       <div className="flex justify-center items-center whitespace-pre-wrap h-[100px] my-14">
         <h1 className="text-3xl font-bold mx-5 text-lightBlue-600">Admin Dashboard</h1>
       </div>
