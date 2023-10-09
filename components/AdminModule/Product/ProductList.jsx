@@ -64,6 +64,7 @@ const ProductList = () => {
   return (
     <>
     <ToastContainer/>
+
       <section>
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
           <h2 className="text-2xl font-semibold">Products List </h2>
@@ -119,7 +120,6 @@ const ProductList = () => {
             <tbody>
               <tr>
                 <td className="">
-                  {" "}
                   <input
                     type="checkbox"
                     className="mx-3 mt-6 cursor-pointer "
@@ -134,13 +134,13 @@ const ProductList = () => {
                 <td className="py-5 text-[18px]">
                   {item?.price ? item?.price : "-"}
                 </td>
-                <td className="py-5 text-[18px] tex">
+                <td className="py-5 text-[18px]">
                   {item?.brand ? item?.brand : "-"}
                 </td>
-                <td className="py-5 text-[18px] tex">
+                <td className="py-5 text-[18px]">
                   {item?.quantity ? item?.quantity : "-"}
                 </td>
-                <td className="py-5 text-[18px] tex">
+                <td className="py-5 text-[18px]">
                   {item?.color.length > 0
                     ? item?.color?.map((optn, inx) => (
                         <p
@@ -152,19 +152,19 @@ const ProductList = () => {
                       ))
                     : "-"}
                 </td>
-                <td className="py-5 text-[18px] tex">
+                <td className="py-5 text-[18px]">
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                     selling
                   </p>
                 </td>
-                <td>
+                <td className="py-5 text-[18px]">
                   <button>
                     <Link href={`/view-product/${item?._id}`}>
                       <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500" />
                     </Link>
                   </button>
                 </td>
-                <td className="flex justify-around">
+                <td className="flex justify-around py-5 ">
                   <Link href={`/edit-product/${item?._id}`}>
                     <button>
                       <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />

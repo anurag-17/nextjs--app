@@ -209,7 +209,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             <div>
               <p>Signout</p>
             </div>
-          </div>\
+          </div>
       </div>
     </div>
   );
