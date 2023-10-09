@@ -35,6 +35,11 @@ export default function EditProduct() {
         ...productDetails,
         [name]: value.split(","),
       });
+    } else if (name === "brand") {
+      setProductDetails({
+        ...productDetails,
+        [name]: value.toUpperCase(),
+      });
     } else {
       setProductDetails({
         ...productDetails,

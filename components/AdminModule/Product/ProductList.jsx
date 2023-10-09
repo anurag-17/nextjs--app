@@ -125,7 +125,7 @@ const ProductList = () => {
                     className="mx-3 mt-6 cursor-pointer "
                   />
                 </td>
-                <td className="py-5 text-[18px]">
+                <td className="py-5 text-[18px] max-w-[200px]">
                   {item?.title ? item?.title : "-"}
                 </td>
                 <td className="py-5 text-[18px]">
@@ -164,7 +164,7 @@ const ProductList = () => {
                     </Link>
                   </button>
                 </td>
-                <td className="flex justify-around py-5 ">
+                <td className="flex justify-between items-center  py-5 ">
                   <Link href={`/edit-product/${item?._id}`}>
                     <button>
                       <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />
