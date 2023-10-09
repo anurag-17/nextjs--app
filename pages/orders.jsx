@@ -26,7 +26,7 @@ const orders = () => {
               >
                 <div className='flex'>
                   <div className='bg-purple-100 p-3 rounded-lg'>
-                    <FaShoppingBag className='text-lightBlue-500' />
+                    <FaShoppingBag className='text-sky-500' />
                   </div>
                   <div className='pl-4'>
                     <p className='text-gray-800 font-bold'>

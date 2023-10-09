@@ -1,9 +1,38 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import Head from "next/head";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
 
 
 function MyApp({ Component, pageProps }) {
+
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  console.log("isAuthenticated",isAuthenticated)
+
+  useEffect(() => {
+    const authToken = sessionStorage.getItem('accessToken');
+    console.log("authToken",authToken)
+    if (authToken) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (!isAuthenticated  || router.pathname === "/admin-dashboard") {
+  //     router.replace("/admin-login");
+  //     console.log("")
+  //   }
+  //   else{
+  //     router.replace("/admin-dashboard");
+  //   }
+  // }, [isAuthenticated, router.pathname]);
+
+
   return (
 
     <>

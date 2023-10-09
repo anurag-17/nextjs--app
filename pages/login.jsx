@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 
-const AdminLogin = () => {
+const UserLogin = ({API_URL}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
@@ -20,14 +20,9 @@ const AdminLogin = () => {
   const addFormHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // console.log("Email:", email);
-    // console.log("Password:", password);
-    // router.push("/")
-    // ClearData();
-
     const options = {
       method: "POST",
-      url: "https://e-commerce-backend-brown.vercel.app/api/auth/login",
+      url: `${API_URL}/login`,
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
@@ -40,22 +35,11 @@ const AdminLogin = () => {
       .then(function (response) {
         if (response?.status === 200) {
           console.log(response.data);
-          // sessionStorage.setItem("accessToken",JSON.stringify(response.data.token))
-          // localStorage.setItem("accessToken",JSON.stringify(response.data.token))
-          // sessionStorage.setItem("userDetails",JSON.stringify(response?.data) );
-          // localStorage.setItem("userDetails",JSON.stringify(response?.data) );
+          sessionStorage.setItem("userToken",JSON.stringify(response.data.token))
+          sessionStorage.setItem("userDetails",JSON.stringify(response?.data) );
           setLoading(false);
-          toast.success("Success. Login Successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          router.push("/");
+          toast.success("Success, Login Successfully!");
+        //   router.push("/");
         } else {
           setLoading(false);
           return;
@@ -64,16 +48,7 @@ const AdminLogin = () => {
       .catch(function (error) {
         setLoading(false);
         console.error(error);
-        toast.error("Failed. Invalid Credentials!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        toast.error("Failed, Invalid Credentials!");
       });
   };
 
@@ -81,21 +56,15 @@ const AdminLogin = () => {
     <div>
       <ToastContainer />
       <div
-        className="min-h-screen py-40"
-        style={{
-          backgroundImage: "linear-gradient(115deg, #0284c7, #2193ce40)",
-        }}
-      >
+        className="min-h-screen py-40 bg-[#DFF9FF]">
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row justify-center w-10/12 lg:w-[80%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden min-h-[700px]">
+          <div className="flex flex-col lg:flex-row justify-center w-10/12 lg:w-[80%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden min-h-[700px] border-[2px] border-[#0891B2]">
             <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center">
-                <Image src="/loginImage.jpg" width={800} height={800} alt="login_img"></Image>
+                <Image src="/loginImage.svg" width={800} height={800} alt="login_img"></Image>
             </div>
             <div className="w-full lg:w-1/2 py-10 px-12 my-[20px]">
-              <h2 className="text-[40px] font-bold mb-4 text-center">Login</h2>
-              <p className="py-4 text-[20px]">
-                Create your account. It’s free and only take a minute
-              </p>
+              <h2 className="text-[40px] font-bold mb-4 text-center"> Login</h2>
+              <p className="py-4 text-[20px] text-center"> Create your account. It’s free and only take a minute</p>
               <form onSubmit={addFormHandler}>
                 <div className="mt-5">
                   <input
@@ -165,4 +134,17 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default UserLogin;
+
+
+
+export async function getServerSideProps() {
+  // Define your API URL here
+  const API_URL = 'https://e-commerce-backend-brown.vercel.app/api/auth';
+
+  return {
+    props: {
+      API_URL,
+    },
+  };
+}

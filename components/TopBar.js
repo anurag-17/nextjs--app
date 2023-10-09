@@ -9,6 +9,10 @@ import {
 import { BellIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
+
+
+
 
 export default function TopBar({ showNav, setShowNav }) {
   return (
@@ -155,6 +159,15 @@ export default function TopBar({ showNav, setShowNav }) {
                   >
                     <Cog8ToothIcon className="h-4 w-4 mr-2" />
                     Settings
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link
+                    href="/login"
+                    className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
+                  >
+                   <LockClosedIcon class="h-5 w-5 mr-1 " />
+                    Log Out
                   </Link>
                 </Menu.Item>
               </div>

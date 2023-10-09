@@ -33,22 +33,16 @@ const menuList = [
         path:'/product-grid'
       },
       {
-        id: 2,
-        label: "product details",
-        component: <New />,
-        path:'/product-details'
-      },
-      {
         id: 3,
-        label: "product edit",
-        component: <New />,
-        path:'/edit-product'
-      },
-      {
-        id: 4,
         label: "product add", 
         component: <New />,
         path:'/add-product'
+      },
+      {
+        id: 4,
+        label: "product details",
+        component: <New />,
+        path:'/product-details'
       },
       {
         id: 3,
@@ -131,10 +125,16 @@ const SideBar = forwardRef(({ showNav }, ref) => {
     }
   };
 
+  const handleSignout = () => {
+    sessionStorage.removeItem("accessToken")
+    sessionStorage.removeItem("userDetails")
+    router.push("/login")
+  }
+
   return (
     <div ref={ref} className="fixed w-[250px] h-full bg-white shadow-sm">
       <div className="flex justify-center items-center whitespace-pre-wrap h-[100px] my-14">
-        <h1 className="text-3xl font-bold mx-5 text-lightBlue-600">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold mx-5 text-sky-600">Admin Dashboard</h1>
       </div>
 
       <div className="flex flex-col">
@@ -145,8 +145,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                 <div
                   className={`pl-6 py-3 mx-5 rounded justify-center cursor-pointer mb-3 flex items-center transition-colors font-semibold
                  ${items?.id === labelId
-                      ? "bg-lightBlue-600 text-white"
-                      : "text-black-400  hover:bg-lightBlue-600  hover:text-white"
+                      ? "bg-sky-600 text-white"
+                      : "text-black-400  hover:bg-sky-600  hover:text-white"
                     }`}
                   onClick={() => handleClick(items.label, items.id)}
                 >
@@ -185,8 +185,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                       <div
                         className={`pl-6 py-3 mx-5 rounded max-w-[200px] justify-center text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
                          ${subOpt?.id === labelId
-                            ? "bg-lightBlue-600 text-white"
-                            : "text-black-400 hover:bg-lightBlue-600 hover:text-white"
+                            ? "bg-sky-600 text-white"
+                            : "text-black-400 hover:bg-sky-600 hover:text-white"
                           }`}
                         onClick={() => handleClick(subOpt.label, subOpt.id)}
                       >
@@ -201,13 +201,13 @@ const SideBar = forwardRef(({ showNav }, ref) => {
           ))
         }
 
-        <Link href="/admin-login">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold
             ${router.pathname == "/admin-login"
-                ? "bg-lightBlue-600 text-white"
-                : "text-black-400 hover:bg-lightBlue-600 hover:text-white"
+                ? "bg-sky-600 text-white"
+                : "text-black-400 hover:bg-sky-600 hover:text-white"
               }`}
+              onClick={handleSignout}
           >
             <div className="mr-2">
               <CreditCardIcon className="h-5 w-5" />
@@ -215,8 +215,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             <div>
               <p>Signout</p>
             </div>
-          </div>
-        </Link>
+          </div>\
       </div>
     </div>
   );

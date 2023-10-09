@@ -6,6 +6,7 @@ import {
   TrashIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const ProductList = () => {
 
@@ -76,7 +77,7 @@ const [allProduct, setAllProduct] = useState([])
 
         <table class="table-auto bg-white w-full rounded-md mt-5">
           <thead className="">
-            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start ">
+            <tr className="bg-gray-200 text-gray-400 text-sm text-start ">
               <input type="checkbox" className="mx-3 mt-6 cursor-pointer " />
               <th className="text-start py-5 ">PRODUCT NAME</th>
               <th className="text-start">CATEGORY</th>
@@ -112,9 +113,11 @@ const [allProduct, setAllProduct] = useState([])
                 </button>
               </td>
               <td className="flex justify-around">
+                <Link href={`/edit-product/${item?._id}`}>
                 <button>
                   <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />
                 </button>
+                </Link>
                 <button>
                   <TrashIcon className="cursor-pointer h-6 w-6 text-gray-500" />
                 </button>
