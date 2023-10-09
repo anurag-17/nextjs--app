@@ -21,31 +21,25 @@ const menuList = [
     submenu: true,
     subData: [
       {
-        id: 0,
+        id: '01',
         label: "product list",
         component: <New />,
         path:'/product-list'
       },
       {
-        id: 1,
+        id: '02',
         label: "product grid",
         component: <New />,
         path:'/product-grid'
       },
       {
-        id: 3,
+        id: '03',
         label: "product add", 
         component: <New />,
         path:'/add-product'
       },
       {
-        id: 4,
-        label: "product details",
-        component: <New />,
-        path:'/product-details'
-      },
-      {
-        id: 3,
+        id: '05',
         label: "product cart",
         component: <New />,
         path:'/product-cart'
@@ -56,21 +50,21 @@ const menuList = [
   {
     id: 3,
     label: "categories",
-    component: '',
+    path: '/categories',
     submenu: true,
     subData: [
       {
-        id: 1,
+        id: '001',
         label: "categories list",
         component: <New />,
       },
       {
-        id: 2,
+        id: '002',
         label: "categories add",
         component: <New />,
       },
       {
-        id: 3,
+        id: '003',
         label: "categories edit",
         component: <New />,
       },

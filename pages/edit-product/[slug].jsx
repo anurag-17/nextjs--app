@@ -9,6 +9,7 @@ export default function EditProduct() {
   const router = useRouter();
   const { slug } = router.query;
   const [isLoading, setLoading] = useState(false);
+  const [isRefresh, setRefresh] = useState(false);
   const [editData, setEditData] = useState({});
   const [productDetails, setProductDetails] = useState({
     title: "",
@@ -21,17 +22,8 @@ export default function EditProduct() {
   });
 
 
-  console.log("editData",editData)
   const refreshData = () => {
-    setProductDetails({
-      title: "",
-      description: "",
-      price: "",
-      category: "",
-      brand: "",
-      quantity: "",
-      color: [],
-    });
+   setRefresh(!isRefresh)
   };
 
   const inputHandler = (e) => {
@@ -52,7 +44,7 @@ export default function EditProduct() {
 
   useEffect(() => {
     getAllProducts();
-  }, []);
+  }, [isRefresh]);
 
   const getAllProducts = async () => {
     const options = {
@@ -79,9 +71,10 @@ export default function EditProduct() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log("editData",productDetails)
 
     const options = {
-      method: "POST",
+      method: "PUT",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/updateProduct/${slug}`,
       headers: {
         cookie:
@@ -90,7 +83,7 @@ export default function EditProduct() {
         "User-Agent": "insomnia/2023.5.8",
         // Authorization: "Bearer " + token,
       },
-      data: poductDetail,
+      data: productDetails,
     };
 
     axios
@@ -98,8 +91,8 @@ export default function EditProduct() {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          notify();
           setLoading(false);
+          toast.success("Product updated successfully !");
           refreshData();
         } else {
           setLoading(false);
@@ -109,16 +102,7 @@ export default function EditProduct() {
       .catch(function (error) {
         setLoading(false);
         console.error(error);
-        toast.success("Failed. Can not repeat product name!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        toast.error("Failed. something went wrong!");
       });
   };
 
@@ -254,8 +238,8 @@ export default function EditProduct() {
                     name="quantity"
                     placeholder="Add quantity"
                     className="custom-input"
-                    value={productDetails.quantity}
                     defaultValue={editData?.quantity ? editData?.quantity : productDetails.quantity}
+                    // value={productDetails.quantity}
                     // onChange={inputHandler}
                     required
                     minLength={10}
@@ -279,7 +263,7 @@ export default function EditProduct() {
                     defaultValue={editData?.brand ? editData?.brand : productDetails.brand}
                     onChange={inputHandler}
                     required
-                    minLength={10}
+                    minLength={3}
                     max={32}
                   />
                 </div>
@@ -319,7 +303,7 @@ export default function EditProduct() {
                     // onClick={handlesubmit}
                     className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
                   >
-                    Add Product
+                    Update Product
                   </button>
                 )}
               </div>

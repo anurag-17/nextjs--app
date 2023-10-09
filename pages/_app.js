@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from 'next/dynamic'
 
 import Head from "next/head";
 import "../styles/globals.css";
@@ -10,7 +11,6 @@ function MyApp({ Component, pageProps }) {
 
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  console.log("isAuthenticated",isAuthenticated)
 
   useEffect(() => {
     const authToken = sessionStorage.getItem('accessToken');

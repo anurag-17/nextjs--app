@@ -1,4 +1,5 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import React from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
@@ -47,11 +48,11 @@ const ProductGrid = () => {
             key={ix}
           >
             <Image
-              src={`https://i.pravatar.cc`}
+              src={`https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png`}
               alt=""
               className=" mx-auto rounded-lg "
               width={400}
-              height={500}
+              height={400}
             />
             <div className="bg-white px-4 pb-3">
             <div className="flex justify-between items-center my-4">
@@ -100,4 +101,4 @@ const ProductGrid = () => {
   );
 };
 
-export default ProductGrid;
+export default dynamic(() => Promise.resolve(ProductGrid), { ssr: false });

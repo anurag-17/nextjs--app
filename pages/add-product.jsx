@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ProductGrid = () => {
+const AddProduct = () => {
   const [isLoading, setLoading] = useState(false);
   const [productDetails, setProductDetails] = useState({
     title: "",
@@ -351,4 +352,4 @@ axios.request(options).then(function (response) {
   );
 };
 
-export default ProductGrid;
+export default dynamic(() => Promise.resolve(AddProduct), { ssr: false });

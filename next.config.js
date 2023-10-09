@@ -5,7 +5,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['i.pravatar.cc'],
+    domains: ['res.cloudinary.com'],
   },
   async headers() {
     return [
