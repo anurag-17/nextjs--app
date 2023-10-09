@@ -21,9 +21,10 @@ export default function EditProduct() {
     color: [],
   });
 
-
+  console.log("editData", editData);
+  console.log("slug", slug);
   const refreshData = () => {
-   setRefresh(!isRefresh)
+    setRefresh(!isRefresh);
   };
 
   const inputHandler = (e) => {
@@ -57,13 +58,13 @@ export default function EditProduct() {
     };
 
     fetch(
-      "https://e-commerce-backend-brown.vercel.app/api/product/getaProduct/651eb687f36c7ccb72c465d1",
+      `https://e-commerce-backend-brown.vercel.app/api/product/getaProduct/${slug}`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-          setEditData(response);
+        setEditData(response);
       })
       .catch((err) => console.error(err));
   };
@@ -71,7 +72,6 @@ export default function EditProduct() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("editData",productDetails)
 
     const options = {
       method: "PUT",
@@ -83,7 +83,21 @@ export default function EditProduct() {
         "User-Agent": "insomnia/2023.5.8",
         // Authorization: "Bearer " + token,
       },
-      data: productDetails,
+      data: {
+        title: productDetails?.title ? productDetails?.title : editData?.title,
+        description: productDetails?.description
+          ? productDetails?.description
+          : editData?.description,
+        price: productDetails?.price ? productDetails?.price : editData?.price,
+        category: productDetails?.category
+          ? productDetails?.category
+          : editData?.category,
+        brand: productDetails?.brand ? productDetails?.brand : editData?.brand,
+        quantity: productDetails?.quantity
+          ? productDetails?.quantity
+          : editData?.quantity,
+        color: productDetails?.color ? productDetails?.color : editData?.color,
+      },
     };
 
     axios
@@ -94,6 +108,7 @@ export default function EditProduct() {
           setLoading(false);
           toast.success("Product updated successfully !");
           refreshData();
+          router.push("/product-list");
         } else {
           setLoading(false);
           return;
@@ -146,7 +161,9 @@ export default function EditProduct() {
                     name="title"
                     placeholder="Product Title/Name"
                     className="custom-input"
-                    defaultValue={editData?.title ? editData?.title : productDetails.title}
+                    defaultValue={
+                      editData?.title ? editData?.title : productDetails.title
+                    }
                     // value={productDetails.title}
                     onChange={inputHandler}
                     required
@@ -168,7 +185,11 @@ export default function EditProduct() {
                     name="description"
                     placeholder="Product Description"
                     spellCheck="false"
-                    defaultValue={editData?.description ? editData?.description : productDetails.description}
+                    defaultValue={
+                      editData?.description
+                        ? editData?.description
+                        : productDetails.description
+                    }
                     // value={productDetails.description}
                     onChange={inputHandler}
                     required
@@ -191,8 +212,10 @@ export default function EditProduct() {
                       name="price"
                       placeholder="OriginalPrice"
                       className="custom-input"
-                      defaultValue={editData?.price ? editData?.price : productDetails.price}
-                    //   value={productDetails.price}
+                      defaultValue={
+                        editData?.price ? editData?.price : productDetails.price
+                      }
+                      //   value={productDetails.price}
                       onChange={inputHandler}
                       required
                       minLength={1}
@@ -217,8 +240,11 @@ export default function EditProduct() {
                     name="category"
                     placeholder="Add Category"
                     className="custom-input"
-                    defaultValue={editData?.category ? editData?.category : productDetails.category}
-                    // value={productDetails.category}
+                    defaultValue={
+                      editData?.category
+                        ? editData?.category
+                        : productDetails.category
+                    }
                     onChange={inputHandler}
                     required
                     minLength={3}
@@ -238,12 +264,14 @@ export default function EditProduct() {
                     name="quantity"
                     placeholder="Add quantity"
                     className="custom-input"
-                    defaultValue={editData?.quantity ? editData?.quantity : productDetails.quantity}
-                    // value={productDetails.quantity}
-                    // onChange={inputHandler}
+                    defaultValue={
+                      editData?.quantity
+                        ? editData?.quantity
+                        : productDetails.quantity
+                    }
+                    onChange={inputHandler}
                     required
                     minLength={10}
-                    // max={32}
                   />
                 </div>
               </div>
@@ -260,7 +288,9 @@ export default function EditProduct() {
                     placeholder="Add Brand Name"
                     className="custom-input uppercase"
                     // value={productDetails.brand}
-                    defaultValue={editData?.brand ? editData?.brand : productDetails.brand}
+                    defaultValue={
+                      editData?.brand ? editData?.brand : productDetails.brand
+                    }
                     onChange={inputHandler}
                     required
                     minLength={3}
@@ -280,7 +310,9 @@ export default function EditProduct() {
                     name="color"
                     placeholder="Enter colors separated by commas"
                     className="custom-input"
-                    defaultValue={editData?.color ? editData?.color : productDetails.color}
+                    defaultValue={
+                      editData?.color ? editData?.color : productDetails.color
+                    }
                     // value={productDetails.color}
                     onChange={inputHandler}
                     required
