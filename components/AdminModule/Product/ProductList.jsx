@@ -11,27 +11,27 @@ import {
 } from "@heroicons/react/24/outline";
 import DeleteModal from "./Modal/deleteModal";
 import axios from "axios";
-
+import Header from "../Header";
 
 const ProductList = () => {
-
-    let [isOpenDelete, setOpenDelete] = useState(false);
-    const [allProduct, setAllProduct] = useState([]);
-    let [isRefresh, setRefresh] = useState(false);
-    let [productID, setProductID] = useState("");
+  let [isOpenDelete, setOpenDelete] = useState(false);
+  const [allProduct, setAllProduct] = useState([]);
+  let [isRefresh, setRefresh] = useState(false);
+  let [productID, setProductID] = useState("");
+  let [productCategory, setProductCategory] = useState(["All"]);
 
   function closeModal() {
     setOpenDelete(false);
   }
 
   function openModal(id) {
-    setProductID(id)
+    setProductID(id);
     setOpenDelete(true);
   }
 
   const refreshData = () => {
-    setRefresh(!isRefresh)
-  }
+    setRefresh(!isRefresh);
+  };
 
   useEffect(() => {
     getAllProducts();
@@ -51,9 +51,20 @@ const ProductList = () => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response.data);
         if (response.status === 200) {
           setAllProduct(response?.data);
+          // const categories = response?.data?.map((product) => product.category);
+          // const uniqueCategories = [...new Set(categories)];
+          // setProductCategory([...productCategory, ...uniqueCategories]);
+          // const uniqueCategories = categories.filter((category, index) => {
+          //   return categories.indexOf(category) === index;
+          // });
+
+          const categories = response?.data?.map(
+            (product) => product.category
+          );
+          const uniqueCategories = [...new Set(categories)];
+          setProductCategory(["All", ...uniqueCategories]);
         }
       })
       .catch(function (error) {
@@ -61,22 +72,43 @@ const ProductList = () => {
       });
   };
 
+  const handleSearchCategories = (e) => {
+    const cate = e.target.value;
+    if (cate === "All") {
+      refreshData();
+    } else {
+      const options = {
+        method: "GET",
+        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${cate}`,
+      };
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response.data);
+          if (response.status === 200) {
+            setAllProduct(response.data);
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+  };
+
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
 
       <section>
-        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-          <h2 className="text-2xl font-semibold">Products List </h2>
-          <h2>Welcome Back, Clint</h2>
-        </div>
+        <Header headTitle="Products List" />
+
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <input
             type="search"
             placeholder="Search Product"
             className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer "
           />
-          <select
+          {/* <select
             name="cars"
             id="cars"
             placeholder="Category"
@@ -87,18 +119,27 @@ const ProductList = () => {
               Men's Cloth
             </option>
             <option value="opel">Women's Cloth</option>
-            <option value="volvo">Watches</option>
-            <option value="audi">Footwear's</option>
-          </select>
-          <select
-            name="cars"
-            id="cars"
-            placeholder="Price"
-            className="border border-gray-400 p-2 rounded-md bg-white w-3/12 cursor-pointer "
-          >
-            <option value="volvo">Low to High</option>
-            <option value="saab">High to Low</option>
-          </select>
+          </select> */}
+
+          {/*----- search by category start ------- */}
+          <div className="w-auto flex items-center gap-x-5">
+            <label htmlFor="" className="whitespace-nowrap">
+              Search by Category :
+            </label>
+            <select
+              name="cars"
+              id="cars"
+              placeholder="Price"
+              className="border border-gray-400 py-2  rounded-md bg-white lg:w-[200px] md:w-full cursor-pointer "
+              onChange={handleSearchCategories}
+            >
+              {productCategory?.length > 0 &&
+                productCategory.map((cate) => (
+                  <option value={cate}>{cate}</option>
+                ))}
+            </select>
+          </div>
+          {/*----- search by category end ------- */}
         </div>
 
         <table class="table-auto bg-white w-full rounded-md mt-5">
@@ -173,7 +214,7 @@ const ProductList = () => {
 
                   <button
                     type="button"
-                    onClick={()=>openModal(item?._id)}
+                    onClick={() => openModal(item?._id)}
                     className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                   >
                     <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
@@ -217,7 +258,11 @@ const ProductList = () => {
                   >
                     Are You Sure! Want to Delete?
                   </Dialog.Title>
-                  <DeleteModal productID={productID} closeModal={closeModal} refreshData={refreshData}/>
+                  <DeleteModal
+                    productID={productID}
+                    closeModal={closeModal}
+                    refreshData={refreshData}
+                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

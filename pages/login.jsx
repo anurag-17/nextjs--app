@@ -56,41 +56,60 @@ const UserLogin = ({API_URL}) => {
     <div>
       <ToastContainer />
       <div
-        className="min-h-screen py-40 bg-[#DFF9FF]">
+        className="2xl:min-h-screen 2xl:py-40 bg-[#DFF9FF]   xl:min-h-screen xl:py-20
+        lg:min-h-screen lg:py-16
+        ">
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row justify-center w-10/12 lg:w-[80%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden min-h-[700px] border-[2px] border-[#0891B2]">
-            <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center">
+          <div className="flex flex-col lg:flex-row justify-center 2xl:w-10/12 lg:w-[70%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden 2xl:min-h-[700px] border-[2px] border-[#0891B2]
+          xl:min-h-[450px] xl:w-8/12
+          lg:min-h-[400px] 
+           ">
+
+
+            <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center ">
                 <Image src="/loginImage.svg" width={800} height={800} alt="login_img"></Image>
             </div>
-            <div className="w-full lg:w-1/2 py-10 px-12 my-[20px]">
-              <h2 className="text-[40px] font-bold mb-4 text-center"> Login</h2>
-              <p className="py-4 text-[20px] text-center"> Create your account. It’s free and only take a minute</p>
+            <div className="w-full lg:w-1/2 2xl:py-10 2xl:px-12 2xl:my-[20px]
+            xl:py-6 xl:px-5 xl:my-[0px]
+            lg:py-6 lg:px-5 lg:my-[12px]">
+              <h2 className="2xl:text-[40px] font-bold 2xl:mb-4  text-center
+              xl:text-[30px] xl:mb-0  
+              lg:text-[25px] lg:mb-1 "> Login</h2>
+              <p className="2xl:py-4 2xl:text-[20px] text-center first-letter xl:py-1 xl:text-[16px] 
+              lg:py-0 xg:text-[14px]"> Create your account. It’s free and only take a minute</p>
               <form onSubmit={addFormHandler}>
-                <div className="mt-5">
+                <div className="2xl:mt-5 
+                xl:mt-3
+                lg:mt-2">
                   <input
                     type="text"
                     placeholder="Email"
                     value={email}
-                    className="custom-input xl:h-[60px]"
+                    className="custom-input 2xl:h-[60px] xl:h-[50px] 
+                    lg:h-[40px]"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
-                <div className="mt-6 mb-2">
+                <div className="2xl:mt-6 2xl:mb-2
+                xl:mt-4 xl:mb-2
+                lg:mt-3 lg:mb-2">
                   <input
                     type="password"
                     placeholder="Password"
                     value={password}
-                    className="custom-input xl:h-[60px]"
+                    className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px]"
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </div>
 
-                <div className="py-5 xl:text-[18px] lg:[text-[16px]">
+                <div className="2xl:py-5 xl:text-[16px] lg:[text-[14px]  xl:py-3 first-letter: lg:py-2">
                   <input
                     type="checkbox"
-                    className="border border-gray-400 mr-2"
+                    className="border border-gray-400 2xl:mr-2
+                    xl:mr-1
+                    lg:mr-1"
                   />
                   <span>
                     I accept the
@@ -103,24 +122,31 @@ const UserLogin = ({API_URL}) => {
                     </a>
                   </span>
                 </div>
-                <div className="mt-8">
+                <div className="2xl:mt-8
+                xl:mt-5
+                lg:mt-2">
                   {isLoading ? (
                     <button
                       type="submit"
-                      className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]"
+                      className="w-full  text-cyan-600 2xl:py-3 text-center bg-white 2xl:mb-2 border border-cyan-600 font-semibold 2xl:text-[18px]
+                      xl:py-2  xl:mb-2 xl:text-[16px]
+                      lg:py-2  lg:mb-2 lg:text-[14px]"
                     >
                       Loading...
                     </button>
                   ) : (
                     <button
                       type="submit"
-                      className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold xl:text-[18px] lg:text-[16px]"
+                      className="w-full bg-cyan-600 2xl:py-3 text-center text-white 2xl:mb-2 font-semibold xl:text-[18px] lg:text-[16px]
+                      xl:py-2 xl:mb-1
+                      lg:py-2 lg:mb-1"
                     >
                       Login
                     </button>
                   )}
                   <Link href="/signup">
-                    <p className="text-center text-cyan-600  underline mt-4 text-[20px] font-medium">
+                    <p className="text-center text-cyan-600  underline 2xl:mt-4 2xl:text-[20px] font-medium
+                    xl:mt-2 xl:text-[18px] first-letter: lg:mt-2 lg:text-[16px] ">
                       Register Now
                     </p>
                   </Link>
