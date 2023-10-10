@@ -22,55 +22,56 @@ const menuList = [
     subData: [
       {
         id: '01',
-        label: "product list",
+        label: "All Product",
         component: <New />,
         path:'/product-list'
       },
-      {
-        id: '02',
-        label: "product grid",
-        component: <New />,
-        path:'/product-grid'
-      },
+      // {
+      //   id: '02',
+      //   label: "product grid",
+      //   component: <New />,
+      //   path:'/product-grid'
+      // },
       {
         id: '03',
         label: "product add", 
         component: <New />,
         path:'/add-product'
       },
+      // {
+      //   id: '05',
+      //   label: "product cart",
+      //   component: <New />,
+      //   path:'/product-cart'
+      // },
       {
-        id: '05',
-        label: "product cart",
-        component: <New />,
-        path:'/product-cart'
+        id: 3,
+        label: "categories",
+        path: '/categories',
+        submenu: true,
+        subData: [
+          {
+            id: '001',
+            label: "categories list",
+            component: <New />,
+          },
+          {
+            id: '002',
+            label: "categories add",
+            component: <New />,
+          },
+          // {
+          //   id: '003',
+          //   label: "categories edit",
+          //   component: <New />,
+          // },
+        ],
+        icon: `fa fa-usd`,
       },
     ],
     icon: `fa fa-usd`,
   },
-  {
-    id: 3,
-    label: "categories",
-    path: '/categories',
-    submenu: true,
-    subData: [
-      {
-        id: '001',
-        label: "categories list",
-        component: <New />,
-      },
-      {
-        id: '002',
-        label: "categories add",
-        component: <New />,
-      },
-      {
-        id: '003',
-        label: "categories edit",
-        component: <New />,
-      },
-    ],
-    icon: `fa fa-usd`,
-  },
+ 
   {
     id: 4,
     label: "orders",
@@ -127,8 +128,9 @@ const SideBar = forwardRef(({ showNav }, ref) => {
 
   return (
     <div ref={ref} className="fixed w-[250px] h-full bg-white shadow-sm">
-      <div className="flex justify-center items-center whitespace-pre-wrap h-[100px] my-14">
-        <h1 className="text-3xl font-bold mx-5 text-sky-600">Admin Dashboard</h1>
+     <img src="/log.png"  width={400} height={350} alt="login_img" className="mx-auto py-2" />
+      <div className="flex justify-center items-center whitespace-pre-wrap h-[100px]">
+        <h1 className="text-2xl font-bold mx-5 text-sky-600">Admin Dashboard</h1>
       </div>
 
       <div className="flex flex-col">
@@ -207,7 +209,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
               <CreditCardIcon className="h-5 w-5" />
             </div>
             <div>
-              <p>Signout</p>
+              <p>Log Out</p>
             </div>
           </div>
       </div>

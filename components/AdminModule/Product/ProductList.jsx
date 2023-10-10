@@ -60,9 +60,7 @@ const ProductList = () => {
           //   return categories.indexOf(category) === index;
           // });
 
-          const categories = response?.data?.map(
-            (product) => product.category
-          );
+          const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
           setProductCategory(["All", ...uniqueCategories]);
         }
@@ -224,6 +222,83 @@ const ProductList = () => {
             </tbody>
           ))}
         </table>
+        <nav aria-label="Page navigation example" className="m-5 mb-10 float-right">
+          <ul className="flex items-center -space-x-px h-8 text-sm">
+            <li>
+              <a
+                href="#"
+                className="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                <span className="sr-only">Previous</span>
+                <svg
+                  className="w-2.5 h-2.5"
+                  aria-hidden="true"
+                  xmlns="#"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 1 1 5l4 4"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="flex items-center justify-center px-3 h-10 leading-tight text-gray-500 bg-white border border-gray-300   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white hover:text-blue-700 hover:border-blue-300 hover:bg-lightBlue-200"
+              >
+                1
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="flex items-center justify-center px-3 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white hover:text-blue-700 hover:border-blue-300 hover:bg-lightBlue-200"
+              >
+                2
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                aria-current="page"
+                className="z-10 flex items-center text-gray-500 justify-center px-3 h-10 leading-tight hover:text-blue-600 border border-gray-400 hover:border-blue-300 bg-blue-50  dark:border-gray-700  dark:text-white hover:bg-lightBlue-200"
+              >
+                3
+              </a>
+            </li>
+         
+          
+            <li>
+              <a
+                href="#"
+                className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white "
+              >
+                <span className="sr-only">Next</span>
+                <svg
+                  className="w-2.5 h-2.5"
+                  aria-hidden="true"
+                  xmlns="#"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </section>
 
       <Transition appear show={isOpenDelete} as={Fragment}>

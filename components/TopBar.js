@@ -22,7 +22,7 @@ export default function TopBar({ showNav, setShowNav }) {
   return (
     <div
       className={`fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
-        showNav ? "pl-56" : ""
+        showNav ? "pl-64 " : ""
       }`}
     >
       <div className="pl-4 md:pl-16">
@@ -151,7 +151,7 @@ export default function TopBar({ showNav, setShowNav }) {
                 </Menu.Item>
                 <Menu.Item>
                   <Link
-                    href="#"
+                    href="/orders"
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
                     <ShoppingBagIcon  className="h-4 w-4 mr-2" />

@@ -5,7 +5,7 @@ import { data } from '../data/data.js';
 
 const orders = () => {
   return (
-    <div className='bg-gray-100 min-h-screen'>
+    <div className='bg-gray-100 min-h-screen  '>
       <div className='flex justify-between px-4 pt-4'>
         <h2>Orders</h2>
         <h2>Welcome Back, Clint</h2>
@@ -30,7 +30,7 @@ const orders = () => {
                   </div>
                   <div className='pl-4'>
                     <p className='text-gray-800 font-bold'>
-                      ${order.total.toLocaleString()}
+                    ₹{order.total.toLocaleString()}
                     </p>
                     <p className='text-gray-800 text-sm'>{order.name.first}</p>
                   </div>

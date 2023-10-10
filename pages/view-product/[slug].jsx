@@ -41,7 +41,7 @@ export default function EditProduct() {
     <>
       <section className="bg-gray-100 min-h-screen">
         <ToastContainer />
-        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
+        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px]  ">
           <div className="">
             <h2 className="text-2xl font-semibold"> Product Details </h2>
             <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
@@ -68,10 +68,10 @@ export default function EditProduct() {
                 </div>
                 <div className="w-full flex flex-col p-5 md:p-8 text-left">
                   <div className="mb-5 block ">
-                    <div className="font-serif font-semibold py-1 lg:text-[18px] text-sm">
-                      <p className="lg:text-[18px] text-sm text-gray-500 pr-4 flex gap-5">
-                        Status :
-                        <span className="text-lightBlue-600 text-[30px]">
+                    <div className="font-serif font-semibold py-1 lg:text-[18px] text-sm ">
+                      <p className="lg:text-[30px]  text-gray-500  flex gap-5 leading-8 ">
+                        {/* Status: */}
+                        <span className="text-lightBlue-600 leading-8 text-[30px]">
                           {productDetail?.title} Showing
                         </span>
                       </p>
@@ -82,34 +82,34 @@ export default function EditProduct() {
                   </div>
                   <div className="font-serif product-price font-bold dark:text-gray-400">
                     <span className="inline-block text-2xl">
-                      $ {productDetail?.price}
+                    ₹{productDetail?.price}
                     </span>
                   </div>
                   <div className="mt-6">
-                    <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-800">
+                    <span className="inline-flex px-2 text-md font-medium leading-5 rounded-full text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-800">
                       <span className="font-bold">Stock Out</span>
                     </span>
-                    <span className=" text-sm text-gray-500 dark:text-gray-400 font-medium pl-4">
+                    <span className=" text-[18px] text-gray-500 dark:text-gray-400 pl-4 ">
                       QUANTITY: {productDetail?.quantity}
                     </span>
                   </div>
-                  <p className="font-serif font-semibold py-1 text-gray-500 lg:text-[18px] text-sm flex gap-5 items-center7 mt-2">
-                    <span className="text-gray-700 dark:text-gray-400 ">
+                  <p className="font-serif font-semibold py-1 text-gray-500 lg:text-[18px]  flex gap-5 items-center mt-2">
+                    <span className="text-gray-700 dark:text-gray-400 leading-[30px]">
                       Categpry :
                     </span>
-                    <p className=" capitalize text-[16px] font-normal leading-[30px]">
+                    <p className=" capitalize text-[18px] font-normal leading-[30px]">
                       {productDetail?.category}
                     </p>
                   </p>
                   <div className="flex flex-col ">
-                    <p className="font-serif font-semibold  text-gray-500 lg:text-[18px] text-sm flex gap-5 items-center">
-                      <span className="text-gray-700 dark:text-gray-400 ">
+                    <p className="font-serif font-semibold  text-gray-500 lg:text-[18px] flex gap-5 items-center">
+                      <span className="text-gray-700 dark:text-gray-400 leading-[30px] ">
                         Color :
                       </span>
                       {productDetail?.color
                         ? productDetail?.color?.map((optn, inx) => (
                             <p
-                              className=" capitalize text-[16px] font-normal leading-[30px]"
+                              className=" capitalize text-[18px] font-normal leading-[30px]"
                               key={inx}
                             >
                               {optn}
@@ -117,7 +117,7 @@ export default function EditProduct() {
                           ))
                         : "-"}
                     </p>
-                    <p className="uppercase font-serif font-normal text-gray-500 dark:text-gray-400 lg:text-[18px] text-sm mt-3">
+                    <p className=" leading-8 tracking-wide  font-serif font-normal text-gray-500 dark:text-gray-400 lg:text-[18px] text-sm mt-3">
                       {productDetail?.description}
                       <span className="font-bold text-gray-500 dark:text-gray-500"></span>
                     </p>
