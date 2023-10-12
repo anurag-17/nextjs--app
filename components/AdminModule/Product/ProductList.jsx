@@ -19,8 +19,6 @@ const ProductList = () => {
   let [isRefresh, setRefresh] = useState(false);
   let [productID, setProductID] = useState("");
   let [productCategory, setProductCategory] = useState(["All"]);
-  let [productBrands, setProductBrands] = useState(["All"]);
-  let [productSearch, setProductSearch] = useState(["All"]);
 
   function closeModal() {
     setOpenDelete(false);
@@ -65,14 +63,6 @@ const ProductList = () => {
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
           setProductCategory(["All", ...uniqueCategories]);
-
-          const brands = response?.data?.map((product) => product.brand);
-          const uniqueBrands = [...new Set(brands)];
-          setProductBrands(["All", ...uniqueBrands]);
-
-          const fields = response?.data?.map((product) => product.title);
-          const uniqueFields = [...new Set(fields)];
-          setProductSearch(["All", ...uniqueFields]);
         }
       })
       .catch(function (error) {
@@ -92,51 +82,7 @@ const ProductList = () => {
       axios
         .request(options)
         .then(function (response) {
-          console.log("hell", response.data);
-          if (response.status === 200) {
-            setAllProduct(response.data);
-          }
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
-  };
-
-  const handleSearchBrand = (e) => {
-    const bnd = e.target.value;
-    if (bnd === "All") {
-      refreshData();
-    } else {
-      const options = {
-        method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?brand=${bnd}`,
-      };
-      axios
-        .request(options)
-        .then(function (response) {
           console.log(response.data);
-          if (response.status === 200) {
-            setAllProduct(response.data);
-          }
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
-  };
-  const handleSearch = (e) => {
-    const search = e.target.value;
-    if (search === "All") {
-      refreshData();
-    } else {
-      const options = {
-        method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?title=${search}`,
-      };
-      axios
-        .request(options)
-        .then(function (response) {
           if (response.status === 200) {
             setAllProduct(response.data);
           }
@@ -159,42 +105,30 @@ const ProductList = () => {
             type="search"
             placeholder="Search Product"
             className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer "
-            
-            onChange={handleSearch}
-          ></input>
-         
-            {productSearch?.length > 0 &&
-              productSearch.map((search) => (
-                <option key={search} >
-                 
-                </option>
-              ))}
-          
-
-          <div className="w-auto flex flex-col items-center gap-x-5">
-            <label className="whitespace-nowrap">Search by Brand :</label>
-            <select
-              name="brand"
-              id="brand"
-              placeholder="Brand"
-              className="border border-gray-400 p-2 rounded-md w-12/12 bg-white cursor-pointer "
-              onChange={handleSearchBrand}
-            >
-              {productBrands?.length > 0 &&
-                productBrands.map((bnd) => <option value={bnd}>{bnd}</option>)}
-            </select>
-          </div>
+          />
+          {/* <select
+            name="cars"
+            id="cars"
+            placeholder="Category"
+            className="border border-gray-400 p-2 rounded-md w-3/12 bg-white cursor-pointer "
+          >
+            Category
+            <option className="p-5" value="saab">
+              Men's Cloth
+            </option>
+            <option value="opel">Women's Cloth</option>
+          </select> */}
 
           {/*----- search by category start ------- */}
-          <div className="w-auto flex flex-col items-center gap-x-5">
+          <div className="w-auto flex items-center gap-x-5">
             <label htmlFor="" className="whitespace-nowrap">
               Search by Category :
             </label>
             <select
-              name="category"
-              id="category"
-              placeholder="Category"
-              className="border border-gray-400 py-2  rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
+              name="cars"
+              id="cars"
+              placeholder="Price"
+              className="border border-gray-400 py-2  rounded-md bg-white lg:w-[200px] md:w-full cursor-pointer "
               onChange={handleSearchCategories}
             >
               {productCategory?.length > 0 &&
@@ -246,7 +180,7 @@ const ProductList = () => {
                   {item?.quantity ? item?.quantity : "-"}
                 </td>
                 <td className="py-5 text-[18px]">
-                  {item?.color?.length > 0
+                  {item?.color.length > 0
                     ? item?.color?.map((optn, inx) => (
                         <p
                           className=" capitalize text-[16px] font-normal leading-[30px]"
@@ -288,10 +222,7 @@ const ProductList = () => {
             </tbody>
           ))}
         </table>
-        <nav
-          aria-label="Page navigation example"
-          className="m-5 mb-10 float-right"
-        >
+        <nav aria-label="Page navigation example" className="m-5 mb-10 float-right">
           <ul className="flex items-center -space-x-px h-8 text-sm">
             <li>
               <a
@@ -341,7 +272,8 @@ const ProductList = () => {
                 3
               </a>
             </li>
-
+         
+          
             <li>
               <a
                 href="#"

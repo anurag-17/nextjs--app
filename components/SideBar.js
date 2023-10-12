@@ -36,7 +36,7 @@ const menuList = [
         id: '03',
         label: "product add", 
         component: <New />,
-        path:'/add-product'
+        path:'/add-product',
       },
       // {
       //   id: '05',
@@ -91,6 +91,7 @@ const menuList = [
     label: "transitions",
     component: '',
     icon: `fa fa-phone-square`,
+    path: '/drawer'
   },
   {
     id: 7,

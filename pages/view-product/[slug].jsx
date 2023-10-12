@@ -62,8 +62,9 @@ export default function EditProduct() {
               <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden gap-20">
                 <div className="flex-shrink-0 flex items-center justify-center h-auto">
                   <img
-                    src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
+                    src="/img1.jpeg"
                     alt="product"
+                    className=" rounded-xl"
                   />
                 </div>
                 <div className="w-full flex flex-col p-5 md:p-8 text-left">
@@ -77,7 +78,7 @@ export default function EditProduct() {
                       </p>
                     </div>
                     <h2 className="text-heading text-[18px] uppercase font-semibold font-serif dark:text-gray-400 mt-4">
-                      {productDetail?.brand}
+                      Brand : {productDetail?.brand}
                     </h2>
                   </div>
                   <div className="font-serif product-price font-bold dark:text-gray-400">
