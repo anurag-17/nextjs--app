@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import {
@@ -10,45 +11,31 @@ import {
   ArrowUpTrayIcon,
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const CategoryList = () => {
-  const categories = [
-    {
-      id: "0C24",
-      name: "Fish",
-      description: "",
-      published: `fa fa-home`,
-      action: "",
-    },
-    {
-      id: "0BE8",
-      name: "Beauty",
-      description: "",
-      published: `fa fa-home`,
-      action: "",
-    },
-    {
-      id: "0BC4",
-      name: "Fruits",
-      description: "",
-      published: `fa fa-home`,
-      action: "",
-    },
-    {
-      id: "1BC4",
-      name: "Biscuits",
-      description: "",
-      published: `fa fa-home`,
-      action: "",
-    },
-    {
-      id: "2BA4",
-      name: "Cooking",
-      description: "",
-      published: `fa fa-home`,
-      action: "",
-    },
-  ];
+  const [getallCategory, setGetallCategory] = useState([]);
+  const [categoryName, setCategoryName] = useState("");
+
+  const options = {
+    method: "GET",
+    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+  };
+
+  useEffect(() => {
+    axios
+      .request(options)
+      .then((response) => {
+        setGetallCategory(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
+
+  
   return (
     <>
       <section>
@@ -72,9 +59,12 @@ const CategoryList = () => {
               <TrashIcon class="h-5 mr-1 w-5 text-white" />
               Delete
             </button>
-            <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer">
+          <Link href="/create-cate">
+          <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer"  >
               + Add Category
             </button>
+          </Link>
+            
           </div>
         </div>
 
@@ -90,7 +80,7 @@ const CategoryList = () => {
               <th className="text-start">ACTION</th>
             </tr>
           </thead>
-          {categories?.map((item) => (
+          {getallCategory.map((items) => (
             <tbody>
               <tr>
                 <td className="">
@@ -99,9 +89,9 @@ const CategoryList = () => {
                     className="mx-3 mt-2 cursor-pointer "
                   />
                 </td>
-                <td className="py-5 text-[18px]">{item?.id}</td>
-                <td className="py-5 text-[18px]">{item?.name}</td>
-                <td className="py-5 text-[18px] tex">{item?.description}</td>
+                <td className="py-5 text-[18px]">{items?.id}</td>
+                <td className="py-5 text-[18px]">{items?.title}</td>
+                {/* <td className="py-5 text-[18px] tex">{item?.description}</td> */}
 
                 <td className="py-5 text-[18px] tex">
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
