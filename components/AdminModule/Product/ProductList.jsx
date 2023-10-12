@@ -12,16 +12,30 @@ import {
 import DeleteModal from "./Modal/deleteModal";
 import axios from "axios";
 import Header from "../Header";
+import Grid from "./svg/Grid";
+import List from "./svg/List";
+
+const headItems = [
+  "PRODUCT NAME",
+  "CATEGORY",
+  "PRICE",
+  "BRAND",
+  "STOCK",
+  "COLOUR",
+  "STATUS",
+  "VIEW",
+  "ACTION",
+];
 
 const ProductList = () => {
-  let [isOpenDelete, setOpenDelete] = useState(false);
+  const [isOpenDelete, setOpenDelete] = useState(false);
   const [allProduct, setAllProduct] = useState([]);
-  let [isRefresh, setRefresh] = useState(false);
-  let [productID, setProductID] = useState("");
-  let [productCategory, setProductCategory] = useState(["All"]);
-  let [productBrands, setProductBrands] = useState(["All"]);
-  let [productSearch, setProductSearch] = useState(["All"]);
-
+  const [isRefresh, setRefresh] = useState(false);
+  const [productID, setProductID] = useState("");
+  const [productCategory, setProductCategory] = useState(["All"]);
+  const [productBrands, setProductBrands] = useState(["All"]);
+  const [productSearch, setProductSearch] = useState(["All"]);
+  const pageLimit = "15";
   function closeModal() {
     setOpenDelete(false);
   }
@@ -36,13 +50,14 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    getAllProducts();
+    getAllProducts(1);
   }, [isRefresh]);
 
-  const getAllProducts = async () => {
+  // ------  get all products ------ //
+  const getAllProducts = async (page) => {
     const options = {
       method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct",
+      url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
       headers: {
         cookie:
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
@@ -80,6 +95,7 @@ const ProductList = () => {
       });
   };
 
+  // ------ filter products by category ------ //
   const handleSearchCategories = (e) => {
     const cate = e.target.value;
     if (cate === "All") {
@@ -103,6 +119,7 @@ const ProductList = () => {
     }
   };
 
+  // ------ filter products by brand ------ //
   const handleSearchBrand = (e) => {
     const bnd = e.target.value;
     if (bnd === "All") {
@@ -125,6 +142,8 @@ const ProductList = () => {
         });
     }
   };
+
+  // ------ search products ------ //
   const handleSearch = (e) => {
     const search = e.target.value;
     if (search === "All") {
@@ -132,7 +151,7 @@ const ProductList = () => {
     } else {
       const options = {
         method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?title=${search}`,
+        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct??search=${search}`,
       };
       axios
         .request(options)
@@ -152,75 +171,79 @@ const ProductList = () => {
       <ToastContainer />
 
       <section>
-        <Header headTitle="Products List" />
+        <Header headTitle="Products List" /> 
 
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-          <input
-            type="search"
-            placeholder="Search Product"
-            className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer "
+
+            <div className="flex justify-center items-end gap-x-3 mr-3 ">
+              <div className="cursor-pointer"> <Grid /> </div>
+              <div className="cursor-pointer"> <List /> </div>
+            </div>
             
-            onChange={handleSearch}
-          ></input>
-         
-            {productSearch?.length > 0 &&
-              productSearch.map((search) => (
-                <option key={search} >
-                 
-                </option>
-              ))}
-          
-
-          <div className="w-auto flex flex-col items-center gap-x-5">
-            <label className="whitespace-nowrap">Search by Brand :</label>
-            <select
-              name="brand"
-              id="brand"
-              placeholder="Brand"
-              className="border border-gray-400 p-2 rounded-md w-12/12 bg-white cursor-pointer "
-              onChange={handleSearchBrand}
-            >
-              {productBrands?.length > 0 &&
-                productBrands.map((bnd) => <option value={bnd}>{bnd}</option>)}
-            </select>
+          <div className="w-full">
+            <input
+              type="search"
+              placeholder="Search Product"
+              className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer "
+              onChange={handleSearch} //search input
+            ></input>
           </div>
 
-          {/*----- search by category start ------- */}
-          <div className="w-auto flex flex-col items-center gap-x-5">
-            <label htmlFor="" className="whitespace-nowrap">
-              Search by Category :
-            </label>
-            <select
-              name="category"
-              id="category"
-              placeholder="Category"
-              className="border border-gray-400 py-2  rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
-              onChange={handleSearchCategories}
-            >
-              {productCategory?.length > 0 &&
-                productCategory.map((cate) => (
-                  <option value={cate}>{cate}</option>
-                ))}
-            </select>
+          <div className=" flex  gap-x-3">
+            {/*----- filter by Brand start ------- */}
+            <div className="w-auto flex flex-col items-center gap-1">
+              <label className="whitespace-nowrap">Filter by Brand</label>
+              <select
+                name="brand"
+                id="brand"
+                placeholder="Brand"
+                className="border border-gray-400 p-2 rounded-md w-12/12 bg-white cursor-pointer "
+                onChange={handleSearchBrand}
+              >
+                {productBrands?.length > 0 &&
+                  productBrands.map((bnd) => (
+                    <option value={bnd}>{bnd}</option>
+                  ))}
+              </select>
+            </div>
+
+            {/*----- filter by category start ------- */}
+            <div className="w-auto flex flex-col items-center gap-1">
+              <label htmlFor="" className="whitespace-nowrap">
+                Filter by Category
+              </label>
+              <select
+                name="category"
+                id="category"
+                placeholder="Category"
+                className="border border-gray-400 p-2  rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
+                onChange={handleSearchCategories}
+              >
+                {productCategory?.length > 0 &&
+                  productCategory.map((cate) => (
+                    <option value={cate}>{cate}</option>
+                  ))}
+              </select>
+            </div>
+
+            {/*--------- show by grid or list ---------*/}
+
           </div>
-          {/*----- search by category end ------- */}
         </div>
 
+        {/*------- product list table start -------*/}
         <table class="table-auto bg-white w-full rounded-md mt-5">
+          {/* -----------   head  ----------------- */}
           <thead className="">
             <tr className="bg-gray-200 text-gray-400 text-sm text-start ">
               <input type="checkbox" className="mx-3 mt-6 cursor-pointer " />
-              <th className="text-start py-5 ">PRODUCT NAME</th>
-              <th className="text-start">CATEGORY</th>
-              <th className="text-start">PRICE</th>
-              <th className="text-start">BRAND</th>
-              <th className="text-start">STOCK</th>
-              <th className="text-start">COLOUR</th>
-              <th className="text-start">STATUS</th>
-              <th className="text-start">VIEW</th>
-              <th className="text-start">ACTION</th>
+              {headItems.map((items) => (
+                <th className="text-start py-5">{items}</th>
+              ))}
             </tr>
           </thead>
+
+          {/* -----------   body   ----------------- */}
           {allProduct?.map((item, index) => (
             <tbody>
               <tr>
@@ -262,6 +285,8 @@ const ProductList = () => {
                     selling
                   </p>
                 </td>
+
+                {/* --------- view details button  ------- */}
                 <td className="py-5 text-[18px]">
                   <button>
                     <Link href={`/view-product/${item?._id}`}>
@@ -269,13 +294,16 @@ const ProductList = () => {
                     </Link>
                   </button>
                 </td>
+
                 <td className="flex justify-between items-center  py-5 ">
+                  {/* --------- edit  button  ------- */}
                   <Link href={`/edit-product/${item?._id}`}>
                     <button>
                       <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />
                     </button>
                   </Link>
 
+                  {/* --------- delete button  ------- */}
                   <button
                     type="button"
                     onClick={() => openModal(item?._id)}
@@ -288,6 +316,9 @@ const ProductList = () => {
             </tbody>
           ))}
         </table>
+        {/*------- product list table start -------*/}
+
+        {/*------------ Pagination -------------*/}
         <nav
           aria-label="Page navigation example"
           className="m-5 mb-10 float-right"
@@ -367,8 +398,18 @@ const ProductList = () => {
             </li>
           </ul>
         </nav>
+
+        {/* {allProduct?.totalPages > 1 && (
+            <Pagination
+              currentpage={allProduct?.page}
+              totalCount={allProduct?.totalPages}
+              visiblePageCount={pageLimit}
+              getAllData={getAllProducts}
+            />
+          )} */}
       </section>
 
+      {/* --------------   delete modal    --------------------- */}
       <Transition appear show={isOpenDelete} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
