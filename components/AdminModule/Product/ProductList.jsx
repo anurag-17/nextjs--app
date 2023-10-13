@@ -171,9 +171,9 @@ const ProductList = () => {
     }
   };
 
-  const handleShowComponent = (val) => {
+  const handleShowComponent = (component) => {
     // alert(val)
-    setShowComponent(val);
+    setShowComponent(component);
   };
 
   return (
@@ -184,9 +184,20 @@ const ProductList = () => {
         <Header headTitle="Products List" />
 
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-          {isShowComponent === "list" ? (
+
+        <div className="flex justify-center items-end gap-x-3 mr-3">
+      <div className="cursor-pointer" onClick={() => handleShowComponent("grid")}>
+        <Grid />
+      </div>
+      <div className="cursor-pointer" onClick={() => handleShowComponent("list")}>
+        <List />
+      </div>
+      {/* {isShowComponent === "grid" ? <Grid /> : <List />} */}
+    </div>         
+
+          {/* {isShowComponent === "list" ? (
             <div className="flex justify-center items-end gap-x-3 mr-3">
-              {/* <p className="font-semibold"> Grid : </p> */}
+            
               <div
                 className="cursor-pointer"
                 onClick={() => handleShowComponent("grid")}
@@ -197,7 +208,7 @@ const ProductList = () => {
             </div>
           ) : (
             <div className="flex justify-center items-end gap-x-3 mr-3">
-              {/* <p className="font-semibold"> List : </p> */}
+             
               <div
                 className="cursor-pointer"
                 onClick={() => handleShowComponent("list")}
@@ -206,7 +217,7 @@ const ProductList = () => {
                 <List />{" "}
               </div>
             </div>
-          )}
+          )} */}
           <div className="w-full">
             <input
               type="search"
@@ -277,7 +288,7 @@ const ProductList = () => {
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                         {items.title}
                       </h6>
-                      <button
+                      {/* <button
                         type="button"
                         className=""
                         data-te-toggle="tooltip"
@@ -293,7 +304,7 @@ const ProductList = () => {
                       </button>
                       <p className="hidden text-red-800 text-[18px] ">
                         Add To Favorites
-                      </p>
+                      </p> */}
                     </div>
 
                     <div className=" flex justify-between items-center">
@@ -301,7 +312,8 @@ const ProductList = () => {
                         Brand : {items.brand}
                       </p>
                       <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                        Price : ₹{items.price}
+                        Price : ₹{items.price} <br></br>
+                        offer : ₹{items.discountedPrice}
                       </p>
                     </div>
                     <p className="text-[18px]  capitalize my-2 ">
