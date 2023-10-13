@@ -25,7 +25,7 @@ export default function TopBar({ showNav, setShowNav }) {
         showNav ? "pl-64 " : ""
       }`}
     >
-      <div className="pl-4 md:pl-16">
+      <div className="pl-4">
         <Bars3CenterLeftIcon
           className="h-8 w-8 text-gray-700 cursor-pointer"
           onClick={() => setShowNav(!showNav)}
@@ -149,15 +149,7 @@ export default function TopBar({ showNav, setShowNav }) {
                     My Profile
                   </Link>
                 </Menu.Item>
-                <Menu.Item>
-                  <Link
-                    href="/orders"
-                    className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
-                  >
-                    <ShoppingBagIcon  className="h-4 w-4 mr-2" />
-                   Orders
-                  </Link>
-                </Menu.Item>
+                
                 <Menu.Item>
                   <Link
                     href="#"

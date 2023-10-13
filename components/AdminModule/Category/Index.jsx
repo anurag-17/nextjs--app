@@ -25,6 +25,7 @@ const CategoryList = () => {
     url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
   };
 
+  
   useEffect(() => {
     axios
       .request(options)
