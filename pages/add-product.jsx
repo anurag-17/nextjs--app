@@ -158,165 +158,179 @@ const AddProduct = () => {
             </svg>
             <span className="sr-only bg-black">Close menu</span>
           </button> */}
-          <div className="h-[100px] ">
-            <h2 className="text-[25px] font-semibold text-green-600 leading-[25px] px-6">
-              Basic Info
-            </h2>
-            <div className="border-b border-[#f3f3f3] mt-6 w-full">
-              <div className="border-b border-green-600   w-[160px]"></div>
+      <div className="h-[100px] ">
+        <h2 className="text-[25px] font-semibold text-green-600 leading-[25px] px-6">
+          Basic Info
+        </h2>
+        <div className="border-b border-[#f3f3f3] mt-6 w-full">
+          <div className="border-b border-green-600   w-[160px]"></div>
+        </div>
+      </div>
+
+      {/*---- form start here ----*/}
+      <form action="" onSubmit={handleFormSubmit} className="">
+        <div className="px-6 pt-1 flex-grow w-full max-h-screen pb-40 md:pb-32 lg:pb-32 xl:pb-32 ">
+          {/*------ title -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+              Product Title/Name
+            </label>
+            <div className="col-span-8 sm:col-span-4">
+              <input
+                type="text"
+                name="title"
+                placeholder="Product Title/Name"
+                className="custom-input"
+                value={productDetails.title}
+                onChange={inputHandler}
+                required
+                minLength={3}
+                max={84}
+              />
             </div>
           </div>
 
-          {/*---- form start here ----*/}
-          <form action="" onSubmit={handleFormSubmit} className="">
-            <div className="px-6 pt-1 flex-grow w-full max-h-screen pb-40 md:pb-32 lg:pb-32 xl:pb-32 ">
-              {/*------ title -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label htmlFor="" className="custom-input-label">
-                  Product Title/Name
-                </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Product Title/Name"
-                    className="custom-input"
-                    value={productDetails.title}
-                    onChange={inputHandler}
-                    required
-                    minLength={3}
-                    max={84}
-                  />
-                </div>
-              </div>
+          {/*------ Description -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+              Product Description
+            </label>
+            <div className="col-span-8 sm:col-span-4">
+              <textarea
+                rows="6"
+                className="custom-input h-[100px]"
+                name="description"
+                placeholder="Product Description"
+                spellCheck="false"
+                value={productDetails.description}
+                onChange={inputHandler}
+                required
+                minLength={10}
+                max={500}
+              ></textarea>
+            </div>
+          </div>
 
-              {/*------ Description -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label htmlFor="" className="custom-input-label">
-                  Product Description
-                </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <textarea
-                    rows="6"
-                    className="custom-input h-[100px]"
-                    name="description"
-                    placeholder="Product Description"
-                    spellCheck="false"
-                    value={productDetails.description}
-                    onChange={inputHandler}
-                    required
-                    minLength={10}
-                    max={500}
-                  ></textarea>
-                </div>
+          {/*------ price -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label className="custom-input-label">Product Price</label>
+            <div className="col-span-8 sm:col-span-4">
+              <div className="flex flex-row">
+                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
+                  ₹
+                </span>
+                <input
+                  type="number"
+                  name="price"
+                  placeholder="OriginalPrice"
+                  className="custom-input"
+                  value={productDetails.price}
+                  onChange={inputHandler}
+                  required
+                  minLength={1}
+                  // max={32}
+                />
               </div>
-
-              {/*------ price -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label className="custom-input-label">Product Price</label>
-                <div className="col-span-8 sm:col-span-4">
-                  <div className="flex flex-row">
-                    <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                      ₹
-                    </span>
-                    <input
-                      type="number"
-                      name="price"
-                      placeholder="OriginalPrice"
-                      className="custom-input"
-                      value={productDetails.price}
-                      onChange={inputHandler}
-                      required
-                      minLength={1}
-                      // max={32}
-                    />
-                  </div>
-                  {/* <span className="text-red-400 text-sm mt-2">
+              {/* <span className="text-red-400 text-sm mt-2">
                   Minimum value 1!
                 </span> */}
-                </div>
-              </div>
+            </div>
+          </div>
 
-              {/*------ category -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label htmlFor="" className="custom-input-label">
-                  Product Category
-                </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
-                    name="category"
-                    placeholder="Add Category"
-                    className="custom-input"
-                    value={productDetails.category}
-                    onChange={inputHandler}
-                    required
-                    minLength={3}
-                    max={32}
-                  />
-                </div>
-              </div>
+          {/*------ category -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+              Product Category
+            </label>
+            <div className="col-span-8 sm:col-span-4">
+              <select 
+              name="category"
+                placeholder="Add Category"
+                className="custom-input"
+                value={productDetails.category}
+                onChange={inputHandler}
+                required
+                minLength={3}
+                max={32}>
+                
+                <option value="Watch">Watch</option>
+                <option value="Laptop">Laptop</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Cate" selected>
+                  Cate
+                </option>
+              </select>
+            </div>
+          </div>
 
-              {/*------ quantity -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label htmlFor="" className="custom-input-label">
-                  Product Quantity
-                </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="number"
-                    name="quantity"
-                    placeholder="Add quantity"
-                    className="custom-input"
-                    value={productDetails.quantity}
-                    onChange={inputHandler}
-                    required
-                    minLength={10}
-                    // max={32}
-                  />
-                </div>
-              </div>
+          {/*------ quantity -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+              Product Quantity
+            </label>
+            <div className="col-span-8 sm:col-span-4">
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Add quantity"
+                className="custom-input"
+                value={productDetails.quantity}
+                onChange={inputHandler}
+                required
+                minLength={10}
+                // max={32}
+              />
+            </div>
+          </div>
 
-              {/*------ brand -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label htmlFor="" className="custom-input-label">
-                  Product Brand
-                </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
-                    name="brand"
-                    placeholder="Add Brand Name"
-                    className="custom-input uppercase"
-                    value={productDetails.brand}
-                    onChange={inputHandler}
-                    required
-                    minLength={10}
-                    max={32}
-                  />
-                </div>
-              </div>
+          {/*------ brand -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+              Product Brand
+            </label>
+            <div className="col-span-8 sm:col-span-4">
+              
+               <div className="col-span-8 sm:col-span-4">
+              <select 
+              type="text"
+                name="brand"
+                placeholder="Add Brand Name"
+                className="custom-input uppercase"
+                value={productDetails.brand}
+                onChange={inputHandler}
+                required
+                minLength={10}
+                max={32}>
+                
+                <option value="apple">Apple</option>
+                <option value="dell">DELL</option>
+                <option value="Demo Product">Demo Product</option>
 
-              {/*------ brand -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label htmlFor="" className="custom-input-label">
-                  Product Colour
-                </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
-                    name="color"
-                    placeholder="Enter colors separated by commas"
-                    className="custom-input"
-                    value={productDetails.color}
-                    onChange={inputHandler}
-                    required
-                  />
-                </div>
-              </div>
+              </select>
+            </div>
+            </div>
+          </div>
 
-              {/*------ Images -----*/}
-              {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          {/*------ brand -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+              Product Colour
+            </label>
+            <div className="col-span-8 sm:col-span-4">
+              <input
+                type="text"
+                name="color"
+                placeholder="Enter colors separated by commas"
+                className="custom-input"
+                value={productDetails.color}
+                onChange={inputHandler}
+                required
+              />
+            </div>
+          </div>
+
+          {/*------ Images -----*/}
+          {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <label className="custom-input-label">Product Images</label>
               <div className="col-span-8 sm:col-span-4">
                 <div className="w-full text-center">
@@ -358,30 +372,30 @@ const AddProduct = () => {
                 </div>
               </div>
             </div> */}
-              {/*------ submit button -----*/}
-              <div className="mt-8">
-                {isLoading ? (
-                  <button
-                    type="button"
-                    className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]"
-                  >
-                    Loading...
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    // onClick={handlesubmit}
-                    className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
-                  >
-                    Add Product
-                  </button>
-                )}
-              </div>
-            </div>
-          </form>
+          {/*------ submit button -----*/}
+          <div className="mt-8">
+            {isLoading ? (
+              <button
+                type="button"
+                className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]"
+              >
+                Loading...
+              </button>
+            ) : (
+              <button
+                type="submit"
+                // onClick={handlesubmit}
+                className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
+              >
+                Add Product
+              </button>
+            )}
+          </div>
+        </div>
+      </form>
 
-          {/*---- form end here ----*/}
-        {/* </div>
+      {/*---- form end here ----*/}
+      {/* </div>
       )} */}
     </section>
   );

@@ -86,7 +86,7 @@ const ProductGrid = () => {
                   <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                     {items.title}
                   </h6>
-                  <button
+                  {/* <button
                     type="button"
                     className=""
                     data-te-toggle="tooltip"
@@ -102,7 +102,7 @@ const ProductGrid = () => {
                   </button>
                   <p className="hidden text-red-800 text-[18px] ">
                     Add To Favorites
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className=" flex justify-between items-center">
@@ -110,8 +110,9 @@ const ProductGrid = () => {
                     Brand : {items.brand}
                   </p>
                   <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                    Price : ₹{items.price}
-                  </p>
+                    Price : ₹{items.price} <br/>
+                  <p>Discount : {items.discountedPrice}</p>
+                   </p>
                 </div>
                 <p className="text-[18px]  capitalize my-2 ">
                   Stock : {items.quantity}

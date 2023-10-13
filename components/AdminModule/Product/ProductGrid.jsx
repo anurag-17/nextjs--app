@@ -60,13 +60,13 @@ const ProductGrid = () => {
                 <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                   {items.title}
                 </h6>
-                <HeartIcon
+                {/* <HeartIcon
                   id="icon-like"
                   className="h-6 w-6  text-gray-500 cursor-pointer"
                 />
                 <p className="hidden text-red-800 text-[18px] ">
                   Add To Favorites
-                </p>
+                </p> */}
               </div>
 
               <div className=" flex justify-between items-center">
