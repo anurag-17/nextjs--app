@@ -60,13 +60,6 @@ const ProductGrid = () => {
                 <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                   {items.title}
                 </h6>
-                {/* <HeartIcon
-                  id="icon-like"
-                  className="h-6 w-6  text-gray-500 cursor-pointer"
-                />
-                <p className="hidden text-red-800 text-[18px] ">
-                  Add To Favorites
-                </p> */}
               </div>
 
               <div className=" flex justify-between items-center">
@@ -88,22 +81,6 @@ const ProductGrid = () => {
                   ))}
                 </div>
               </p>
-
-              {/* <p className="text-[18px]  text-gray-700 font-normal text-justify mt-4 max-h-[100px] h-[100px] overflow-y-hidden hover:overflow-y-scroll">
-              {items.description}
-            </p> */}
-              <button
-                type="type"
-                className="border text-[18px] font-semibold border-sky-400 text-sky-600 p-1 mt-2 hover:border-none rounded-lg mt-5  hover:bg-sky-700 hover:text-white w-full"
-              >
-                View Details
-              </button>
-              <button
-                type="submit"
-                className="border text-[18px] font-semibold hover:border-sky-400 hover:text-sky-600 p-1 my-2  rounded-lg mt-5  hover:bg-white bg-sky-700 text-white w-full"
-              >
-                Add To Cart
-              </button>
             </div>
           </div>
         ))}

@@ -105,15 +105,15 @@ const ProductGrid = () => {
                   </p> */}
                 </div>
 
-                <div className=" flex justify-between items-center">
+              
                   <p className="text-[16px]  capitalize  ">
                     Brand : {items.brand}
                   </p>
                   <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                    Price : ₹{items.price} <br/>
-                  <p>Discount : {items.discountedPrice}</p>
+                  Offer price : {items.discountedPrice} <br/>
                    </p>
-                </div>
+                   <del className="text-sm font-semibold capitalize my-2 text-sky-600" > Regular Price : ₹{items.price}</del>
+               
                 <p className="text-[18px]  capitalize my-2 ">
                   Stock : {items.quantity}
                 </p>
@@ -122,7 +122,7 @@ const ProductGrid = () => {
                 </p>
                 <div className="flex">
                   {" "}
-                  <h1 className="mt-1 mr-1">Status : </h1>
+                  <h1 className="mt-1  mr-1">Status : </h1>
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                     selling
                   </p>
@@ -176,20 +176,8 @@ const ProductGrid = () => {
                     <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                   </button>
                 </div>
-                <Link href="#">
-                  <button
-                    type="type"
-                    className="border text-[18px] font-semibold border-sky-400 text-sky-600 p-1 mt-2 hover:border-none rounded-lg mt-5  hover:bg-sky-700 hover:text-white w-full"
-                  >
-                    View Details
-                  </button>
-                </Link>
-                <button
-                  type="submit"
-                  className="border text-[18px] font-semibold hover:border-sky-400 hover:text-sky-600 p-1 my-2  rounded-lg mt-5  hover:bg-white bg-sky-700 text-white w-full"
-                >
-                  Add To Cart
-                </button>
+
+                
               </div>
             </div>
           ))}

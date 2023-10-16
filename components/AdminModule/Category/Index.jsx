@@ -116,7 +116,7 @@ const CategoryList = () => {
                   <input
                     type="checkbox"
                     checked={selectDelete}
-                    className="mx-3 mt-2 cursor-pointer "
+                    className="mx-3 cursor-pointer "
                   />
                 </td>
                 <td className="py-5 text-[18px]">{items?.id}</td>
