@@ -142,7 +142,7 @@ export default function TopBar({ showNav, setShowNav }) {
               
               <Menu.Item>
                   <Link
-                    href="#"
+                    href="/profile"
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
                    <UserCircleIcon class="h-5 w-5 mr-1 text-black   " />
@@ -150,9 +150,9 @@ export default function TopBar({ showNav, setShowNav }) {
                   </Link>
                 </Menu.Item>
                 
-                <Menu.Item>
+                <Menu.Item> 
                   <Link
-                    href="#"
+                    href="/setting"
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
                     <Cog8ToothIcon className="h-4 w-4 mr-2" />

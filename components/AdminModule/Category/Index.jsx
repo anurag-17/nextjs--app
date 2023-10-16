@@ -2,31 +2,31 @@
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Menu, Transition, Popover } from "@headlessui/react";
+import { Transition, Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
-  CheckIcon,
   PencilSquareIcon,
   ArrowUpTrayIcon,
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-const CategoryList = () => {
+const CategoryList = (_id) => {
+  console.log(_id)
   const [getallCategory, setGetallCategory] = useState([]);
-  // const [categoryName, setCategoryName] = useState("");
-  // const router = useRouter();
   const [selectDelete, setSelectDelete] = useState("");
   const options = {
     method: "GET",
     url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
   };
 
-  
   useEffect(() => {
+    defaultCategory();
+  }, []);
+
+  const defaultCategory = () => {
     axios
       .request(options)
       .then((response) => {
@@ -36,12 +36,9 @@ const CategoryList = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, []);
-
+  };
   const removeCategory = async (_id) => {
-    //  const confirmed = confirm ("are you sure");
-    //  console.log(_id);
-    //  return
+    console.log(_id)
     await fetch(
       `https://e-commerce-backend-brown.vercel.app/api/category/deleteCategory/${_id}`,
       {
@@ -51,17 +48,23 @@ const CategoryList = () => {
           "Content-Type": "application/json",
         },
       }
-    );
-
-    // if (res.ok){
-    //   router
-    // }
+    )
+      .then((res) => {
+        if (res.ok) {
+          defaultCategory();
+        } else {
+          throw new Error("failed to create");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   const selectAllDelete = (e) => {
-    console.log(e.target.checked);
-    setSelectDelete(e.target.checked);
+    const checkboxChecked = e.target.checked;
+    setSelectDelete(checkboxChecked);
   };
-
+  
   return (
     <>
       <section>
@@ -81,10 +84,6 @@ const CategoryList = () => {
             </button>
           </div>
           <div className="flex justify-around">
-            {/* <button className="flex rounded-md p-2 bg-red-700 text-white  cursor-pointer mr-3">
-              <TrashIcon class="h-5 mr-1 w-5 text-white" />
-              Delete
-            </button> */}
             <Link href="/create-cate">
               <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer">
                 + Add Category
@@ -92,7 +91,6 @@ const CategoryList = () => {
             </Link>
           </div>
         </div>
-
         <table class="table-auto bg-white w-full rounded-md mt-5">
           <thead className="">
             <tr className="bg-coolGray-200 text-gray-400 text-sm text-start ">
@@ -101,10 +99,8 @@ const CategoryList = () => {
                 onChange={selectAllDelete}
                 className="mx-3 mt-6 cursor-pointer "
               />
-              <th className="text-start py-5 ">ID</th>
-
               <th className="text-start">NAME</th>
-              <th className="text-start">DESCRIPTION</th>
+              {/* <th className="text-start">DESCRIPTION</th> */}
               <th className="text-start">PUBLISHED</th>
               <th className="text-start">ACTION</th>
             </tr>
@@ -119,21 +115,23 @@ const CategoryList = () => {
                     className="mx-3 cursor-pointer "
                   />
                 </td>
-                <td className="py-5 text-[18px]">{items?.id}</td>
-                <td className="py-5 text-[18px]">{items?.title}</td>
-                {/* <td className="py-5 text-[18px] tex">{item?.description}</td> */}
-
+                <td className="py-5 text-[18px]">  {items?.title ? items?.title : "-"}</td>
                 <td className="py-5 text-[18px] tex">
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                     selling
                   </p>
                 </td>
-
                 <td className=" flex">
                   <button className="flex">
                     <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
-                    <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
-                    <Popover className="relative">
+                   
+                    <Link href={`/edit-cate/${items?._id}`}>
+                   <button>
+                   <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                   
+                   </button>
+                    </Link>
+                     <Popover className="relative">
                       <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
                         <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
                       </Popover.Button>

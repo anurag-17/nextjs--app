@@ -520,15 +520,6 @@ const ProductList = () => {
             </nav>
           </>
         )}
-
-        {/* {allProduct?.totalPages > 1 && (
-            <Pagination 
-              currentpage={allProduct?.page}
-              totalCount={allProduct?.totalPages}
-              visiblePageCount={pageLimit}
-              getAllData={getAllProducts}
-            />
-          )} */}
       </section>
 
       {/* --------------   delete modal    --------------------- */}
