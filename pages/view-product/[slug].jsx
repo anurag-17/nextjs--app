@@ -82,9 +82,14 @@ export default function EditProduct() {
                     </h2>
                   </div>
                   <div className="font-serif product-price font-bold dark:text-gray-400">
-                    <span className="inline-block text-2xl">
+                    {/* <span className="inline-block text-2xl">
                     ₹{productDetail?.price}
-                    </span>
+                    </span> */}
+
+                  <p className="inline-block text-2xl">
+                  Offer price : {productDetail.discountedPrice} <br/>
+                   </p><br/>
+                   <del className="inline-block text-2xl mt-2" > Regular Price : ₹{productDetail.price}</del>
                   </div>
                   <div className="mt-6">
                     <span className="inline-flex px-2 text-md font-medium leading-5 rounded-full text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-800">

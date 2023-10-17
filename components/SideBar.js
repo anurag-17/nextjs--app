@@ -38,12 +38,12 @@ const menuList = [
         component: <New />,
         path:'/add-product',
       },
-      // {
-      //   id: '05',
-      //   label: "product cart",
-      //   component: <New />,
-      //   path:'/product-cart'
-      // },
+      {
+        id: '05',
+        label: "Brand",
+        component: <New />,
+        path:'/product-cart'
+      },
       {
         id: 3,
         label: "categories",
@@ -60,11 +60,7 @@ const menuList = [
             label: "categories add",
             component: <New />,
           },
-          // {
-          //   id: '003',
-          //   label: "categories edit",
-          //   component: <New />,
-          // },
+  
         ],
         icon: `fa fa-usd`,
       },
@@ -80,6 +76,13 @@ const menuList = [
     path:"/orders"
   },
   {
+    id: 4,
+    label: "Vendor",
+    component: '',
+    icon: `fa fa-users`,
+    path:""
+  },
+  {
     id: 5,
     label: "customers",
     component: <Customers />,
@@ -88,7 +91,7 @@ const menuList = [
   },
   {
     id: 6,
-    label: "transitions",
+    label: "transactions",
     component: '',
     icon: `fa fa-phone-square`,
     path: '/drawer'
@@ -98,6 +101,7 @@ const menuList = [
     label: "settings",
     component: '',
     icon: `fa fa-phone-square`,
+    path: '/setting'
   },
 ];
 

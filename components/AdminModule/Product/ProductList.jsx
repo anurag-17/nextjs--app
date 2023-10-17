@@ -195,29 +195,7 @@ const ProductList = () => {
       {/* {isShowComponent === "grid" ? <Grid /> : <List />} */}
     </div>         
 
-          {/* {isShowComponent === "list" ? (
-            <div className="flex justify-center items-end gap-x-3 mr-3">
-            
-              <div
-                className="cursor-pointer"
-                onClick={() => handleShowComponent("grid")}
-              >
-                {" "}
-                <Grid />{" "}
-              </div>
-            </div>
-          ) : (
-            <div className="flex justify-center items-end gap-x-3 mr-3">
-             
-              <div
-                className="cursor-pointer"
-                onClick={() => handleShowComponent("list")}
-              >
-                {" "}
-                <List />{" "}
-              </div>
-            </div>
-          )} */}
+         
           <div className="w-full">
             <input
               type="search"
@@ -229,8 +207,8 @@ const ProductList = () => {
 
           <div className=" flex  gap-x-3">
             {/*----- filter by Brand start ------- */}
-            <div className="w-auto flex flex-col items-center gap-1">
-              <label className="whitespace-nowrap">Filter by Brand</label>
+            <div className="w-auto flex flex-col  gap-1">
+              <label className="whitespace-nowrap text-start">Filter by Brand</label>
               <select
                 name="brand"
                 id="brand"
@@ -288,34 +266,18 @@ const ProductList = () => {
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                         {items.title}
                       </h6>
-                      {/* <button
-                        type="button"
-                        className=""
-                        data-te-toggle="tooltip"
-                        data-te-html="true"
-                        data-te-ripple-init=""
-                        data-te-ripple-color="light"
-                        title="Add To Wishlist"
-                      >
-                        <HeartIcon
-                          id="icon-like"
-                          className="h-6 w-6  text-gray-500 cursor-pointer"
-                        />
-                      </button>
-                      <p className="hidden text-red-800 text-[18px] ">
-                        Add To Favorites
-                      </p> */}
+                    
                     </div>
 
                     <div className=" flex justify-between items-center">
                       <p className="text-[16px]  capitalize  ">
                         Brand : {items.brand}
                       </p>
-                      <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                        Price : ₹{items.price} <br></br>
-                        offer : ₹{items.discountedPrice}
-                      </p>
                     </div>
+                      <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
+                        Offer Price : ₹{items.discountedPrice} <br/>
+                      </p>
+                      <del className="text-sm font-semibold capitalize my-2 text-sky-600"> Regular Price : ₹{items.price} </del>
                     <p className="text-[18px]  capitalize my-2 ">
                       Stock : {items.quantity}
                     </p>
@@ -324,8 +286,8 @@ const ProductList = () => {
                     </p>
                     <div className="flex">
                       {" "}
-                      <h1 className="mt-1 mr-1">Status : </h1>
-                      <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
+                      <h1 className="mt-1 mr-1 text-[18px]" >Status : </h1>
+                      <p className=" bg-green-100  m-2 text-center rounded-xl text-green-700 w-20 h-[20px]">
                         selling
                       </p>
                     </div>
@@ -378,20 +340,7 @@ const ProductList = () => {
                         <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                       </button>
                     </div>
-                    <Link href="#">
-                      <button
-                        type="type"
-                        className="border text-[18px] font-semibold border-sky-400 text-sky-600 p-1 mt-2 hover:border-none rounded-lg mt-5  hover:bg-sky-700 hover:text-white w-full"
-                      >
-                        Add to Wishlist
-                      </button>
-                    </Link>
-                    <button
-                      type="submit"
-                      className="border text-[18px] font-semibold hover:border-sky-400 hover:text-sky-600 p-1 my-2  rounded-lg mt-5  hover:bg-white bg-sky-700 text-white w-full"
-                    >
-                      Add To Cart
-                    </button>
+                  
                   </div>
                 </div>
               ))}
@@ -421,7 +370,7 @@ const ProductList = () => {
                     <td className="">
                       <input
                         type="checkbox"
-                        className="mx-3 mt-6 cursor-pointer "
+                        className="mx-3  cursor-pointer "
                       />
                     </td>
                     <td className="py-5 text-[18px] max-w-[200px]">
@@ -571,15 +520,6 @@ const ProductList = () => {
             </nav>
           </>
         )}
-
-        {/* {allProduct?.totalPages > 1 && (
-            <Pagination 
-              currentpage={allProduct?.page}
-              totalCount={allProduct?.totalPages}
-              visiblePageCount={pageLimit}
-              getAllData={getAllProducts}
-            />
-          )} */}
       </section>
 
       {/* --------------   delete modal    --------------------- */}

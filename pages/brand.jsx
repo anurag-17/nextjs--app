@@ -1,76 +1,65 @@
-"use client";
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Transition, Popover } from "@headlessui/react";
+import { Menu, Transition, Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
+  CheckIcon,
   PencilSquareIcon,
   ArrowUpTrayIcon,
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-const CategoryList = (_id) => {
-  console.log(_id)
-  const [getallCategory, setGetallCategory] = useState([]);
-  const [selectDelete, setSelectDelete] = useState("");
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
-  };
+
+
+const brandList = async () => {
+
+  const [allProduct, setAllProduct] = useState([]);
 
   useEffect(() => {
-    defaultCategory();
+    getAllProducts();
   }, []);
 
-  const defaultCategory = () => {
+  const getAllProducts = async () => {
+    try {
+      const response = await axios.get("https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct", {
+        headers: {
+          cookie: "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+          "User-Agent": "insomnia/2023.5.8",
+        },
+      });
+
+      if (response.status === 200) {
+        setAllProduct(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+    
     axios
       .request(options)
-      .then((response) => {
-        setGetallCategory(response.data);
+      .then(function (response) {
         console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  const removeCategory = async (_id) => {
-    console.log(_id)
-    await fetch(
-      `https://e-commerce-backend-brown.vercel.app/api/category/deleteCategory/${_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          defaultCategory();
-        } else {
-          throw new Error("failed to create");
+        if (response.status == 200) {
+          setAllProduct(response?.data);
         }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(function (error) {
+        console.error(error);
       });
-  };
-  const selectAllDelete = (e) => {
-    const checkboxChecked = e.target.checked;
-    setSelectDelete(checkboxChecked);
-  };
   
+
+
   return (
     <>
       <section>
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-          <h2 className="text-2xl font-semibold">Category List </h2>
-          <h2>Welcome Back, Client</h2>
+          <h2 className="text-2xl font-semibold">Brand List </h2>
+          <h2>Welcome Back, Clint</h2>
         </div>
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <div className="flex justify-between ">
@@ -84,54 +73,55 @@ const CategoryList = (_id) => {
             </button>
           </div>
           <div className="flex justify-around">
-            <Link href="/create-cate">
+            {/* <button className="flex rounded-md p-2 bg-red-700 text-white  cursor-pointer mr-3">
+              <TrashIcon class="h-5 mr-1 w-5 text-white" />
+              Delete
+            </button> */}
+            <Link href="/create-brand">
               <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer">
-                + Add Category
+                + Add Brand
               </button>
             </Link>
           </div>
         </div>
+
         <table class="table-auto bg-white w-full rounded-md mt-5">
           <thead className="">
             <tr className="bg-coolGray-200 text-gray-400 text-sm text-start ">
-              <input
-                type="checkbox"
-                onChange={selectAllDelete}
-                className="mx-3 mt-6 cursor-pointer "
-              />
-              <th className="text-start">NAME</th>
-              {/* <th className="text-start">DESCRIPTION</th> */}
+              <input type="checkbox" className="mx-3 mt-6 cursor-pointer " />
+              {/* <th className="text-start py-5 ">ID</th> */}
+
+              <th className="text-start">Brand NAME</th>
+              <th className="text-start">STOCK</th>
               <th className="text-start">PUBLISHED</th>
               <th className="text-start">ACTION</th>
             </tr>
           </thead>
-          {getallCategory.map((items) => (
+          {/* {getallCategory.map((items) => ( ))} */}
+          {allProduct.map((items) => (
             <tbody>
               <tr>
                 <td className="">
                   <input
                     type="checkbox"
-                    checked={selectDelete}
-                    className="mx-3 cursor-pointer "
+                    className="mx-3 mt-2 cursor-pointer "
                   />
                 </td>
-                <td className="py-5 text-[18px]">  {items?.title ? items?.title : "-"}</td>
+                <td className="py-5 text-[18px]"> {items.brand} </td>
+                <td className="py-5 text-[18px]"></td>
+                {/* <td className="py-5 text-[18px] tex">{item?.description}</td> */}
+
                 <td className="py-5 text-[18px] tex">
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                     selling
                   </p>
                 </td>
+
                 <td className=" flex">
                   <button className="flex">
                     <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
-                   
-                    <Link href={`/edit-cate/${items?._id}`}>
-                   <button>
-                   <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
-                   
-                   </button>
-                    </Link>
-                     <Popover className="relative">
+                    <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                    <Popover className="relative">
                       <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
                         <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
                       </Popover.Button>
@@ -163,9 +153,6 @@ const CategoryList = (_id) => {
                                 No, Keep It
                               </button>
                               <button
-                                onClick={() => {
-                                  removeCategory(items?._id);
-                                }}
                                 className="border border-1 rounded-md 
                               text-sm 
                               border-red-400 text-red-700 hover:bg-red-200  p-1
@@ -189,4 +176,4 @@ const CategoryList = (_id) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(CategoryList), { ssr: false });
+export default dynamic(() => Promise.resolve(brandList), { ssr: false });

@@ -210,7 +210,13 @@ export default function EditProduct() {
                 <div className="col-span-8 sm:col-span-4">
                   <div className="flex flex-row">
                     <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                    ₹
+                      <select>
+                        <option>INR₹</option>
+                        <option>USD$</option>
+                        <option>EUR€</option>
+                        <option>JPY¥</option>
+                        <option>AEDد.إ</option>
+                      </select>
                     </span>
                     <input
                       type="number"
@@ -220,17 +226,11 @@ export default function EditProduct() {
                       defaultValue={
                         editData?.price ? editData?.price : productDetails.price
                       }
-                      //   value={productDetails.price}
                       onChange={inputHandler}
                       required
                       minLength={1}
-                      // max={32}
                     />
                   </div>
-                  {/* <span className="text-red-400 text-sm mt-2">
-                  value={productDetails.title}Minimum 
-                  defaultValue 1!
-                </span> */}
                 </div>
               </div>
 
@@ -239,9 +239,9 @@ export default function EditProduct() {
                 <label htmlFor="" className="custom-input-label">
                   Product Category
                 </label>
+
                 <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
+                  <select
                     name="category"
                     placeholder="Add Category"
                     className="custom-input"
@@ -254,7 +254,14 @@ export default function EditProduct() {
                     required
                     minLength={3}
                     max={32}
-                  />
+                  >
+                    <option value="Watch">WATCH</option>
+                    <option value="Laptop">LAPTOP</option>
+                    <option value="Mobile">MOBILE</option>
+                    <option value="Cate" selected>
+                      CATE
+                    </option>
+                  </select>
                 </div>
               </div>
 
@@ -287,20 +294,25 @@ export default function EditProduct() {
                   Product Brand
                 </label>
                 <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
-                    name="brand"
-                    placeholder="Add Brand Name"
-                    className="custom-input uppercase"
-                    // value={productDetails.brand}
-                    defaultValue={
-                      editData?.brand ? editData?.brand : productDetails.brand
-                    }
-                    onChange={inputHandler}
-                    required
-                    minLength={3}
-                    max={32}
-                  />
+                  <div className="col-span-8 sm:col-span-4">
+                    <select
+                      type="text"
+                      name="brand"
+                      placeholder="Add Brand Name"
+                      className="custom-input uppercase"
+                      defaultValue={
+                        editData?.brand ? editData?.brand : productDetails.brand
+                      }
+                      onChange={inputHandler}
+                      required
+                      minLength={3}
+                      max={32}
+                    >
+                      <option value="apple">Apple</option>
+                      <option value="dell">DELL</option>
+                      <option value="Demo Product">Demo Product</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 

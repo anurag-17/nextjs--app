@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 
-const UserLogin = ({API_URL}) => {
+const UserLogin = ({ API_URL }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
@@ -35,11 +35,14 @@ const UserLogin = ({API_URL}) => {
       .then(function (response) {
         if (response?.status === 200) {
           console.log(response.data);
-          sessionStorage.setItem("userToken",JSON.stringify(response.data.token))
-          sessionStorage.setItem("userDetails",JSON.stringify(response?.data) );
+          sessionStorage.setItem(
+            "userToken",
+            JSON.stringify(response.data.token)
+          );
+          sessionStorage.setItem("userDetails", JSON.stringify(response?.data));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-        //   router.push("/");
+          //   router.push("/");
         } else {
           setLoading(false);
           return;
@@ -60,42 +63,64 @@ const UserLogin = ({API_URL}) => {
         lg:min-h-screen lg:py-16
         md:min-h-screen md:py-16
         sm:min-h-screen sm:py-10
-        ">
+        "
+      >
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row justify-center 2xl:w-10/12 lg:w-[70%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden 2xl:min-h-[700px] border-[2px] border-[#0891B2]
+          <div
+            className="flex flex-col lg:flex-row justify-center 2xl:w-10/12 lg:w-[70%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden 2xl:min-h-[700px] border-[2px] border-[#0891B2]
           xl:min-h-[450px] xl:w-8/12
           lg:min-h-[400px] 
           md:w-10/12
           sm:w-10/12
           
-           ">
-
-
-            <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center 
+           "
+          >
+            <div
+              className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center 
             md:w-10/12 md:mx-auto 
-            sm:w-10/12 sm:mx-auto">
-                <Image src="/loginImage.svg" width={800} height={800} alt="login_img"></Image>
+            sm:w-10/12 sm:mx-auto"
+            >
+              <Image
+                src="/loginImage.svg"
+                width={800}
+                height={800}
+                alt="login_img"
+              ></Image>
             </div>
-            <div className="w-full lg:w-1/2 2xl:py-10 2xl:px-12 2xl:my-[20px]
+            <div
+              className="w-full lg:w-1/2 2xl:py-10 2xl:px-12 2xl:my-[20px]
             xl:py-6 xl:px-5 xl:my-[0px]
             lg:py-6 lg:px-5 lg:my-[12px]
-             md:px-16 sm:px-14 ">
-              <h2 className="2xl:text-[40px] font-bold 2xl:mb-4  text-center
+             md:px-16 sm:px-14 "
+            >
+              <h2
+                className="2xl:text-[40px] font-bold 2xl:mb-4  text-center
               xl:text-[30px] xl:mb-0  
               lg:text-[25px] lg:mb-1
               md:text-[35px] md:mb-2
-               sm:text-[30px] sm:mb-2 "> Login</h2>
-              <p className="2xl:py-4 2xl:text-[20px] text-center first-letter xl:py-1 xl:text-[16px] 
+               sm:text-[30px] sm:mb-2 "
+              >
+                {" "}
+                Login
+              </h2>
+              <p
+                className="2xl:py-4 2xl:text-[20px] text-center first-letter xl:py-1 xl:text-[16px] 
               lg:py-0 lg:text-[14px]
               md:py-2 md:text-[16px]
-              sm:py-2 sm:text-[14px]"> Create your account. It’s free and only take a minute</p>
-              
+              sm:py-2 sm:text-[14px]"
+              >
+                {" "}
+                Create your account. It’s free and only take a minute
+              </p>
+
               <form onSubmit={addFormHandler}>
-                <div className="2xl:mt-5 
+                <div
+                  className="2xl:mt-5 
                 xl:mt-3
                 lg:mt-2
                 md:mt-3
-                sm:mt-2">
+                sm:mt-2"
+                >
                   <input
                     type="text"
                     placeholder="Email"
@@ -108,12 +133,13 @@ const UserLogin = ({API_URL}) => {
                     required
                   />
                 </div>
-                <div className="2xl:mt-6 2xl:mb-2
+                <div
+                  className="2xl:mt-6 2xl:mb-2
                 xl:mt-4 xl:mb-2
                 lg:mt-3 lg:mb-2 
                 md:mt-4 md:mb-2 
-                sm:mt-4 sm:mb-2 ">
-                
+                sm:mt-4 sm:mb-2 "
+                >
                   <input
                     type="password"
                     placeholder="Password"
@@ -126,29 +152,30 @@ const UserLogin = ({API_URL}) => {
                   />
                 </div>
 
-                <div className="2xl:py-5 xl:text-[16px] lg:[text-[14px]  xl:py-3 first-letter: lg:py-2
-                md:py-2 sm:py-2">
-                  <input
-                    type="checkbox"
-                    className="border border-gray-400 2xl:mr-2
-                    xl:mr-1
-                    lg:mr-1 md:mr-1
-                    sm:mr-1"
-                  />
-                  <span>
-                    I accept the
-                    <a href="#" className="text-cyan-600 font-semibold">
-                      Terms of Use
-                    </a>
-                    &nbsp; &amp; &nbsp;
-                    <a href="#" className="text-cyan-600 font-semibold">
-                      Privacy Policy
-                    </a>
-                  </span>
+                <div className="2xl:py-5 xl:text-[16px] lg:[text-[14px]  xl:py-3 first-letter: lg:py-2 md:py-2 sm:py-2">
+                  <label>
+                    <input
+                      type="checkbox"
+                      className="border border-gray-400 2xl:mr-2 xl:mr-1 lg:mr-1 md:mr-1 sm:mr-1"
+                    />
+                    <span>
+                      I accept the
+                      <a href="#" className="text-cyan-600 font-semibold">
+                        Terms of Use
+                      </a>
+                      &nbsp; &amp; &nbsp;
+                      <a href="#" className="text-cyan-600 font-semibold">
+                        Privacy Policy
+                      </a>
+                    </span>
+                  </label>
                 </div>
-                <div className="2xl:mt-8
+
+                <div
+                  className="2xl:mt-8
                 xl:mt-2
-                lg:mt-2 md:mt-2">
+                lg:mt-2 md:mt-2"
+                >
                   {isLoading ? (
                     <button
                       type="submit"
@@ -173,10 +200,12 @@ const UserLogin = ({API_URL}) => {
                     </button>
                   )}
                   <Link href="/signup">
-                    <p className="text-center text-cyan-600  underline 2xl:mt-4 2xl:text-[20px] font-medium
+                    <p
+                      className="text-center text-cyan-600  underline 2xl:mt-4 2xl:text-[20px] font-medium
                     xl:mt-2 xl:text-[18px] first-letter: lg:mt-2 lg:text-[16px] 
                     md:mt-2 md:text-[18px]  md:mb-10
-                    sm:mt-2 sm:text-[16px]  sm:mb-10">
+                    sm:mt-2 sm:text-[16px]  sm:mb-10"
+                    >
                       Register Now
                     </p>
                   </Link>
@@ -192,11 +221,9 @@ const UserLogin = ({API_URL}) => {
 
 export default UserLogin;
 
-
-
 export async function getServerSideProps() {
   // Define your API URL here
-  const API_URL = 'https://e-commerce-backend-brown.vercel.app/api/auth';
+  const API_URL = "https://e-commerce-backend-brown.vercel.app/api/auth";
 
   return {
     props: {

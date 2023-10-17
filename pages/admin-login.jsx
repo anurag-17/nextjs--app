@@ -82,7 +82,7 @@ const AdminLogin = ({ API_URL }) => {
                     required
                   />
                 </div>
-                <div className="mt-5">
+                {/* <div className="mt-5">
                   <input
                     type="password"
                     placeholder="Password"
@@ -90,7 +90,11 @@ const AdminLogin = ({ API_URL }) => {
                     className="custom-input  xl:h-[60px]"
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                  />
+                  >
+
+
+                    
+                  </input>
                 </div>
 
                 <div className="py-5 xl:text-[18px] lg:[text-[16px] mt-6">
@@ -108,7 +112,42 @@ const AdminLogin = ({ API_URL }) => {
                       Privacy Policy
                     </a>
                   </span>
-                </div>
+                </div> */}
+
+
+
+
+                <div className="mt-5">
+  <input
+    type="password"
+    placeholder="Password"
+    value={password}
+    className="custom-input xl:h-[60px]"
+    onChange={(e) => setPassword(e.target.value)}
+    required
+  >
+  </input>
+</div>
+
+<div className="py-5 xl:text-[18px] lg:[text-[16px] mt-6">
+  <label>
+    <input
+      type="checkbox"
+      className="border border-gray-400 mr-2"
+    />
+    <span>
+      I accept the
+      <a href="#" className="text-cyan-600 font-semibold">
+        Terms of Use
+      </a>
+      &nbsp; &amp; &nbsp;
+      <a href="#" className="text-cyan-600 font-semibold">
+        Privacy Policy
+      </a>
+    </span>
+  </label>
+</div>
+
                 <div className="mt-8">
                   {isLoading ? (
                     <button
