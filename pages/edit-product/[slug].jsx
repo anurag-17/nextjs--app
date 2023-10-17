@@ -15,6 +15,7 @@ export default function EditProduct() {
     title: "",
     description: "",
     price: "",
+    discountedPrice: "",
     category: "",
     brand: "",
     quantity: "",
@@ -94,6 +95,9 @@ export default function EditProduct() {
           ? productDetails?.description
           : editData?.description,
         price: productDetails?.price ? productDetails?.price : editData?.price,
+        discountedPrice: productDetails?.discountedPrice
+          ? productDetails?.discountedPrice
+          : editData?.discountedPrice,
         category: productDetails?.category
           ? productDetails?.category
           : editData?.category,
@@ -225,6 +229,39 @@ export default function EditProduct() {
                       className="custom-input"
                       defaultValue={
                         editData?.price ? editData?.price : productDetails.price
+                      }
+                      onChange={inputHandler}
+                      required
+                      minLength={1}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/*------offer price -----*/}
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <label className="custom-input-label">Offer Price</label>
+                <div className="col-span-8 sm:col-span-4">
+                  <div className="flex flex-row">
+                    <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
+                      <select>
+                        <option>INR₹</option>
+                        <option>USD$</option>
+                        <option>EUR€</option>
+                        <option>JPY¥</option>
+                        <option>AEDد.إ</option>
+                      </select>
+                    </span>
+                    <input
+                      type="number"
+                      name="price"
+                      placeholder="OfferPrice"
+                      className="custom-input"
+                      value={productDetails.discountedPrice}
+                      defaultValue={
+                        editData?.discountedPrice
+                          ? editData?.discountedPrice
+                          : productDetails.discountedPrice
                       }
                       onChange={inputHandler}
                       required

@@ -41,8 +41,8 @@ const menuList = [
       {
         id: '05',
         label: "Brand",
-        component: <New />,
-        path:'/product-cart'
+        component: <New/>,
+        path:'/brand'
       },
       {
         id: 3,
@@ -76,11 +76,11 @@ const menuList = [
     path:"/orders"
   },
   {
-    id: 4,
+    id: 8,
     label: "Vendor",
     component: '',
     icon: `fa fa-users`,
-    path:""
+    path:"#"
   },
   {
     id: 5,

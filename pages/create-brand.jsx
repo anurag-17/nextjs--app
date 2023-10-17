@@ -1,28 +1,53 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react'
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
-function CreateBrandForm() {
-  
+const createbrand = () => {
+  const [brand, setBrand] = useState("");
+  const router = useRouter();
 
-//   const handleChange = (e) => {
-//     setCategory({
-//       ...category,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await fetch(
+        "https://e-commerce-backend-brown.vercel.app/api/brand/createBrand",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ brand }),
+        }
+      )
+        .then((res) => {
+          if (res.ok) {
+            router.push("/brand");
+          } else {
+            throw new Error("failed to create");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (error) {}
+  };
+
 
   return (
-    <form   className=' bg-white border w-1/2 p-2 mx-auto'>
+    <div>
+       <form  onSubmit={handleSubmit} className=' bg-white border w-1/2 p-2 mx-auto'>
       <div>
         <label>Brand Name:</label><br/>
         <input
+         onChange={(e) => setBrand(e.target.value)}
+          value={brand}
           type="text"
           name="name"
           className='border p-1 m-2'
 
         />
       </div>
-      <div className='my-2'>
+      {/* <div className='my-2'>
         <label>Brand Logo:</label><br/>
         <input
           type="file"
@@ -30,18 +55,19 @@ function CreateBrandForm() {
           className=' p-1 m-2'
 
         />
-      </div>
-      <div>
+      </div> */}
+      {/* <div>
         <label>Brand Description:</label><br/>
         <textarea
           className='border p-1 m-2'
           name="description"
          
         />
-      </div>
+      </div> */}
       <button type="submit" className='border p-1 m-2 rounded-lg bg-blue-600 text-white '>Create Brand</button>
     </form>
-  );
+    </div>
+  )
 }
 
-export default CreateBrandForm;
+export default createbrand

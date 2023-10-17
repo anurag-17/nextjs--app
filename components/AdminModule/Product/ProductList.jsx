@@ -21,10 +21,11 @@ import Image from "next/image";
 const headItems = [
   "PRODUCT NAME",
   "CATEGORY",
-  "PRICE",
+  "REGULAR PRICE",
+  "OFFER PRICE",
   "BRAND",
   "STOCK",
-  "COLOUR",
+  "COLOR",
   "STATUS",
   "VIEW",
   "ACTION",
@@ -192,10 +193,7 @@ const ProductList = () => {
       <div className="cursor-pointer" onClick={() => handleShowComponent("list")}>
         <List />
       </div>
-      {/* {isShowComponent === "grid" ? <Grid /> : <List />} */}
-    </div>         
-
-         
+    </div>       
           <div className="w-full">
             <input
               type="search"
@@ -204,7 +202,6 @@ const ProductList = () => {
               onChange={handleSearch} //search input
             ></input>
           </div>
-
           <div className=" flex  gap-x-3">
             {/*----- filter by Brand start ------- */}
             <div className="w-auto flex flex-col  gap-1">
@@ -380,7 +377,13 @@ const ProductList = () => {
                       {item?.category ? item?.category : "-"}
                     </td>
                     <td className="py-5 text-[18px]">
-                      {item?.price ? item?.price : "-"}
+                   <del className="text-red-500">
+                   {item?.price ? item?.price : "-"}
+                   </del>
+
+                    </td>
+                    <td className="py-5 text-[18px] text-green-500">
+                      {item?.discountedPrice ? item?.discountedPrice : "-"}
                     </td>
                     <td className="py-5 text-[18px]">
                       {item?.brand ? item?.brand : "-"}

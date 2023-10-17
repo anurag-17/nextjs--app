@@ -45,31 +45,32 @@ const ProductGrid = () => {
       <div className="grid lg:grid-cols-3 gap-5 my-16">
         {allProduct.map((items, ix) => (
           <div
-            className="max-w-[80%] bg-white  border-2 border-gray rounded-lg  mx-auto hover:border-lightBlue-600"
+            className="max-w-[80%] bg-white  border-[5px] rounded-[20px] border-gray  mx-auto hover:border-lightBlue-600"
             key={ix}
           >
             <Image
-              src={`https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png`}
-              alt=""
-              className=" mx-auto rounded-lg "
+              src="/img1.jpeg"    alt=""
+              className=" mx-auto rounded-[20px] "
               width={400}
               height={400}
             />
-            <div className="bg-white px-4 pb-3">
+            <div className="bg-white px-4 pb-3 rounded-[20px]">
               <div className="flex justify-between items-center my-4">
                 <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                   {items.title}
                 </h6>
               </div>
 
-              <div className=" flex justify-between items-center">
                 <p className="text-[18px]  capitalize my-2 ">
                   Available : {items.quantity}
                 </p>
                 <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                  Price : ₹{items.price}
+                 Offer Price : ₹{items.price}
                 </p>
-              </div>
+                <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                  Regular Price : ₹{items.discountedPrice}
+                </del>
+            
               <p className="text-[18px]  capitalize my-2 ">
                 Category : {items.category}
               </p>
