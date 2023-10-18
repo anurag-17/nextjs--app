@@ -80,7 +80,7 @@ const menuList = [
     label: "Vendor",
     component: '',
     icon: `fa fa-users`,
-    path:"#"
+    path:"/vendor"
   },
   {
     id: 5,

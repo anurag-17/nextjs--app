@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
-import axios from 'axios';
-
+import axios from "axios";
 
 const EditCate = ({ _id }) => {
-    const router = useRouter();
-    const { slug } = router.query;
-    const [isLoading, setLoading] = useState(false);
-    const [isRefresh, setRefresh] = useState(false);
-    const [editData, setEditData] = useState({});
-  // const [category, setCategory] = useState('');
+  const router = useRouter();
+  const { slug } = router.query;
+  const [isLoading, setLoading] = useState(false);
+  const [isRefresh, setRefresh] = useState(false);
+  const [editData, setEditData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
   const [productDetails, setProductDetails] = useState({
     title: "",
@@ -19,7 +17,6 @@ const EditCate = ({ _id }) => {
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
-
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
@@ -42,21 +39,22 @@ const EditCate = ({ _id }) => {
     }
   };
 
-
   useEffect(() => {
-    // Fetch the category data when the component mounts
     fetchCategory();
   }, [_id]);
 
   const fetchCategory = async () => {
     try {
       setIsFetching(true);
-      const res = await fetch(`https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${slug}`, {
-        cache: 'no-store',
-      });
+      const res = await fetch(
+        `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${slug}`,
+        {
+          cache: "no-store",
+        }
+      );
 
       if (!res.ok) {
-        throw new Error('Failed to fetch category');
+        throw new Error("Failed to fetch category");
       }
 
       const data = await res.json();
@@ -67,6 +65,8 @@ const EditCate = ({ _id }) => {
       setIsFetching(false);
     }
   };
+
+  
   const handleUpdateCategory = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -83,7 +83,6 @@ const EditCate = ({ _id }) => {
       },
       data: {
         title: productDetails?.title ? productDetails?.title : editData?.title,
-      
       },
     };
 
@@ -110,42 +109,38 @@ const EditCate = ({ _id }) => {
   return (
     <div className="bg-white border w-1/3 p-2 mx-auto">
       <ToastContainer />
-     <form onSubmit={handleUpdateCategory}>
-
-     <h1 className='text-2xl my-5'>Edit Categories :</h1>
-     {isFetching ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <label>Update category:</label>
-          <br />
-          <input
-            type="text"
-            name="title"
-            className="border p-1 m-2"
-            value={productDetails.title}
-            defaultValue={
-                      editData?.title ? editData?.title : productDetails.title
-                    }
-                    // value={productDetails.title}
-                    onChange={inputHandler}
-                    required
-                    minLength={3}
-                    max={84}
-          />
-
-
-
-        </div>
-      )}
-      <button
-        type="submit"
-        className="border p-1 m-2 rounded-lg bg-blue-600 text-white"
-        onClick={handleUpdateCategory}
-      >
-        Update Category
-      </button>
-     </form>
+      <form onSubmit={handleUpdateCategory}>
+        <h1 className="text-2xl my-5">Edit Categories :</h1>
+        {isFetching ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            <label>Update category:</label>
+            <br />
+            <input
+              type="text"
+              name="title"
+              className="border p-1 m-2"
+              value={productDetails.title}
+              defaultValue={
+                editData?.title ? editData?.title : productDetails.title
+              }
+              // value={productDetails.title}
+              onChange={inputHandler}
+              required
+              minLength={3}
+              max={84}
+            />
+          </div>
+        )}
+        <button
+          type="submit"
+          className="border p-1 m-2 rounded-lg bg-blue-600 text-white"
+          onClick={handleUpdateCategory}
+        >
+          Update Category
+        </button>
+      </form>
     </div>
   );
 };

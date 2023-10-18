@@ -70,7 +70,7 @@ const setting = () => {
               >
                 Change
               </button>
-              <h1>Password</h1>
+              <h1>Password Change</h1>
               <p className="text-gray-600 w-10/12 my-2">
                 You can reset or change your password by clicking here
               </p>
@@ -82,7 +82,7 @@ const setting = () => {
               >
                 Deactivate
               </button>
-              <h1>Remove account</h1>
+              <h1>Deactivate an account</h1>
               <p className="text-gray-600 w-10/12 my-2">
                 Once you delete your account, there is no going back. Please be
                 certain.
