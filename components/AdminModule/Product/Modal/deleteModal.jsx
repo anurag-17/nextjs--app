@@ -10,8 +10,8 @@ const DeleteModal = ({ productID,closeModal,refreshData }) => {
   const [isLoading, setLoading] = useState(false);
 
   const handleClose = () => {
-    closeModal()
-    refreshData()
+    closeModal();
+    refreshData();
   }
 
   const handleDelete = (e) => {
