@@ -22,6 +22,7 @@ const AddProduct = () => {
     title: "",
     description: "",
     price: "",
+    discountedPrice: "",
     category: "",
     brand: "",
     quantity: "",
@@ -121,43 +122,6 @@ const AddProduct = () => {
     <section className="bg-gray-100 min-h-screen">
       <ToastContainer />
 
-      {/* <div className="text-center">
-        <button
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover-bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          type="button"
-          onClick={openDrawer} // Open the drawer when this button is clicked
-        >
-          Add Product
-        </button>
-        
-      
-        
-      </div>
-
-      {isDrawerOpen && (
-        <div
-          id="drawer-form"
-          className="  mt-[44px]  py-10
-          fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800 max-h-fit"
-          tabIndex={-1}
-          aria-labelledby="drawer-form-label"
-        >
-        <button
-            type="button"
-            onClick={closeDrawer} // Close the drawer when this button is clicked
-            className="text-gray-400  shadow-2xl text-sm w-10 h-8   float-right inline-flex items-center justify-center "
-          >
-            <svg
-              className="w-9 h-9 bg-white border rounded-3xl p-1 hover:bg-orange-100 hover:text-black"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-           <XMarkIcon className="h-4 w-4 text-orange-700 " />
-            </svg>
-            <span className="sr-only bg-black">Close menu</span>
-          </button> */}
       <div className="h-[100px] ">
         <h2 className="text-[25px] font-semibold text-green-600 leading-[25px] px-6">
           Basic Info
@@ -213,17 +177,17 @@ const AddProduct = () => {
 
           {/*------ price -----*/}
           <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label className="custom-input-label">Product Price</label>
+            <label className="custom-input-label">Regular Price</label>
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-               <select>
-               <option>INR₹</option>
-                  <option>USD$</option>
-                  <option>EUR€</option>
-                  <option>JPY¥</option>
-                  <option>AEDد.إ</option>
-               </select>
+                  <select>
+                    <option>INR₹</option>
+                    <option>USD$</option>
+                    <option>EUR€</option>
+                    <option>JPY¥</option>
+                    <option>AEDد.إ</option>
+                  </select>
                 </span>
                 <input
                   type="number"
@@ -231,6 +195,33 @@ const AddProduct = () => {
                   placeholder="OriginalPrice"
                   className="custom-input"
                   value={productDetails.price}
+                  onChange={inputHandler}
+                  required
+                  minLength={1}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/*------offer price -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label className="custom-input-label">Offer Price</label>
+            <div className="col-span-8 sm:col-span-4">
+              <div className="flex flex-row">
+                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
+                  <select>
+                    <option>INR₹</option>
+                    <option>USD$</option>
+                    <option>EUR€</option>
+                    <option>JPY¥</option>
+                    <option>AEDد.إ</option>
+                  </select>
+                </span>
+                <input
+                  type="number"
+                  placeholder="OfferPrice"
+                  className="custom-input"
+                  value={productDetails.discountedPrice}
                   onChange={inputHandler}
                   required
                   minLength={1}
@@ -280,7 +271,7 @@ const AddProduct = () => {
                 onChange={inputHandler}
                 required
                 minLength={10}
-                // max={32}
+                max={32}
               />
             </div>
           </div>
@@ -328,50 +319,6 @@ const AddProduct = () => {
               />
             </div>
           </div>
-
-          {/*------ Images -----*/}
-          {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <label className="custom-input-label">Product Images</label>
-              <div className="col-span-8 sm:col-span-4">
-                <div className="w-full text-center">
-                  <div
-                    className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-                    role="presentation"
-                  >
-                    <input
-                      accept="image/*,.jpeg,.jpg,.png,.webp"
-                      multiple=""
-                      type="file"
-                    />
-                    <span className="mx-auto flex justify-center">
-                      <svg
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        className="text-3xl text-green-500"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <polyline points="16 16 12 12 8 16"></polyline>
-                        <line x1="12" y1="12" x2="12" y2="21"></line>
-                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>{" "}
-                        <polyline points="16 16 12 12 8 16"></polyline>
-                      </svg>
-                    </span>
-                    <p className="text-sm mt-2">Drag your images here</p>
-                    <em className="text-xs text-gray-400">
-                      (Only *.jpeg, *.webp and *.png images will be accepted)
-                    </em>
-                  </div>
-                  <div className="text-green-500"></div>
-                  <aside className="flex flex-row flex-wrap mt-4"></aside>
-                </div>
-              </div>
-            </div> */}
           {/*------ submit button -----*/}
           <div className="mt-8">
             {isLoading ? (
@@ -384,7 +331,6 @@ const AddProduct = () => {
             ) : (
               <button
                 type="submit"
-                // onClick={handlesubmit}
                 className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
               >
                 Add Product
@@ -393,10 +339,6 @@ const AddProduct = () => {
           </div>
         </div>
       </form>
-
-      {/*---- form end here ----*/}
-      {/* </div>
-      )} */}
     </section>
   );
 };

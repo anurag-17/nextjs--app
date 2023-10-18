@@ -10,7 +10,7 @@ const EditCate = ({ _id }) => {
     const [isLoading, setLoading] = useState(false);
     const [isRefresh, setRefresh] = useState(false);
     const [editData, setEditData] = useState({});
-  const [category, setCategory] = useState('');
+  // const [category, setCategory] = useState('');
   const [isFetching, setIsFetching] = useState(false);
   const [productDetails, setProductDetails] = useState({
     title: "",

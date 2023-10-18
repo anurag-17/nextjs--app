@@ -16,9 +16,7 @@ const Addproduct = () => {
     quantity: "",
     color: [],
   });
-  // const [token, setToken] = useState(
-  //   JSON.parse(sessionStorage.getItem("accessToken"))
-  // );
+  
   const refreshData = () => {
     setProductDetails({
       title: "",
@@ -174,15 +172,37 @@ const Addproduct = () => {
                     onChange={inputHandler}
                     required
                     minLength={1}
-                    // max={32}
                   />
                 </div>
-                {/* <span className="text-red-400 text-sm mt-2">
-                Minimum value 1!
-              </span> */}
               </div>
             </div>
 
+               {/*------offer price -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label className="custom-input-label">Offer Price</label>
+            <div className="col-span-8 sm:col-span-4">
+              <div className="flex flex-row">
+                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
+                  <select>
+                    <option>INR₹</option>
+                    <option>USD$</option>
+                    <option>EUR€</option>
+                    <option>JPY¥</option>
+                    <option>AEDد.إ</option>
+                  </select>
+                </span>
+                <input
+                  type="number"
+                  placeholder="OfferPrice"
+                  className="custom-input"
+                  value={productDetails.discountedPrice}
+                  onChange={inputHandler}
+                  required
+                  minLength={1}
+                />
+              </div>
+            </div>
+          </div>
             {/*------ category -----*/}
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <label htmlFor="" className="custom-input-label">
@@ -260,50 +280,6 @@ const Addproduct = () => {
                 />
               </div>
             </div>
-
-            {/*------ Images -----*/}
-            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label className="custom-input-label">Product Images</label>
-            <div className="col-span-8 sm:col-span-4">
-              <div className="w-full text-center">
-                <div
-                  className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-                  role="presentation"
-                >
-                  <input
-                    accept="image/*,.jpeg,.jpg,.png,.webp"
-                    multiple=""
-                    type="file"
-                  />
-                  <span className="mx-auto flex justify-center">
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="text-3xl text-green-500"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <polyline points="16 16 12 12 8 16"></polyline>
-                      <line x1="12" y1="12" x2="12" y2="21"></line>
-                      <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>{" "}
-                      <polyline points="16 16 12 12 8 16"></polyline>
-                    </svg>
-                  </span>
-                  <p className="text-sm mt-2">Drag your images here</p>
-                  <em className="text-xs text-gray-400">
-                    (Only *.jpeg, *.webp and *.png images will be accepted)
-                  </em>
-                </div>
-                <div className="text-green-500"></div>
-                <aside className="flex flex-row flex-wrap mt-4"></aside>
-              </div>
-            </div>
-          </div> */}
             {/*------ submit button -----*/}
             <div className="mt-8">
               {isLoading ? (

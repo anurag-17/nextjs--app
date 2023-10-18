@@ -1,96 +1,34 @@
-"use client";
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Transition, Popover } from "@headlessui/react";
+import { Menu, Transition, Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
+  CheckIcon,
   PencilSquareIcon,
   ArrowUpTrayIcon,
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-const CategoryList = (_id) => {
-  console.log(_id);
-  const [getallCategory, setGetallCategory] = useState([]);
-  const [isChecked, setisChecked] = useState([]);
-  const [brandIds, setBrandIds] = useState("");
-  const [selectDelete, setSelectDelete] = useState("");
-
-
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
-  };
+const BrandList = async () => {
+  const [allProduct, setAllProduct] = useState([]);
 
   useEffect(() => {
-    defaultCategory();
+
   }, []);
 
-  const defaultCategory = () => {
-    axios
-      .request(options)
-      .then((response) => {
-        setGetallCategory(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  const removeCategory = async (_id) => {
-    console.log(_id);
-    await fetch(
-      `https://e-commerce-backend-brown.vercel.app/api/category/deleteCategory/${_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => {
-        if (res.ok) {
-          defaultCategory();
-        } else {
-          throw new Error("failed to create");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const allDelete = async () => {
-    console.log(isChecked);
-    const response = await axios.post(`https://e-commerce-backend-brown.vercel.app/api/category/deleteBulkCategory`,{"CategoryIds":isChecked})
-    console.log(response);
-  };
-  // const selectAllDelete = (e) => {
-  //   const checkboxChecked = e.target.checked;
-  //   setSelectDelete(checkboxChecked);
-  //   const checkbox = document.getElementById("myCheckbox");
-  //   const selectDelete = checkbox.checked;
-  //   console.log("selectDelete:", selectDelete);
-  // };
-
-  const handleCheckbox = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setisChecked([...isChecked, value]);
-    } else {
-      setisChecked(isChecked.filter((e) => e !== value));
-    }
-  };
+  const getAllProducts = async () => {
+    
+  }
   return (
     <>
       <section>
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-          <h2 className="text-2xl font-semibold">Category List </h2>
-          <h2>Welcome Back, Client</h2>
+          <h2 className="text-2xl font-semibold">Brand List </h2>
+          <h2>Welcome Back, Clint</h2>
         </div>
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <div className="flex justify-between ">
@@ -104,49 +42,37 @@ const CategoryList = (_id) => {
             </button>
           </div>
           <div className="flex justify-around">
-            <Link href="/create-cate">
-              <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer mr-4">
-                + Add Category
+            <Link href="/create-brand">
+              <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer">
+                + Add Brand
               </button>
             </Link>
-
-            <button
-              onClick={allDelete}
-              className="border border-1  rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2 hover:border-none">
-             Delete
-            </button>
           </div>
         </div>
+
         <table class="table-auto bg-white w-full rounded-md mt-5">
           <thead className="">
-          <label>
-            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between ">
-              <input type="checkbox" className="mx-3 my-5 cursor-pointer " />
-              <th className="text-start">NAME</th>
-              {/* <th className="text-start">DESCRIPTION</th> */}
+            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start ">
+              <input type="checkbox" className="mx-3 mt-6 cursor-pointer " />
+
+              <th className="text-start">Brand NAME</th>
+              <th className="text-start">STOCK</th>
               <th className="text-start">PUBLISHED</th>
               <th className="text-start">ACTION</th>
             </tr>
-            </label>
           </thead>
-          {getallCategory.map((items) => (
+
+          {allProduct.map((items) => (
             <tbody>
-            <label>
-            <tr className="flex justify-between">
-             
+              <tr>
                 <td className="">
                   <input
                     type="checkbox"
-                    className="mx-3 cursor-pointer mt-5"
-                    value={items?._id}
-                    checked={items.isChecked}
-                    onChange={(e) => handleCheckbox(e)}
+                    className="mx-3 mt-2 cursor-pointer "
                   />
                 </td>
-                <td className="py-5 text-[18px]">
-                  {" "}
-                  {items?.title ? items?.title : "-"}
-                </td>
+                <td className="py-5 text-[18px]"> {items.brand} </td>
+                <td className="py-5 text-[18px]"></td>
                 <td className="py-5 text-[18px] tex">
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                     selling
@@ -155,12 +81,7 @@ const CategoryList = (_id) => {
                 <td className=" flex">
                   <button className="flex">
                     <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
-
-                    <Link href={`/edit-cate/${items?._id}`}>
-                      <button>
-                        <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
-                      </button>
-                    </Link>
+                    <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                     <Popover className="relative">
                       <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
                         <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
@@ -193,9 +114,6 @@ const CategoryList = (_id) => {
                                 No, Keep It
                               </button>
                               <button
-                                onClick={() => {
-                                  removeCategory(items?._id);
-                                }}
                                 className="border border-1 rounded-md 
                               text-sm 
                               border-red-400 text-red-700 hover:bg-red-200  p-1
@@ -211,7 +129,6 @@ const CategoryList = (_id) => {
                   </button>
                 </td>
               </tr>
-             </label>
             </tbody>
           ))}
         </table>
@@ -220,4 +137,4 @@ const CategoryList = (_id) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(CategoryList), { ssr: false });
+export default dynamic(() => Promise.resolve(BrandList), { ssr: false });
