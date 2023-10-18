@@ -185,7 +185,7 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
         <table class="table-auto bg-white w-full rounded-md mt-5">
           <thead className="">
             <label>
-              <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between ">
+              <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center">
                 <input
                   type="checkbox"
                   className="mx-3 my-5 cursor-pointer"
@@ -204,21 +204,21 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
           {getallCategory.map((items) => (
             <tbody>
               <label>
-                <tr className="flex justify-between">
+                <tr className="flex">
                   <td className="">
                     <input
                       type="checkbox"
-                      className="mx-3 cursor-pointer mt-5"
+                      className="mx-3 cursor-pointer mt-5 mr-48"
                       value={items?._id}
                       checked={items.isChecked}
                       onChange={(e) => handleCheckbox(e)}
                     />
                   </td>
-                  <td className="py-5 text-[18px]">
+                  <td className="py-5 text-[18px] w-[15%] ">
                     {" "}
                     {items?.title ? items?.title : "-"}
                   </td>
-                  <td className="py-5 text-[18px] tex">
+                  <td className="py-5 text-[18px] w-[15%]">
                     <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                       selling
                     </p>

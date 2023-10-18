@@ -111,8 +111,8 @@ const brandlist = () => {
         <h2 className="text-2xl font-semibold">Brand List </h2>
         <h2>Welcome Back, Client</h2>
       </div>
-      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-        <div className="flex float-right ">
+      <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
+        <div className="flex  justify-end mt-7 ">
           <Link href="/create-brand">
             <button className="rounded-md p-2 bg-green-600 text-white cursor-pointer">
               + Add Brand
@@ -129,7 +129,7 @@ const brandlist = () => {
       <table class="table-auto  bg-white w-full rounded-md mt-5">
         <thead className="">
           <label>
-            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between  ">
+            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
               <input
                 type="checkbox"
                 className="mx-3 my-5 cursor-pointer"
@@ -148,7 +148,7 @@ const brandlist = () => {
         {getallBrand.map((items) => (
           <tbody>
             <label>
-              <tr className="flex justify-between">
+              <tr className="flex gap-48">
                 <td className="">
                   <input
                     type="checkbox"
@@ -159,7 +159,7 @@ const brandlist = () => {
                     onChange={(e) => handleCheckbox(e)}
                   />
                 </td>
-                <td className="py-5 text-[18px]">
+                <td className="py-5 text-[18px] w-[2%]">
                   {" "}
                   {items?.brand ? items?.brand : "-"}
                 </td>
