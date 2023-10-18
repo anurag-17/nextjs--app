@@ -117,33 +117,32 @@ const CategoryList = (_id) => {
             </button>
           </div>
         </div>
-        <table class="table-auto bg-white w-full rounded-md mt-5">
+        <table class="table bg-white w-full rounded-md mt-5">
           <thead className="">
           <label>
-            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between ">
-              <input type="checkbox" className="mx-3 my-5 cursor-pointer " />
-              <th className="text-start">NAME</th>
-              {/* <th className="text-start">DESCRIPTION</th> */}
-              <th className="text-start">PUBLISHED</th>
-              <th className="text-start">ACTION</th>
+            <tr className="bg-coolGray-200 text-gray-400 gap-x-48 text-sm text-start flex ">
+              <input type="checkbox" className="mx-3 my-5 cursor-pointer  " />
+              <th className="text-start mt-4 w-[11%] ">NAME</th>
+              <th className="text-start mt-4 ">PUBLISHED</th>
+              <th className="text-start  mt-4 ">ACTION</th>
             </tr>
             </label>
           </thead>
           {getallCategory.map((items) => (
             <tbody>
             <label>
-            <tr className="flex justify-between">
+            <tr className="flex justify-between w-[60%]">
              
                 <td className="">
                   <input
                     type="checkbox"
-                    className="mx-3 cursor-pointer mt-5"
+                    className="mx-3 cursor-pointer mt-6"
                     value={items?._id}
                     checked={items.isChecked}
                     onChange={(e) => handleCheckbox(e)}
                   />
                 </td>
-                <td className="py-5 text-[18px]">
+                <td className="py-5 text-[18px] w-[20%]">
                   {" "}
                   {items?.title ? items?.title : "-"}
                 </td>
@@ -152,8 +151,8 @@ const CategoryList = (_id) => {
                     selling
                   </p>
                 </td>
-                <td className=" flex">
-                  <button className="flex">
+                <td className=" flex mt-3">
+                  <button className="flex w-[45%]">
                     <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
                     <Link href={`/edit-cate/${items?._id}`}>

@@ -112,19 +112,19 @@ const brandlist = () => {
       <table class="table-auto  bg-white w-full rounded-md mt-5">
         <thead className="">
         <label>
-          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between  ">
+          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 ">
             <input type="checkbox" className="mx-3 my-5 cursor-pointer mt-5" />
-            <th className="text-start">NAME</th>
+            <th className="text-start mt-4 w-[11%]">NAME</th>
             {/* <th className="text-start">DESCRIPTION</th> */}
-            <th className="text-start">PUBLISHED</th>
-            <th className="text-start">ACTION</th>
+            <th className="text-start mt-4">PUBLISHED</th>
+            <th className="text-start mt-4">ACTION</th>
           </tr>
           </label>
         </thead>
         {getallBrand.map((items) => (
           <tbody>
           <label>
-            <tr className="flex justify-between">
+            <tr className="flex justify-between w-[60%]">
                 <td className="">
                   <input
                     type="checkbox"
@@ -135,7 +135,7 @@ const brandlist = () => {
                     onChange={(e) => handleCheckbox(e)}
                   />
                 </td>
-                <td className="py-5 text-[18px]">
+                <td className="py-5 text-[18px] w-[20%]">
                   {" "}
                   {items?.brand ? items?.brand : "-"}
                 </td>
