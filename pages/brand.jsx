@@ -14,6 +14,7 @@ import { Fragment } from "react";
 const brandlist = () => {
   const [getallBrand, setGetallBrand] = useState([]);
   const [isChecked, setisChecked] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   const options = {
     method: "GET",
@@ -33,7 +34,7 @@ const brandlist = () => {
         console.error("Error:", error);
       });
   };
-
+  
   const removeCategory = async (_id) => {
     console.log(_id);
     await fetch(
@@ -59,32 +60,48 @@ const brandlist = () => {
   };
 
   const allDelete = async () => {
-    console.log(isChecked);
-    const response = await axios
-      .post(
+    try {
+      console.log(isChecked);
+      const response = await axios.post(
         `https://e-commerce-backend-brown.vercel.app/api/brand/deleteBulkBrands`,
         { brandIds: isChecked }
-      )
-      // console.log(response);
-      .then((response) => {
-        if (response.ok) {
-          defaultBrand();
-        } else {
-          throw new Error("failed to delete");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      );
+  
+      // Check the HTTP status code for success (2xx codes)
+      if (response.status === 200) {
+        console.log("Successfully deleted brands");
+        // Call the function to refresh your brand data
+        defaultBrand();
+      } else {
+        // Handle other status codes or error responses from the server
+        console.error("Failed to delete brands. Status code: " + response.status);
+      }
+    } catch (error) {
+      // Handle network errors or exceptions thrown during the request
+      console.error("Error deleting brands:", error);
+    }
   };
+  
 
   const handleCheckbox = (e) => {
     const { value, checked } = e.target;
-    console.log(value);
-    if (checked) {
-      setisChecked([...isChecked, value]);
+
+    // If the header checkbox is clicked
+    if (value === "selectAll") {
+      setSelectAll(checked);
+      if (checked) {
+        const allItemIds = getallBrand.map((item) => item._id);
+        setisChecked(allItemIds);
+      } else {
+        setisChecked([]);
+      }
     } else {
-      setisChecked(isChecked.filter((e) => e !== value));
+      // If an item checkbox is clicked
+      if (checked) {
+        setisChecked([...isChecked, value]);
+      } else {
+        setisChecked(isChecked.filter((id) => id !== value));
+      }
     }
   };
 
@@ -111,20 +128,27 @@ const brandlist = () => {
       </div>
       <table class="table-auto  bg-white w-full rounded-md mt-5">
         <thead className="">
-        <label>
-          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 ">
-            <input type="checkbox" className="mx-3 my-5 cursor-pointer mt-5" />
-            <th className="text-start mt-4 w-[11%]">NAME</th>
-            {/* <th className="text-start">DESCRIPTION</th> */}
-            <th className="text-start mt-4">PUBLISHED</th>
-            <th className="text-start mt-4">ACTION</th>
-          </tr>
+          <label>
+            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between  ">
+              <input
+                type="checkbox"
+                className="mx-3 my-5 cursor-pointer"
+                value="selectAll"
+                checked={selectAll}
+                onChange={handleCheckbox}
+              />
+
+              <th className="text-start">NAME</th>
+              {/* <th className="text-start">DESCRIPTION</th> */}
+              <th className="text-start">PUBLISHED</th>
+              <th className="text-start">ACTION</th>
+            </tr>
           </label>
         </thead>
         {getallBrand.map((items) => (
           <tbody>
-          <label>
-            <tr className="flex justify-between w-[60%]">
+            <label>
+              <tr className="flex justify-between">
                 <td className="">
                   <input
                     type="checkbox"
@@ -135,7 +159,7 @@ const brandlist = () => {
                     onChange={(e) => handleCheckbox(e)}
                   />
                 </td>
-                <td className="py-5 text-[18px] w-[20%]">
+                <td className="py-5 text-[18px]">
                   {" "}
                   {items?.brand ? items?.brand : "-"}
                 </td>
@@ -144,66 +168,67 @@ const brandlist = () => {
                     selling
                   </p>
                 </td>
-             
-               <td className=" flex">
-                <button className="flex">
-                  <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
-                  <Link href={`/edit-brand/${items?._id}`}>
-                    <button>
-                      <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
-                    </button>
-                  </Link>
+                <td className=" flex">
+                  <button className="flex">
+                    <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
-                  <Popover className="relative">
-                    <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
-                      <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
-                    </Popover.Button>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform scale-95"
-                      enterTo="transform scale-100"
-                      leave="transition ease-in duration=75"
-                      leaveFrom="transform scale-100"
-                      leaveTo="transform scale-95"
-                    >
-                      <Popover.Panel className="absolute -right-16 sm:right-72  z-50 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 max-w-xs sm:max-w-sm w-screen ">
-                        <div className="relative  p-3">
-                          <div className="flex justify-center items-center w-full">
-                            <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
-                          </div>
-                          <p>Are You Sure! Want to Delete?</p>
-                          <p className="text-sm text-gray-500 my-3">
-                            Do you really want to delete these records? You
-                            cant't view this in your list anymore if you delete!
-                          </p>
-                          <div className="flex justify-around">
-                            <button
-                              className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
+                    <Link href={`/edit-brand/${items?._id}`}>
+                      <button>
+                        <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                      </button>
+                    </Link>
+
+                    <Popover className="relative">
+                      <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
+                        <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform scale-95"
+                        enterTo="transform scale-100"
+                        leave="transition ease-in duration=75"
+                        leaveFrom="transform scale-100"
+                        leaveTo="transform scale-95"
+                      >
+                        <Popover.Panel className="absolute -right-16 sm:right-72  z-50 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 max-w-xs sm:max-w-sm w-screen ">
+                          <div className="relative  p-3">
+                            <div className="flex justify-center items-center w-full">
+                              <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
+                            </div>
+                            <p>Are You Sure! Want to Delete?</p>
+                            <p className="text-sm text-gray-500 my-3">
+                              Do you really want to delete these records? You
+                              cant't view this in your list anymore if you
+                              delete!
+                            </p>
+                            <div className="flex justify-around">
+                              <button
+                                className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
                               hover:border-none"
-                            >
-                              No, Keep It
-                            </button>
-                            <button
-                              onClick={() => {
-                                removeCategory(items?._id);
-                              }}
-                              className="border border-1 rounded-md 
+                              >
+                                No, Keep It
+                              </button>
+                              <button
+                                onClick={() => {
+                                  removeCategory(items?._id);
+                                }}
+                                className="border border-1 rounded-md 
                               text-sm 
                               border-red-400 text-red-700 hover:bg-red-200  p-1
                               hover:border-none"
-                            >
-                              Yes, Delete It
-                            </button>
+                              >
+                                Yes, Delete It
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </Popover.Panel>
-                    </Transition>
-                  </Popover>
-                </button>
-              </td>
-            </tr>
+                        </Popover.Panel>
+                      </Transition>
+                    </Popover>
+                  </button>
+                </td>
+              </tr>
             </label>
           </tbody>
         ))}
