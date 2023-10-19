@@ -46,7 +46,7 @@ const updateVendor = ({ _id }) => {
     try {
       setIsFetching(true);
       const res = await fetch(
-        `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${slug}`,
+        `https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors/${slug}`,
         {
           cache: "no-store",
         }
