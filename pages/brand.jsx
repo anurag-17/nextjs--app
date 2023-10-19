@@ -107,8 +107,8 @@ const brandlist = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-        <h2 className="text-2xl font-semibold">Brand List </h2>
+      <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
+        <h2 className="text-2xl font-semibold pb-4">Brand List </h2>
         <h2>Welcome Back, Client</h2>
       </div>
       <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
