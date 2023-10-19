@@ -141,7 +141,7 @@ export default function EditProduct() {
               Add your product and necessary information from here
             </p>
           </div>
-          <h2 className="xl:text-[18px] lg:text-[16px] font-normal">
+          <h2 className="xl:text-[18px] lg:text-[16px] font-normal mt-8">
             Welcome Back, Admin
           </h2>
         </div>
