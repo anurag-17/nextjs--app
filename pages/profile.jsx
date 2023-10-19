@@ -20,12 +20,13 @@ const profile = () => {
               <p className="text-blue-600 text-xl my-auto  mx-5">
                 I am Professional Frontend Web Developer
               </p>
-              <div className="flex mt-5 ml-5">
-                <img class="h-9 w-13  " src="/fb.png" />
-                <img class="h-9 w-13" src="/in.png" />
-                <img class="h-9 w-13   " src="/twitter.png" />
+              <div className="flex mt-5 ml-5 justify-evenly w-6/12">
+                <img class="h-9 w-13  " src="/fb.svg" />
+                <img class="h-9 w-13" src="/in.svg" />
+                <img class="h-9 w-13   " src="/twitterr.svg" />
+                <img class="h-9 w-13   " src="/add.svg" />
 
-                <PlusCircleIcon class="h-10 w-10 " />
+                
               </div>
             </div>
           </div>
@@ -52,19 +53,19 @@ const profile = () => {
                 <tr>
                   <td className="p-3  text-[20px] ">Email</td>
                   <td className="px-10">:</td>
-                  <td className="p-53 text-gray-500 text-[18px] ">
+                  <td className="p-3 text-gray-500 text-[18px] ">
                     hariompatil00gmail.com
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Phone</td>
                   <td className="px-10">:</td>
-                  <td className="p-53 text-gray-500 text-[18px]">8989898989</td>
+                  <td className="p-3 text-gray-500 text-[18px]">8989898989</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Date of Birth </td>
                   <td className="px-10">:</td>
-                  <td className="p-53 text-gray-500 text-[18px] ">
+                  <td className="p-3 text-gray-500 text-[18px] ">
                     15/10/2000
                   </td>
                 </tr>
@@ -83,18 +84,16 @@ const profile = () => {
                 <tr>
                   <td className="p-3 text-[20px]">Language</td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">
-                    Hindi, English
+                  <td className="p-3 text-gray-500 text-[18px] ">Hindi, English
                   </td>
                 </tr>
               </tbody>
             </table>
-<Link href="/passwordchange">
-
-<button className=" border border-red-500 text-red-600 p-2">
-            passwordchange
-            </button>
-</Link>
+            <Link href="/passwordchange">
+              <button className=" border border-red-500 text-red-600 p-2">
+                Password Change
+              </button>
+            </Link>
           </div>
         </div>
       </div>
