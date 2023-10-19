@@ -26,17 +26,23 @@ const menuList = [
         component: <New />,
         path:'/product-list'
       },
-      // {
-      //   id: '02',
-      //   label: "product grid",
-      //   component: <New />,
-      //   path:'/product-grid'
-      // },
+      {
+        id: '02',
+        label: "payment method",
+        component: <New />,
+        path:'/payment'
+      },
       {
         id: '03',
         label: "product add", 
         component: <New />,
         path:'/add-product',
+      },
+      {
+        id: '04',
+        label: "Notification", 
+        component: <New />,
+        path:'/notification',
       },
       {
         id: '05',
