@@ -40,6 +40,8 @@ const ProductList = () => {
   const [productBrands, setProductBrands] = useState(["All"]);
   const [productSearch, setProductSearch] = useState(["All"]);
   const [isShowComponent, setShowComponent] = useState("list");
+  const [isChecked, setisChecked] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   const pageLimit = "15";
   function closeModal() {
@@ -173,8 +175,51 @@ const ProductList = () => {
   };
 
   const handleShowComponent = (component) => {
-    // alert(val)
     setShowComponent(component);
+  };
+
+  const allDelete = async () => {
+    try {
+      console.log(isChecked);
+      const response = await axios.post(
+        `https://e-commerce-backend-brown.vercel.app/api/product/deleteBulkProducts`,
+        { ProductIds: isChecked }
+      );
+
+      if (response.status === 200) {
+        console.log("Successfully deleted brands");
+
+        getAllProducts();
+      } else {
+        console.error(
+          "Failed to delete brands. Status code: " + response.status
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting brands:", error);
+    }
+  };
+
+  const handleCheckbox = (e) => {
+    const { value, checked } = e.target;
+
+    // If the header checkbox is clicked
+    if (value === "selectAll") {
+      setSelectAll(checked);
+      if (checked) {
+        const allItemIds = allProduct.map((item) => item._id);
+        setisChecked(allItemIds);
+      } else {
+        setisChecked([]);
+      }
+    } else {
+      // If an item checkbox is clicked
+      if (checked) {
+        setisChecked([...isChecked, value]);
+      } else {
+        setisChecked(isChecked.filter((id) => id !== value));
+      }
+    }
   };
 
   return (
@@ -185,15 +230,20 @@ const ProductList = () => {
         <Header headTitle="Products List" />
 
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-
-        <div className="flex justify-center items-end gap-x-3 mr-3">
-      <div className="cursor-pointer" onClick={() => handleShowComponent("grid")}>
-        <Grid />
-      </div>
-      <div className="cursor-pointer" onClick={() => handleShowComponent("list")}>
-        <List />
-      </div>
-    </div>       
+          <div className="flex justify-center items-end gap-x-3 mr-3">
+            <div
+              className="cursor-pointer"
+              onClick={() => handleShowComponent("grid")}
+            >
+              <Grid />
+            </div>
+            <div
+              className="cursor-pointer"
+              onClick={() => handleShowComponent("list")}
+            >
+              <List />
+            </div>
+          </div>
           <div className="w-full">
             <input
               type="search"
@@ -202,10 +252,19 @@ const ProductList = () => {
               onChange={handleSearch} //search input
             ></input>
           </div>
+          <button
+            onClick={allDelete}
+            className="border border-1  rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2  mr-5 hover:border-none"
+          >
+            Delete
+          </button>
           <div className=" flex  gap-x-3">
             {/*----- filter by Brand start ------- */}
+
             <div className="w-auto flex flex-col  gap-1">
-              <label className="whitespace-nowrap text-start">Filter by Brand</label>
+              <label className="whitespace-nowrap text-start">
+                Filter by Brand
+              </label>
               <select
                 name="brand"
                 id="brand"
@@ -263,7 +322,6 @@ const ProductList = () => {
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                         {items.title}
                       </h6>
-                    
                     </div>
 
                     <div className=" flex justify-between items-center">
@@ -271,10 +329,13 @@ const ProductList = () => {
                         Brand : {items.brand}
                       </p>
                     </div>
-                      <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
-                        Offer Price : ₹{items.discountedPrice} <br/>
-                      </p>
-                      <del className="text-sm font-semibold capitalize my-2 text-sky-600"> Regular Price : ₹{items.price} </del>
+                    <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
+                      Offer Price : ₹{items.discountedPrice} <br />
+                    </p>
+                    <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                      {" "}
+                      Regular Price : ₹{items.price}{" "}
+                    </del>
                     <p className="text-[18px]  capitalize my-2 ">
                       Stock : {items.quantity}
                     </p>
@@ -283,7 +344,7 @@ const ProductList = () => {
                     </p>
                     <div className="flex">
                       {" "}
-                      <h1 className="mt-1 mr-1 text-[18px]" >Status : </h1>
+                      <h1 className="mt-1 mr-1 text-[18px]">Status : </h1>
                       <p className=" bg-green-100  m-2 text-center rounded-xl text-green-700 w-20 h-[20px]">
                         selling
                       </p>
@@ -337,7 +398,6 @@ const ProductList = () => {
                         <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                       </button>
                     </div>
-                  
                   </div>
                 </div>
               ))}
@@ -353,6 +413,9 @@ const ProductList = () => {
                   <input
                     type="checkbox"
                     className="mx-3 mt-6 cursor-pointer "
+                    value="selectAll"
+                    checked={selectAll}
+                    onChange={handleCheckbox}
                   />
                   {headItems.map((items) => (
                     <th className="text-start py-5">{items}</th>
@@ -368,6 +431,9 @@ const ProductList = () => {
                       <input
                         type="checkbox"
                         className="mx-3  cursor-pointer "
+                        value={item?._id}
+                        checked={item.isChecked}
+                        onChange={(e) => handleCheckbox(e)}
                       />
                     </td>
                     <td className="py-5 text-[18px] max-w-[200px]">
@@ -377,10 +443,9 @@ const ProductList = () => {
                       {item?.category ? item?.category : "-"}
                     </td>
                     <td className="py-5 text-[18px]">
-                   <del className="text-red-500">
-                   {item?.price ? item?.price : "-"}
-                   </del>
-
+                      <del className="text-red-500">
+                        {item?.price ? item?.price : "-"}
+                      </del>
                     </td>
                     <td className="py-5 text-[18px] text-green-500">
                       {item?.discountedPrice ? item?.discountedPrice : "-"}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import axios from "axios";
@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const AddProduct = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [getallBrand, setGetallBrand] = useState([]);
+  const [getallCategory, setGetallCategory] = useState([]);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -57,6 +59,47 @@ const AddProduct = () => {
         [name]: value,
       });
     }
+  };
+
+  const option = {
+    method: "GET",
+    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+  };
+
+  useEffect(() => {
+    defaultCategory();
+  }, []);
+
+  const defaultCategory = () => {
+    axios
+      .request(option)
+      .then((response) => {
+        setGetallCategory(response.data);
+        console.log(response.data);
+        handleClose();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const options = {
+    method: "GET",
+    url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+  };
+  useEffect(() => {
+    defaultBrand();
+  }, []);
+  const defaultBrand = () => {
+    axios
+      .request(options)
+      .then((response) => {
+        setGetallBrand(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const handleFormSubmit = async (e) => {
@@ -219,6 +262,7 @@ const AddProduct = () => {
                 </span>
                 <input
                   type="number"
+                  name="discountedPrice"
                   placeholder="OfferPrice"
                   className="custom-input"
                   value={productDetails.discountedPrice}
@@ -246,12 +290,15 @@ const AddProduct = () => {
                 minLength={3}
                 max={32}
               >
-                <option value="Watch">WATCH</option>
-                <option value="Laptop">LAPTOP</option>
-                <option value="Mobile">MOBILE</option>
-                <option value="Cate" selected>
-                  CATE
-                </option>
+                {getallCategory.map((item) => (
+                  <option
+                    key={item.id}
+                    value={item.title}
+                    selected={item.title === productDetails.category}
+                  >
+                    {item.title}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -287,16 +334,22 @@ const AddProduct = () => {
                   type="text"
                   name="brand"
                   placeholder="Add Brand Name"
-                  className="custom-input uppercase"
+                  className="custom-input "
                   value={productDetails.brand}
                   onChange={inputHandler}
                   required
-                  minLength={10}
+                  minLength={3}
                   max={32}
                 >
-                  <option value="apple">Apple</option>
-                  <option value="dell">DELL</option>
-                  <option value="Demo Product">Demo Product</option>
+                  {getallBrand.map((items) => (
+                    <option
+                      key={items.id}
+                      value={items.brand}
+                      selected={items.brand === productDetails.brand}
+                    >
+                      {items.brand}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

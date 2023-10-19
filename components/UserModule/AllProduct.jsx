@@ -86,34 +86,19 @@ const ProductGrid = () => {
                   <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                     {items.title}
                   </h6>
-                  {/* <button
-                    type="button"
-                    className=""
-                    data-te-toggle="tooltip"
-                    data-te-html="true"
-                    data-te-ripple-init=""
-                    data-te-ripple-color="light"
-                    title="Add To Wishlist"
-                  >
-                    <HeartIcon
-                      id="icon-like"
-                      className="h-6 w-6  text-gray-500 cursor-pointer"
-                    />
-                  </button>
-                  <p className="hidden text-red-800 text-[18px] ">
-                    Add To Favorites
-                  </p> */}
                 </div>
 
-              
-                  <p className="text-[16px]  capitalize  ">
-                    Brand : {items.brand}
-                  </p>
-                  <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                  Offer price : {items.discountedPrice} <br/>
-                   </p>
-                   <del className="text-sm font-semibold capitalize my-2 text-sky-600" > Regular Price : ₹{items.price}</del>
-               
+                <p className="text-[16px]  capitalize  ">
+                  Brand : {items.brand}
+                </p>
+                <p className="text-sm font-semibold capitalize my-2 text-sky-600">
+                  Offer price : {items.discountedPrice} <br />
+                </p>
+                <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                  {" "}
+                  Regular Price : ₹{items.price}
+                </del>
+
                 <p className="text-[18px]  capitalize my-2 ">
                   Stock : {items.quantity}
                 </p>
@@ -176,8 +161,6 @@ const ProductGrid = () => {
                     <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                   </button>
                 </div>
-
-                
               </div>
             </div>
           ))}
