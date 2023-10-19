@@ -5,7 +5,7 @@ import { data } from '../data/data.js';
 const Customers = () => {
   return (
     <div className='bg-gray-100 min-h-screen'>
-      <div className='flex justify-between p-4'>
+      <div className='flex justify-between pt-12 px-4 '>
         <h2>Customers</h2>
         <h2>Welcome Back, Clint</h2>
       </div>

@@ -69,7 +69,7 @@ const updateVendor = ({ _id }) => {
     e.preventDefault();
 
     const options = {
-      method: "PUT",
+      method: "put",
       url: `https://e-commerce-backend-brown.vercel.app/api/vendor/updateVendor/${slug}`,
       headers: {
         cookie:
