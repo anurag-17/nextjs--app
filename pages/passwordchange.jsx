@@ -1,9 +1,9 @@
 import React from "react";
 
-const passwordchange = () => {
+const PasswordChange = () => {
   return (
     <>
-      <div className="flex bg-white">
+      <div className="flex bg-white ml-5">
         <div className="w-6/12">
           <div className="bg-white  p-5 ">
             <h1 className="text-[25px] m-10 mt-0">Change Password</h1>
@@ -47,7 +47,7 @@ const passwordchange = () => {
             </div>
           </div>
         </div>
-        <div className="w-6/12">
+        <div className="w-6/12 my-auto">
           <img src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg?w=740&t=st=1697718579~exp=1697719179~hmac=44b24d05b8e7c60bfbc271df2575209a83b00d44fd9c3949a4a919e3acc9672d"  className="w-8/12 mx-auto"></img>
         </div>
       </div>
@@ -55,4 +55,4 @@ const passwordchange = () => {
   );
 };
 
-export default passwordchange;
+export default PasswordChange;

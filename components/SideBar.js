@@ -170,7 +170,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                           <span
                             className="submenu-toggle"
                           >
-                            <RightArrow />
+                            {/* <RightArrow /> */}
                           </span>
                         </p> :
                         <p className=" capitalize whitespace-nowrap" >

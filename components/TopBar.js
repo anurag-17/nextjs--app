@@ -10,6 +10,8 @@ import { BellIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
 import { LockClosedIcon, UserCircleIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import ProfileSideBar from "../pages/profilesidebar";
+
 
 
 
@@ -142,7 +144,7 @@ export default function TopBar({ showNav, setShowNav }) {
               
               <Menu.Item>
                   <Link
-                    href="/profile"
+                    href="/profilesidebar"
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
                    <UserCircleIcon class="h-5 w-5 mr-1 text-black   " />
