@@ -1,14 +1,14 @@
 import React from "react";
-import Bank from "../public/bank.jpg";
+import Bank from '../public/bank.svg'
 import Image from "next/image";
 import Visa from '../public/visa.png';
-import Visa1 from '../public/visa1.png';
-import Paypal from '../public/paypal.png';
+import Visa1 from '../public/visa1.svg'
+import paypal from '../public/paypal.svg';
 
-const payment = () => {
+const Payment = () => {
   return (
     <>
-      <div>
+      <div className="ml-5">
         <div className="bg-white p-5 border">
           <div className="flex flex-row justify-end">
             <div>
@@ -66,7 +66,7 @@ const payment = () => {
           <div className="my-7">
             <div className="flex justify-between items-center">
               <div className="flex">
-                <Image className="w-24" src={Paypal} />
+                <Image className="w-24" src={paypal} />
                 <div className="space-y-2 ml-4">
                   <p className="font-medium text-lg opacity-70 ">
                     Bank of America
@@ -89,4 +89,4 @@ const payment = () => {
   );
 };
 
-export default payment;
+export default Payment;

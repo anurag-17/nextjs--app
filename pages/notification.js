@@ -1,16 +1,22 @@
 import React from "react";
-import Telegram from "../public/telegram.png";
+import telegram from '../public/telegram.svg';
 import Image from "next/image";
+import star from '../public/stars.svg';
+import heart from '../public/hearts.svg';
+import discount from '../public/discount.svg';
+import etherum from '../public/etherum.svg';
+import folders from '../public/empty folder.svg';
+import puzzle from '../public/puzzle.svg';
 
-const notification = () => {
+const Notification = () => {
   return (
     <>
-      <div className="">
+      <div className="ml-5">
         <div className="p-4 border bg-white space-y-2">
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={telegram}/>
                 <div className="ml-3">
                   <p className="font-semibold text-lg">Send Inactive for 7 days</p>
                   <p className="opacity-60">
@@ -35,7 +41,7 @@ const notification = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={puzzle} />
                 <div className="ml-3">
                   <p className="font-semibold text-lg">New Contributions</p>
                   <p className="opacity-60">
@@ -60,7 +66,7 @@ const notification = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={folders} />
                 <div className="ml-3">
                   <p className="font-semibold text-lg">Empty Buffer</p>
                   <p className="opacity-60">
@@ -85,7 +91,7 @@ const notification = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={etherum} />
                 <div className="ml-3">
                   <p className="font-semibold text-lg">Your Ethereum Balance</p>
                   <p className="opacity-60">Evey new follower you can get notifcation
@@ -109,7 +115,7 @@ const notification = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={discount} />
                 <div className="ml-3">
                   <p className="font-semibold text-lg">New Offer</p>
                   <p className="opacity-60">
@@ -134,7 +140,7 @@ const notification = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={heart} />
                 <div className="ml-3">
                   <p className="font-semibold text-lg">You swapped exactly</p>
                   <p className="opacity-60">
@@ -159,7 +165,7 @@ const notification = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-16" src={Telegram} />
+                <Image className="w-14" src={star} />
                 <div className="ml-3">
                   <p className="font-semibold text-lg">A new rating has been received</p>
                   <p className="opacity-60">
@@ -186,4 +192,4 @@ const notification = () => {
   );
 };
 
-export default notification;
+export default Notification;
