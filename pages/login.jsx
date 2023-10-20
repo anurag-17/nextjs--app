@@ -42,7 +42,7 @@ const UserLogin = ({ API_URL }) => {
           sessionStorage.setItem("userDetails", JSON.stringify(response?.data));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-          //   router.push("/");
+            router.push("/admin-dashboard");
         } else {
           setLoading(false);
           return;

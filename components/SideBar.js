@@ -26,24 +26,14 @@ const menuList = [
         component: <New />,
         path:'/product-list'
       },
-      {
-        id: '02',
-        label: "payment method",
-        component: <New />,
-        path:'/payment'
-      },
+     
       {
         id: '03',
         label: "product add", 
         component: <New />,
         path:'/add-product',
       },
-      {
-        id: '04',
-        label: "Notification", 
-        component: <New />,
-        path:'/notification',
-      },
+    
       {
         id: '05',
         label: "Brand",
@@ -164,7 +154,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                     {
                       items.submenu ?
                         <p className=" capitalize whitespace-nowrap flex gap-5"
-                          onClick={() => handleSubMenuToggle(items.id)}
+                          onClick={() => handleSubMenuToggle(items.id)} 
                         >
                           {items.label}
                           <span
