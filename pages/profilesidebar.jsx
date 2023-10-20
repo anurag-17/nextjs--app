@@ -5,6 +5,7 @@ import Notification from "./notification";
 import Payment from "./payment";
 import PasswordChange from "./passwordchange";
 import ConnectSocial from "./connectsocial";
+import Logactivity from "./logactivity";
 
 const profilesideBar = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
@@ -38,7 +39,7 @@ const profilesideBar = ({ showNav }) => {
     {
       id: 4,
       label: "Login Activity",
-      component: '', // Replace with the actual component you want to render
+      component: <Logactivity/>, 
       icon: "fa fa-phone-square",
       path: '/profile'
     },

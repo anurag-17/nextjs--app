@@ -15,7 +15,7 @@ const PasswordChange = () => {
                 </label>
                 <input
                   type="password "
-                  className="border p-2 relative rounded-lg m-10 w-full"
+                  className="border p-4 relative rounded-lg m-10 w-full"
                 />
               </div>
               <div className=" mb-3 ">
@@ -24,7 +24,7 @@ const PasswordChange = () => {
                 </label>
                 <input
                   type="password "
-                  className="border p-2 relative rounded-lg m-10 w-full"
+                  className="border p-4 relative rounded-lg m-10 w-full"
                 />
               </div>
 
@@ -34,7 +34,7 @@ const PasswordChange = () => {
                 </label>
                 <input
                   type="password "
-                  className="border p-2 relative rounded-lg m-10 w-full"
+                  className="border p-4 relative rounded-lg m-10 w-full"
                 />
               </div>
 
