@@ -1,7 +1,6 @@
 import React from "react";
 import Bank from '../public/bank.svg'
 import Image from "next/image";
-import Visa from '../public/visa.png';
 import Visa1 from '../public/visa1.svg'
 import paypal from '../public/paypal.svg';
 
