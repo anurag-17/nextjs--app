@@ -254,7 +254,7 @@ export default function EditProduct() {
                     </span>
                     <input
                       type="number"
-                      name="price"
+                      name="discountedPrice"
                       placeholder="OfferPrice"
                       className="custom-input"
                       value={productDetails.discountedPrice}

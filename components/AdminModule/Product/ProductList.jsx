@@ -4,12 +4,13 @@ import "react-toastify/dist/ReactToastify.css";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
-import { HeartIcon } from "@heroicons/react/24/outline";
+
 
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
   PencilSquareIcon,
+  HeartIcon,
 } from "@heroicons/react/24/outline";
 import DeleteModal from "./Modal/deleteModal";
 import axios from "axios";
@@ -322,6 +323,7 @@ const ProductList = () => {
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                         {items.title}
                       </h6>
+                      <HeartIcon class="h-8https://e-commerce-backend-brown.vercel.app/api/auth/getaUser w-8 text-gray-500"/>
                     </div>
 
                     <div className=" flex justify-between items-center">

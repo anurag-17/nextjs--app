@@ -34,6 +34,31 @@ const Customers = () => {
       });
   };
 
+
+  const removeCustomer = async (_id) => {
+    console.log(_id);
+    await fetch(
+      `https://e-commerce-backend-brown.vercel.app/api/auth/deleteaUser/${_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          defaultCustomer();
+        } else {
+          throw new Error("failed to create");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div>
         <div className="flex justify-between items-center px-10 pt-4 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
@@ -103,11 +128,11 @@ const Customers = () => {
                   {items?.country}
                 </td>
                 <td className="py-5 text-[18px] mx-auto flex justify-center">
-                  {/* <Link href={`/update-vendor/${items?._id}`}>
+                  <Link href={`/edit-customer/${items?._id}`}>
                     <button>
                       <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                     </button>
-                  </Link> */}
+                  </Link>
 
                   <Popover className="relative">
                     <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
@@ -141,7 +166,7 @@ const Customers = () => {
                             </button>
                             <button
                               onClick={() => {
-                                removeVendor(items?._id);
+                                removeCustomer(items?._id);
                               }}
                               className="border border-1 rounded-md 
                               text-sm 

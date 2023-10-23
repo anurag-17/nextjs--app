@@ -16,7 +16,7 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Facebook *
                     </label>
-                  <img src="/facebook-176-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[23%] z-20"/>
+                  <img src="/facebook-176-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full "
@@ -28,7 +28,7 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Twitter *
                     </label>
-                    <img src="/twitter-154-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[23%] z-20"/>
+                    <img src="/twitter-154-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -39,7 +39,7 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Google Plus *
                     </label>
-                    <img src="/google-plus-circle-svgrepo-com.svg" className="w-8 absolute mt-11 ml-[22.5%] z-20"/>
+                    <img src="/google-plus-circle-svgrepo-com.svg" className="w-8 absolute mt-11 ml-[21.5%] z-20"/>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -53,7 +53,7 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Linkedin *
                     </label>
-                    <img src="/linkedin-161-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[23%] z-20"/>
+                    <img src="/linkedin-161-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -64,7 +64,7 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Instagram *
                     </label>
-                    <img src="/instagram-167-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[23%] z-20"/>
+                    <img src="/instagram-167-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -76,7 +76,7 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Pinterest *
                     </label>
-                    <img src="/pinterest-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[23%] z-20"/>
+                    <img src="/pinterest-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"

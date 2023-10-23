@@ -1,7 +1,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import React from "react";
-import { HeartIcon } from "@heroicons/react/24/outline";
+// import { HeartIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -59,6 +59,7 @@ const ProductGrid = () => {
                 <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                   {items.title}
                 </h6>
+              
               </div>
 
                 <p className="text-[18px]  capitalize my-2 ">
