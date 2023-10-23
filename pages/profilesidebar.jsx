@@ -11,6 +11,13 @@ import Logactivity from "./logactivity";
 
 const profilesideBar = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+  const [labelId, setLabelId] = useState(1);
+  const [show, setShow] = useState("Dashboard");
+
+  const handleClick = (label, id) => {
+    setShow(label);
+    setLabelId(id);
+  };
 
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
@@ -69,13 +76,13 @@ const profilesideBar = ({ showNav }) => {
 
   return (
     <div>
-       <h1 className="text-[30px] ml-4 ">Setting</h1>
+       <h1 className="text-[30px] ml-4 ">{selectedMenuItem ? `Setting/${selectedMenuItem.label}` : "Setting/Profile"}</h1>
     
     <div className="flex ">
     
       <div className="w-3/12 bg-white p-5">
         {/* Sidebar content */}
-        {menuList.map((item) => (
+       { menuList.map((item) => (
           <div
             key={item.id}
             className={`menu-item ${
@@ -86,7 +93,7 @@ const profilesideBar = ({ showNav }) => {
           
           <img className="w-6 absolute mt-5 ml-2" src={item.imagePath}   />
           
-        <li className="list-none border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500">    {item.label}</li>
+        <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500">    {item.label}</li>
           </div>
           
         ))}

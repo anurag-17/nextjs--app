@@ -14,7 +14,7 @@ const menuList = [
     icon: `fa fa-home`,
     path:'/admin-dashboard'
   },
-  {
+  { 
     id: 2,
     label: "products",
     component: '',
@@ -107,6 +107,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   const [show, setShow] = useState("Dashboard");
   const [labelId, setLabelId] = useState(1);
   const [activeSubMenuId, setActiveSubMenuId] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
 
   const handleClick = (label, id) => {
     setShow(label);
@@ -122,10 +124,21 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   };
 
   const handleSignout = () => {
-    sessionStorage.removeItem("accessToken")
-    sessionStorage.removeItem("userDetails")
-    router.push("/login")
-  }
+    console.log('Logging out...');
+    // Remove access token from local storage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userDetails');
+
+    // sessionStorage.removeItem('accessToken');
+    // sessionStorage.removeItem('userDetails');
+  
+    // Clear state variables (optional, depending on your use case)
+    setAccessToken(null);
+    setUserDetails(null);
+  
+    // Redirect to the login page
+    router.push('/login');
+  };
 
   return (
     <div ref={ref} className="fixed w-[250px] h-full bg-white shadow-sm">

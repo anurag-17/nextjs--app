@@ -36,8 +36,8 @@ const AdminLogin = ({ API_URL }) => {
       .then(function (response) {
         if (response?.status === 200) {
           console.log(response.data);
-          sessionStorage.setItem('accessToken', JSON.stringify(response.data.token));
-          sessionStorage.setItem('userDetails', JSON.stringify(response?.data));
+          localStorage.setItem('accessToken', JSON.stringify(response.data.token));
+          localStorage.setItem('userDetails', JSON.stringify(response?.data));
           setLoading(false);
           toast.success('Success. Login Successfully!');
           router.push('/admin-dashboard');
