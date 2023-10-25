@@ -34,7 +34,7 @@ const AdminLogin = ({ API_URL }) => {
     axios
       .request(options)
       .then(function (response) {
-        if (response?.status === 200) {
+        if (response?.status === 201) {
           console.log(response.data);
           localStorage.setItem('accessToken', JSON.stringify(response.data.token));
           localStorage.setItem('userDetails', JSON.stringify(response?.data));

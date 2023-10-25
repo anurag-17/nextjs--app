@@ -19,10 +19,15 @@ const PasswordChange = ({ _id }) => {
           _id,
           currentPassword,
           newPassword,
+          
         }
+  //       {
+  //         Authorization: `Bearer ${token}`,
+  // 'Content-Type': 'application/json',
+  //       }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201 ) {
         setMessage("Password changed successfully.");
       } else {
         setMessage("Password change failed: " + response.data.error);
@@ -35,7 +40,7 @@ const PasswordChange = ({ _id }) => {
     }
   };
   console.log("hhh", _id);
-
+  
   return (
     <>
       <div className="flex bg-white ml-5 ">
@@ -44,7 +49,7 @@ const PasswordChange = ({ _id }) => {
             <h1 className="text-[25px] m-10 mt-0">Change Password</h1>
 
             <form onSubmit={handleSubmit}>
-            <PasswordChange _id = {userId}/>
+            {/* <PasswordChange _id = {userId}/> */}
               <div className="my-16">
                 <div className=" mb-3 ">
                   <label className="absolute mt-6 ml-14 z-20 text-[18px] text-gray-500 bg-white">

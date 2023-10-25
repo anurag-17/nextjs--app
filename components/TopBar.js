@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment,useState } from "react";
 import {
   Bars3CenterLeftIcon,
   PencilIcon,
@@ -21,6 +21,28 @@ import ProfileSideBar from "../pages/profilesidebar";
 
 
 export default function TopBar({ showNav, setShowNav }) {
+  const [accessToken, setAccessToken] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+
+  const handleSignout = () => {
+    console.log('Logging out...');
+    // Remove access token from local storage
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('userDetails');
+
+    // sessionStorage.removeItem('accessToken');
+    // sessionStorage.removeItem('userDetails');
+  
+    // Clear state variables (optional, depending on your use case)
+    setAccessToken(null);
+    setUserDetails(null);
+  
+    // Redirect to the login page
+    router.push('/login');
+  };
+
+
+
   return (
     <div
       className={`fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
@@ -165,6 +187,7 @@ export default function TopBar({ showNav, setShowNav }) {
                   <Link
                     href="/login"
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
+                    onClick={handleSignout}
                   >
                    <LockClosedIcon class="h-5 w-5 mr-1 " />
                     Log Out
