@@ -4,7 +4,7 @@ const language = () => {
   return (
     <>
       <h1 className="text-[30px] font-semibold ">Language</h1>
-      <p className="mb-10">Home / Language</p>
+      <p className="mb-19">Home / Language</p>
       <div className="bg-white border border-gray-300 rounded-md p-4 flex flex-wrap ">
     
         <div className="bg-[#F0F3F8] flex justify-between p-5 w-[48%] m-4 rounded-lg">
