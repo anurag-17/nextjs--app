@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const ConnectSocial = () => {
@@ -16,7 +17,9 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Facebook *
                     </label>
-                  <img src="/facebook-176-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                 <Link href="https://www.facebook.com/login/">
+                 <img src="/facebook-176-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                 </Link>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full "
@@ -28,7 +31,9 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Twitter *
                     </label>
+                    <Link href="https://twitter.com/">
                     <img src="/twitter-154-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                    </Link>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -39,7 +44,9 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Google Plus *
                     </label>
+                    <Link href="https://accounts.google.com/v3/signin">
                     <img src="/google-plus-circle-svgrepo-com.svg" className="w-8 absolute mt-11 ml-[21.5%] z-20"/>
+                    </Link>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -53,7 +60,9 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Linkedin *
                     </label>
+                    <Link href="https://www.linkedin.com/home">
                     <img src="/linkedin-161-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                    </Link>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -64,7 +73,9 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Instagram *
                     </label>
+                    <Link href="https://www.instagram.com/accounts/login/">
                     <img src="/instagram-167-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                    </Link>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"
@@ -76,7 +87,9 @@ const ConnectSocial = () => {
                     <label className="absolute mt-4 ml-8 z-20 text-[18px] text-gray-500 bg-white">
                       Pinterest *
                     </label>
+                    <Link href="https://in.pinterest.com/login/">
                     <img src="/pinterest-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                    </Link>
                     <input
                       type="password "
                       className="border p-5 relative rounded-lg my-7 w-full"

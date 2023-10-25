@@ -6,18 +6,22 @@ import { setCookie } from "cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import Cart from "./cart";
+
 
 const UserLogin = ({ API_URL }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
+  const [userId, setUserId] = useState("")
   const router = useRouter();
   const ClearData = () => {
     setPassword("");
     setEmail("");
+    setUserId("");
   };
 
-  const addFormHandler = async (e) => {
+  const addFormHandler = async (e, _id) => {
     e.preventDefault();
     setLoading(true);
     const options = {
@@ -27,19 +31,23 @@ const UserLogin = ({ API_URL }) => {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
       },
-      data: { email: email, password: password },
+      data: { email: email, password: password }, // Use _id here
     };
-
+   
+  
     axios
       .request(options)
       .then(function (response) {
-        if (response?.status === 200) {
+        if (response?.status === 201) {
           console.log(response.data);
-          localStorage.setItem("userToken", JSON.stringify(response.data.token));
+          localStorage.setItem(
+            "userToken",
+            JSON.stringify(response.data.token)
+          );
           localStorage.setItem("userDetails", JSON.stringify(response?.data));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-            router.push("/admin-dashboard");
+          router.push("/admin-dashboard");
         } else {
           setLoading(false);
           return;
@@ -50,11 +58,14 @@ const UserLogin = ({ API_URL }) => {
         console.error(error);
         toast.error("Failed, Invalid Credentials!");
       });
+      console.log("id", _id);
   };
+  
 
   return (
     <div>
       <ToastContainer />
+     <Cart _id={_id}/>
       <div
         className="2xl:min-h-screen 2xl:py-40 bg-[#DFF9FF]   xl:min-h-screen xl:py-20
         lg:min-h-screen lg:py-16

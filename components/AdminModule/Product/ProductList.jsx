@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 
-
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
@@ -43,6 +42,9 @@ const ProductList = () => {
   const [isShowComponent, setShowComponent] = useState("list");
   const [isChecked, setisChecked] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [added, setAdded] = useState(false);
+  const [productId, setProductId] = useState("your_product_id");
+  const [quantity, setQuantity] = useState(1);
 
   const pageLimit = "15";
   function closeModal() {
@@ -223,6 +225,43 @@ const ProductList = () => {
     }
   };
 
+  const addToCart = async (productId, quantity) => {
+    const apiUrl = "https://e-commerce-backend-brown.vercel.app/api/auth/cart";
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: productId,
+          quantity: quantity,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data; // You may want to return some confirmation or response from the server.
+      } else {
+        throw new Error("Failed to add the product to the cart");
+      }
+    } catch (error) {
+      console.error("Error adding the product to the cart:", error);
+      throw error;
+    }
+  };
+  const handleAddToCart = async () => {
+    try {
+      const response = await addToCart(productId, quantity);
+      console.log("Product added to cart:", response);
+      // Handle the response as needed, e.g., update the UI.
+    } catch (error) {
+      console.error("Failed to add the product to the cart:", error);
+      // Handle the error, e.g., show an error message to the user.
+    }
+  };
+
   return (
     <>
       <ToastContainer />
@@ -323,7 +362,9 @@ const ProductList = () => {
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                         {items.title}
                       </h6>
-                      <HeartIcon class="h-8https://e-commerce-backend-brown.vercel.app/api/auth/getaUser w-8 text-gray-500"/>
+                      <button onClick={handleAddToCart}>
+                        <HeartIcon class="h-8 w-8 text-gray-500" />
+                      </button>
                     </div>
 
                     <div className=" flex justify-between items-center">
@@ -400,6 +441,9 @@ const ProductList = () => {
                         <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                       </button>
                     </div>
+                    <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
+                      Add To Cart
+                    </button>
                   </div>
                 </div>
               ))}

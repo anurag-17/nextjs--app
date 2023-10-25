@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import New from "./New";
 import RightArrow from "./svg/rightArrow";
 import Customers from "../pages/customers";
+import language from "../pages/language";
+import Cookies from "js-cookie";
 
 const menuList = [
   {
@@ -94,6 +96,13 @@ const menuList = [
   },
   {
     id: 7,
+    label: "Language",
+    component: <language/>,
+    icon: `fa fa-phone-square`,
+    path: '/language'
+  },
+  {
+    id: 8,
     label: "settings",
     component: '',
     icon: `fa fa-phone-square`,
@@ -107,7 +116,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   const [show, setShow] = useState("Dashboard");
   const [labelId, setLabelId] = useState(1);
   const [activeSubMenuId, setActiveSubMenuId] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
+  const [userToken, setUserToken] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
 
   const handleClick = (label, id) => {
@@ -125,15 +134,12 @@ const SideBar = forwardRef(({ showNav }, ref) => {
 
   const handleSignout = () => {
     console.log('Logging out...');
-    // Remove access token from local storage
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userDetails');
-
-    // sessionStorage.removeItem('accessToken');
-    // sessionStorage.removeItem('userDetails');
+    // Remove user token from local storage
+    Cookies.remove('userToken');
+    Cookies.remove('userDetails');
   
     // Clear state variables (optional, depending on your use case)
-    setAccessToken(null);
+    setUserToken(null);
     setUserDetails(null);
   
     // Redirect to the login page
