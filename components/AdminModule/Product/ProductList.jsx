@@ -294,7 +294,7 @@ const ProductList = () => {
           </div>
           <button
             onClick={allDelete}
-            className="border border-1  rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2  mr-5 hover:border-none"
+            className="border border-1 mt-7 rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2  mr-5 hover:border-none"
           >
             Delete
           </button>
@@ -350,21 +350,22 @@ const ProductList = () => {
                   className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
                   key={ix}
                 >
+                <Link href={`/view-product/${items?._id}`}>
                   <Image
                     src="/img1.jpeg"
                     alt=""
                     className=" mx-auto rounded-[20px] "
                     width={400}
                     height={400}
-                  />
+                  /></Link>
                   <div className="bg-white px-4 pb-6 rounded-[20px]">
                     <div className="flex justify-between items-center my-4">
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                         {items.title}
                       </h6>
-                      <button onClick={handleAddToCart}>
+                      {/* <button onClick={handleAddToCart}>
                         <HeartIcon class="h-8 w-8 text-gray-500" />
-                      </button>
+                      </button> */}
                     </div>
 
                     <div className=" flex justify-between items-center">
@@ -441,9 +442,9 @@ const ProductList = () => {
                         <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                       </button>
                     </div>
-                    <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
+                    {/* <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
                       Add To Cart
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}
