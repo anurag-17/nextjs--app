@@ -172,7 +172,7 @@ const AdminLogin = ({ API_URL }) => {
       </div>
     </div>
   );
-};
+};  
 
 export default AdminLogin;
 

@@ -59,7 +59,7 @@ export default function Layout({ children }) {
   return (
     <>
       {
-        router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product" ?
+        router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product" || router.pathname === "/wish-list" || router.pathname === "/user-order" || router.pathname === "/userFAQ"  ?
           null :
           <>
             <TopBar showNav={showNav} setShowNav={setShowNav} />
@@ -78,10 +78,10 @@ export default function Layout({ children }) {
           </>
       }
       <main
-        className={` transition-all duration-[400ms] ${(showNav && !isMobile) && !(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product") ? "pt-16 pl-56" : ""
+        className={` transition-all duration-[400ms] ${(showNav && !isMobile) && !(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product" || router.pathname === "/wish-list") ? "pt-16 pl-56" : ""
           }`}
       >
-        <div className={!(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product") ? "px-4 md:px-16" : ""}>{children}</div>
+        <div className={!(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product" ) ? "px-4 md:px-16" : ""}>{children}</div>
       </main>
     </>
   );

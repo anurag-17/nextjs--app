@@ -1,38 +1,20 @@
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import React from "react";
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { Fragment, useState, useEffect } from "react";
+import React from 'react'
+import { useState,useEffect } from 'react';
 import axios from "axios";
-import { Dialog, Transition } from "@headlessui/react";
-import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
-
 import Link from "next/link";
+import { HeartIcon } from "@heroicons/react/24/outline";
 import {
-  MagnifyingGlassPlusIcon,
-  TrashIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
-import TopBarCustomer from "../../pages/topBar-customer";
-const ProductGrid = () => {
-  const [allProduct, setAllProduct] = useState([]);
+    MagnifyingGlassPlusIcon,
+    TrashIcon,
+    PencilSquareIcon,
+  } from "@heroicons/react/24/outline";
+import TopBarCustomer from "./topBar-customer";
+
+const WishList = () => {
+     const [allProduct, setAllProduct] = useState([]);
   const [addInWishlist, setAddInWishlist] = useState();
   let [productID, setProductID] = useState("");
-  let [isOpenDelete, setOpenDelete] = useState(false);
-  let [isRefresh, setRefresh] = useState(false);
-
-  function closeModal() {
-    setOpenDelete(false);
-  }
-
-  function openModal(id) {
-    setProductID(id);
-    setOpenDelete(true);
-  }
-
-  const refreshData = () => {
-    setRefresh(!isRefresh);
-  };
 
   useEffect(() => {
     getAllProducts();
@@ -72,16 +54,18 @@ const ProductGrid = () => {
       // Handle the error, e.g., show an error message to the user.
     }
   };
-
+ 
   return (
-    <>
-      <section className="bg-gray-00 min-h-screen">
-      <TopBarCustomer/>
-        <div className="flex justify-between  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-          <h2 className="text-2xl font-semibold">Products Grid </h2>
+  <>
+    
+    {/* <section className="bg-gray-00 min-h-screen"> */}
+       <TopBarCustomer/>
+       <div className="flex justify-between  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
+       <h2 className="text-2xl font-semibold">Wish List </h2>
           <h2 className="mt-12">Welcome Back, User</h2>
-        </div>
-        <div className="grid lg:grid-cols-4 gap-7 my-16 ">
+       </div> {/* </div> */}
+   
+    <div className="grid lg:grid-cols-4 gap-7 my-16 ">
           {allProduct.map((items, ix) => (
             <div
               className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
@@ -101,7 +85,13 @@ const ProductGrid = () => {
                     {items.title}
                   </h6>
                   <button onClick={handleAddToCart}>
-                        <HeartIcon class="h-8 w-8 text-gray-500" />
+                  <Image
+                src="/hart.svg"
+                alt=""
+                className=" mx-auto rounded-[20px] "
+                width={50}
+                height={50}
+              />
                       </button>
                 </div>
 
@@ -185,52 +175,10 @@ const ProductGrid = () => {
             </div>
           ))}
         </div>
-      </section>
-      <Transition appear show={isOpenDelete} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+        {/* </section> */}
+    
+  </>
+  )
+}
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
-                  >
-                    Are You Sure! Want to Delete?
-                  </Dialog.Title>
-                  <DeleteModal
-                    productID={productID}
-                    closeModal={closeModal}
-                    refreshData={refreshData}
-                  />
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
-  );
-};
-
-export default dynamic(() => Promise.resolve(ProductGrid), { ssr: false });
+export default WishList
