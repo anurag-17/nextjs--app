@@ -8,12 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Cart from "./cart";
 
-
 const UserLogin = ({ API_URL }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
-  const [userId, setUserId] = useState("")
+  const [userId, setUserId] = useState("");
   const router = useRouter();
   const ClearData = () => {
     setPassword("");
@@ -33,8 +32,7 @@ const UserLogin = ({ API_URL }) => {
       },
       data: { email: email, password: password }, // Use _id here
     };
-   
-  
+
     axios
       .request(options)
       .then(function (response) {
@@ -47,7 +45,7 @@ const UserLogin = ({ API_URL }) => {
           localStorage.setItem("userDetails", JSON.stringify(response?.data));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-          router.push("/admin-dashboard");
+          router.push("/all-product");
         } else {
           setLoading(false);
           return;
@@ -57,15 +55,15 @@ const UserLogin = ({ API_URL }) => {
         setLoading(false);
         console.error(error);
         toast.error("Failed, Invalid Credentials!");
+       
       });
-      console.log("id", _id);
+    console.log("id", _id);
   };
-  
 
   return (
     <div>
       <ToastContainer />
-     <Cart _id={_id}/>
+
       <div
         className="2xl:min-h-screen 2xl:py-40 bg-[#DFF9FF]   xl:min-h-screen xl:py-20
         lg:min-h-screen lg:py-16
