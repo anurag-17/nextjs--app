@@ -3,9 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const UserUpdatePassword = () => {
-  const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userDetails"))
-  );
+
 
 
   const [formData, setFormData] = useState({
@@ -18,7 +16,7 @@ const UserUpdatePassword = () => {
     .post(
       "https://e-commerce-backend-brown.vercel.app/api/auth/updatePassword",
       {
-        _id: customerID,
+        
       
       },
       {
