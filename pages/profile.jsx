@@ -9,33 +9,42 @@ const profile = () => {
   const [id, setId] = useState("");
   const [response, setResponse] = useState("");
   const [getAllCustomer, setGetAllCustomer] = useState([]);
-
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-    headers: {
-      "Content-Type": "application/json",
-      "User-Agent": "PostmanRuntime/7.33.0",
-    },
-  };
+  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
+  // const options = {
+  //   method: "GET",
+  //   url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
+    
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "User-Agent": "PostmanRuntime/7.33.0",
+  //   },
+  //   data:{_id:customerID}
+  // };
 
   useEffect(() => {
     defaultCustomer();
   }, []);
 
   const defaultCustomer = () => {
-    axios
-      .request(options)
-      .then((response) => {
-        setGetAllCustomer(response.data);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        if (error.response) {
-          console.error("Server Response Data:", error.response.data);
-        }
-      });
+    // axios
+    //   .request(options)
+    //   .then((response) => {
+    //     setGetAllCustomer(response.data);
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //     if (error.response) {
+    //       console.error("Server Response Data:", error.response.data);
+    //     }
+    //   });
+    console.log(customerID);
+
+    // axios.get("https://e-commerce-backend-brown.vercel.app/api/auth/getaUser", {_id:customerID}).then((res)=>{
+    //   console.log(res);
+    // }).catch((e)=>{
+    //   console.log(e);
+    // })
   };
 
   return (
