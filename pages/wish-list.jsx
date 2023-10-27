@@ -1,19 +1,19 @@
 import Image from "next/image";
-import React from 'react'
-import { useState,useEffect } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import {
-    MagnifyingGlassPlusIcon,
-    TrashIcon,
-    PencilSquareIcon,
-  } from "@heroicons/react/24/outline";
+  MagnifyingGlassPlusIcon,
+  TrashIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/outline";
 import TopBarCustomer from "./topBar-customer";
 import UserNavbar from "../components/UserModule/userNavbar";
 
 const WishList = () => {
-     const [allProduct, setAllProduct] = useState([]);
+  const [allProduct, setAllProduct] = useState([]);
   const [addInWishlist, setAddInWishlist] = useState();
   let [productID, setProductID] = useState("");
 
@@ -55,45 +55,42 @@ const WishList = () => {
       // Handle the error, e.g., show an error message to the user.
     }
   };
- 
+
   return (
-  <>
-    <UserNavbar/>
-    {/* <section className="bg-gray-00 min-h-screen"> */}
-       {/* <TopBarCustomer/> */}
-       <div className="flex justify-between  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-       <h2 className="text-2xl font-semibold">Wish List </h2>
-          <h2 className="mt-12">Welcome Back, User</h2>
-       </div> {/* </div> */}
-   
-    <div className="grid lg:grid-cols-4 gap-7 my-16 ">
+    <>
+      <UserNavbar />
+      <div className="px-20">
+        <h2 className="text-[30px] font-medium my-5 ">Wish List </h2>
+
+        <div className="grid lg:grid-cols-4 gap-7  ">
           {allProduct.map((items, ix) => (
             <div
               className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
               key={ix}
             >
-            <Link href={`/view-product/${items?._id}`}>
-              <Image
-                src="/img1.jpeg"
-                alt=""
-                className=" mx-auto rounded-[20px] "
-                width={400}
-                height={400}
-              /></Link>
+              <Link href={`/view-product/${items?._id}`}>
+                <Image
+                  src="/img1.jpeg"
+                  alt=""
+                  className=" mx-auto rounded-[20px] "
+                  width={400}
+                  height={400}
+                />
+              </Link>
               <div className="bg-white px-4 pb-6 rounded-[20px]">
                 <div className="flex justify-between items-center my-4">
                   <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                     {items.title}
                   </h6>
                   <button onClick={handleAddToCart}>
-                  <Image
-                src="/hart.svg"
-                alt=""
-                className=" mx-auto rounded-[20px] "
-                width={50}
-                height={50}
-              />
-                      </button>
+                    <Image
+                      src="/hart.svg"
+                      alt=""
+                      className=" mx-auto rounded-[20px] "
+                      width={50}
+                      height={50}
+                    />
+                  </button>
                 </div>
 
                 <p className="text-[16px]  capitalize  ">
@@ -138,9 +135,9 @@ const WishList = () => {
                     data-te-ripple-color="light"
                     title="View product"
                   >
-                     <Link href={`/view-product/${items?._id}`}>
+                    <Link href={`/view-product/${items?._id}`}>
                       <MagnifyingGlassPlusIcon className="cursor-pointer h-10 w-10 text-gray-800" />
-                      </Link>
+                    </Link>
                   </button>
                   {/* <button
                     type="button"
@@ -169,17 +166,17 @@ const WishList = () => {
                     <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                   </button> */}
                 </div>
-                  <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
-                      Add To Cart
-                    </button>
+                <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
+                  Add To Cart
+                </button>
               </div>
             </div>
           ))}
         </div>
         {/* </section> */}
-    
-  </>
-  )
-}
+      </div>
+    </>
+  );
+};
 
-export default WishList
+export default WishList;

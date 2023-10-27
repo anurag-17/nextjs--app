@@ -9,8 +9,8 @@ import UserNavbar from "./userNavbar";
 const UserProfile = () => {
   const [id, setId] = useState("");
   const [response, setResponse] = useState("");
-  const [getAllCustomer, setGetAllCustomer] = useState([]);
-
+  const [getAllCustomer, setGetAllCustomer] = useState();
+  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
   const options = {
     method: "GET",
     url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
@@ -18,6 +18,7 @@ const UserProfile = () => {
       "Content-Type": "application/json",
       "User-Agent": "PostmanRuntime/7.33.0",
     },
+    data:{_id:customerID}
   };
 
   useEffect(() => {
@@ -25,17 +26,23 @@ const UserProfile = () => {
   }, []);
 
   const defaultCustomer = () => {
-    axios
-      .request(options)
-      .then((response) => {
-        setGetAllCustomer(response.data);
-        console.log(response);
+    console.log(customerID);
+  
+    axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/getaUser", {
+      _id: customerID
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "PostmanRuntime/7.33.0"
+      }
+    })
+      .then((res) => {
+        console.log(res.data.getaUser);
+        setGetAllCustomer(res.data.getaUser)
+        // Assuming the response contains data property, adjust this based on the actual API response structure
       })
       .catch((error) => {
-        console.error("Error:", error);
-        if (error.response) {
-          console.error("Server Response Data:", error.response.data);
-        }
+        console.error(error);
       });
   };
 
@@ -43,6 +50,7 @@ const UserProfile = () => {
     <>
     <UserNavbar/>
       <div className=" px-20 ">
+
       <h1 className="text-[30px] pl-10 mb-5">Your Account</h1>
         <div className="bg-white ml-5 p-5 ">
           <div className="flex my-auto  bg-[#e2eaf5] px-10 py-5">
@@ -51,12 +59,10 @@ const UserProfile = () => {
               <p className="text-sky-600 text-xl mx-3 cursor-pointer">Change</p>
             </div>
             <div className="my-auto ml-10 ">
-              {getAllCustomer.map((items) => (
-                <h1 className="my-auto mx-5 text-[35px]">
+            <h1 className="my-auto mx-5 text-[35px]">
                   {" "}
-                  {items?.firstname}
+                  {getAllCustomer?.firstname}
                 </h1>
-              ))}
               <p className="text-sky-600 text-xl my-auto  mx-5">
                 I am Professional Frontend Web Developer
               </p>
@@ -85,50 +91,50 @@ const UserProfile = () => {
                   <td className="p-3 text-[20px]">Full Name</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px]">
-                    Hariom Patil
+                  {getAllCustomer?.firstname}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">About</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                    i am a frontend web developer
+                  {getAllCustomer?.about}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3  text-[20px] ">Email</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                    hariompatil00gmail.com
+                  {getAllCustomer?.email}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Phone</td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]">8989898989</td>
+                  <td className="p-3 text-gray-500 text-[18px]">  {getAllCustomer?.mobile}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Date of Birth </td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">15/10/2000</td>
+                  <td className="p-3 text-gray-500 text-[18px] ">  {getAllCustomer?.dob}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Address</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                    Palasia, Indore
+                  {getAllCustomer?.address}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Country</td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]  ">India</td>
+                  <td className="p-3 text-gray-500 text-[18px]  ">  {getAllCustomer?.country}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Language</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                    Hindi, English
+                  {getAllCustomer?.language}
                   </td>
                 </tr>
               </tbody>

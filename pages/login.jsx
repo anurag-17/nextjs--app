@@ -20,7 +20,7 @@ const UserLogin = ({ API_URL }) => {
     setUserId("");
   };
 
-  const addFormHandler = async (e, _id) => {
+  const addFormHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
     const options = {
@@ -37,14 +37,15 @@ const UserLogin = ({ API_URL }) => {
       .request(options)
       .then(function (response) {
         if (response?.status === 201) {
-          console.log(response.data);
+          // console.log(response.data.user._id);
           localStorage.setItem(
             "userToken",
             JSON.stringify(response.data.token)
           );
-          localStorage.setItem("userDetails", JSON.stringify(response?.data));
+          localStorage.setItem("userDetails", JSON.stringify(response?.data?.user?._id));
           setLoading(false);
           toast.success("Success, Login Successfully!");
+
           router.push("/all-product");
         } else {
           setLoading(false);
@@ -57,7 +58,7 @@ const UserLogin = ({ API_URL }) => {
         toast.error("Failed, Invalid Credentials!");
        
       });
-    console.log("id", _id);
+    
   };
 
   return (
