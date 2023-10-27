@@ -43,8 +43,8 @@ const menuList = [
     label: "Setting",
     component: "",
     icon: "fa fa-phone-square",
-    imagePath: "/social.svg",
-    path: "/",
+    imagePath: "",
+    path: "/user-setting",
   },
   {
     id: 6,

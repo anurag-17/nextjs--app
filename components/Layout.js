@@ -63,7 +63,8 @@ export default function Layout({ children }) {
       router.pathname === "/wish-list" ||
       router.pathname === "/user-order" ||
       router.pathname === "/userFAQ" ||
-      router.pathname === "/user-profile" ? null : (
+      router.pathname === "/user-profile" ||
+      router.pathname === "/user-setting" ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
           <Transition
@@ -92,7 +93,8 @@ export default function Layout({ children }) {
             router.pathname === "/userFAQ" ||
             router.pathname === "/user-profile" ||
             router.pathname === "/user-order" ||
-            router.pathname === "/wish-list"
+            router.pathname === "/wish-list" ||
+            router.pathname === "/user-setting"
           )
             ? "pt-16 pl-56"
             : ""
@@ -108,7 +110,8 @@ export default function Layout({ children }) {
               router.pathname === "/user-profile" ||
               router.pathname === "/wish-list" ||
               router.pathname === "/user-order" ||
-              router.pathname === "/all-product"
+              router.pathname === "/all-product" ||
+              router.pathname === "/user-setting"
             )
               ? "px-4 md:px-16"
               : ""

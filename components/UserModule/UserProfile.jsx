@@ -7,19 +7,10 @@ import axios from "axios";
 import UserNavbar from "./userNavbar";
 
 const UserProfile = () => {
-  const [id, setId] = useState("");
-  const [response, setResponse] = useState("");
   const [getAllCustomer, setGetAllCustomer] = useState();
-  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-    headers: {
-      "Content-Type": "application/json",
-      "User-Agent": "PostmanRuntime/7.33.0",
-    },
-    data:{_id:customerID}
-  };
+  const [customerID, setCustomerID] = useState(
+    JSON.parse(localStorage.getItem("userDetails"))
+  );
 
   useEffect(() => {
     defaultCustomer();
@@ -27,19 +18,23 @@ const UserProfile = () => {
 
   const defaultCustomer = () => {
     console.log(customerID);
-  
-    axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/getaUser", {
-      _id: customerID
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": "PostmanRuntime/7.33.0"
-      }
-    })
+
+    axios
+      .post(
+        "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
+        {
+          _id: customerID,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "PostmanRuntime/7.33.0",
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data.getaUser);
-        setGetAllCustomer(res.data.getaUser)
-        // Assuming the response contains data property, adjust this based on the actual API response structure
+        setGetAllCustomer(res.data.getaUser);
       })
       .catch((error) => {
         console.error(error);
@@ -48,10 +43,9 @@ const UserProfile = () => {
 
   return (
     <>
-    <UserNavbar/>
+      <UserNavbar />
       <div className=" px-20 ">
-
-      <h1 className="text-[30px] pl-10 mb-5">Your Account</h1>
+        <h1 className="text-[30px] pl-10 mb-5">Your Account</h1>
         <div className="bg-white ml-5 p-5 ">
           <div className="flex my-auto  bg-[#e2eaf5] px-10 py-5">
             <div className=" w-1/12">
@@ -59,10 +53,10 @@ const UserProfile = () => {
               <p className="text-sky-600 text-xl mx-3 cursor-pointer">Change</p>
             </div>
             <div className="my-auto ml-10 ">
-            <h1 className="my-auto mx-5 text-[35px]">
-                  {" "}
-                  {getAllCustomer?.firstname}
-                </h1>
+              <h1 className="my-auto mx-5 text-[35px]">
+                {" "}
+                {getAllCustomer?.firstname} {getAllCustomer?.lastname}
+              </h1>
               <p className="text-sky-600 text-xl my-auto  mx-5">
                 I am Professional Frontend Web Developer
               </p>
@@ -91,50 +85,59 @@ const UserProfile = () => {
                   <td className="p-3 text-[20px]">Full Name</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px]">
-                  {getAllCustomer?.firstname}
+                    {getAllCustomer?.firstname} {getAllCustomer?.lastname}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">About</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                  {getAllCustomer?.about}
+                    {getAllCustomer?.about}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3  text-[20px] ">Email</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                  {getAllCustomer?.email}
+                    {getAllCustomer?.email}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Phone</td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]">  {getAllCustomer?.mobile}</td>
+                  <td className="p-3 text-gray-500 text-[18px]">
+                    {" "}
+                    {getAllCustomer?.mobile}
+                  </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Date of Birth </td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">  {getAllCustomer?.dob}</td>
+                  <td className="p-3 text-gray-500 text-[18px] ">
+                    {" "}
+                    {getAllCustomer?.dob}
+                  </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Address</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                  {getAllCustomer?.address}
+                    {getAllCustomer?.address}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Country</td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]  ">  {getAllCustomer?.country}</td>
+                  <td className="p-3 text-gray-500 text-[18px]  ">
+                    {" "}
+                    {getAllCustomer?.country}
+                  </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Language</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                  {getAllCustomer?.language}
+                    {getAllCustomer?.language}
                   </td>
                 </tr>
               </tbody>
