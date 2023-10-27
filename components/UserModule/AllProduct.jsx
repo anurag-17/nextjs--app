@@ -77,12 +77,8 @@ const ProductGrid = () => {
   return (
     <>
     <UserNavbar/>
-      <section className="bg-gray-00 min-h-screen">
-      <TopBarCustomer/>
-        <div className="flex justify-between  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-          <h2 className="text-2xl font-semibold">Products Grid </h2>
-          <h2 className="mt-12">Welcome Back, User</h2>
-        </div>
+      <section className="bg-gray-00 min-h-screen px-20">
+     
         <div className="grid lg:grid-cols-4 gap-7 my-16 ">
           {allProduct.map((items, ix) => (
             <div
