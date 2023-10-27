@@ -8,43 +8,33 @@ import axios from "axios";
 const profile = () => {
   const [id, setId] = useState("");
   const [response, setResponse] = useState("");
-  const [getAllCustomer, setGetAllCustomer] = useState([]);
+  const [getAllCustomer, setGetAllCustomer] = useState();
   const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
-  // const options = {
-  //   method: "GET",
-  //   url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-    
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     "User-Agent": "PostmanRuntime/7.33.0",
-  //   },
-  //   data:{_id:customerID}
-  // };
+ 
 
   useEffect(() => {
     defaultCustomer();
   }, []);
 
   const defaultCustomer = () => {
-    // axios
-    //   .request(options)
-    //   .then((response) => {
-    //     setGetAllCustomer(response.data);
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //     if (error.response) {
-    //       console.error("Server Response Data:", error.response.data);
-    //     }
-    //   });
-    console.log(customerID);
-
-    // axios.get("https://e-commerce-backend-brown.vercel.app/api/auth/getaUser", {_id:customerID}).then((res)=>{
-    //   console.log(res);
-    // }).catch((e)=>{
-    //   console.log(e);
-    // })
+    console.log("customerid",customerID);
+  
+    axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/getaUser", {
+      _id: customerID
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "PostmanRuntime/7.33.0"
+      }
+    })
+      .then((res) => {
+        console.log("aa",res.data.getaUser);
+        setGetAllCustomer(res.data.getaUser)
+        // Assuming the response contains data property, adjust this based on the actual API response structure
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -57,12 +47,14 @@ const profile = () => {
               <p className="text-sky-600 text-xl mx-3 cursor-pointer">Change</p>
             </div>
             <div className="my-auto ml-10 ">
-              {getAllCustomer.map((items) => (
+              {/* {getAllCustomer.map((items) => (
                 <h1 className="my-auto mx-5 text-[35px]">
                   {" "}
-                  {items?.firstname}
+                  {getAllCustomer?.firstname}
                 </h1>
-              ))}
+              ))} */}
+
+              {getAllCustomer?.firstname}
               <p className="text-sky-600 text-xl my-auto  mx-5">
                 I am Professional Frontend Web Developer
               </p>
@@ -91,7 +83,7 @@ const profile = () => {
                   <td className="p-3 text-[20px]">Full Name</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px]">
-                    Hariom Patil
+                  {getAllCustomer?.firstname}
                   </td>
                 </tr>
                 <tr>
@@ -105,13 +97,13 @@ const profile = () => {
                   <td className="p-3  text-[20px] ">Email</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                    hariompatil00gmail.com
+                  {getAllCustomer?.email}
                   </td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Phone</td>
                   <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]">8989898989</td>
+                  <td className="p-3 text-gray-500 text-[18px]"> {getAllCustomer?.mobile}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-[20px]">Date of Birth </td>
@@ -122,7 +114,7 @@ const profile = () => {
                   <td className="p-3 text-[20px]">Address</td>
                   <td className="px-10">:</td>
                   <td className="p-3 text-gray-500 text-[18px] ">
-                    Palasia, Indore
+                  {getAllCustomer?.address}
                   </td>
                 </tr>
                 <tr>
