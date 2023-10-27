@@ -81,7 +81,7 @@ export default function Layout({ children }) {
         className={` transition-all duration-[400ms] ${(showNav && !isMobile) && !(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product" ||  router.pathname === "/userFAQ" || router.pathname === "/user-profile"  || router.pathname === "/user-order"|| router.pathname === "/wish-list") ? "pt-16 pl-56" : ""
           }`}
       >
-        <div className={!(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" || router.pathname === "/all-product" ) ? "px-4 md:px-16" : ""}>{children}</div>
+        <div className={!(router.pathname === "/admin-login" || router.pathname === "/signup" || router.pathname === "/login" ||  router.pathname === "/userFAQ" || router.pathname === "/user-profile"  || router.pathname === "/user-order"|| router.pathname === "/all-product" ) ? "px-4 md:px-16" : ""}>{children}</div>
       </main>
     </>
   );

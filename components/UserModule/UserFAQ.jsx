@@ -9,7 +9,7 @@ const UserFAQ = () => {
   return (
     <>
     <UserNavbar/>
-    <div>
+    <div className='px-20'>
     <h1 className='text-[35px] my-5'>Help and Customer Service</h1>
         <div>
         <h1 className='text-[25px]'>Find more solutions</h1>

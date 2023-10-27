@@ -8,7 +8,7 @@ import Link from 'next/link';
 const menuList = [
     {
       id: 1,
-      label: "Profile",
+      label: "Your Account",
       component: "",
       icon: "fa fa-users",
       imagePath:"",
@@ -19,8 +19,8 @@ const menuList = [
       label: "Wishlist",
       component: "",
       icon: "fa fa-users",
-      imagePath:"/paymntmethod.svg",
-      path: "/"
+      imagePath:"",
+      path: "/wish-list"
     },
     {
       id: 3,
@@ -40,19 +40,19 @@ const menuList = [
     },
     {
       id: 5,
-      label: "FAQ",
-      component:"", 
-      icon: "fa fa-phone-square",
-      imagePath:"",
-      path: '/userFAQ'
-    },
-    {
-      id: 6,
       label: "Setting",
       component:"",
       icon: "fa fa-phone-square",
       imagePath:"/social.svg",
       path: '/'
+    },
+    {
+      id: 6,
+      label: "FAQ",
+      component:"", 
+      icon: "fa fa-phone-square",
+      imagePath:"",
+      path: '/userFAQ'
     },
     {
         id: 7,

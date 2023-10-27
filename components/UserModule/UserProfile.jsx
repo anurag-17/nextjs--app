@@ -42,9 +42,10 @@ const UserProfile = () => {
   return (
     <>
     <UserNavbar/>
-      <div className="">
+      <div className=" px-20 ">
+      <h1 className="text-[30px] pl-10 mb-5">Your Account</h1>
         <div className="bg-white ml-5 p-5 ">
-          <div className="flex my-auto  bg-[#F5F7FA] px-10 py-5">
+          <div className="flex my-auto  bg-[#e2eaf5] px-10 py-5">
             <div className=" w-1/12">
               <img src="/user.png" className="rounded-[60%]   mb-0" />
               <p className="text-sky-600 text-xl mx-3 cursor-pointer">Change</p>
