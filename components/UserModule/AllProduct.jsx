@@ -14,6 +14,7 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import TopBarCustomer from "../../pages/topBar-customer";
+import UserNavbar from "./userNavbar";
 const ProductGrid = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [addInWishlist, setAddInWishlist] = useState();
@@ -75,6 +76,7 @@ const ProductGrid = () => {
 
   return (
     <>
+    <UserNavbar/>
       <section className="bg-gray-00 min-h-screen">
       <TopBarCustomer/>
         <div className="flex justify-between  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">

@@ -11,8 +11,8 @@ const menuList = [
       label: "Profile",
       component: "",
       icon: "fa fa-users",
-      imagePath:"/profilephoto.svg",
-      path: "/profile"
+      imagePath:"",
+      path: "/user-profile"
     },
     {
       id: 2,
