@@ -42,7 +42,10 @@ const UserLogin = ({ API_URL }) => {
             "userToken",
             JSON.stringify(response.data.token)
           );
-          localStorage.setItem("userDetails", JSON.stringify(response?.data?.user?._id));
+          localStorage.setItem(
+            "userDetails",
+            JSON.stringify(response?.data?.user?._id)
+          );
           setLoading(false);
           toast.success("Success, Login Successfully!");
 
@@ -56,9 +59,7 @@ const UserLogin = ({ API_URL }) => {
         setLoading(false);
         console.error(error);
         toast.error("Failed, Invalid Credentials!");
-       
       });
-    
   };
 
   return (
@@ -215,7 +216,25 @@ const UserLogin = ({ API_URL }) => {
                     >
                       Register Now
                     </p>
+                    
                   </Link>
+                    <div className=" flex justify-center">
+                      <Link href="https://www.facebook.com/" target="_blank">
+                      <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
+                        <img src="/fbb.svg" className="w-8" />
+                      </div>
+                      </Link>
+                      <Link href="https://twitter.com/"  target="_blank">
+                      <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
+                        <img src="/tw.svg" className="w-8" />
+                      </div>
+                      </Link>
+                      <Link href="https://www.google.com/account"  target="_blank">
+                      <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
+                        <img src="/g.svg" className="w-8" />
+                      </div>
+                      </Link>
+                    </div>
                 </div>
               </form>
             </div>

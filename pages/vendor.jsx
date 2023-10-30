@@ -65,8 +65,8 @@ const vendor = () => {
           <h2 className="text-2xl font-semibold pb-4">Vendor List </h2>
           <h2>Welcome Back, Client</h2>
         </div>
-        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-          <div className="flex justify-between ">
+        <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
+          {/* <div className="flex justify-between ">
             <button className="border border-gray-400 rounded-md p-2 mr-3 flex justify-around hover:border-green-500 hover:text-green-500">
               <ArrowDownTrayIcon class="h-6 w-5  mr-1 text-black" />
               Import
@@ -75,7 +75,7 @@ const vendor = () => {
               <ArrowUpTrayIcon class="h-6 w-5 mr-1 text-black" />
               Export
             </button>
-          </div>
+          </div> */}
           <div className="flex justify-around">
             <Link href="/add-vendor">
               <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer mr-4">

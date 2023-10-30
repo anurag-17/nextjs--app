@@ -70,7 +70,7 @@ const menuList = [
     path: "/orders",
   },
   {
-    id: 8,
+    id: "",
     label: "Vendor",
     component: "",
     icon: `fa fa-users`,
@@ -142,7 +142,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   };
 
   return (
-    <div ref={ref} className="fixed w-[250px] h-full bg-white shadow-sm">
+    <div ref={ref} className="fixed w-[250px] bg-white shadow-sm ">
       <img
         src="/log.png"
         width={400}
@@ -156,7 +156,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         </h1>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col truncate scroll-auto">
         {menuList.map((items, inx) => (
           <Fragment key={inx}>
             <Link href={items.path ? items.path : "#"}>

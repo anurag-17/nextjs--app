@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
-
+import Link from "next/link";
 
 const Signup = () => {
   const [firstname, setFirstname] = useState("");
@@ -146,25 +146,27 @@ const Signup = () => {
                       required
                     />
                   </div>
-                  <div className="mt-5">
-                    <textarea
-                      type="number"
-                      placeholder="Date of Birth"
-                      className="custom-input w-full"
-                      onChange={(e) => setDob(e.target.value)}
-                      value={dob}
-                      required
-                    />
-                  </div>
-                  <div className="mt-5">
-                    <textarea
-                      type="text"
-                      placeholder="Country"
-                      className="custom-input w-full"
-                      onChange={(e) => setCountry(e.target.value)}
-                      value={country}
-                      required
-                    />
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="mt-5">
+                      <textarea
+                        type="number"
+                        placeholder="Date of Birth"
+                        className="custom-input"
+                        onChange={(e) => setDob(e.target.value)}
+                        value={dob}
+                        required
+                      />
+                    </div>
+                    <div className="mt-5">
+                      <textarea
+                        type="text"
+                        placeholder="Country"
+                        className="custom-input"
+                        onChange={(e) => setCountry(e.target.value)}
+                        value={country}
+                        required
+                      />
+                    </div>
                   </div>
                   <div className="mt-5">
                     <textarea
@@ -186,10 +188,11 @@ const Signup = () => {
                       required
                     />
                   </div>
-                  <div className="py-5 xl:text-[18px] lg:[text-[16px] mt-2">
+                  <div className="2xl:py-5 xl:text-[16px] lg:[text-[14px]  xl:py-3 first-letter: lg:py-2 md:py-2 sm:py-2">
+                  <label>
                     <input
                       type="checkbox"
-                      className="border border-gray-400 mr-2"
+                      className="border border-gray-400 2xl:mr-2 xl:mr-1 lg:mr-1 md:mr-1 sm:mr-1"
                     />
                     <span>
                       I accept the
@@ -201,7 +204,8 @@ const Signup = () => {
                         Privacy Policy
                       </a>
                     </span>
-                  </div>
+                  </label>
+                </div>
                   <div className="mt-5">
                     <button className="w-full bg-cyan-600  text-center text-white mb-2 font-semibold xl:text-[18px] lg:text-[16px] rounded">
                       {isLoading ? (
@@ -214,12 +218,38 @@ const Signup = () => {
                       ) : (
                         <button
                           type="submit"
-                          className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
+                          className="w-full bg-cyan-600 py-3 text-center text-white  font-semibold text-[18px]"
                         >
                           Register
                         </button>
                       )}
                     </button>
+
+                    <Link href="/">
+                      <h1 className="text-center text-cyan-600 text-[25px] font-medium underline">
+                        Login
+                      </h1>
+                    </Link>
+                    <div className=" flex justify-center mt-5">
+                      <Link href="https://www.facebook.com/" target="_blank">
+                        <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
+                          <img src="/fbb.svg" className="w-8" />
+                        </div>
+                      </Link>
+                      <Link href="https://twitter.com/" target="_blank">
+                        <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
+                          <img src="/tw.svg" className="w-8" />
+                        </div>
+                      </Link>
+                      <Link
+                        href="https://www.google.com/account"
+                        target="_blank"
+                      >
+                        <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
+                          <img src="/g.svg" className="w-8" />
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -232,14 +262,3 @@ const Signup = () => {
 };
 
 export default dynamic(() => Promise.resolve(Signup), { ssr: false });
-
-// export async function getServerSideProps() {
-//   // Define your API URL here
-//   const API_URL = "https://e-commerce-backend-brown.vercel.app/api/auth/register";
-
-//   return {
-//     props: {
-//       API_URL,
-//     },
-//   };
-// }
