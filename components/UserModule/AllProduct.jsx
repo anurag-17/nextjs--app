@@ -6,6 +6,7 @@ import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
+import right from "/public/right-arrows.svg";
 
 import Link from "next/link";
 import {
@@ -15,6 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import TopBarCustomer from "../../pages/topBar-customer";
 import UserNavbar from "./userNavbar";
+import Slider from "./sliderrange";
 const ProductGrid = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [addInWishlist, setAddInWishlist] = useState();
@@ -76,80 +78,287 @@ const ProductGrid = () => {
 
   return (
     <>
-    <UserNavbar/>
-      <section className="bg-gray-00 min-h-screen px-20">
-     
-        <div className="grid lg:grid-cols-4 gap-7 my-16 ">
-          {allProduct.map((items, ix) => (
-            <div
-              className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
-              key={ix}
-            >
-            <Link href={`/view-product/${items?._id}`}>
-              <Image
-                src="/img1.jpeg"
-                alt=""
-                className=" mx-auto rounded-[20px] "
-                width={400}
-                height={400}
-              /></Link>
-              <div className="bg-white px-4 pb-6 rounded-[20px]">
-                <div className="flex justify-between items-center my-4">
-                  <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
-                    {items.title}
-                  </h6>
-                  <button onClick={handleAddToCart}>
-                        <HeartIcon class="h-8 w-8 text-gray-500" />
-                      </button>
-                </div>
-
-                <p className="text-[16px]  capitalize  ">
-                  Brand : {items.brand}
-                </p>
-                <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                  Offer price : {items.discountedPrice} <br />
-                </p>
-                <del className="text-sm font-semibold capitalize my-2 text-sky-600">
-                  {" "}
-                  Regular Price : ₹{items.price}
-                </del>
-
-                <p className="text-[18px]  capitalize my-2 ">
-                  Stock : {items.quantity}
-                </p>
-                <p className="text-[18px]  capitalize my-2 ">
-                  Category : {items.category}
-                </p>
-                <div className="flex">
-                  {" "}
-                  <h1 className="mt-1  mr-1">Status : </h1>
-                  <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
-                    selling
+      <UserNavbar />
+      <section className="bg-gray-00 min-h-screen px-20 flex">
+        <div className="space-y-9">
+          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
+            <p className="font-semibold text-2xl mb-4">Product Categories</p>
+            <hr className="mb-2" />
+            <div className="space-y-4 ">
+              <div className="flex justify-between text-[#645D64]  hover:text-[#0284C7]">
+                <div className="flex ">
+                  <Image className="w-3 " src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Women's Bag
                   </p>
                 </div>
-                <p className="text-[18px]  capitalize my-2  flex gap-x-5">
-                  Colors :
-                  <div className="flex gap-x-2">
-                    {items.color?.map((opt, inx) => (
-                      <p className="">{opt}</p>
-                    ))}
-                  </div>
-                </p>
-                <div className="flex justify-between ">
-                  <button
-                    type="button"
-                    className=""
-                    data-te-toggle="tooltip"
-                    data-te-html="true"
-                    data-te-ripple-init=""
-                    data-te-ripple-color="light"
-                    title="View product"
+                <p>15</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Men's Accessories
+                  </p>
+                </div>
+                <p>20</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    School Bag
+                  </p>
+                </div>
+                <p>30</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Boots
+                  </p>
+                </div>
+                <p>40</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Boy's Dress
+                  </p>
+                </div>
+                <p>44</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Women's Fashion
+                  </p>
+                </div>
+                <p>50</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Fashion Accessories
+                  </p>
+                </div>
+                <p>33</p>
+              </div>
+              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
+                <div className="flex">
+                  <Image className="w-3" src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Makeup Corner
+                  </p>
+                </div>
+                <p>25</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 py-12 rounded-sm w-96 mr-4 ">
+            <p className="font-semibold text-2xl mb-4">Price Range</p>
+            <hr className="mb-2" />
+            <div className=" ">
+              <div className="flex justify-between text-[#645D64]  ">
+                <div className=" ">
+                  {/* <Image className="w-3 " src={right} /> */}
+                  <p className="text-[#645D64]  no-underline hover:underline mb-3">
+                    Range:{" "}
+                    <span className="font-semibold text-black">
+                      {" "}
+                      $0- $1000
+                    </span>
+                  </p>
+                  <Slider min={0} max={1000}/>
+                </div>
+                {/* <p>15</p> */}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
+            <p className="font-semibold text-2xl mb-4">Product Brands</p>
+            <hr className="mb-2" />
+            <div className=" ">
+              <div className=" justify-between text-[#645D64] space-y-4 ">
+                <div className="flex ">
+                  <Image className="w-3 " src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Nike
+                  </p>
+                </div>
+                <div className="flex ">
+                  <Image className="w-3 " src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Zara
+                  </p>
+                </div>
+                <div className="flex ">
+                  <Image className="w-3 " src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Denim
+                  </p>
+                </div>
+                <div className="flex ">
+                  <Image className="w-3 " src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Madame
+                  </p>
+                </div>
+                <div className="flex ">
+                  <Image className="w-3 " src={right} />
+                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
+                    Arong
+                  </p>
+                </div>
+                {/* <p>15</p> */}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
+            <p className="font-semibold text-2xl mb-4">Size</p>
+            <hr className="mb-3" />
+            <div className=" ">
+              <div className=" justify-between text-[#645D64]  ">
+                <div className="flex space-x-3">
+                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">XL</p>
+                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">X</p>
+                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">L</p>
+                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">M</p>
+                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">Slim Fit</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex gap-3">
+            <div class=" w-1/4">
+              <div class="relative mb- flex w-full flex-wrap items-stretch">
+                <input
+                  type="search"
+                  class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="button-addon1"
+                />
+
+                {/* <!--Search button--> */}
+                <button
+                  class="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-[#0284C7] hover:text-white shadow-md transition duration-150 ease-in-out hover:bg-[#0284C7] hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                  type="button"
+                  id="button-addon1"
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="h-5 w-5"
                   >
-                     <Link href={`/view-product/${items?._id}`}>
-                      <MagnifyingGlassPlusIcon className="cursor-pointer h-10 w-10 text-gray-800" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white grid grid-cols-3 gap-4 items-center p-2 border">
+              <p className="cursor-pointer hover:text-[#0284C7] no-underline hover:underline ">
+                Top Rated{" "}
+              </p>
+              <p className="cursor-pointer hover:text-[#0284C7] no-underline hover:underline ">
+                Popular{" "}
+              </p>
+              <p className="cursor-pointer hover:text-[#0284C7] no-underline hover:underline ">
+                Newest
+              </p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-4 gap-7 my-16 ">
+            {allProduct.map((items, ix) => (
+              <div
+                className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
+                key={ix}
+              >
+                <Link href={`/user-detail`}>
+                  <Image
+                    src="/img1.jpeg"   
+                    alt=""
+                    className=" mx-auto rounded-[20px] "
+                    width={400}
+                    height={400}
+                  />
+                 </Link>
+                <div className="bg-white px-4 pb-6 rounded-[20px]">
+                  <div className="flex justify-between items-center my-4">
+                    <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                      {items.title}
+                    </h6>
+                    <button onClick={handleAddToCart}>
+                      <HeartIcon class="h-8 w-8 text-gray-500" />
+                    </button>
+                  </div>
+
+                  <p className="text-[16px]  capitalize  ">
+                    Brand : {items.brand}
+                  </p>
+                  <p className="text-sm font-semibold capitalize my-2 text-sky-600">
+                    Offer price : {items.discountedPrice} <br />
+                  </p>
+                  <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                    {" "}
+                    Regular Price : ₹{items.price}
+                  </del>
+
+                  <p className="text-[18px]  capitalize my-2 ">
+                    Stock : {items.quantity}
+                  </p>
+                  <p className="text-[18px]  capitalize my-2 ">
+                    Category : {items.category}
+                  </p>
+                  <div className="flex">
+                    {" "}
+                    <h1 className="mt-1  mr-1">Status : </h1>
+                    <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
+                      selling
+                    </p>
+                  </div>
+                  <p className="text-[18px]  capitalize my-2  flex gap-x-5">
+                    Colors :
+                    <div className="flex gap-x-2">
+                      {items.color?.map((opt, inx) => (
+                        <p className="">{opt}</p>
+                      ))}
+                    </div>
+                  </p>
+                  <div className="flex justify-between ">
+                    <button
+                      type="button"
+                      className=""
+                      data-te-toggle="tooltip"
+                      data-te-html="true"
+                      data-te-ripple-init=""
+                      data-te-ripple-color="light"
+                      title="View product"
+                    >
+                      <Link href={`/view-product/${items?._id}`}>
+                        <MagnifyingGlassPlusIcon className="cursor-pointer h-10 w-10 text-gray-800" />
                       </Link>
-                  </button>
-                  {/* <button
+                    </button>
+                    {/* <button
                     type="button"
                     className=""
                     data-te-toggle="tooltip"
@@ -175,13 +384,14 @@ const ProductGrid = () => {
                   >
                     <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                   </button> */}
-                </div>
+                  </div>
                   <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
-                      Add To Cart
-                    </button>
+                    Add To Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
       <Transition appear show={isOpenDelete} as={Fragment}>

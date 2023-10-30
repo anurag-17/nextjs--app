@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import Head from "next/head";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
+import "./"
 
 
 function MyApp({ Component, pageProps }) {
