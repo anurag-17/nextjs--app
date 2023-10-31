@@ -65,9 +65,9 @@ export default function Layout({ children }) {
       router.pathname === "/userFAQ" ||
       router.pathname === "/user-profile" ||
       router.pathname === "/user-setting" ||
+      router.pathname === "/user-invoice"||
       router.pathname.includes("user-productdetail")
        ? null : (
-      router.pathname === "/user-invoice" ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
           <Transition
@@ -83,7 +83,8 @@ export default function Layout({ children }) {
             <SideBar showNav={showNav} />
           </Transition>
         </>
-      )}
+      )
+    }
       <main
         className={` transition-all duration-[400ms]  ${
           showNav &&
