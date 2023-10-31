@@ -39,12 +39,20 @@ const ProductList = () => {
   const [productCategory, setProductCategory] = useState(["All"]);
   const [productBrands, setProductBrands] = useState(["All"]);
   const [productSearch, setProductSearch] = useState(["All"]);
-  const [isShowComponent, setShowComponent] = useState("list");
+  const [isShowComponent, setShowComponent] = useState("grid");
   const [isChecked, setisChecked] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [added, setAdded] = useState(false);
   const [productId, setProductId] = useState("your_product_id");
   const [quantity, setQuantity] = useState(1);
+  const [isAllChecked, setAllChecked] = useState("");
+
+  const [selected, setSelected] = useState([]);
+  // const [numSelected, setNumSelected] = useState(selected?.length || null);
+  const [rowCount, setRowCount] = useState(allProduct?.length || null);
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+  console.log(selected);
 
   const pageLimit = "15";
   function closeModal() {
@@ -183,10 +191,9 @@ const ProductList = () => {
 
   const allDelete = async () => {
     try {
-      console.log(isChecked);
       const response = await axios.post(
         `https://e-commerce-backend-brown.vercel.app/api/product/deleteBulkProducts`,
-        { ProductIds: isChecked }
+        { ProductIds: selected }
       );
 
       if (response.status === 200) {
@@ -202,27 +209,32 @@ const ProductList = () => {
       console.error("Error deleting brands:", error);
     }
   };
-
-  const handleCheckbox = (e) => {
-    const { value, checked } = e.target;
-
-    // If the header checkbox is clicked
-    if (value === "selectAll") {
-      setSelectAll(checked);
-      if (checked) {
-        const allItemIds = allProduct.map((item) => item._id);
-        setisChecked(allItemIds);
-      } else {
-        setisChecked([]);
-      }
-    } else {
-      // If an item checkbox is clicked
-      if (checked) {
-        setisChecked([...isChecked, value]);
-      } else {
-        setisChecked(isChecked.filter((id) => id !== value));
-      }
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = allProduct?.map((n) => n?._id);
+      setSelected(newSelected);
+      return;
     }
+    setSelected([]);
+  };
+
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
   };
 
   const addToCart = async (productId, quantity) => {
@@ -251,6 +263,7 @@ const ProductList = () => {
       throw error;
     }
   };
+
   const handleAddToCart = async () => {
     try {
       const response = await addToCart(productId, quantity);
@@ -262,6 +275,19 @@ const ProductList = () => {
     }
   };
 
+  const EnhancedTableToolbar = ({ numLength }) => {
+    return (
+      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg h-[80px] bg-lightBlue-100 mt-4">
+        <h2 className="text-lg font-medium ">{numLength} Product selected</h2>
+        <button
+          onClick={allDelete}
+          className="border border-1 rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200 py-2 px-4 hover:border-none"
+        >
+          Delete All
+        </button>
+      </div>
+    );
+  };
   return (
     <>
       <ToastContainer />
@@ -269,95 +295,106 @@ const ProductList = () => {
       <section>
         <Header headTitle="Products List" />
 
-        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-          <div className="flex justify-center items-end gap-x-3 mr-3">
-            <div
-              className="cursor-pointer"
-              onClick={() => handleShowComponent("grid")}
-            >
-              <Grid />
-            </div>
-            <div
-              className="cursor-pointer"
-              onClick={() => handleShowComponent("list")}
-            >
-              <List />
-            </div>
-          </div>
-          <div className="w-full">
-            <input
-              type="search"
-              placeholder="Search Product"
-              className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer "
-              onChange={handleSearch} //search input
-            ></input>
-          </div>
-          <button
-            onClick={allDelete}
-            className="border border-1 mt-7 rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2  mr-5 hover:border-none"
-          >
-            Delete
-          </button>
-          <div className=" flex  gap-x-3">
-            {/*----- filter by Brand start ------- */}
-
-            <div className="w-auto flex flex-col  gap-1">
-              <label className="whitespace-nowrap text-start">
-                Filter by Brand
-              </label>
-              <select
-                name="brand"
-                id="brand"
-                placeholder="Brand"
-                className="border border-gray-400 p-2 rounded-md w-12/12 bg-white cursor-pointer "
-                onChange={handleSearchBrand}
+        {selected?.length > 0 ? (
+          <EnhancedTableToolbar numLength={selected?.length} />
+        ) : (
+          <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[80px] mt-4">
+            <div className="flex justify-center items-end gap-x-3 mr-3">
+              <div
+                className={`cursor-pointer border h-[30px] w-[30px] flex justify-center items-center 
+                ${
+                  isShowComponent === "grid"
+                    ? "border-lightBlue-300"
+                    : "border-transparent"
+                }`}
+                onClick={() => handleShowComponent("grid")}
               >
-                {productBrands?.length > 0 &&
-                  productBrands.map((bnd) => (
-                    <option value={bnd}>{bnd}</option>
-                  ))}
-              </select>
-            </div>
-
-            {/*----- filter by category start ------- */}
-            <div className="w-auto flex flex-col items-center gap-1">
-              <label htmlFor="" className="whitespace-nowrap">
-                Filter by Category
-              </label>
-              <select
-                name="category"
-                id="category"
-                placeholder="Category"
-                className="border border-gray-400 p-2  rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
-                onChange={handleSearchCategories}
+                <Grid />
+              </div>
+              <div
+                className={`cursor-pointer border-2 h-[30px] w-[30px] flex justify-center items-center 
+                ${
+                  isShowComponent === "list"
+                    ? "border-lightBlue-300 "
+                    : "border-transparent"
+                }`}
+                onClick={() => handleShowComponent("list")}
               >
-                {productCategory?.length > 0 &&
-                  productCategory.map((cate) => (
-                    <option value={cate}>{cate}</option>
-                  ))}
-              </select>
+                <List />
+              </div>
+            </div>
+            <div className="w-full">
+              <input
+                type="search"
+                placeholder="Search Product"
+                className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer focus-visible:outline-offset-0"
+                onChange={handleSearch} //search input
+              ></input>
             </div>
 
-            {/*--------- show by grid or list ---------*/}
+            <div className=" flex  gap-x-3">
+              {/*----- filter by Brand start ------- */}
+
+              <div className="w-auto flex flex-col  gap-1">
+                <label className="whitespace-nowrap text-start text-[14px]">
+                  Filter by Brand
+                </label>
+                <select
+                  name="brand"
+                  id="brand"
+                  placeholder="Brand"
+                  className="border border-gray-400 px-2 py-1 rounded-md w-12/12 bg-white cursor-pointer "
+                  onChange={handleSearchBrand}
+                >
+                  {productBrands?.length > 0 &&
+                    productBrands.map((bnd) => (
+                      <option value={bnd}>{bnd}</option>
+                    ))}
+                </select>
+              </div>
+
+              {/*----- filter by category start ------- */}
+              <div className="w-auto flex flex-col items-center gap-1">
+                <label htmlFor="" className="whitespace-nowrap text-[14px]">
+                  Filter by Category
+                </label>
+                <select
+                  name="category"
+                  id="category"
+                  placeholder="Category"
+                  className="border border-gray-400 px-2 py-1 rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
+                  onChange={handleSearchCategories}
+                >
+                  {productCategory?.length > 0 &&
+                    productCategory.map((cate) => (
+                      <option value={cate}>{cate}</option>
+                    ))}
+                </select>
+              </div>
+
+              {/*--------- show by grid or list ---------*/}
+            </div>
           </div>
-        </div>
+        )}
 
         {isShowComponent === "grid" ? (
           <>
-            <div className="grid lg:grid-cols-4 gap-7 my-16 ">
-              {allProduct.map((items, ix) => (
+            <div className=" w-full md:w-[85%] mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              {allProduct?.map((items, ix) => (
                 <div
-                  className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
+                  className=" bg-white  border-[2px] border-gray rounded-[10px] m-4 hover:border-lightBlue-600"
                   key={ix}
                 >
-                <Link href={`/view-product/${items?._id}`}>
-                  <Image
-                    src="/img1.jpeg"
-                    alt=""
-                    className=" mx-auto rounded-[20px] "
-                    width={400}
-                    height={400}
-                  /></Link>
+                  <Link href={`/view-product/${items?._id}`}>
+                    <Image
+                      src="/img1.jpeg"
+                      alt=""
+                      className=" mx-auto rounded-[20px] "
+                      width={400}
+                      height={400}
+                    />
+                  </Link>
                   <div className="bg-white px-4 pb-6 rounded-[20px]">
                     <div className="flex justify-between items-center my-4">
                       <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
@@ -401,7 +438,7 @@ const ProductList = () => {
                         ))}
                       </div>
                     </p>
-                    <div className="flex justify-between ">
+                    <div className="flex justify-between pt-4">
                       <button
                         type="button"
                         className=""
@@ -449,112 +486,131 @@ const ProductList = () => {
                 </div>
               ))}
             </div>
+            </div>
           </>
         ) : (
           <>
             {/*------- product list table start -------*/}
-            <table class="table-auto bg-white w-full rounded-md mt-5">
+            <table class="table-auto bg-white w-full rounded-md mt-4">
               {/* -----------   head  ----------------- */}
               <thead className="">
                 <tr className="bg-gray-200 text-gray-400 text-sm text-start ">
                   <input
                     type="checkbox"
                     className="mx-3 mt-6 cursor-pointer "
-                    value="selectAll"
-                    checked={selectAll}
-                    onChange={handleCheckbox}
+                    onChange={handleSelectAllClick}
+                    inputProps={{
+                      "aria-label": "select all desserts",
+                    }}
                   />
-                  {headItems.map((items) => (
-                    <th className="text-start py-5">{items}</th>
+                  {headItems.map((items, inx) => (
+                    <th
+                      className="text-start py-5 text-[14px] font-medium  "
+                      key={inx}
+                    >
+                      {items}
+                    </th>
                   ))}
                 </tr>
               </thead>
 
               {/* -----------   body   ----------------- */}
-              {allProduct?.map((item, index) => (
-                <tbody>
-                  <tr>
-                    <td className="">
-                      <input
-                        type="checkbox"
-                        className="mx-3  cursor-pointer "
-                        value={item?._id}
-                        checked={item.isChecked}
-                        onChange={(e) => handleCheckbox(e)}
-                      />
-                    </td>
-                    <td className="py-5 text-[18px] max-w-[200px]">
-                      {item?.title ? item?.title : "-"}
-                    </td>
-                    <td className="py-5 text-[18px]">
-                      {item?.category ? item?.category : "-"}
-                    </td>
-                    <td className="py-5 text-[18px]">
-                      <del className="text-red-500">
-                        {item?.price ? item?.price : "-"}
-                      </del>
-                    </td>
-                    <td className="py-5 text-[18px] text-green-500">
-                      {item?.discountedPrice ? item?.discountedPrice : "-"}
-                    </td>
-                    <td className="py-5 text-[18px]">
-                      {item?.brand ? item?.brand : "-"}
-                    </td>
-                    <td className="py-5 text-[18px]">
-                      {item?.quantity ? item?.quantity : "-"}
-                    </td>
-                    <td className="py-5 text-[18px]">
-                      {item?.color?.length > 0
-                        ? item?.color?.map((optn, inx) => (
-                            <p
-                              className=" capitalize text-[16px] font-normal leading-[30px]"
-                              key={inx}
-                            >
-                              {optn}
-                            </p>
-                          ))
-                        : "-"}
-                    </td>
-                    <td className="py-5 text-[18px]">
-                      <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
-                        selling
-                      </p>
-                    </td>
+              {allProduct?.map((item, index) => {
+                const isItemSelected = isSelected(item?._id);
+                const labelId = `enhanced-table-checkbox-${index}`;
+                return (
+                  <tbody key={item?._id}>
+                    <tr
+                      role="checkbox"
+                      onClick={(event) => handleClick(event, item?._id)}
+                      aria-checked={isItemSelected}
+                      selected={isItemSelected}
+                      className="cursor-pointer"
+                    >
+                      <td className="">
+                        <input
+                          type="checkbox"
+                          className="mx-3  cursor-pointer "
+                          checked={isItemSelected}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                          }}
+                        />
+                      </td>
+                      <td className="py-5 text-[14px] font-normal  max-w-[200px]">
+                        {item?.title ? item?.title : "-"}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal ">
+                        {item?.category ? item?.category : "-"}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal ">
+                        {/* <del className="text-red-500"> */}
+                          {item?.price ? item?.price : "-"}
+                        {/* </del> */}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal  text-green-500">
+                        {item?.discountedPrice ? item?.discountedPrice : "-"}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal ">
+                        {item?.brand ? item?.brand : "-"}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal ">
+                        {item?.quantity ? item?.quantity : "-"}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal ">
+                        {item?.color?.length > 0
+                          ? item?.color?.map((optn, inx) => (
+                              <p
+                                className=" capitalize text-[16px] font-normal leading-[30px]"
+                                key={inx}
+                              >
+                                {optn}
+                              </p>
+                            ))
+                          : "-"}
+                      </td>
+                      <td className="py-5 text-[14px] font-normal ">
+                        <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
+                          selling
+                        </p>
+                      </td>
 
-                    {/* --------- view details button  ------- */}
-                    <td className="py-5 text-[18px]">
-                      <button>
-                        <Link href={`/view-product/${item?._id}`}>
-                          <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500" />
-                        </Link>
-                      </button>
-                    </td>
-
-                    <td className="flex justify-between items-center  py-5 ">
-                      {/* --------- edit  button  ------- */}
-                      <Link href={`/edit-product/${item?._id}`}>
+                      {/* --------- view details button  ------- */}
+                      <td className="py-5 text-[14px] font-normal ">
                         <button>
-                          <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />
+                          <Link href={`/view-product/${item?._id}`}>
+                            <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500" />
+                          </Link>
                         </button>
-                      </Link>
+                      </td>
 
-                      {/* --------- delete button  ------- */}
-                      <button
-                        type="button"
-                        onClick={() => openModal(item?._id)}
-                        className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                      >
-                        <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              ))}
+                      <td className="py-5 ">
+                        <div className="flex gap-5 items-center ">
+                          {/* --------- edit  button  ------- */}
+                          <Link href={`/edit-product/${item?._id}`}>
+                            <button>
+                              <PencilSquareIcon className="cursor-pointer h-6 w-6 text-gray-500" />
+                            </button>
+                          </Link>
+                          {/* --------- delete button  ------- */}
+                          <button
+                            type="button"
+                            onClick={() => openModal(item?._id)}
+                            className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                          >
+                            <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
             </table>
             {/*------- product list table start -------*/}
 
             {/*------------ Pagination -------------*/}
-            <nav
+            {/* <nav
               aria-label="Page navigation example"
               className="m-5 mb-10 float-right"
             >
@@ -632,7 +688,7 @@ const ProductList = () => {
                   </a>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
           </>
         )}
       </section>

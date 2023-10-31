@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../../components/AdminModule/Header";
 
 export default function EditProduct() {
   const router = useRouter();
@@ -37,22 +38,14 @@ export default function EditProduct() {
       })
       .catch((err) => console.error(err));
   };
+
+
+
   return (
     <>
       <section className="bg-gray-100 min-h-screen">
         <ToastContainer />
-        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px]  ">
-          <div className="">
-            <h2 className="text-2xl font-semibold"> Product Details </h2>
-            <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
-              Add your product and necessary information from here
-            </p>
-          </div>
-          <h2 className="xl:text-[18px] lg:text-[16px] font-normal">
-            Welcome Back, Admin
-          </h2>
-        </div>
-
+        <Header headTitle="Product Details" subTitle="Add your product and necessary information from here" />
         <main className="h-full overflow-y-auto pt-[40px]">
           <div className="container grid px-6 mx-auto">
             {/* <h1 className="my-6 text-[40px] font-bold text-gray-700 dark:text-gray-300">
@@ -61,11 +54,7 @@ export default function EditProduct() {
             <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
               <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden gap-20">
                 <div className="flex-shrink-0 flex items-center justify-center h-auto">
-                  <img
-                    src="/img1.jpeg"
-                    alt="product"
-                    className=" rounded-xl"
-                  />
+                  <img src="/img1.jpeg" alt="product" className=" rounded-xl w-[350px] h-auto" />
                 </div>
                 <div className="w-full flex flex-col p-5 md:p-8 text-left">
                   <div className="mb-5 block ">
@@ -86,15 +75,19 @@ export default function EditProduct() {
                     ₹{productDetail?.price}
                     </span> */}
 
-                  <p className="inline-block text-2xl">
-                  Offer price : {productDetail.discountedPrice} <br/>
-                   </p><br/>
-                   <del className="inline-block text-2xl mt-2" > Regular Price : ₹{productDetail.price}</del>
+                    <p className="inline-block text-2xl">
+                      Offer price : {productDetail.discountedPrice} <br />
+                    </p>
+                    <br />
+                    <del className="inline-block text-2xl mt-2">
+                      
+                      Regular Price : ₹{productDetail.price}
+                    </del>
                   </div>
                   <div className="mt-6">
-                    <span className="inline-flex px-2 text-md font-medium leading-5 rounded-full text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-800">
+                    {/* <span className="inline-flex px-2 text-md font-medium leading-5 rounded-full text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-800">
                       <span className="font-bold">Stock Out</span>
-                    </span>
+                    </span> */}
                     <span className=" text-[18px] text-gray-500 dark:text-gray-400 pl-4 ">
                       QUANTITY: {productDetail?.quantity}
                     </span>
