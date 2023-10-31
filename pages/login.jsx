@@ -40,11 +40,15 @@ const UserLogin = ({ API_URL }) => {
           // console.log(response.data.user._id);
           localStorage.setItem(
             "userToken",
-            JSON.stringify(response.data.token)
+            JSON.stringify(response?.data?.token)
           );
           localStorage.setItem(
             "userDetails",
             JSON.stringify(response?.data?.user?._id)
+          );
+          localStorage.setItem(
+            "wishList",
+            JSON.stringify(response?.data?.user?.wishlist)
           );
           setLoading(false);
           toast.success("Success, Login Successfully!");

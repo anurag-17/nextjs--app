@@ -4,8 +4,12 @@
 
 body {
   @apply bg-gray-100
+  
 }
 
+body{
+  font-family: 'Montserrat', sans-serif;
+}
 .dropdown {
 
   min-height: 0px;

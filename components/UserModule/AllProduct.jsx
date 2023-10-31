@@ -1,22 +1,26 @@
+import React from "react";
+import axios from "axios";
+import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import React from "react";
-import { HeartIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState, useEffect } from "react";
-import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
-import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
-import right from "/public/right-arrows.svg";
+import { ToastContainer, toast } from "react-toastify";
 
-import Link from "next/link";
+import { HeartIcon } from "@heroicons/react/24/outline";
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+
+import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
+import right from "/public/right-arrows.svg";
+
 import TopBarCustomer from "../../pages/topBar-customer";
 import UserNavbar from "./userNavbar";
 import Slider from "./sliderrange";
+
 const ProductGrid = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
@@ -25,14 +29,22 @@ const ProductGrid = () => {
   let [productID, setProductID] = useState("");
   let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")) );
+  const [token, setToken] = useState( JSON.parse(localStorage.getItem("userToken")));
+  const [wishListItems, setWishListItems] = useState( );
+  const [isWished, setIsWished] = useState({});
 
   const option = {
     method: "GET",
     url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
   };
+
   useEffect(() => {
     defaultBrand();
   }, []);
+
+
   const defaultBrand = () => {
     axios
       .request(option)
@@ -98,7 +110,6 @@ const ProductGrid = () => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response.data);
         if (response.status === 200) {
           setAllProduct(response?.data);
         }
@@ -108,7 +119,9 @@ const ProductGrid = () => {
       });
   };
 
-  const handleAddToCart = async () => {
+
+
+  const handleAddToCart = async (id) => {
     try {
       const response = await addToCart(productId, quantity);
       console.log("Product added to cart:", response);
@@ -119,11 +132,87 @@ const ProductGrid = () => {
     }
   };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const options = {
+      method: "POST",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
+      data: productDetails,
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response);
+        if (response.status === 200) {
+          toast.success("Success. Product added successfully!");
+          setLoading(false);
+          refreshData();
+        } else {
+          setLoading(false);
+          return;
+        }
+      })
+      .catch(function (error) {
+        setLoading(false);
+        console.error(error);
+        toast.failed("Failed. Can not repeat product name!");
+      });
+  };
+
+  const addToWishlist = (id) => {
+    console.log(id);
+    setWished(!isWished)
+    const prodId = id;
+    const options = {
+      method: "POST",
+      url: "https://e-commerce-backend-brown.vercel.app/api/product/addToWishlist",
+      headers: {
+        cookie:
+          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/2023.5.8",
+      },
+      data: {
+        prodId: id,
+        _id: customerID,
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response);
+        if (response.status === 200) {
+          toast.success("Success. Product added successfully!");
+          setLoading(false);
+          refreshData();
+        } else {
+          setLoading(false);
+          return;
+        }
+      })
+      .catch(function (error) {
+        setLoading(false);
+        console.error(error);
+        toast.error("Failed. Can not repeat product name!");
+      });
+  };
+
+  const toggleWishlist = (productId) => {
+    setIsWished((prevIsWished) => ({
+      ...prevIsWished,
+      [productId]: !prevIsWished[productId], // Toggle the state for the specified product
+    }));
+  };
   return (
     <>
       <UserNavbar />
+
       <section className="bg-gray-00 min-h-screen px-20 flex">
-        <div className="space-y-9">
+        <div className="space-y-9 w-[25%]">
           <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
             <p className="font-semibold text-2xl mb-4">Product Categories</p>
             <hr className="mb-2" />
@@ -168,7 +257,7 @@ const ProductGrid = () => {
                     className="text-[#645D64] flex hover:text-[#0284C7] cursor-pointer no-underline hover:underline"
                     key={brands}
                   >
-                  <Image className="w-3  " src={right} />
+                    <Image className="w-3  " src={right} />
                     {brands?.brand}
                   </div>
                 ))}
@@ -192,8 +281,7 @@ const ProductGrid = () => {
             </div>
           </div> */}
         </div>
-
-        <div>
+        <div className=" w-full md:w-[85%] mx-auto">
           <div className="flex gap-3">
             <div class=" w-1/4">
               <div class="relative mb- flex w-full flex-wrap items-stretch">
@@ -243,7 +331,7 @@ const ProductGrid = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-7 my-16 ">
-            {allProduct.map((items, ix) => (
+            {allProduct?.map((items, ix) => (
               <div
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
@@ -262,16 +350,52 @@ const ProductGrid = () => {
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                       {items.title}
                     </h6>
-                    <button onClick={handleAddToCart}>
-                      <HeartIcon class="h-8 w-8 text-gray-500" />
+                    <button onClick={() => toggleWishlist(items._id)}>
+                    {
+                      isWished[items._id]   ?
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1}
+                        stroke="currentColor"
+                        className="w-6 h-6 fill-[#ed8080]"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>
+                      :
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>
+                    }
                     </button>
                   </div>
 
                   <p className="text-[18px]  flex capitalize  ">
-                    Brand : <p className="font-semibold px-2">  {items.brand} </p>
+                    Brand :{" "}
+                    <p className="font-semibold px-2"> {items.brand} </p>
                   </p>
                   <p className="text-[20px] flex font-semibold capitalize my-2 text-sky-600">
-                    Offer price : <p className="text-sky-800 px-2 font-bold">₹{items.discountedPrice} </p><br />
+                    Offer price :{" "}
+                    <p className="text-sky-800 px-2 font-bold">
+                      ₹{items.discountedPrice}{" "}
+                    </p>
+                    <br />
                   </p>
                   <del className="text-md font-semibold capitalize my-2 text-sky-600">
                     {" "}
@@ -279,10 +403,12 @@ const ProductGrid = () => {
                   </del>
 
                   <p className="text-[18px] flex capitalize my-2 ">
-                    Stock : <p className="px-2 font-semibold">{items.quantity}</p>
+                    Stock :{" "}
+                    <p className="px-2 font-semibold">{items.quantity}</p>
                   </p>
                   <p className="text-[18px] flex capitalize my-2 ">
-                    Category : <p className="font-semibold px-2">{items.category}</p>
+                    Category :{" "}
+                    <p className="font-semibold px-2">{items.category}</p>
                   </p>
                   <div className="flex">
                     {" "}
@@ -294,13 +420,16 @@ const ProductGrid = () => {
                   <p className="text-[18px]  capitalize my-2  flex gap-x-5 ">
                     Colors :
                     <div className="flex font-semibold gap-x-2 whitespace-nowrap overflow-hidden text-ellipsis ">
-                      {items.color?.map((opt, inx) => (
+                      {items?.color?.map((opt, inx) => (
                         <p className="">{opt}</p>
                       ))}
                     </div>
                   </p>
-            
-                  <button className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 items-end">
+
+                  <button
+                    className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 items-end"
+                    onClick={() => handleAddToCart(items?._id)}
+                  >
                     Add To Cart
                   </button>
                 </div>

@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/AdminModule/Header";
 
-export default function EditProduct() {
+export default function USerProductDetails() {
   const router = useRouter();
   const { slug } = router.query;
   const [isLoading, setLoading] = useState(false);

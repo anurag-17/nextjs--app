@@ -64,7 +64,9 @@ export default function Layout({ children }) {
       router.pathname === "/user-order" ||
       router.pathname === "/userFAQ" ||
       router.pathname === "/user-profile" ||
-      router.pathname === "/user-setting" ? null : (
+      router.pathname === "/user-setting" ||
+      router.pathname.includes("user-productdetail")
+       ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
           <Transition
@@ -94,7 +96,8 @@ export default function Layout({ children }) {
             router.pathname === "/user-profile" ||
             router.pathname === "/user-order" ||
             router.pathname === "/wish-list" ||
-            router.pathname === "/user-setting"
+            router.pathname === "/user-setting"||
+            router.pathname.includes("user-productdetail")
           )
             ? "pt-[4rem] pl-56"
             : ""
