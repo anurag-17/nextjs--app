@@ -65,6 +65,8 @@ export default function Layout({ children }) {
       router.pathname === "/userFAQ" ||
       router.pathname === "/user-profile" ||
       router.pathname === "/user-setting" ||
+      router.pathname.includes("user-productdetail")
+       ? null : (
       router.pathname === "/user-invoice" ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
