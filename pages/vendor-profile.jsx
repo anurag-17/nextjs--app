@@ -56,7 +56,7 @@ const vendorprofile = ({ showNav }) => {
     {
       id: 4,
       label: "Edit Profile",
-      component: <UpdateVendor/>,
+      component: <UpdateVendor />,
       icon: "fa fa-phone-square",
       imagePath: "/loginn.svg",
       path: "/update-vendor",
@@ -77,8 +77,22 @@ const vendorprofile = ({ showNav }) => {
       </div>
 
       <div className=" bg-white p-5 ">
-        <img src="/profile-cover.jpg" className="w-full" />
-        <div className="   flex">
+        <img
+          src="/profile.png"
+          className="w-36 border-[5px] rounded-full border-white absolute mt-56 ml-5 z-50"
+        />
+        <img src="/profile-cover.jpg" className="w-full relative" />
+        <div className="flex justify-end mt-5">
+          <div className="mx-5">
+            <p>Followers</p>
+            <p className="text-[35px] font-semibold">4532</p>
+          </div>
+          <div className="mx-5">
+            <p>Following</p>
+            <p className="text-[35px] font-semibold">532</p>
+          </div>
+        </div>
+        <div className="   flex mt-12">
           {/* Sidebar content */}
           {menuList.map((item) => (
             <div
