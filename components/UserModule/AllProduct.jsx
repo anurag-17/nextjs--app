@@ -19,10 +19,53 @@ import UserNavbar from "./userNavbar";
 import Slider from "./sliderrange";
 const ProductGrid = () => {
   const [allProduct, setAllProduct] = useState([]);
+  const [getallCategory, setGetallCategory] = useState([]);
+  const [getallBrand, setGetallBrand] = useState([]);
   const [addInWishlist, setAddInWishlist] = useState();
   let [productID, setProductID] = useState("");
   let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
+
+  const option = {
+    method: "GET",
+    url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+  };
+  useEffect(() => {
+    defaultBrand();
+  }, []);
+  const defaultBrand = () => {
+    axios
+      .request(option)
+      .then((response) => {
+        setGetallBrand(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const options = {
+    method: "GET",
+    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+  };
+
+  useEffect(() => {
+    defaultCategory();
+  }, []);
+
+  const defaultCategory = () => {
+    axios
+      .request(options)
+      .then((response) => {
+        setGetallCategory(response.data);
+        console.log(response.data);
+        handleClose();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   function closeModal() {
     setOpenDelete(false);
@@ -85,78 +128,15 @@ const ProductGrid = () => {
             <p className="font-semibold text-2xl mb-4">Product Categories</p>
             <hr className="mb-2" />
             <div className="space-y-4 ">
-              <div className="flex justify-between text-[#645D64]  hover:text-[#0284C7]">
-                <div className="flex ">
-                  <Image className="w-3 " src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Women's Bag
-                  </p>
+              {getallCategory.map((category) => (
+                <div
+                  className="text-[#645D64] flex hover:text-[#0284C7] cursor-pointer no-underline hover:underline"
+                  key={category.id}
+                >
+                  <Image className="w-3  " src={right} />
+                  {category.title}
                 </div>
-                <p>15</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Men's Accessories
-                  </p>
-                </div>
-                <p>20</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    School Bag
-                  </p>
-                </div>
-                <p>30</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Boots
-                  </p>
-                </div>
-                <p>40</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Boy's Dress
-                  </p>
-                </div>
-                <p>44</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Women's Fashion
-                  </p>
-                </div>
-                <p>50</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Fashion Accessories
-                  </p>
-                </div>
-                <p>33</p>
-              </div>
-              <div className="flex justify-between text-[#645D64] hover:text-[#0284C7]">
-                <div className="flex">
-                  <Image className="w-3" src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Makeup Corner
-                  </p>
-                </div>
-                <p>25</p>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -169,59 +149,34 @@ const ProductGrid = () => {
                   {/* <Image className="w-3 " src={right} /> */}
                   <p className="text-[#645D64]  no-underline hover:underline mb-3">
                     Range:{" "}
-                    <span className="font-semibold text-black">
-                      {" "}
-                      $0- $1000
-                    </span>
+                    <span className="font-semibold text-black"> $0- $1000</span>
                   </p>
-                  <Slider min={0} max={1000}/>
+                  <Slider min={0} max={1000} />
                 </div>
                 {/* <p>15</p> */}
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
+          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4">
             <p className="font-semibold text-2xl mb-4">Product Brands</p>
             <hr className="mb-2" />
             <div className=" ">
               <div className=" justify-between text-[#645D64] space-y-4 ">
-                <div className="flex ">
-                  <Image className="w-3 " src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Nike
-                  </p>
-                </div>
-                <div className="flex ">
-                  <Image className="w-3 " src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Zara
-                  </p>
-                </div>
-                <div className="flex ">
-                  <Image className="w-3 " src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Denim
-                  </p>
-                </div>
-                <div className="flex ">
-                  <Image className="w-3 " src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Madame
-                  </p>
-                </div>
-                <div className="flex ">
-                  <Image className="w-3 " src={right} />
-                  <p className="text-[#645D64] hover:text-[#0284C7] no-underline hover:underline">
-                    Arong
-                  </p>
-                </div>
-                {/* <p>15</p> */}
+                {getallBrand.map((brands) => (
+                  <div
+                    className="text-[#645D64] flex hover:text-[#0284C7] cursor-pointer no-underline hover:underline"
+                    key={brands}
+                  >
+                  <Image className="w-3  " src={right} />
+                    {brands?.brand}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
+          {/* <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
             <p className="font-semibold text-2xl mb-4">Size</p>
             <hr className="mb-3" />
             <div className=" ">
@@ -235,7 +190,7 @@ const ProductGrid = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div>
@@ -252,7 +207,7 @@ const ProductGrid = () => {
 
                 {/* <!--Search button--> */}
                 <button
-                  class="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-[#0284C7] hover:text-white shadow-md transition duration-150 ease-in-out hover:bg-[#0284C7] hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                  class="relative z-[2] flex items-center rounded-r bg-primary px-3 py-2 text-xs font-medium uppercase leading-tight text-[#0284C7] hover:text-white border transition duration-150 ease-in-out hover:bg-[#0284C7] hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
                   type="button"
                   id="button-addon1"
                   data-te-ripple-init
@@ -287,24 +242,24 @@ const ProductGrid = () => {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-4 gap-7 my-16 ">
+          <div className="grid lg:grid-cols-3 gap-7 my-16 ">
             {allProduct.map((items, ix) => (
               <div
-                className=" bg-white  border-[5px] border-gray  hover:rounded-[20px] m-4 hover:border-lightBlue-600"
+                className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
               >
-                <Link href={`/user-detail`}>
+                <Link href={`/user-productdetail/${items?._id}`}>
                   <Image
-                    src="/img1.jpeg"   
+                    src="/img1.jpeg"
                     alt=""
                     className=" mx-auto rounded-[20px] "
                     width={400}
                     height={400}
                   />
-                 </Link>
-                <div className="bg-white px-4 pb-6 rounded-[20px]">
+                </Link>
+                <div className="bg-white px-10 pb-6 rounded-[20px] ">
                   <div className="flex justify-between items-center my-4">
-                    <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                    <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                       {items.title}
                     </h6>
                     <button onClick={handleAddToCart}>
@@ -312,80 +267,40 @@ const ProductGrid = () => {
                     </button>
                   </div>
 
-                  <p className="text-[16px]  capitalize  ">
-                    Brand : {items.brand}
+                  <p className="text-[18px]  flex capitalize  ">
+                    Brand : <p className="font-semibold px-2">  {items.brand} </p>
                   </p>
-                  <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                    Offer price : {items.discountedPrice} <br />
+                  <p className="text-[20px] flex font-semibold capitalize my-2 text-sky-600">
+                    Offer price : <p className="text-sky-800 px-2 font-bold">₹{items.discountedPrice} </p><br />
                   </p>
-                  <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                  <del className="text-md font-semibold capitalize my-2 text-sky-600">
                     {" "}
                     Regular Price : ₹{items.price}
                   </del>
 
-                  <p className="text-[18px]  capitalize my-2 ">
-                    Stock : {items.quantity}
+                  <p className="text-[18px] flex capitalize my-2 ">
+                    Stock : <p className="px-2 font-semibold">{items.quantity}</p>
                   </p>
-                  <p className="text-[18px]  capitalize my-2 ">
-                    Category : {items.category}
+                  <p className="text-[18px] flex capitalize my-2 ">
+                    Category : <p className="font-semibold px-2">{items.category}</p>
                   </p>
                   <div className="flex">
                     {" "}
-                    <h1 className="mt-1  mr-1">Status : </h1>
-                    <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
+                    <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
+                    <p className=" bg-sky-200 p-1 text-center font-semibold rounded-xl text-sky-600 w-20">
                       selling
                     </p>
                   </div>
-                  <p className="text-[18px]  capitalize my-2  flex gap-x-5">
+                  <p className="text-[18px]  capitalize my-2  flex gap-x-5 ">
                     Colors :
-                    <div className="flex gap-x-2">
+                    <div className="flex font-semibold gap-x-2 whitespace-nowrap overflow-hidden text-ellipsis ">
                       {items.color?.map((opt, inx) => (
                         <p className="">{opt}</p>
                       ))}
                     </div>
                   </p>
-                  <div className="flex justify-between ">
-                    <button
-                      type="button"
-                      className=""
-                      data-te-toggle="tooltip"
-                      data-te-html="true"
-                      data-te-ripple-init=""
-                      data-te-ripple-color="light"
-                      title="View product"
-                    >
-                      <Link href={`/view-product/${items?._id}`}>
-                        <MagnifyingGlassPlusIcon className="cursor-pointer h-10 w-10 text-gray-800" />
-                      </Link>
-                    </button>
-                    {/* <button
-                    type="button"
-                    className=""
-                    data-te-toggle="tooltip"
-                    data-te-html="true"
-                    data-te-ripple-init=""
-                    data-te-ripple-color="black"
-                    title="Edit"
-                  >
-                    <Link href={`/edit-product/${items?._id}`}>
-                      <PencilSquareIcon className="cursor-pointer h-10 w-10 text-gray-800" />
-                    </Link>
-                  </button>
-
-                  <button
-                    data-te-toggle="tooltip"
-                    data-te-html="true"
-                    data-te-ripple-init=""
-                    data-te-ripple-color="light"
-                    title="Delete "
-                    type="button"
-                    onClick={() => openModal(items?._id)}
-                    className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                  >
-                    <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
-                  </button> */}
-                  </div>
-                  <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
+            
+                  <button className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 items-end">
                     Add To Cart
                   </button>
                 </div>

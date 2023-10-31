@@ -393,9 +393,9 @@ const ProductList = () => {
                         selling
                       </p>
                     </div>
-                    <p className="text-[18px]  capitalize my-2  flex gap-x-5">
+                    <p className="text-[18px]  capitalize my-2   flex gap-x-5">
                       Colors :
-                      <div className="flex gap-x-2">
+                      <div className="flex gap-x-2  ">
                         {items.color?.map((opt, inx) => (
                           <p className="">{opt}</p>
                         ))}

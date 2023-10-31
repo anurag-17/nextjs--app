@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const UserProductDetail = () => {
+const Userdetail = () => {
     const router = useRouter();
     const { slug } = router.query;
     const [isLoading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ const UserProductDetail = () => {
     <>
          <section className="bg-gray-100 min-h-screen">
         <ToastContainer />
-        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px]  ">
+        <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px]">
           <div className="">
             <h2 className="text-2xl font-semibold"> Product Details </h2>
             <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
@@ -149,4 +149,4 @@ const UserProductDetail = () => {
   )
 }
 
-export default UserProductDetail
+export default Userdetail
