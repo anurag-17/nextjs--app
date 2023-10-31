@@ -30,6 +30,7 @@ const menuList = [
     path: "/user-order",
   },
 
+
   {
     id: 4,
     label: "Notifiction",
@@ -61,6 +62,13 @@ const menuList = [
     icon: "fa fa-phone-square",
     imagePath: "/social.svg",
     path: "/",
+  },
+  {
+    id: 8,
+    label: "Invoice",
+    component: "",
+    icon: "fa fa-phone-square",
+    path: "/user-invoice",
   },
 ];
 const UserNavbar = () => {
@@ -110,7 +118,8 @@ const UserNavbar = () => {
 
                 <span className="sr-only bg-black">Close menu</span>
               </button>
-              <img src="/log.png" className=" p-0" />
+              <Link href='/all-product'>
+              <img src="/log.png" className=" p-0" /></Link>
               <div className="">
                 <ul>
                   {menuList.map((item) => (
