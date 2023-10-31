@@ -126,9 +126,9 @@ const UserNavbar = () => {
             </div>
           )}
         </ul>
-        <ul className="flex justify-end">
+        {/* <ul className="flex justify-end">
           <input type="text" placeholder="Search" className="p-1 border rounded-lg"/>
-        </ul>
+        </ul> */}
       </nav>
     </>
   );
