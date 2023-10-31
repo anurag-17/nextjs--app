@@ -82,7 +82,7 @@ export default function Layout({ children }) {
         </>
       )}
       <main
-        className={` transition-all duration-[400ms] ${
+        className={` transition-all duration-[400ms] pt-11 ${
           showNav &&
           !isMobile &&
           !(
@@ -96,7 +96,7 @@ export default function Layout({ children }) {
             router.pathname === "/wish-list" ||
             router.pathname === "/user-setting"
           )
-            ? "pt-16 pl-56"
+            ? "pt-[4rem] pl-56"
             : ""
         }`}
       >
@@ -113,7 +113,7 @@ export default function Layout({ children }) {
               router.pathname === "/all-product" ||
               router.pathname === "/user-setting"
             )
-              ? "px-4 md:px-16"
+              ? "pl-4 md:pl-16 pr-4"
               : ""
           }
         >
