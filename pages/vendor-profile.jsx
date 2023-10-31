@@ -1,3 +1,4 @@
+
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import Profile from "./profile";
@@ -9,7 +10,7 @@ import Image from "next/image";
 import bank from "../public/bank.svg";
 import Logactivity from "./logactivity";
 
-const profilesideBar = ({ showNav }) => {
+const vendorprofile = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [labelId, setLabelId] = useState(1);
   const [show, setShow] = useState("Dashboard");
@@ -26,7 +27,7 @@ const profilesideBar = ({ showNav }) => {
   const menuList = [
     {
       id: 1,
-      label: "Personal Info",
+      label: "About",
       component: <Profile />,
       icon: "fa fa-users",
       imagePath: "/profilephoto.svg",
@@ -34,7 +35,7 @@ const profilesideBar = ({ showNav }) => {
     },
     {
       id: 2,
-      label: "Payment Method",
+      label: "Product",
       component: <Payment />,
       icon: "fa fa-users",
       imagePath: "/paymntmethod.svg",
@@ -42,7 +43,7 @@ const profilesideBar = ({ showNav }) => {
     },
     {
       id: 3,
-      label: "Notification Setting",
+      label: "Hidden",
       component: <Notification />,
       icon: "fa fa-phone-square",
       imagePath: "/bell.svg",
@@ -50,28 +51,13 @@ const profilesideBar = ({ showNav }) => {
     },
     {
       id: 4,
-      label: "Login Activity",
+      label: "Edit Profile",
       component: <Logactivity />,
       icon: "fa fa-phone-square",
       imagePath: "/loginn.svg",
       path: "/logactivity",
     },
-    {
-      id: 5,
-      label: "Change Password",
-      component: <PasswordChange />,
-      icon: "fa fa-phone-square",
-      imagePath: "/keylock.svg",
-      path: "/passwordchange",
-    },
-    {
-      id: 6,
-      label: "Connect With Social",
-      component: <ConnectSocial />,
-      icon: "fa fa-phone-square",
-      imagePath: "/social.svg",
-      path: "/profile",
-    },
+   
   ];
 
   return (
@@ -125,4 +111,4 @@ const profilesideBar = ({ showNav }) => {
 };
 
 
-export default dynamic(() => Promise.resolve(profilesideBar), { ssr: false });
+export default dynamic(() => Promise.resolve(vendorprofile), { ssr: false });

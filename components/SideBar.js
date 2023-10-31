@@ -74,7 +74,30 @@ const menuList = [
     label: "Vendor",
     component: "",
     icon: `fa fa-users`,
-    path: "/vendor",
+    submenu: true,
+    subData: [
+      {
+        id: "1",
+        label: "Vendor List",
+        component: "",
+        icon: `fa fa-users`,
+        path: "/vendor",
+      },
+      {
+        id: "2",
+        label: "Vendor Grid",
+        component: "",
+        icon: `fa fa-users`,
+        path: "/vendor-grid",
+      },
+      {
+        id: "3",
+        label: "Vendor Profile",
+        component: "",
+        icon: `fa fa-users`,
+        path: "",
+      },
+    ],
   },
   {
     id: 5,
@@ -102,7 +125,7 @@ const menuList = [
     label: "settings",
     component: "",
     icon: `fa fa-phone-square`,
-    path: "/setting",
+    path: "/profilesidebar",
   },
 ];
 

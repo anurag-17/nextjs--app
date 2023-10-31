@@ -189,23 +189,23 @@ const Signup = () => {
                     />
                   </div>
                   <div className="2xl:py-5 xl:text-[16px] lg:[text-[14px]  xl:py-3 first-letter: lg:py-2 md:py-2 sm:py-2">
-                  <label>
-                    <input
-                      type="checkbox"
-                      className="border border-gray-400 2xl:mr-2 xl:mr-1 lg:mr-1 md:mr-1 sm:mr-1"
-                    />
-                    <span>
-                      I accept the
-                      <a href="#" className="text-cyan-600 font-semibold">
-                        Terms of Use
-                      </a>
-                      &nbsp; &amp; &nbsp;
-                      <a href="#" className="text-cyan-600 font-semibold">
-                        Privacy Policy
-                      </a>
-                    </span>
-                  </label>
-                </div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="border border-gray-400 2xl:mr-2 xl:mr-1 lg:mr-1 md:mr-1 sm:mr-1"
+                      />
+                      <span>
+                        I accept the
+                        <a href="#" className="text-cyan-600 font-semibold">
+                          Terms of Use
+                        </a>
+                        &nbsp; &amp; &nbsp;
+                        <a href="#" className="text-cyan-600 font-semibold">
+                          Privacy Policy
+                        </a>
+                      </span>
+                    </label>
+                  </div>
                   <div className="mt-5">
                     <button className="w-full bg-cyan-600  text-center text-white mb-2 font-semibold xl:text-[18px] lg:text-[16px] rounded">
                       {isLoading ? (

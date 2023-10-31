@@ -6,9 +6,9 @@ import { data } from '../data/data.js';
 const orders = () => {
   return (
     <div className='bg-gray-100 min-h-screen  '>
-      <div className='flex justify-between px-4 pt-12'>
-        <h2>Orders</h2>
-        <h2>Welcome Back, Clint</h2>
+      <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
+        <h2 className="text-2xl font-semibold pb-4">Orders List </h2>
+        <h2>Welcome Back, Client</h2>
       </div>
       <div className='p-4'>
         <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>

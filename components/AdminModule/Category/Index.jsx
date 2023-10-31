@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-const CategoryList = ({_id,closeModal,refreshData}) => {
+const CategoryList = ({ _id, closeModal, refreshData }) => {
   console.log(_id);
   const [getallCategory, setGetallCategory] = useState([]);
   const [isChecked, setisChecked] = useState([]);
@@ -24,7 +24,7 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
   const handleClose = () => {
     closeModal();
     refreshData();
-  }
+  };
 
   const options = {
     method: "GET",
@@ -64,12 +64,10 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
           defaultCategory();
         } else {
           throw new Error("failed to create");
-          
         }
       })
       .catch((e) => {
         console.log(e);
-        
       });
   };
 
@@ -115,7 +113,7 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
         `https://e-commerce-backend-brown.vercel.app/api/category/deleteBulkCategory`,
         { CategoryIds: isChecked }
       );
-  
+
       // Check the HTTP status code for success (2xx codes)
       if (response.status === 200) {
         console.log("Successfully deleted Catagory");
@@ -123,32 +121,15 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
         defaultCategory();
       } else {
         // Handle other status codes or error responses from the server
-        console.error("Failed to delete catagory. Status code: " + response.status);
-        
+        console.error(
+          "Failed to delete catagory. Status code: " + response.status
+        );
       }
     } catch (error) {
       // Handle network errors or exceptions thrown during the request
       console.error("Error deleting catagory:", error);
-      
     }
   };
-  
-  // const selectAllDelete = (e) => {
-  //   const checkboxChecked = e.target.checked;
-  //   setSelectDelete(checkboxChecked);
-  //   const checkbox = document.getElementById("myCheckbox");
-  //   const selectDelete = checkbox.checked;
-  //   console.log("selectDelete:", selectDelete);
-  // };
-
-  // const handleCheckbox = (e) => {
-  //   const { value, checked } = e.target;
-  //   if (checked) {
-  //     setisChecked([...isChecked, value]);
-  //   } else {
-  //     setisChecked(isChecked.filter((e) => e !== value));
-  //   }
-  // };
   return (
     <>
       <section>
@@ -157,19 +138,9 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
           <h2>Welcome Back, Client</h2>
         </div>
         <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-          {/* <div className="flex justify-between ">
-            <button className="border border-gray-400 rounded-md p-2 mr-3 flex justify-around hover:border-green-500 hover:text-green-500">
-              <ArrowDownTrayIcon class="h-6 w-5  mr-1 text-black" />
-              Import
-            </button>
-            <button className="border border-gray-400 rounded-md p-2 hover:border-yellow-600 hover:text-yellow-600 flex">
-              <ArrowUpTrayIcon class="h-6 w-5 mr-1 text-black" />
-              Export
-            </button>
-          </div> */}
           <div className="flex justify-around">
             <Link href="/create-cate">
-              <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer mr-4">
+              <button className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4">
                 + Add Category
               </button>
             </Link>
@@ -182,10 +153,10 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
             </button>
           </div>
         </div>
-        <table class="table-auto bg-white w-full rounded-md mt-5">
+        <table class="table-auto bg-white  rounded-md mt-5">
           <thead className="">
             <label>
-              <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center">
+              <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
                 <input
                   type="checkbox"
                   className="mx-3 my-5 cursor-pointer"
@@ -194,27 +165,27 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
                   onChange={handleCheckbox}
                 />
 
-                <th className="text-start">NAME</th>
+                <th className="text-start w-24  ">NAME</th>
                 {/* <th className="text-start">DESCRIPTION</th> */}
-                <th className="text-start">PUBLISHED</th>
-                <th className="text-start">ACTION</th>
+                <th className="text-start w-24">PUBLISHED</th>
+                <th className="text-start w-24">ACTION</th>
               </tr>
             </label>
           </thead>
           {getallCategory.map((items) => (
             <tbody>
               <label>
-                <tr className="flex">
+                <tr className="flex gap-48">
                   <td className="">
                     <input
                       type="checkbox"
-                      className="mx-3 cursor-pointer mt-5 mr-48"
+                      className="mx-3 mt-5 cursor-pointer "
                       value={items?._id}
                       checked={items.isChecked}
                       onChange={(e) => handleCheckbox(e)}
                     />
                   </td>
-                  <td className="py-5 text-[18px] w-[15%] ">
+                  <td className="py-5 text-[18px] w-[20%] ">
                     {" "}
                     {items?.title ? items?.title : "-"}
                   </td>
@@ -260,20 +231,19 @@ const CategoryList = ({_id,closeModal,refreshData}) => {
                                 <button
                                   className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
                               hover:border-none"
-                              onClick={handleClose}
+                                  onClick={handleClose}
                                 >
                                   No, Keep It
                                 </button>
                                 <button
                                   onClick={() => {
                                     removeCategory(items?._id);
-                                    handleClose()
+                                    handleClose();
                                   }}
                                   className="border border-1 rounded-md 
                               text-sm 
                               border-red-400 text-red-700 hover:bg-red-200  p-1
                               hover:border-none"
-                             
                                 >
                                   Yes, Delete It
                                 </button>

@@ -90,7 +90,7 @@ const Customers = () => {
         </div> */}
 
         <table className="table bg-white w-full mt-5 gap-48 rounded-lg">
-          <thead className=" bg-gray-400 ">
+          <thead className=" bg-gray-200 text-gray-400">
             <tr className="gap-48 ">
               {/* <label> */}
               <th>

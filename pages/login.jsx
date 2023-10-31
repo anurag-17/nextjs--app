@@ -216,25 +216,24 @@ const UserLogin = ({ API_URL }) => {
                     >
                       Register Now
                     </p>
-                    
                   </Link>
-                    <div className=" flex justify-center">
-                      <Link href="https://www.facebook.com/" target="_blank">
+                  <div className=" flex justify-center">
+                    <Link href="https://www.facebook.com/" target="_blank">
                       <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
                         <img src="/fbb.svg" className="w-8" />
                       </div>
-                      </Link>
-                      <Link href="https://twitter.com/"  target="_blank">
+                    </Link>
+                    <Link href="https://twitter.com/" target="_blank">
                       <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
                         <img src="/tw.svg" className="w-8" />
                       </div>
-                      </Link>
-                      <Link href="https://www.google.com/account"  target="_blank">
+                    </Link>
+                    <Link href="https://www.google.com/account" target="_blank">
                       <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
                         <img src="/g.svg" className="w-8" />
                       </div>
-                      </Link>
-                    </div>
+                    </Link>
+                  </div>
                 </div>
               </form>
             </div>

@@ -34,7 +34,7 @@ const brandlist = () => {
         console.error("Error:", error);
       });
   };
-  
+
   const removeCategory = async (_id) => {
     console.log(_id);
     await fetch(
@@ -66,7 +66,7 @@ const brandlist = () => {
         `https://e-commerce-backend-brown.vercel.app/api/brand/deleteBulkBrands`,
         { brandIds: isChecked }
       );
-  
+
       // Check the HTTP status code for success (2xx codes)
       if (response.status === 200) {
         console.log("Successfully deleted brands");
@@ -74,14 +74,15 @@ const brandlist = () => {
         defaultBrand();
       } else {
         // Handle other status codes or error responses from the server
-        console.error("Failed to delete brands. Status code: " + response.status);
+        console.error(
+          "Failed to delete brands. Status code: " + response.status
+        );
       }
     } catch (error) {
       // Handle network errors or exceptions thrown during the request
       console.error("Error deleting brands:", error);
     }
   };
-  
 
   const handleCheckbox = (e) => {
     const { value, checked } = e.target;
@@ -114,7 +115,7 @@ const brandlist = () => {
       <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
         <div className="flex  justify-end mt-7 ">
           <Link href="/create-brand">
-            <button className="rounded-md p-2 bg-green-600 text-white cursor-pointer">
+            <button className="rounded-md p-2 bg-sky-600 text-white cursor-pointer">
               + Add Brand
             </button>
           </Link>
@@ -126,7 +127,7 @@ const brandlist = () => {
           </button>
         </div>
       </div>
-      <table class="table-auto  bg-white w-full rounded-md mt-5">
+      <table class="table-auto  bg-white  rounded-md mt-5">
         <thead className="">
           <label>
             <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">

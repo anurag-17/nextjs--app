@@ -2,12 +2,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  ArrowUpTrayIcon,
-  ArrowDownTrayIcon,
-  TrashIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
+import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Transition, Popover } from "@headlessui/react";
 import axios from "axios";
@@ -78,7 +73,7 @@ const vendor = () => {
           </div> */}
           <div className="flex justify-around">
             <Link href="/add-vendor">
-              <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer mr-4">
+              <button className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4">
                 + Add Vendor
               </button>
             </Link>
@@ -90,7 +85,7 @@ const vendor = () => {
         </div>
 
         <table className="table bg-white w-full mt-5 gap-48 rounded-lg">
-          <thead className=" bg-gray-400 ">
+          <thead className=" bg-gray-200 text-gray-400 ">
             <tr className="gap-48 ">
               {/* <label> */}
               <th>
