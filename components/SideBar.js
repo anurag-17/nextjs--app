@@ -95,7 +95,7 @@ const menuList = [
         label: "Vendor Profile",
         component: "",
         icon: `fa fa-users`,
-        path: "",
+        path: "vendor-profile",
       },
     ],
   },

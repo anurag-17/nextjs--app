@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import axios from "axios";
 
-const updateVendor = ({ _id }) => {
+const UpdateVendor = ({ _id }) => {
   const router = useRouter();
   const { slug } = router.query;
   const [editData, setEditData] = useState({});
@@ -110,100 +110,128 @@ const updateVendor = ({ _id }) => {
 
   return (
     <div>
-      <form
-        onSubmit={handleUpdateVendor}
-        className=" bg-white border w-1/3 p-2 mx-auto"
-      >
-        <h1 className="text-2xl my-5">Update Vendor :</h1>
+      <form onSubmit={handleUpdateVendor} className=" bg-white border rounded-lg ">
         <div>
-          <label>Vendor Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateVendor.vendorName}
-            defaultValue={
-              editData?.vendorName
-                ? editData?.vendorName
-                : updateVendor.vendorName
-            }
-            type="text"
-            name="vendorName"
-            className="border p-1 m-2"
-            // className="custom-input"
-            required
-            minLength={3}
-            max={84}
-          />{" "}
-          <br />
-          <label>Company Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateVendor.companyName}
-            defaultValue={
-              editData?.companyName
-                ? editData?.companyName
-                : updateVendor.companyName
-            }
-            type="text"
-            name="companyName"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Email:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateVendor.email}
-            defaultValue={
-              editData?.email ? editData?.email : updateVendor.email
-            }
-            type="text"
-            name="email"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Phone No.:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateVendor.phone}
-            defaultValue={
-              editData?.phone ? editData?.phone : updateVendor.phone
-            }
-            type="number"
-            name="phone"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Address:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateVendor.address}
-            defaultValue={
-              editData?.address ? editData?.address : updateVendor.address
-            }
-            type="text"
-            name="address"
-            className="border p-1 m-2"
-            required
-          />{" "}
+          <div className="flex w-full">
+            <div className=" mb-3 w-6/12">
+              <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
+                Vendor Name
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateVendor.vendorName}
+                defaultValue={
+                  editData?.vendorName
+                    ? editData?.vendorName
+                    : updateVendor.vendorName
+                }
+                type="text"
+                name="vendorName"
+                required
+                minLength={3}
+                max={84}
+                className="border p-4 relative rounded-lg m-10 w-11/12 "
+              />
+            </div>
+            <div className=" mb-3 w-6/12">
+              <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
+                Company Name
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateVendor.companyName}
+                defaultValue={
+                  editData?.companyName
+                    ? editData?.companyName
+                    : updateVendor.companyName
+                }
+                name="companyName"
+                type="text"
+                required
+                minLength={3}
+                max={84}
+                className="border p-4 relative rounded-lg m-10 w-11/12 "
+              />
+            </div>
+          </div>
+          <div className="flex w-full">
+            <div className=" mb-3 w-6/12">
+            <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
+              Email
+            </label>
+            <input
+              onChange={inputHandler}
+              value={updateVendor.email}
+              defaultValue={
+                editData?.email ? editData?.email : updateVendor.email
+              }
+              type="text"
+              name="email"
+              required
+              minLength={3}
+              max={84}
+              className="border p-4 relative rounded-lg m-10 w-11/12"
+            />
+          </div>
+
+          <div className=" mb-3 w-6/12">
+            <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
+              Phone No
+            </label>
+            <input
+              onChange={inputHandler}
+              value={updateVendor.phone}
+              defaultValue={
+                editData?.phone ? editData?.phone : updateVendor.phone
+              }
+              type="number"
+              name="phone"
+              required
+              minLength={3}
+              max={84}
+              className="border p-4 relative rounded-lg m-10 w-11/12"
+            />
+          </div>
+</div>
+          <div className=" mb-3 w-6/12 ">
+            <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white ">
+              Address
+            </label>
+            <input
+              onChange={inputHandler}
+              value={updateVendor.address}
+              defaultValue={
+                editData?.address ? editData?.address : updateVendor.address
+              }
+              type="text"
+              name="address"
+              required
+              minLength={3}
+              max={84}
+              className="border p-4 relative rounded-lg m-10 w-11/12 "
+            />
+          </div>
+
           <br />
         </div>
-        <button
-          type="submit"
-          onClick={handleUpdateVendor}
-          className="border p-2 m-2 rounded-lg bg-blue-600 text-white "
-        >
-          Add Vendor
-        </button>
+        <div className=" flex justify-end mb-5 mr-5">
+          <button
+            type="submit"
+            onClick={handleUpdateVendor}
+            className="border p-3 m-2 rounded-lg bg-sky-600 text-white text-[20px]"
+          >
+            Update Vendor
+          </button>
+          <button
+            type="submit"
+            className="border py-2 px-4 m-2 rounded-lg bg-red-600 text-white text-[20px]"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default updateVendor;
+export default UpdateVendor;
