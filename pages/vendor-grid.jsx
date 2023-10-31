@@ -32,14 +32,14 @@ const vendorgrid = () => {
         <h2 className="text-2xl font-semibold pb-4">Vendor List </h2>
         <h2>Welcome Back, Client</h2>
       </div>
-      <div className="flex flex-wrap  justify-between ">
+      <div className="flex flex-wrap  justify-around ">
         {getAllVendor.map((item) => (
           <div className="border rounded-lg bg-white w-[28%] p-8 my-5">
             <div className="flex">
               {/* vender profile image */}
               <div className="w-36 mt-14 ">
                 <img
-                  src="/ind flag.png"
+                   src="/profile.png"
                   className="w-20  border-[5px] border-white shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)] rounded-full"
                 />
               </div>
@@ -82,6 +82,9 @@ const vendorgrid = () => {
                 <p className=" text-[22px] font-medium my-3">92852</p>
               </div>
             </div>
+          <div>
+          <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-sky-600 text-white text-[20px] ">View</button>
+          </div>
           </div>
         ))}
       </div>
