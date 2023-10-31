@@ -37,7 +37,7 @@ const menuList = [
     component: "",
     icon: "fa fa-phone-square",
     imagePath: "/loginn.svg",
-    path: "/",
+    path: "",
   },
   {
     id: 5,
