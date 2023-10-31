@@ -64,7 +64,8 @@ export default function Layout({ children }) {
       router.pathname === "/user-order" ||
       router.pathname === "/userFAQ" ||
       router.pathname === "/user-profile" ||
-      router.pathname === "/user-setting" ? null : (
+      router.pathname === "/user-setting" ||
+      router.pathname === "/user-invoice" ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
           <Transition
@@ -82,7 +83,7 @@ export default function Layout({ children }) {
         </>
       )}
       <main
-        className={` transition-all duration-[400ms] pt-11 ${
+        className={` transition-all duration-[400ms]  ${
           showNav &&
           !isMobile &&
           !(
@@ -94,7 +95,8 @@ export default function Layout({ children }) {
             router.pathname === "/user-profile" ||
             router.pathname === "/user-order" ||
             router.pathname === "/wish-list" ||
-            router.pathname === "/user-setting"
+            router.pathname === "/user-setting" ||
+            router.pathname === "/user-invoice"
           )
             ? "pt-[4rem] pl-56"
             : ""
@@ -111,7 +113,8 @@ export default function Layout({ children }) {
               router.pathname === "/wish-list" ||
               router.pathname === "/user-order" ||
               router.pathname === "/all-product" ||
-              router.pathname === "/user-setting"
+              router.pathname === "/user-setting" ||
+              router.pathname === "/user-invoice"
             )
               ? "pl-4 md:pl-16 pr-4"
               : ""
