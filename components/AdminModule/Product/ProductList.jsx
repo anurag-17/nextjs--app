@@ -323,11 +323,11 @@ const ProductList = () => {
                 <List />
               </div>
             </div>
-            <div className="w-full">
+            <div className="w-full flex justify-center">
               <input
                 type="search"
                 placeholder="Search Product"
-                className="border border-gray-400 p-2 rounded-md w-3/12 cursor-pointer focus-visible:outline-offset-0"
+                className=" border border-gray-500  p-3 rounded-xl focus:border-none w-1/3 "
                 onChange={handleSearch} //search input
               ></input>
             </div>

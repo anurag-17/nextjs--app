@@ -32,7 +32,7 @@ const ConnectSocial = () => {
                       Twitter *
                     </label>
                     <Link href="https://twitter.com/">
-                    <img src="/twitter-154-svgrepo-com.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
+                    <img src="/tw.svg" className="w-5 absolute mt-12 ml-[22%] z-20"/>
                     </Link>
                     <input
                       type="password "

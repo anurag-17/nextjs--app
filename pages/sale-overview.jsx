@@ -36,7 +36,7 @@ const SaleOverview = () => {
 
               <h1 className="text-gray-400 text-[22px]">Visits </h1>
             </div>
-            <h1 className="text-gray-600 text-[22px]">25.7%</h1>
+            <h1 className="text-gray-600 text-[22px]">29.3%</h1>
             <p className="text-gray-400 text-[18px]">12452</p>
           </div>
         </div>

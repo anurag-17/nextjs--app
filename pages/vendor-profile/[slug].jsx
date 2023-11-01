@@ -1,20 +1,11 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import Profile from "./profile";
-import Notification from "./notification";
-import Payment from "./payment";
-import PasswordChange from "./passwordchange";
-import ConnectSocial from "./connectsocial";
-import Image from "next/image";
-import bank from "../public/bank.svg";
-import Logactivity from "./logactivity";
-import AboutVendor from "./about-vendor";
-import ActiveProduct from "./active-product";
-import HiddenProduct from "./hidden-product";
-import updateVendor from "./update-vendor/[slug]";
-import UpdateVendor from "./update-vendor/[slug]";
+// import AboutVendor from "./about-vendor";
+// import ActiveProduct from "./active-product";
+// import HiddenProduct from "./hidden-product";
+// import UpdateVendor from "./update-vendor/[slug]";
 
-const vendorprofile = ({ showNav }) => {
+const VendorProfile = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [labelId, setLabelId] = useState(1);
   const [show, setShow] = useState("Dashboard");
@@ -32,7 +23,7 @@ const vendorprofile = ({ showNav }) => {
     {
       id: 1,
       label: "About",
-      component: <AboutVendor />,
+    //   component: <AboutVendor/>,
       icon: "fa fa-users",
       imagePath: "/profilephoto.svg",
       path: "/about-vendor",
@@ -40,7 +31,7 @@ const vendorprofile = ({ showNav }) => {
     {
       id: 2,
       label: "Product",
-      component: <ActiveProduct />,
+    //   component: <ActiveProduct/>,
       icon: "fa fa-users",
       imagePath: "/paymntmethod.svg",
       path: "/active-product",
@@ -48,7 +39,7 @@ const vendorprofile = ({ showNav }) => {
     {
       id: 3,
       label: "Hidden",
-      component: <HiddenProduct />,
+    //   component: <HiddenProduct/>,
       icon: "fa fa-phone-square",
       imagePath: "/bell.svg",
       path: "/hidden-product",
@@ -56,7 +47,7 @@ const vendorprofile = ({ showNav }) => {
     {
       id: 4,
       label: "Edit Profile",
-      component: <UpdateVendor />,
+    //   component: <UpdateVendor/>,
       icon: "fa fa-phone-square",
       imagePath: "/loginn.svg",
       path: "/update-vendor",
@@ -82,20 +73,14 @@ const vendorprofile = ({ showNav }) => {
           className="w-36 border-[5px] rounded-full border-white absolute mt-56 ml-5 z-50"
         />
         <img src="/profile-cover.jpg" className="w-full relative" />
-        <div className="flex justify-between mt-5">
-        <div className="ml-48">
-        <h1 className="text-[35px] font-semibold">Hariom Patil</h1>
-        <p className="text-[20px] font-medium">@_hmpatil_</p>
-        </div>
-          <div className="flex">
+        <div className="flex justify-end mt-5">
           <div className="mx-5">
-            <p className="text-[20px] font-medium">Followers</p>
+            <p>Followers</p>
             <p className="text-[35px] font-semibold">4532</p>
           </div>
           <div className="mx-5">
-            <p className="text-[20px] font-medium"> Following</p>
+            <p>Following</p>
             <p className="text-[35px] font-semibold">532</p>
-          </div>
           </div>
         </div>
         <div className="   flex mt-12">
@@ -124,9 +109,7 @@ const vendorprofile = ({ showNav }) => {
             selectedMenuItem.component
           ) : (
             // Render a default component or welcome message
-            <div>
-              <AboutVendor/>
-            </div>
+            <div></div>
           )}
         </div>
       </div>
@@ -134,4 +117,4 @@ const vendorprofile = ({ showNav }) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(vendorprofile), { ssr: false });
+export default dynamic(() => Promise.resolve(VendorProfile), { ssr: false });
