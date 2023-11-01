@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import shoping from "../../public/shopingcart.svg";
 
 import Link from "next/link";
 
@@ -30,14 +32,13 @@ const menuList = [
     path: "/user-order",
   },
 
-
   {
     id: 4,
-    label: "Notifiction",
+    label: "Notification",
     component: "",
     icon: "fa fa-phone-square",
     imagePath: "/loginn.svg",
-    path: "",
+    path: "user-notifictionSet",
   },
   {
     id: 5,
@@ -70,6 +71,13 @@ const menuList = [
     icon: "fa fa-phone-square",
     path: "/user-invoice",
   },
+  {
+    id: 9,
+    label: "Order Details",
+    component: "",
+    icon: "fa fa-phone-square",
+    path: "/userorder-detail",
+  },
 ];
 const UserNavbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -85,19 +93,26 @@ const UserNavbar = () => {
   return (
     <>
       <nav className="p-6 bg-white border mb-5 flex justify-between">
-        <ul className="flex justify-start">
-          <div className="text-center">
-            <button
-              className="w-36"
-              type="button"
-              onClick={openDrawer} // Open the drawer when this button is clicked
-            >
-              <div className="w-[30%]">
-                <div className="bg-black p-[3px] my-2"></div>
-                <div className="bg-black p-[3px] my-2"></div>
-                <div className="bg-black p-[3px] my-2"></div>
-              </div>
-            </button>
+        <ul className="flex justify-start w-full">
+          <div className="flex justify-between w-full">
+            <div className="text-center">
+              <button
+                className="w-36"
+                type="button"
+                onClick={openDrawer} // Open the drawer when this button is clicked
+              >
+                <div className="w-[30%]">
+                  <div className="bg-black p-[3px] my-2"></div>
+                  <div className="bg-black p-[3px] my-2"></div>
+                  <div className="bg-black p-[3px] my-2"></div>
+                </div>
+              </button>
+            </div>
+            <div>
+            <Link href="/user-cart">
+                <Image src={shoping} />
+              </Link>
+            </div>
           </div>
 
           {/* drawer component */}
@@ -118,8 +133,9 @@ const UserNavbar = () => {
 
                 <span className="sr-only bg-black">Close menu</span>
               </button>
-              <Link href='/all-product'>
-              <img src="/log.png" className=" p-0" /></Link>
+              <Link href="/all-product">
+                <img src="/log.png" className=" p-0" />
+              </Link>
               <div className="">
                 <ul>
                   {menuList.map((item) => (
