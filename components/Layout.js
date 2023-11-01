@@ -65,9 +65,11 @@ export default function Layout({ children }) {
       router.pathname === "/userFAQ" ||
       router.pathname === "/user-profile" ||
       router.pathname === "/user-setting" ||
-      router.pathname === "/user-invoice"||
-      router.pathname.includes("user-productdetail")
-       ? null : (
+      router.pathname === "/userorder-detail" ||
+      router.pathname === "/user-invoice" ||
+      router.pathname === "/user-notifictionSet" ||
+      router.pathname === "/user-cart" ||
+      router.pathname.includes("user-productdetail") ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
           <Transition
@@ -83,8 +85,7 @@ export default function Layout({ children }) {
             <SideBar showNav={showNav} />
           </Transition>
         </>
-      )
-    }
+      )}
       <main
         className={` transition-all duration-[400ms]  ${
           showNav &&
@@ -99,7 +100,10 @@ export default function Layout({ children }) {
             router.pathname === "/user-order" ||
             router.pathname === "/wish-list" ||
             router.pathname === "/user-setting" ||
-            router.pathname === "/user-invoice"
+            router.pathname === "/user-invoice" || 
+            router.pathname === "/user-cart" ||
+            router.pathname === "/userorder-detail" ||
+            router.pathname === "/user-notifictionSet"
           )
             ? "pt-[4rem] pl-56"
             : ""
@@ -117,7 +121,10 @@ export default function Layout({ children }) {
               router.pathname === "/user-order" ||
               router.pathname === "/all-product" ||
               router.pathname === "/user-setting" ||
-              router.pathname === "/user-invoice"
+              router.pathname === "/user-invoice" ||
+              router.pathname === "/user-cart" ||
+              router.pathname === "/userorder-detail" ||
+              router.pathname === "/user-notifictionSet"
             )
               ? "pl-4 md:pl-16 pr-4"
               : ""
