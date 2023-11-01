@@ -5,19 +5,9 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ToastContainer, toast } from "react-toastify";
-
-import { HeartIcon } from "@heroicons/react/24/outline";
-import {
-  MagnifyingGlassPlusIcon,
-  TrashIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
-
+import { toast } from "react-toastify";
 import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
 import right from "/public/right-arrows.svg";
-
-import TopBarCustomer from "../../pages/topBar-customer";
 import UserNavbar from "./userNavbar";
 import Slider from "./sliderrange";
 
@@ -30,9 +20,13 @@ const ProductGrid = () => {
   let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")) );
-  const [token, setToken] = useState( JSON.parse(localStorage.getItem("userToken")));
-  const [wishListItems, setWishListItems] = useState( );
+  const [customerID, setCustomerID] = useState(
+    JSON.parse(localStorage.getItem("userDetails"))
+  );
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem("userToken"))
+  );
+  const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
 
   const option = {
@@ -43,7 +37,6 @@ const ProductGrid = () => {
   useEffect(() => {
     defaultBrand();
   }, []);
-
 
   const defaultBrand = () => {
     axios
@@ -119,8 +112,6 @@ const ProductGrid = () => {
       });
   };
 
-
-
   const handleAddToCart = async (id) => {
     try {
       const response = await addToCart(productId, quantity);
@@ -164,7 +155,7 @@ const ProductGrid = () => {
 
   const addToWishlist = (id) => {
     console.log(id);
-    setWished(!isWished)
+    setWished(!isWished);
     const prodId = id;
     const options = {
       method: "POST",
@@ -264,22 +255,6 @@ const ProductGrid = () => {
               </div>
             </div>
           </div>
-
-          {/* <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
-            <p className="font-semibold text-2xl mb-4">Size</p>
-            <hr className="mb-3" />
-            <div className=" ">
-              <div className=" justify-between text-[#645D64]  ">
-                <div className="flex space-x-3">
-                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">XL</p>
-                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">X</p>
-                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">L</p>
-                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">M</p>
-                  <p className="border px-4 p-2 hover:text-[#0284C7] no-underline hover:underline">Slim Fit</p>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
         <div className=" w-full md:w-[85%] mx-auto">
           <div className="flex gap-3">
@@ -351,38 +326,37 @@ const ProductGrid = () => {
                       {items.title}
                     </h6>
                     <button onClick={() => toggleWishlist(items._id)}>
-                    {
-                      isWished[items._id]   ?
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1}
-                        stroke="currentColor"
-                        className="w-6 h-6 fill-[#ed8080]"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                        />
-                      </svg>
-                      :
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                        />
-                      </svg>
-                    }
+                      {isWished[items._id] ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1}
+                          stroke="currentColor"
+                          className="w-6 h-6 fill-[#ed8080]"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                          />
+                        </svg>
+                      )}
                     </button>
                   </div>
 

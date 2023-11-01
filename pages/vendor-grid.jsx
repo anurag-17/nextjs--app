@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 const vendorgrid = () => {
   const [getAllVendor, setgetAllVendor] = useState([]);
@@ -29,17 +30,28 @@ const vendorgrid = () => {
   return (
     <>
       <div className="flex justify-between items-center pt-4 my-5 px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-        <h2 className="text-2xl font-semibold pb-4">Vendor List </h2>
+        <h2 className="text-2xl font-semibold pb-4">Vendor Grid </h2>
+
+        <div className="mb-3 w-[40%]">
+        <input
+              type="search"
+              className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+              placeholder="Search"
+              aria-label="Search"
+              aria-describedby="button-addon1"
+            />
+        </div>
+
         <h2>Welcome Back, Client</h2>
       </div>
-      <div className="flex flex-wrap  justify-around ">
+      <div className="flex flex-wrap  justify-evenly ">
         {getAllVendor.map((item) => (
           <div className="border rounded-lg bg-white w-[28%] p-8 my-5">
             <div className="flex">
               {/* vender profile image */}
               <div className="w-36 mt-14 ">
                 <img
-                   src="/profile.png"
+                  src="/profile.png"
                   className="w-20  border-[5px] border-white shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)] rounded-full"
                 />
               </div>
@@ -82,9 +94,13 @@ const vendorgrid = () => {
                 <p className=" text-[22px] font-medium my-3">92852</p>
               </div>
             </div>
-          <div>
-          <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-sky-600 text-white text-[20px] ">View</button>
-          </div>
+            <div>
+              <Link href={`/vendor-profile/${item?._id}`}>
+                <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-sky-600 text-white text-[20px] ">
+                  View
+                </button>
+              </Link>
+            </div>
           </div>
         ))}
       </div>

@@ -165,7 +165,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   };
 
   return (
-    <div ref={ref} className="fixed w-[250px] bg-white shadow-sm ">
+    <div ref={ref} className="fixed w-[270px] bg-white shadow-sm  ">
       <img
         src="/log.png"
         width={400}
@@ -179,16 +179,16 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         </h1>
       </div>
 
-      <div className="flex flex-col truncate scroll-auto">
+      <div className="flex flex-col truncate overflow-y-scroll min-h-screen">
         {menuList.map((items, inx) => (
           <Fragment key={inx}>
             <Link href={items.path ? items.path : "#"}>
               <div
-                className={`pl-6 py-3 mx-5 rounded justify-center cursor-pointer mb-3 flex items-center transition-colors font-semibold
+                className={`pl-6 py-3 ml-5 rounded-l-full justify-center cursor-pointer mb-3 flex items-center transition-colors font-semibold
                  ${
                    items?.id === labelId
                      ? "bg-sky-600 text-white"
-                     : "text-black-400  hover:bg-sky-600  hover:text-white"
+                     : "text-black-400  hover:bg-sky-600 hover:rounded-l-full  hover:text-white"
                  }`}
                 onClick={() => handleClick(items.label, items.id)}
               >
@@ -198,16 +198,16 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                 <div className="w-full">
                   {items.submenu ? (
                     <p
-                      className=" capitalize whitespace-nowrap flex gap-5"
+                      className=" capitalize whitespace-nowrap flex gap-5 "
                       onClick={() => handleSubMenuToggle(items.id)}
                     >
                       {items.label}
-                      <span className="submenu-toggle">
+                      <span className="submenu-toggle ">
                         {/* <RightArrow /> */}
                       </span>
                     </p>
                   ) : (
-                    <p className=" capitalize whitespace-nowrap">
+                    <p className=" capitalize whitespace-nowrap ">
                       {items.label}
                     </p>
                   )}
@@ -224,11 +224,11 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                   {items.subData.map((subOpt, subInx) => (
                     <Link href={subOpt.path ? subOpt.path : "#"} key={subInx}>
                       <div
-                        className={`pl-6 py-3 mx-5 rounded max-w-[200px] justify-center text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
+                        className={`pl-6 py-3 ml-5 rounded-l-full max-w-[230px] justify-center text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
                          ${
                            subOpt?.id === labelId
                              ? "bg-sky-600 text-white"
-                             : "text-black-400 hover:bg-sky-600 hover:text-white"
+                             : "text-black-400 hover:bg-sky-600 hover:text-white hover:rounded-l-full "
                          }`}
                         onClick={() => handleClick(subOpt.label, subOpt.id)}
                       >
@@ -243,7 +243,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         ))}
 
         <div
-          className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold
+          className={`pl-6 py-3 ml-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold overflow-y-scroll
             ${
               router.pathname == "/admin-login"
                 ? "bg-sky-600 text-white"
