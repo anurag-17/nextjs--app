@@ -12,10 +12,15 @@ import axios from "axios";
 
 const Customers = () => {
   const [getallCustomer, setGetallCustomer] = useState([]);
+  const [searchCustomer,setSearchCustomer]=useState([]);
 
   useEffect(() => {
     defaultCustomer();
   }, []);
+
+  const refreshData = () => {
+    setRefresh(!isRefresh);
+  };
 
   const options = {
     method: "GET",
@@ -34,6 +39,27 @@ const Customers = () => {
       });
   };
 
+  const handleSearch = (e) => {
+    const search = e.target.value;
+    if (search.trim() === "") {
+      refreshData();
+    } else {
+      const option = {
+        method: "GET",
+        url: `http://e-commerce-backend-brown.vercel.app/api/brand/getallBrand?search=${search}`,
+      };
+      axios
+        .request(option)
+        .then(function (response) {
+          if (response.status === 200) {
+            setSearchCustomer(response.data);
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+  };
 
   const removeCustomer = async (_id) => {
     console.log(_id);
@@ -71,6 +97,7 @@ const Customers = () => {
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon1"
+              onChange={handleSearch}
             />
         </div>
           <h2>Welcome Back, Client</h2>
