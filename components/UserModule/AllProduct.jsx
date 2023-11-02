@@ -23,6 +23,8 @@ const ProductGrid = () => {
   const [customerID, setCustomerID] = useState(
     JSON.parse(localStorage.getItem("userDetails"))
   );
+  console.log("hmhm", customerID);
+  const _id = productID;
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("userToken"))
   );
@@ -112,45 +114,44 @@ const ProductGrid = () => {
       });
   };
 
-  const handleAddToCart = async (id) => {
+  const handleAddToCart = async (e, _id) => {
     try {
       const response = await addToCart(productId, quantity);
       console.log("Product added to cart:", response);
-      // Handle the response as needed, e.g., update the UI.
     } catch (error) {
       console.error("Failed to add the product to the cart:", error);
-      // Handle the error, e.g., show an error message to the user.
     }
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e, prodId) => {
+    console.log(prodId)
+    // Pass productID as a parameter
     e.preventDefault();
     setLoading(true);
 
-    const options = {
-      method: "POST",
-      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
-      data: productDetails,
-    };
+    
+    try {
+      const response = await axios.post(
+        "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
+        {
+          _id: prodId,
+          "count": 2,
+      "color": "red"
 
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response);
-        if (response.status === 200) {
-          toast.success("Success. Product added successfully!");
-          setLoading(false);
-          refreshData();
-        } else {
-          setLoading(false);
-          return;
         }
-      })
-      .catch(function (error) {
+      );
+
+      if (response.status === 200) {
+        toast.success("Success. Product added successfully!");
         setLoading(false);
-        console.error(error);
-        toast.failed("Failed. Can not repeat product name!");
-      });
+        refreshData();
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
   };
 
   const addToWishlist = (id) => {
@@ -402,7 +403,7 @@ const ProductGrid = () => {
 
                   <button
                     className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 items-end"
-                    onClick={() => handleAddToCart(items?._id)}
+                    onClick={(e) => handleFormSubmit(e,_id)}
                   >
                     Add To Cart
                   </button>

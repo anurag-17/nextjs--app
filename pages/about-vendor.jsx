@@ -1,7 +1,43 @@
 import React from "react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AboutVendor = () => {
+
+ 
+  const [getVendor, setGetVendor] = useState();
+  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
+ 
+
+  useEffect(() => {
+    defaultCustomer();
+  }, []);
+
+  const defaultCustomer = () => {
+    console.log("customerid",customerID);
+  
+    axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/getaVendor", {
+      _id: customerID
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "PostmanRuntime/7.33.0"
+      }
+    })
+      .then((res) => {
+        console.log("aa",res.data);
+        setGetVendor(res.data)
+        // Assuming the response contains data property, adjust this based on the actual API response structure
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+
+
+
   return (
     <>
       <div className="border p-7 my-10 bg-white rounded-lg">

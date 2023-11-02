@@ -22,7 +22,7 @@ const menuList = [
     component: "",
     icon: "fa fa-users",
     imagePath: "",
-    path: "/wish-list",
+    path: "/user-wishlist",
   },
   {
     id: 3,
@@ -110,7 +110,7 @@ const UserNavbar = () => {
             </div>
             <div>
             <Link href="/user-cart">
-                <Image src={shoping} />
+                <Image src={shoping}  className="w-12 mr-10"/>
               </Link>
             </div>
           </div>
