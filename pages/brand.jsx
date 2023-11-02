@@ -15,6 +15,23 @@ const brandlist = () => {
   const [getallBrand, setGetallBrand] = useState([]);
   const [isChecked, setisChecked] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [allProduct, setAllProduct] = useState([]);
+  const [isRefresh, setRefresh] = useState(false);
+  const [productSearch, setProductSearch] = useState(["All"]);
+  const [selected, setSelected] = useState([]);
+
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+  console.log(selected); 
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = allProduct?.map((n) => n?._id);
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
 
   const options = {
     method: "GET",
@@ -59,12 +76,36 @@ const brandlist = () => {
       });
   };
 
+  // -------------search product----------
+  const handleSearch = (e) => {
+    const search = e.target.value;
+    if (e.target.value !== "") {
+      const option = {
+        method: "GET",
+        url: `http://e-commerce-backend-brown.vercel.app/api/brand/getallBrand?search=${e.target.value}`,
+      };
+      axios
+        .request(option)
+        .then(function (response) {
+          if (response.status === 200) {
+            setGetallBrand(response.data);
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+     else {
+      defaultBrand();
+    }
+  };
+
   const allDelete = async () => {
     try {
       console.log(isChecked);
       const response = await axios.post(
         `https://e-commerce-backend-brown.vercel.app/api/brand/deleteBulkBrands`,
-        { brandIds: isChecked }
+        { brandIds: selected }
       );
 
       // Check the HTTP status code for success (2xx codes)
@@ -106,6 +147,25 @@ const brandlist = () => {
     }
   };
 
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
@@ -118,6 +178,7 @@ const brandlist = () => {
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon1"
+              onChange={handleSearch}
             />
         </div>
         <h2>Welcome Back, Client</h2>
@@ -145,8 +206,8 @@ const brandlist = () => {
                 type="checkbox"
                 className="mx-3 my-5 cursor-pointer"
                 value="selectAll"
-                checked={selectAll}
-                onChange={handleCheckbox}
+                // checked={selectAll}
+                onChange={handleSelectAllClick}
               />
 
               <th className="text-start">NAME</th>
@@ -167,7 +228,7 @@ const brandlist = () => {
                     className="mx-3 mt-5 cursor-pointer "
                     value={items?._id}
                     checked={items.isChecked}
-                    onChange={(e) => handleCheckbox(e)}
+                    onClick={(event) => handleClick(event, items?._id)}
                   />
                 </td>
                 <td className="py-5 text-[18px] w-[2%]">

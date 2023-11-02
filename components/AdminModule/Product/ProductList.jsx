@@ -352,7 +352,7 @@ const ProductList = () => {
                     ))}
                 </select>
               </div>
-
+                      
               {/*----- filter by category start ------- */}
               <div className="w-auto flex flex-col items-center gap-1">
                 <label htmlFor="" className="whitespace-nowrap text-[14px]">
