@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import Profile from "./profile";
 import Notification from "./notification";
 import Payment from "./payment";
@@ -14,10 +13,13 @@ import HiddenProduct from "./hidden-product";
 import updateVendor from "./update-vendor/[slug]";
 import UpdateVendor from "./update-vendor/[slug]";
 
+import { useState } from "react";
+
 const vendorprofile = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [labelId, setLabelId] = useState(1);
   const [show, setShow] = useState("Dashboard");
+ 
 
   const handleClick = (label, id) => {
     setShow(label);
@@ -63,6 +65,9 @@ const vendorprofile = ({ showNav }) => {
     },
   ];
 
+
+
+ 
   return (
     <div>
       <div className="flex justify-between items-center pt-4 my-4 px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
@@ -82,22 +87,24 @@ const vendorprofile = ({ showNav }) => {
           className="w-36 border-[5px] rounded-full border-white absolute mt-56 ml-5 z-50"
         />
         <img src="/profile-cover.jpg" className="w-full relative" />
-        <div className="flex justify-between mt-5">
-        <div className="ml-48">
-        <h1 className="text-[35px] font-semibold">Hariom Patil</h1>
-        <p className="text-[20px] font-medium">@_hmpatil_</p>
-        </div>
-          <div className="flex">
-          <div className="mx-5">
-            <p className="text-[20px] font-medium">Followers</p>
-            <p className="text-[35px] font-semibold">4532</p>
+       
+          <div className="flex justify-between mt-5">
+            <div className="ml-48">
+              <h1 className="text-[35px] font-semibold"></h1>
+              <p className="text-[20px] font-medium">@_hmpatil_</p>
+            </div>
+            <div className="flex">
+              <div className="mx-5">
+                <p className="text-[20px] font-medium">Followers</p>
+                <p className="text-[35px] font-semibold">4532</p>
+              </div>
+              <div className="mx-5">
+                <p className="text-[20px] font-medium"> Following</p>
+                <p className="text-[35px] font-semibold">532</p>
+              </div>
+            </div>
           </div>
-          <div className="mx-5">
-            <p className="text-[20px] font-medium"> Following</p>
-            <p className="text-[35px] font-semibold">532</p>
-          </div>
-          </div>
-        </div>
+      
         <div className="   flex mt-12">
           {/* Sidebar content */}
           {menuList.map((item) => (
@@ -125,7 +132,7 @@ const vendorprofile = ({ showNav }) => {
           ) : (
             // Render a default component or welcome message
             <div>
-              <AboutVendor/>
+              <AboutVendor />
             </div>
           )}
         </div>

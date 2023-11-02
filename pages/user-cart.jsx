@@ -39,6 +39,32 @@ const usercart = () => {
       });
   };
 
+  const removeWishlist = async () => {
+    const _id = customerID;
+    try {
+      const response = await axios
+        .delete(
+          "https://e-commerce-backend-brown.vercel.app/api/auth/empty-cart",
+          {
+            data: { _id: customerID },
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            defaultCustomer();
+          } else {
+            throw new Error("Failed to delete");
+          }
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <UserNavbar />
@@ -49,7 +75,10 @@ const usercart = () => {
               <h1 className="text-[35px] font-semibold"> Your Cart</h1>
             </div>
 
-            <button className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer">
+            <button
+              onClick={removeWishlist}
+              className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer"
+            >
               <p className="text-[22px] mx-1 flex">
                 Clear Cart
                 <img src="cross.svg" className="w-7   mx-1" />

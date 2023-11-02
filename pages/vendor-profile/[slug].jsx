@@ -1,14 +1,21 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 // import AboutVendor from "./about-vendor";
 // import ActiveProduct from "./active-product";
 // import HiddenProduct from "./hidden-product";
 // import UpdateVendor from "./update-vendor/[slug]";
+import axios from "axios";
 
 const VendorProfile = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [labelId, setLabelId] = useState(1);
   const [show, setShow] = useState("Dashboard");
+  const router = useRouter();
+  const { slug } = router;
+  const [getVendor, setGetVendor] = useState({});
+  console.log("ventDetail", getVendor);
 
   const handleClick = (label, id) => {
     setShow(label);
@@ -23,7 +30,7 @@ const VendorProfile = ({ showNav }) => {
     {
       id: 1,
       label: "About",
-    //   component: <AboutVendor/>,
+      //   component: <AboutVendor/>,
       icon: "fa fa-users",
       imagePath: "/profilephoto.svg",
       path: "/about-vendor",
@@ -31,7 +38,7 @@ const VendorProfile = ({ showNav }) => {
     {
       id: 2,
       label: "Product",
-    //   component: <ActiveProduct/>,
+      //   component: <ActiveProduct/>,
       icon: "fa fa-users",
       imagePath: "/paymntmethod.svg",
       path: "/active-product",
@@ -39,7 +46,7 @@ const VendorProfile = ({ showNav }) => {
     {
       id: 3,
       label: "Hidden",
-    //   component: <HiddenProduct/>,
+      //   component: <HiddenProduct/>,
       icon: "fa fa-phone-square",
       imagePath: "/bell.svg",
       path: "/hidden-product",
@@ -47,12 +54,29 @@ const VendorProfile = ({ showNav }) => {
     {
       id: 4,
       label: "Edit Profile",
-    //   component: <UpdateVendor/>,
+      //   component: <UpdateVendor/>,
       icon: "fa fa-phone-square",
       imagePath: "/loginn.svg",
       path: "/update-vendor",
     },
   ];
+
+  // useEffect(() => {
+  //   getaVendor();
+  // }, []);
+
+  const getaVendor = async () => {
+    try {
+      const response = await axios.post(
+        `https://e-commerce-backend-brown.vercel.app/api/vendor/getaVendor/${slug}`,
+        options
+      );
+      console.log(response.result);
+      setGetVendor(response.result);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div>
@@ -73,16 +97,21 @@ const VendorProfile = ({ showNav }) => {
           className="w-36 border-[5px] rounded-full border-white absolute mt-56 ml-5 z-50"
         />
         <img src="/profile-cover.jpg" className="w-full relative" />
-        <div className="flex justify-end mt-5">
-          <div className="mx-5">
-            <p>Followers</p>
-            <p className="text-[35px] font-semibold">4532</p>
-          </div>
-          <div className="mx-5">
-            <p>Following</p>
-            <p className="text-[35px] font-semibold">532</p>
+
+        <div>
+          <div>{getVendor?.vendorName}</div>
+          <div className="flex justify-end mt-5">
+            <div className="mx-5">
+              <p>Followers {getVendor?.vendorName}</p>
+              <p className="text-[35px] font-semibold">4532</p>
+            </div>
+            <div className="mx-5">
+              <p>Following</p>
+              <p className="text-[35px] font-semibold">532</p>
+            </div>
           </div>
         </div>
+
         <div className="   flex mt-12">
           {/* Sidebar content */}
           {menuList.map((item) => (
