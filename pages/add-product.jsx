@@ -104,6 +104,10 @@ const AddProduct = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setProductDetails({
+      ...productDetails,
+      discountedPrice: ""
+    });
     setLoading(true);
 
     const options = {
@@ -290,6 +294,7 @@ const AddProduct = () => {
                 minLength={3}
                 max={32}
               >
+              <option value="" disabled>Select Category</option>
                 {getallCategory.map((item) => (
                   <option
                     key={item.id}
@@ -341,6 +346,7 @@ const AddProduct = () => {
                   minLength={3}
                   max={32}
                 >
+                <option value="" disabled>Select Brands</option>
                   {getallBrand.map((items) => (
                     <option
                       key={items.id}
