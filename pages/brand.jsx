@@ -283,37 +283,7 @@ const brandlist = () => {
         </div>
       )}
 
-      {/* drawer component for edit brand */}
-      {/* {isDrawerOpen && (
-        <div
-          id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[50%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
-          tabIndex={-1}
-          aria-labelledby="drawer-form-label"
-        >
-          <button
-            type="button"
-            onClick={closeDrawer}
-            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
-          >
-            <svg
-              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
-            </svg>
-            <span className="sr-only bg-black">Close menu</span>
-          </button>
-          <div>
-            <Editbrand/>
-          </div>
-        </div>
-      )} */}
-
-      <table class="table-auto  bg-white  rounded-md mt-5">
+      <table class="table-auto  bg-white  rounded-md mt-5 relative">
         <thead className="">
           <label>
             <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
@@ -360,19 +330,18 @@ const brandlist = () => {
                   <button className="flex">
                     <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
-                    <Link
-                      onClick={(e) => {
-                        e.preventDefault();
-                        openDrawerO();
-                      }}
-                      href={`/edit-brand/${items?._id}`}
-                    >
-                      <button onClick={(e) => openDrawerO(items?._id)}>
+                    <Link href={`/edit-brand/${items?._id}`}>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          openDrawerO();
+                        }}
+                      >
                         <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                       </button>
                     </Link>
 
-                    <Popover className="relative ">
+                    <Popover className=" ">
                       <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
                         <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
                       </Popover.Button>
@@ -385,7 +354,7 @@ const brandlist = () => {
                         leaveFrom="transform scale-100"
                         leaveTo="transform scale-95"
                       >
-                        <Popover.Panel className="absolute sm:right-60 sm:top-4  z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 sm:max-w-sm  w-screen ">
+                        <Popover.Panel className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-6/12 right-72 ">
                           <div className="relative  p-3">
                             <div className="flex justify-center items-center w-full">
                               <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
