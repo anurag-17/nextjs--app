@@ -16,9 +16,7 @@ const WishList = () => {
   const [wishListItems, setWishListItems] = useState([]);
   const [addInWishlist, setAddInWishlist] = useState();
   let [productID, setProductID] = useState("");
-  const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userDetails"))
-  );
+
 
   useEffect(() => {
     getAllWishList();
@@ -26,16 +24,16 @@ const WishList = () => {
 
   const getAllWishList = async () => {
     const options = {
-      method: "POST",
+      method: "get",
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/wishlist",
       headers: {
         cookie:
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "User-Agent": "insomnia/2023.5.8",
       },
-      data: {
-        _id: customerID,
-      },
+      // data: {
+      //   _id: customerID,
+      // },
     };
 
     axios
@@ -72,10 +70,6 @@ const WishList = () => {
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-      },
-      data: {
-        prodId: id,
-        _id: customerID,
       },
     };
 
