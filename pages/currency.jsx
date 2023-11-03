@@ -1,9 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import dollar from '../public/dollarsign.svg'
 import yen from '../public/yen.svg';
 import pound from '../public/pound.svg';
+import rupee from '../public/rupee.svg';
+import axios from "axios";
+
+const currency=[
+    {
+        id:1,
+        currencyName:"Rupee",
+        currencyImage:rupee,
+    },
+    {
+        id:2,
+        currencyName:"Dollar",
+        currencyImage:dollar,
+    },
+    {
+        id:3,
+        currencyName:"Yen",
+        currencyImage:yen,
+    },
+    {
+        id:4,
+        currencyName:"Pound",
+        currencyImage:pound,
+    },
+]
+
 const Currency = () => {
+    const [getCurrency,setGetCurrency]=useState([]);
+
+     const options={
+        method:"GET",
+        url:"http://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies"
+     };
+     useEffect(()=>{
+        defaultCurrency();
+     },[]);
+     const defaultCurrency = () => {
+        axios
+          .request(options) 
+          .then((response) => {
+            setGetCurrency(response.data);
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+
   return (
     <>
       <div>
@@ -30,6 +77,8 @@ const Currency = () => {
                 
             </tr>
         </thead>
+        {
+            getCurrency.map((item)=>(
         <tbody>
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                <td className="px-6 py-3">
@@ -37,40 +86,17 @@ const Currency = () => {
                 classNameName=""/>
                </td>
                 <td className="px- py-4">
-                 Dollar   
+                 {item?.currencyName}
                 </td>
                 <td className="">
-                    <Image className="w-10" src={dollar}/>
+                  {item?.currencySign}
                 </td>
                 
             </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td className="px-6 py-3">
-                <input type="checkbox"
-                classNameName=""/>
-               </td>
-                <td className="px- py-4">
-                    Yen
-                </td>
-                <td className="">
-                <Image className="w-10" src={yen}/>
-                </td>
-                
-            </tr>
-            <tr className="bg-white dark:bg-gray-800">
-            <td className="px-6 py-3">
-                <input type="checkbox"
-                classNameName=""/>
-               </td>
-                <td className="px- py-4">
-                    Pound
-                </td>
-                <td className="">
-                   <Image className="w-10" src={pound}/>
-                </td>
-                
-            </tr>
+         
         </tbody>
+        ))
+        }
     </table>
 </div>
         </div>
