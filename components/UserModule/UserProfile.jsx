@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import UserNavbar from "./userNavbar";
 
+
 const UserProfile = () => {
   const [getAllCustomer, setGetAllCustomer] = useState();
   const [customerID, setCustomerID] = useState(
@@ -20,11 +21,11 @@ const UserProfile = () => {
     console.log(customerID);
 
     axios
-      .post(
+      .get(
         "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-        {
-          _id: customerID,
-        },
+        // {
+        //   _id: customerID,
+        // },
         {
           headers: {
             "Content-Type": "application/json",

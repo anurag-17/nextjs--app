@@ -18,24 +18,24 @@ const EditCustomer = ({ _id }) => {
     dob: "",
     country: "",
     language: "",
-    about: ""
+    about: "",
   });
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
     if (name === "color") {
-        setUpdateCustomer({
+      setUpdateCustomer({
         ...updateCustomer,
         [name]: value.split(","),
       });
     } else if (name === "brand") {
-        setUpdateCustomer({
+      setUpdateCustomer({
         ...updateCustomer,
         [name]: value.toUpperCase(),
       });
     } else {
-        setUpdateCustomer({
+      setUpdateCustomer({
         ...updateCustomer,
         [name]: value,
       });
@@ -49,7 +49,7 @@ const EditCustomer = ({ _id }) => {
   const fetchCustomer = async () => {
     try {
       setIsFetching(true);
-      const res = await fetch(
+      const res = await axios.get(
         `https://e-commerce-backend-brown.vercel.app/api/auth/all-users/${slug}`,
         {
           cache: "no-store",
@@ -92,16 +92,21 @@ const EditCustomer = ({ _id }) => {
           : editData?.lastname,
 
         email: updateCustomer?.email ? updateCustomer?.email : editData?.email,
-     
+
         mobile: updateCustomer?.mobile
           ? updateCustomer?.mobile
           : editData?.mobile,
-          address: updateCustomer?.address ? updateCustomer?.address : editData?.address,
-          dob: updateCustomer?.dob ? updateCustomer?.dob : editData?.dob,
-          country: updateCustomer?.country ? updateCustomer?.country : editData?.country,
-          language: updateCustomer?.language ? updateCustomer?.language : editData?.language,
-          about: updateCustomer?.about ? updateCustomer?.about : editData?.about,
-        
+        address: updateCustomer?.address
+          ? updateCustomer?.address
+          : editData?.address,
+        dob: updateCustomer?.dob ? updateCustomer?.dob : editData?.dob,
+        country: updateCustomer?.country
+          ? updateCustomer?.country
+          : editData?.country,
+        language: updateCustomer?.language
+          ? updateCustomer?.language
+          : editData?.language,
+        about: updateCustomer?.about ? updateCustomer?.about : editData?.about,
       },
     };
 
@@ -154,9 +159,7 @@ const EditCustomer = ({ _id }) => {
             onChange={inputHandler}
             value={updateCustomer.lastname}
             defaultValue={
-              editData?.lastname
-                ? editData?.lastname
-                : updateCustomer.lastname
+              editData?.lastname ? editData?.lastname : updateCustomer.lastname
             }
             type="text"
             name="lastname"
@@ -211,9 +214,7 @@ const EditCustomer = ({ _id }) => {
           <input
             onChange={inputHandler}
             value={updateCustomer.dob}
-            defaultValue={
-              editData?.dob ? editData?.dob : updateCustomer.dob
-            }
+            defaultValue={editData?.dob ? editData?.dob : updateCustomer.dob}
             type="text"
             name="dob"
             className="border p-1 m-2"
@@ -262,14 +263,13 @@ const EditCustomer = ({ _id }) => {
             required
           />{" "}
           <br />
-         
         </div>
         <button
           type="submit"
           onClick={handleUpdateCustomer}
           className="border p-2 m-2 rounded-lg bg-blue-600 text-white "
         >
-         Update Customer
+          Update Customer
         </button>
       </form>
     </div>
@@ -277,4 +277,3 @@ const EditCustomer = ({ _id }) => {
 };
 
 export default EditCustomer;
-
