@@ -8,6 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Cart from "./cart";
 
+import Cookies from 'js-cookie';
+
+
+const setTokenInCookies = (token) => {
+  Cookies.set('token', token, { expires: 7 }); // 'expires' sets the cookie expiration in days
+};
+
 const UserLogin = ({ API_URL }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +43,7 @@ const UserLogin = ({ API_URL }) => {
     axios
       .request(options)
       .then(function (response) {
+
         if (response?.status === 201) {
           // console.log(response.data.user._id);
           localStorage.setItem(
@@ -50,6 +58,7 @@ const UserLogin = ({ API_URL }) => {
             "wishList",
             JSON.stringify(response?.data?.user?.wishlist)
           );
+          setTokenInCookies(response?.data?.token);
           setLoading(false);
           toast.success("Success, Login Successfully!");
 

@@ -1,15 +1,16 @@
-import React from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { Fragment, useState, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, Listbox } from "@headlessui/react";
 import { toast } from "react-toastify";
 import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
 import right from "/public/right-arrows.svg";
 import UserNavbar from "./userNavbar";
 import Slider from "./sliderrange";
+
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const ProductGrid = () => {
   const [allProduct, setAllProduct] = useState([]);
@@ -23,13 +24,17 @@ const ProductGrid = () => {
   const [customerID, setCustomerID] = useState(
     JSON.parse(localStorage.getItem("userDetails"))
   );
-  console.log("hmhm", customerID);
   const _id = productID;
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("userToken"))
   );
   const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
+
+  const [productQuantitiesArray, setProductQuantitiesArray] = useState([]);
+  const [productColorsArray, setProductColorsArray] = useState([]);
+  const [isAddedCart, setAdedCart] = useState(false);
+  const [isAddIntoCartID, setAddIntoCartID] = useState(false);
 
   const option = {
     method: "GET",
@@ -114,44 +119,6 @@ const ProductGrid = () => {
       });
   };
 
-  const handleAddToCart = async (e, _id) => {
-    try {
-      const response = await addToCart(productId, quantity);
-      console.log("Product added to cart:", response);
-    } catch (error) {
-      console.error("Failed to add the product to the cart:", error);
-    }
-  };
-
-  const handleFormSubmit = async (e, prodId) => {
-    console.log(prodId);
-    // Pass productID as a parameter
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await axios.post(
-        "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
-        {
-          _id: prodId,
-          count: 2,
-          color: "red",
-        }
-      );
-
-      if (response.status === 200) {
-        toast.success("Success. Product added successfully!");
-        setLoading(false);
-        refreshData();
-      } else {
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-    }
-  };
-
   const addToWishlist = (id) => {
     console.log(id);
     setWished(!isWished);
@@ -197,6 +164,105 @@ const ProductGrid = () => {
       [productId]: !prevIsWished[productId], // Toggle the state for the specified product
     }));
   };
+
+  const handleCounter = (productId) => {
+    const productIndex = productQuantitiesArray.findIndex(
+      (item) => item.productId === productId
+    );
+
+    if (productIndex !== -1) {
+      // If the product is already in the array, update its quantity
+      const updatedArray = [...productQuantitiesArray];
+      updatedArray[productIndex].quantity += 1;
+      setProductQuantitiesArray(updatedArray);
+    } else {
+      // If the product is not in the array, add it with a quantity of 1
+      const updatedArray = [
+        ...productQuantitiesArray,
+        { productId, quantity: 1 },
+      ];
+      setProductQuantitiesArray(updatedArray);
+    }
+  };
+
+  const handleColorChange = (productId, selectedColor) => {
+    const productIndex = productColorsArray.findIndex(
+      (item) => item.productId === productId
+    );
+
+    if (productIndex !== -1) {
+      // If the product is already in the array, update its color
+      const updatedArray = [...productColorsArray];
+      updatedArray[productIndex].color = selectedColor;
+      setProductColorsArray(updatedArray);
+    } else {
+      // If the product is not in the array, add it with the selected color
+      const updatedArray = [
+        ...productColorsArray,
+        { productId, color: selectedColor },
+      ];
+      setProductColorsArray(updatedArray);
+    }
+  };
+
+  const handleAddToCart = async (e, prodId) => {
+    // console.log(prodId);
+
+    e.preventDefault();
+    setLoading(true);
+
+    const filterArry = productQuantitiesArray?.filter((item) => {
+      if (item?.productId === prodId) return item?.quantity;
+    });
+
+    const filterColor = productColorsArray?.filter((item) => {
+      if (item?.productId === prodId) return item?.color;
+    });
+
+    const options = {
+      method: "POST",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
+      headers: {
+        cookie:
+          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/2023.5.8",
+      },
+      data: {
+        cart: [
+          {
+            _id: prodId,
+            count: filterArry?.quantity || 1,
+            color: filterColor?.color,
+          },
+        ],
+        _id: customerID,
+      },
+    };
+    try {
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response);
+          if (response.status === 200) {
+            toast.success("Success. Product added into cart !");
+            setAdedCart(true);
+            setAddIntoCartID(response?.data?.product[0]?.product);
+            refreshData();
+          } else {
+            setLoading(false);
+            return;
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+          toast.error("Failed !");
+        });
+    } catch {
+      console.log("error");
+    }
+  };
+
   return (
     <>
       <UserNavbar />
@@ -255,6 +321,7 @@ const ProductGrid = () => {
             </div>
           </div>
         </div>
+
         <div className=" w-full md:w-[85%] mx-auto">
           <div className="flex gap-3">
             <div class=" w-1/4">
@@ -383,34 +450,79 @@ const ProductGrid = () => {
                     Category :{" "}
                     <p className="font-semibold px-2">{items.category}</p>
                   </p>
-                  <div className="flex">
+                  <div className="flex mt-3">
                     {" "}
                     <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
                     <p className=" bg-sky-200 p-1 text-center font-semibold rounded-xl text-sky-600 w-20">
                       selling
                     </p>
                   </div>
-                  <p className="text-[18px]  capitalize my-2  flex gap-x-5 ">
-                    Colors :
-                    <div className="flex font-semibold gap-x-2 whitespace-nowrap overflow-hidden text-ellipsis ">
-                      {items?.color?.map((opt, inx) => (
-                        <p className="">{opt}</p>
-                      ))}
-                    </div>
+                  <p className="text-[18px] flex capitalize my-4">
+                    Quantity :
+                    <p className="font-semibold px-2">
+                      {productQuantitiesArray.find(
+                        (item) => item.productId === items._id
+                      )?.quantity || 1}
+                    </p>
+                    <button
+                      onClick={() => handleCounter(items._id)}
+                      className="border px-3 ml-3"
+                    >
+                      +
+                    </button>
                   </p>
-
-                  <button
-                    className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 items-end"
-                    onClick={(e) => handleFormSubmit(e, _id)}
-                  >
-                    Add To Cart
-                  </button>
+                  <div className="flex gap-x-5 mt-3">
+                    <label for="color" className="text-[18px] capitalize my-2">
+                      Colors :
+                    </label>
+                    <div className="w-[250px]">
+                      <select
+                        onChange={(e) =>
+                          handleColorChange(items._id, e.target.value)
+                        }
+                        // value={selectedColor}
+                        className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm"
+                      >
+                        <option
+                          value=""
+                          className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
+                        >
+                          Select Color
+                        </option>
+                        {items?.color?.map((options, inx) => (
+                          <option
+                            key={inx}
+                            value={options}
+                            className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
+                          >
+                            {options}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  {isAddIntoCartID === items?._id ? (
+                    <button
+                      className="w-full border p-3 rounded-lg hover:text-white border-sky-600 text-sky-900   hover:bg-sky-600 my-2 mt-4 items-end"
+                      onClick={(e) => handleAddToCart(e, items?._id)}
+                    >
+                      Go To Cart
+                    </button>
+                  ) : (
+                    <button
+                      className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end"
+                      onClick={(e) => handleAddToCart(e, items?._id)}
+                    >
+                      Add To Cart
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
       <Transition appear show={isOpenDelete} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child

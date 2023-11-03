@@ -49,7 +49,7 @@ const EditCustomer = ({ _id }) => {
   const fetchCustomer = async () => {
     try {
       setIsFetching(true);
-      const res = await fetch(
+      const res = await axios.get(
         `https://e-commerce-backend-brown.vercel.app/api/auth/all-users/${slug}`,
         {
           cache: "no-store",
@@ -300,6 +300,135 @@ const EditCustomer = ({ _id }) => {
               required
             />{" "}
           </div>
+          <label>Vendor Name:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.firstname}
+            defaultValue={
+              editData?.firstname
+                ? editData?.firstname
+                : updateCustomer.firstname
+            }
+            type="text"
+            name="firstname"
+            className="border p-1 m-2"
+            // className="custom-input"
+            required
+            minLength={3}
+            max={84}
+          />{" "}
+          <br />
+          <label>Company Name:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.lastname}
+            defaultValue={
+              editData?.lastname ? editData?.lastname : updateCustomer.lastname
+            }
+            type="text"
+            name="lastname"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>Email:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.email}
+            defaultValue={
+              editData?.email ? editData?.email : updateCustomer.email
+            }
+            type="text"
+            name="email"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>Phone No.:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.mobile}
+            defaultValue={
+              editData?.mobile ? editData?.mobile : updateCustomer.mobile
+            }
+            type="number"
+            name="mobile"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>Address:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.address}
+            defaultValue={
+              editData?.address ? editData?.address : updateCustomer.address
+            }
+            type="text"
+            name="address"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>DOB:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.dob}
+            defaultValue={editData?.dob ? editData?.dob : updateCustomer.dob}
+            type="text"
+            name="dob"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>Country:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.country}
+            defaultValue={
+              editData?.country ? editData?.country : updateCustomer.country
+            }
+            type="text"
+            name="country"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>Language:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.language}
+            defaultValue={
+              editData?.language ? editData?.language : updateCustomer.language
+            }
+            type="text"
+            name="language"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
+          <label>About:</label>
+          <br />
+          <input
+            onChange={inputHandler}
+            value={updateCustomer.about}
+            defaultValue={
+              editData?.about ? editData?.about : updateCustomer.about
+            }
+            type="text"
+            name="about"
+            className="border p-1 m-2"
+            required
+          />{" "}
+          <br />
         </div>
         <button
           type="submit"

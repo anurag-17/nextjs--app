@@ -7,7 +7,6 @@ const AboutVendor = () => {
 
  
   const [getVendor, setGetVendor] = useState();
-  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
  
 
   useEffect(() => {
@@ -15,11 +14,12 @@ const AboutVendor = () => {
   }, []);
 
   const defaultCustomer = () => {
-    console.log("customerid",customerID);
   
-    axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/getaVendor", {
-      _id: customerID
-    }, {
+    axios.get("https://e-commerce-backend-brown.vercel.app/api/auth/getaVendor",
+    //  {
+    //   _id: customerID
+    // },
+     {
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "PostmanRuntime/7.33.0"
