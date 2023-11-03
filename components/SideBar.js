@@ -121,6 +121,13 @@ const menuList = [
     path: "/language",
   },
   {
+    id: 9,
+    label: "Currency",
+    component: <language />,
+    icon: `fa fa-phone-square`,
+    path: "/currency",
+  },
+  {
     id: 8,
     label: "settings",
     component: "",
