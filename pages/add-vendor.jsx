@@ -53,78 +53,101 @@ const AddVendor = () => {
 
   return (
     <>
-      <form
-        onSubmit={handleFormSubmit}
-        className=" bg-white border w-1/3 p-2 mx-auto"
-      >
-        <h1 className="text-2xl my-5">Add Vendor :</h1>
-        <div>
-          <label>Vendor Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={vendorDetails.vendorName}
-            type="text"
-            name="vendorName"
-            className="border p-1 m-2"
-            // className="custom-input"
-            required
-            minLength={3}
-            max={84}
-          />{" "}
-          <br />
-          <label>Company Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={vendorDetails.companyName}
-            type="text"
-            name="companyName"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Email:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={vendorDetails.email}
-            type="text"
-            name="email"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Phone No.:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={vendorDetails.phone}
-            type="number"
-            name="phone"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Address:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={vendorDetails.address}
-            type="text"
-            name="address"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
+      <section className=" overflow-y-auto">
+        <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
+          <h2 className="text-2xl font-semibold pb-4">Add New Vendor </h2>
+          <div className="mb-3 w-[40%]"></div>
         </div>
-        <button
-          type="submit"
-          className="border p-2 m-2 rounded-lg bg-blue-600 text-white "
+
+        <form
+          onSubmit={handleFormSubmit}
+          className=" bg-white border  rounded-lg p-2 mx-auto"
         >
-          Add Vendor
-        </button>
-      </form>
+          <div>
+            <div className="flex">
+              <div className="w-full">
+                <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                  Vendor Name
+                </label>
+                <input
+                  onChange={inputHandler}
+                  value={vendorDetails.vendorName}
+                  type="text"
+                  name="vendorName"
+                  className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  // className="custom-input"
+                  required
+                  minLength={3}
+                  max={84}
+                />{" "}
+              </div>
+              <div className="w-full">
+                <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                  Company Name
+                </label>
+                <input
+                  onChange={inputHandler}
+                  value={vendorDetails.companyName}
+                  type="text"
+                  name="companyName"
+                  className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  required
+                />{" "}
+              </div>
+            </div>
+            <div className="flex">
+              <div className="w-full">
+                <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                  Email
+                </label>
+                <input
+                  onChange={inputHandler}
+                  value={vendorDetails.email}
+                  type="text"
+                  name="email"
+                  className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  required
+                />{" "}
+              </div>
+              <div className="w-full">
+                <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                  Phone No.
+                </label>
+                <input
+                  onChange={inputHandler}
+                  value={vendorDetails.phone}
+                  type="number"
+                  name="phone"
+                  className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  required
+                />
+              </div>
+            </div>
+            <div className="flex">
+              <div className="w-6/12">
+                <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                  Address
+                </label>
+                <input
+                  onChange={inputHandler}
+                  value={vendorDetails.address}
+                  type="text"
+                  name="address"
+                  className="px-3 py-2 rounded m-10   border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  required
+                />
+              </div>
+            </div>
+            <br />
+          </div>
+          <button
+            type="submit"
+            className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] "
+          >
+            Add Vendor
+          </button>
+        </form>
+      </section>
     </>
   );
 };

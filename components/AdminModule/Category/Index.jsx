@@ -9,9 +9,13 @@ import {
   TrashIcon,
   PencilSquareIcon,
   ArrowUpTrayIcon,
+  ArrowRightIcon,
   ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import CreateCategoryForm from "../../../pages/create-cate";
+import EditCate from "../../../pages/edit-cate/[slug]";
 
 const CategoryList = ({ _id, closeModal, refreshData }) => {
   console.log(_id);
@@ -20,6 +24,24 @@ const CategoryList = ({ _id, closeModal, refreshData }) => {
   const [brandIds, setBrandIds] = useState("");
   const [selectDelete, setSelectDelete] = useState("");
   const [selectAll, setSelectAll] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+  const openDrawerO = () => {
+    setIsDrawerOpenO(true);
+  };
+
+  const closeDrawerO = () => {
+    setIsDrawerOpenO(false);
+  };
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
 
   const handleClose = () => {
     closeModal();
@@ -136,23 +158,22 @@ const CategoryList = ({ _id, closeModal, refreshData }) => {
         <div className="flex justify-between items-center pt-4 px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
           <h2 className="text-2xl font-semibold pb-4">Category List </h2>
           <div className="mb-3 w-[40%]">
-        <input
+            <input
               type="search"
               className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon1"
             />
-        </div>
+          </div>
           <h2>Welcome Back, Client</h2>
         </div>
         <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <div className="flex justify-around">
-            <Link href="/create-cate">
-              <button className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4">
-                + Add Category
-              </button>
-            </Link>
+            <Link href="/create-cate"></Link>
+            <button  onClick={openDrawer} className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4">
+              + Add Category
+            </button>
 
             <button
               onClick={allDelete}
@@ -161,7 +182,67 @@ const CategoryList = ({ _id, closeModal, refreshData }) => {
               Delete
             </button>
           </div>
+
+          </div>
+
+          {isDrawerOpen && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawer}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div>
+            <CreateCategoryForm/>
+          </div>
         </div>
+      )}
+
+      {isDrawerOpenO && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawerO}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div>
+            <EditCate/>
+          </div>
+        </div>
+      )}
+       
         <table class="table-auto bg-white  rounded-md mt-5">
           <thead className="">
             <label>
@@ -208,10 +289,10 @@ const CategoryList = ({ _id, closeModal, refreshData }) => {
                       <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
                       <Link href={`/edit-cate/${items?._id}`}>
-                        <button>
+                      </Link>
+                        <button onClick={openDrawerO}>
                           <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                         </button>
-                      </Link>
                       <Popover className="relative">
                         <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
                           <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />

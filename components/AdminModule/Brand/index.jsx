@@ -15,6 +15,7 @@ import Link from "next/link";
 
 const BrandList = async () => {
   const [allProduct, setAllProduct] = useState([]);
+ 
 
   useEffect(() => {
 
@@ -109,6 +110,7 @@ const BrandList = async () => {
                             </p>
                             <div className="flex justify-around">
                               <button
+                             
                                 className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
                               hover:border-none"
                               >

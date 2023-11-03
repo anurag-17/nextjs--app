@@ -5,14 +5,34 @@ import {
   ArrowDownTrayIcon,
   TrashIcon,
   PencilSquareIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Transition, Popover } from "@headlessui/react";
 import axios from "axios";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import EditCustomer from "./edit-customer/[slug]";
 
 const Customers = () => {
   const [getallCustomer, setGetallCustomer] = useState([]);
   const [searchCustomer, setSearchCustomer] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  useEffect(() => {
+    defaultCustomer();
+  }, []);
+
+  const refreshData = () => {
+    setRefresh(!isRefresh);
+  };
 
   
   const options = {
@@ -100,6 +120,31 @@ const Customers = () => {
         </div>
         <h2>Welcome Back, Client</h2>
       </div>
+      {isDrawerOpen && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[65%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawer}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div className="overflow-y-auto ">
+            <EditCustomer />
       {/* <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <div className="flex justify-between ">
             <button className="border border-gray-400 rounded-md p-2 mr-3 flex justify-around hover:border-green-500 hover:text-green-500">
@@ -122,15 +167,23 @@ const Customers = () => {
               Delete
             </button>
           </div>
-        </div> */}
+        </div>
+      )}
 
       <table className="table bg-white w-full mt-5 gap-48 rounded-lg">
         <thead className=" bg-gray-200 text-gray-400">
+
           <tr className="gap-48 ">
             {/* <label> */}
             <th>
               <input type="checkbox" className="cursor-pointer   " />
             </th>
+            <th className="py-5 text-start">Customer Name</th>
+            <th className="py-5 text-start">Email</th>
+            <th className="py-5 text-start">Address</th>
+            <th className="py-5 text-start">Phone No.</th>
+            <th className="py-5 text-start">Country</th>
+            <th className="py-5 text-start">Action</th>
             <th className="py-5">Customer Name</th>
             <th>Email</th>
             <th>Address</th>
@@ -144,6 +197,25 @@ const Customers = () => {
           <tbody>
             {/* <label> */}
             <tr className="">
+              <td className="text-center ">
+                <input type="checkbox" className="cursor-pointer  my-2" />
+              </td>
+              <td className="py-5 text-[18px] text-start">
+                {items?.firstname} {items?.lastname}
+              </td>
+              <td className="py-5 text-[18px] text-start ">{items?.email}</td>
+              <td className="py-5 text-[18px] text-start  ">
+                {items?.address}
+              </td>
+              <td className="py-5 text-[18px] text-start ">{items?.mobile}</td>
+              <td className="py-5 text-[18px] text-start ">
+                {items?.country}
+              </td>
+              <td className="py-5 text-[18px] mx-auto flex  ">
+                <Link href={`/edit-customer/${items?._id}`}></Link>
+                <button onClick={openDrawer}>
+                  <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                </button>
               <td className="text-center">
                 <input type="checkbox" className="cursor-pointer  " />
               </td>

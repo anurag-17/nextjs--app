@@ -2,13 +2,34 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, PencilSquareIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Transition, Popover } from "@headlessui/react";
 import axios from "axios";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import AddVendor from "./add-vendor";
+import UpdateVendor from "./update-vendor/[slug]";
 
 const vendor = () => {
   const [getAllVendors, setgetAllVendors] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+  const openDrawerO = () => {
+    setIsDrawerOpenO(true);
+  };
+
+  const closeDrawerO = () => {
+    setIsDrawerOpenO(false);
+  };
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
 
   const options = {
     method: "GET",
@@ -83,16 +104,81 @@ const vendor = () => {
           </div> */}
           <div className="flex justify-around">
             <Link href="/add-vendor">
-              <button className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4">
+            </Link>
+              <button 
+                onClick={openDrawer} className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4">
                 + Add Vendor
               </button>
-            </Link>
 
             <button className="border border-1  rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2 hover:border-none">
               Delete
             </button>
           </div>
         </div>
+
+
+
+
+        {isDrawerOpen && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[65%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawer}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div className="overflow-y-auto ">
+           <AddVendor/>
+          </div>
+        </div>
+      )}
+
+
+      {isDrawerOpenO && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[65%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawerO}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div className="overflow-y-auto ">
+          <UpdateVendor/>
+          </div>
+        </div>
+      )}
+
+
 
         <table className="table bg-white w-full mt-5 gap-48 rounded-lg">
           <thead className=" bg-gray-200 text-gray-400 ">
@@ -134,10 +220,10 @@ const vendor = () => {
                 </td>
                 <td className="py-5 text-[18px] mx-auto flex justify-center">
                   <Link href={`/update-vendor/${items?._id}`}>
-                    <button>
+                  </Link>
+                    <button onClick={openDrawerO}>
                       <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                     </button>
-                  </Link>
 
                   <Popover className="relative">
                     <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
