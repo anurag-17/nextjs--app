@@ -118,59 +118,38 @@ const Customers = () => {
         </div>
         <h2>Welcome Back, Client</h2>
       </div>
-      {isDrawerOpen && (
-        <div
-          id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[65%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
-          tabIndex={-1}
-          aria-labelledby="drawer-form-label"
-        >
-          <button
-            type="button"
-            onClick={closeDrawer}
-            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+      <div className="border">
+        {isDrawerOpen && (
+          <div
+            id="drawer-form"
+            className="fixed border content-center mb-5 right-5 z-40 h-[75%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
+            tabIndex={-1}
+            aria-labelledby="drawer-form-label"
           >
-            <svg
-              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
+            <button
+              type="button"
+              onClick={closeDrawer}
+              className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
             >
-              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
-            </svg>
-            <span className="sr-only bg-black">Close menu</span>
-          </button>
-          <div className="overflow-y-auto ">
-            <EditCustomer />
-          </div>
-        </div>
-      )}
-      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-        <div className="flex justify-between ">
-          <button className="border border-gray-400 rounded-md p-2 mr-3 flex justify-around hover:border-green-500 hover:text-green-500">
-            <ArrowDownTrayIcon class="h-6 w-5  mr-1 text-black" />
-            Import
-          </button>
-          <button className="border border-gray-400 rounded-md p-2 hover:border-yellow-600 hover:text-yellow-600 flex">
-            <ArrowUpTrayIcon class="h-6 w-5 mr-1 text-black" />
-            Export
-          </button>
-        </div>
-        <div className="flex justify-around">
-          <Link href="/add-vendor">
-            <button className=" rounded-md p-2 bg-green-600 text-white cursor-pointer mr-4">
-              + Add Vendor
+              <svg
+                className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+              </svg>
+              <span className="sr-only bg-black">Close menu</span>
             </button>
-          </Link>
-
-          <button className="border border-1  rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2 hover:border-none">
-            Delete
-          </button>
-        </div>
+            <div className="overflow-y-auto ">
+              <EditCustomer />
+            </div>
+          </div>
+        )}
       </div>
 
-      <table className="table bg-white w-full mt-5 gap-48 rounded-lg">
+      <table className="table bg-white w-full mt-5 gap-48 rounded-lg relative">
         <thead className=" bg-gray-200 text-gray-400">
           <tr className="gap-48 ">
             {/* <label> */}
@@ -207,60 +186,58 @@ const Customers = () => {
                 <button onClick={openDrawer}>
                   <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                 </button>
-                <Popover className="relative">
-        <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
-          <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
-        </Popover.Button>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform scale-95"
-          enterTo="transform scale-100"
-          leave="transition ease-in duration=75"
-          leaveFrom="transform scale-100"
-          leaveTo="transform scale-95"
-        >
-          <Popover.Panel className="absolute -right-16 sm:right-72  z-50 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 max-w-xs sm:max-w-sm w-screen ">
-            <div className="relative  p-3">
-              <div className="flex justify-center items-center w-full">
-                <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
-              </div>
-              <p>Are You Sure! Want to Delete?</p>
-              <p className="text-sm text-gray-500 my-3">
-                Do you really want to delete these records? You cant't view this
-                in your list anymore if you delete!
-              </p>
-              <div className="flex justify-around">
-                <button
-                  className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
+                <Popover className="">
+                  <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
+                    <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
+                  </Popover.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform scale-95"
+                    enterTo="transform scale-100"
+                    leave="transition ease-in duration=75"
+                    leaveFrom="transform scale-100"
+                    leaveTo="transform scale-95"
+                  >
+                    <Popover.Panel  className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-4/12 right-[40%] ">
+                      <div className="relative  p-3">
+                        <div className="flex justify-center items-center w-full">
+                          <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
+                        </div>
+                        <p>Are You Sure! Want to Delete?</p>
+                        <p className="text-sm text-gray-500 my-3">
+                          Do you really want to delete these records? You cant't
+                          view this in your list anymore if you delete!
+                        </p>
+                        <div className="flex justify-around">
+                          <button
+                            className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
                               hover:border-none"
-                >
-                  No, Keep It
-                </button>
-                <button
-                  onClick={() => {
-                    removeCustomer(items?._id);
-                  }}
-                  className="border border-1 rounded-md 
+                          >
+                            No, Keep It
+                          </button>
+                          <button
+                            onClick={() => {
+                              removeCustomer(items?._id);
+                            }}
+                            className="border border-1 rounded-md 
                               text-sm 
                               border-red-400 text-red-700 hover:bg-red-200  p-1
                               hover:border-none"
-                >
-                  Yes, Delete It
-                </button>
-              </div>
-            </div>
-          </Popover.Panel>
-        </Transition>
-      </Popover>
+                          >
+                            Yes, Delete It
+                          </button>
+                        </div>
+                      </div>
+                    </Popover.Panel>
+                  </Transition>
+                </Popover>
               </td>
             </tr>
             {/* </label> */}
           </tbody>
         ))}
       </table>
-
-   
     </div>
   );
 };

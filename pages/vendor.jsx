@@ -180,7 +180,7 @@ const vendor = () => {
 
 
 
-        <table className="table bg-white w-full mt-5 gap-48 rounded-lg">
+        <table className="table bg-white w-full mt-5 gap-48 rounded-lg relative">
           <thead className=" bg-gray-200 text-gray-400 ">
             <tr className="gap-48 ">
               {/* <label> */}
@@ -225,7 +225,7 @@ const vendor = () => {
                       <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                     </button>
 
-                  <Popover className="relative">
+                  <Popover className="">
                     <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
                       <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
                     </Popover.Button>
@@ -238,7 +238,7 @@ const vendor = () => {
                       leaveFrom="transform scale-100"
                       leaveTo="transform scale-95"
                     >
-                      <Popover.Panel className="absolute -right-16 sm:right-72  z-50 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 max-w-xs sm:max-w-sm w-screen ">
+                      <Popover.Panel className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-4/12 right-[35%] ">
                         <div className="relative  p-3">
                           <div className="flex justify-center items-center w-full">
                             <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />

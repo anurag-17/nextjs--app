@@ -128,8 +128,8 @@ const EditCustomer = ({ _id }) => {
 
   return (
     <div>
-      <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
-        <h2 className="text-2xl font-semibold pb-4">Edit Customer </h2>
+      <div className="flex justify-  items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
+        <h2 className="text-2xl font-semibold pb-4 ">Edit Customer </h2>
         <div className="mb-3 w-[40%]"></div>
       </div>
 
@@ -141,7 +141,7 @@ const EditCustomer = ({ _id }) => {
         <div>
           <div className="flex">
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
               Customer Name:
               </label>
               <input
@@ -154,7 +154,7 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="firstname"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 // className="custom-input"
                 required
                 minLength={3}
@@ -162,7 +162,7 @@ const EditCustomer = ({ _id }) => {
               />{" "}
             </div>
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 Company Name:
               </label>
               <input
@@ -175,14 +175,14 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="lastname"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
           </div>
           <div className="flex">
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 Email:
               </label>
               <input
@@ -193,12 +193,12 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="email"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 Phone No.:
               </label>
               <input
@@ -209,14 +209,14 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="number"
                 name="mobile"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
           </div>
           <div className="flex">
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 Address:
               </label>
               <input
@@ -227,12 +227,12 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="address"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 DOB:
               </label>
               <input
@@ -243,14 +243,14 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="dob"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
           </div>
           <div className="flex">
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 Country:
               </label>
               <input
@@ -261,12 +261,12 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="country"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
             <div className="w-full">
-              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
                 Language:
               </label>
               <input
@@ -279,13 +279,13 @@ const EditCustomer = ({ _id }) => {
                 }
                 type="text"
                 name="language"
-                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
           </div>
-          <div className="w-full">
-            <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+          <div className="w-6/12">
+            <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
               About:
             </label>
             <input
@@ -296,144 +296,16 @@ const EditCustomer = ({ _id }) => {
               }
               type="text"
               name="about"
-              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+              className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
               required
             />{" "}
           </div>
-          <label>Vendor Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.firstname}
-            defaultValue={
-              editData?.firstname
-                ? editData?.firstname
-                : updateCustomer.firstname
-            }
-            type="text"
-            name="firstname"
-            className="border p-1 m-2"
-            // className="custom-input"
-            required
-            minLength={3}
-            max={84}
-          />{" "}
-          <br />
-          <label>Company Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.lastname}
-            defaultValue={
-              editData?.lastname ? editData?.lastname : updateCustomer.lastname
-            }
-            type="text"
-            name="lastname"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Email:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.email}
-            defaultValue={
-              editData?.email ? editData?.email : updateCustomer.email
-            }
-            type="text"
-            name="email"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Phone No.:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.mobile}
-            defaultValue={
-              editData?.mobile ? editData?.mobile : updateCustomer.mobile
-            }
-            type="number"
-            name="mobile"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Address:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.address}
-            defaultValue={
-              editData?.address ? editData?.address : updateCustomer.address
-            }
-            type="text"
-            name="address"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>DOB:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.dob}
-            defaultValue={editData?.dob ? editData?.dob : updateCustomer.dob}
-            type="text"
-            name="dob"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Country:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.country}
-            defaultValue={
-              editData?.country ? editData?.country : updateCustomer.country
-            }
-            type="text"
-            name="country"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Language:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.language}
-            defaultValue={
-              editData?.language ? editData?.language : updateCustomer.language
-            }
-            type="text"
-            name="language"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>About:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.about}
-            defaultValue={
-              editData?.about ? editData?.about : updateCustomer.about
-            }
-            type="text"
-            name="about"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
+         
         </div>
         <button
           type="submit"
           onClick={handleUpdateCustomer}
-          className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px]  "
+          className="border p-2 m-5 mt-0 rounded-lg bg-sky-600 text-white text-[20px]  "
         >
           Update Customer
         </button>
