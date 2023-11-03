@@ -371,7 +371,7 @@ const ProductGrid = () => {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-7 my-16 ">
+          <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll " >
             {allProduct?.map((items, ix) => (
               <div
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
