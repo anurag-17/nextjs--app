@@ -18,24 +18,24 @@ const EditCustomer = ({ _id }) => {
     dob: "",
     country: "",
     language: "",
-    about: ""
+    about: "",
   });
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
     if (name === "color") {
-        setUpdateCustomer({
+      setUpdateCustomer({
         ...updateCustomer,
         [name]: value.split(","),
       });
     } else if (name === "brand") {
-        setUpdateCustomer({
+      setUpdateCustomer({
         ...updateCustomer,
         [name]: value.toUpperCase(),
       });
     } else {
-        setUpdateCustomer({
+      setUpdateCustomer({
         ...updateCustomer,
         [name]: value,
       });
@@ -92,16 +92,21 @@ const EditCustomer = ({ _id }) => {
           : editData?.lastname,
 
         email: updateCustomer?.email ? updateCustomer?.email : editData?.email,
-     
+
         mobile: updateCustomer?.mobile
           ? updateCustomer?.mobile
           : editData?.mobile,
-          address: updateCustomer?.address ? updateCustomer?.address : editData?.address,
-          dob: updateCustomer?.dob ? updateCustomer?.dob : editData?.dob,
-          country: updateCustomer?.country ? updateCustomer?.country : editData?.country,
-          language: updateCustomer?.language ? updateCustomer?.language : editData?.language,
-          about: updateCustomer?.about ? updateCustomer?.about : editData?.about,
-        
+        address: updateCustomer?.address
+          ? updateCustomer?.address
+          : editData?.address,
+        dob: updateCustomer?.dob ? updateCustomer?.dob : editData?.dob,
+        country: updateCustomer?.country
+          ? updateCustomer?.country
+          : editData?.country,
+        language: updateCustomer?.language
+          ? updateCustomer?.language
+          : editData?.language,
+        about: updateCustomer?.about ? updateCustomer?.about : editData?.about,
       },
     };
 
@@ -123,153 +128,185 @@ const EditCustomer = ({ _id }) => {
 
   return (
     <div>
+      <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
+        <h2 className="text-2xl font-semibold pb-4">Edit Customer </h2>
+        <div className="mb-3 w-[40%]"></div>
+      </div>
+
       <form
         onSubmit={handleUpdateCustomer}
-        className=" bg-white border w-1/3 p-2 mx-auto"
+        className=" bg-white border  rounded-lg p-2 mx-auto"
       >
-        <h1 className="text-2xl my-5">Update Vendor :</h1>
+     
         <div>
-          <label>Vendor Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.firstname}
-            defaultValue={
-              editData?.firstname
-                ? editData?.firstname
-                : updateCustomer.firstname
-            }
-            type="text"
-            name="firstname"
-            className="border p-1 m-2"
-            // className="custom-input"
-            required
-            minLength={3}
-            max={84}
-          />{" "}
-          <br />
-          <label>Company Name:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.lastname}
-            defaultValue={
-              editData?.lastname
-                ? editData?.lastname
-                : updateCustomer.lastname
-            }
-            type="text"
-            name="lastname"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Email:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.email}
-            defaultValue={
-              editData?.email ? editData?.email : updateCustomer.email
-            }
-            type="text"
-            name="email"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Phone No.:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.mobile}
-            defaultValue={
-              editData?.mobile ? editData?.mobile : updateCustomer.mobile
-            }
-            type="number"
-            name="mobile"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Address:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.address}
-            defaultValue={
-              editData?.address ? editData?.address : updateCustomer.address
-            }
-            type="text"
-            name="address"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>DOB:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.dob}
-            defaultValue={
-              editData?.dob ? editData?.dob : updateCustomer.dob
-            }
-            type="text"
-            name="dob"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Country:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.country}
-            defaultValue={
-              editData?.country ? editData?.country : updateCustomer.country
-            }
-            type="text"
-            name="country"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>Language:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.language}
-            defaultValue={
-              editData?.language ? editData?.language : updateCustomer.language
-            }
-            type="text"
-            name="language"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-          <label>About:</label>
-          <br />
-          <input
-            onChange={inputHandler}
-            value={updateCustomer.about}
-            defaultValue={
-              editData?.about ? editData?.about : updateCustomer.about
-            }
-            type="text"
-            name="about"
-            className="border p-1 m-2"
-            required
-          />{" "}
-          <br />
-         
+          <div className="flex">
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              Customer Name:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.firstname}
+                defaultValue={
+                  editData?.firstname
+                    ? editData?.firstname
+                    : updateCustomer.firstname
+                }
+                type="text"
+                name="firstname"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                // className="custom-input"
+                required
+                minLength={3}
+                max={84}
+              />{" "}
+            </div>
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                Company Name:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.lastname}
+                defaultValue={
+                  editData?.lastname
+                    ? editData?.lastname
+                    : updateCustomer.lastname
+                }
+                type="text"
+                name="lastname"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+          </div>
+          <div className="flex">
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                Email:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.email}
+                defaultValue={
+                  editData?.email ? editData?.email : updateCustomer.email
+                }
+                type="text"
+                name="email"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                Phone No.:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.mobile}
+                defaultValue={
+                  editData?.mobile ? editData?.mobile : updateCustomer.mobile
+                }
+                type="number"
+                name="mobile"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+          </div>
+          <div className="flex">
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                Address:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.address}
+                defaultValue={
+                  editData?.address ? editData?.address : updateCustomer.address
+                }
+                type="text"
+                name="address"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                DOB:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.dob}
+                defaultValue={
+                  editData?.dob ? editData?.dob : updateCustomer.dob
+                }
+                type="text"
+                name="dob"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+          </div>
+          <div className="flex">
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                Country:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.country}
+                defaultValue={
+                  editData?.country ? editData?.country : updateCustomer.country
+                }
+                type="text"
+                name="country"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+            <div className="w-full">
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                Language:
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateCustomer.language}
+                defaultValue={
+                  editData?.language
+                    ? editData?.language
+                    : updateCustomer.language
+                }
+                type="text"
+                name="language"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                required
+              />{" "}
+            </div>
+          </div>
+          <div className="w-full">
+            <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              About:
+            </label>
+            <input
+              onChange={inputHandler}
+              value={updateCustomer.about}
+              defaultValue={
+                editData?.about ? editData?.about : updateCustomer.about
+              }
+              type="text"
+              name="about"
+              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+              required
+            />{" "}
+          </div>
         </div>
         <button
           type="submit"
           onClick={handleUpdateCustomer}
-          className="border p-2 m-2 rounded-lg bg-blue-600 text-white "
+          className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px]  "
         >
-         Update Customer
+          Update Customer
         </button>
       </form>
     </div>
@@ -277,4 +314,3 @@ const EditCustomer = ({ _id }) => {
 };
 
 export default EditCustomer;
-

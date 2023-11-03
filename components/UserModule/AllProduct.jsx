@@ -124,20 +124,18 @@ const ProductGrid = () => {
   };
 
   const handleFormSubmit = async (e, prodId) => {
-    console.log(prodId)
+    console.log(prodId);
     // Pass productID as a parameter
     e.preventDefault();
     setLoading(true);
 
-    
     try {
       const response = await axios.post(
         "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
         {
           _id: prodId,
-          "count": 2,
-      "color": "red"
-
+          count: 2,
+          color: "red",
         }
       );
 
@@ -403,7 +401,7 @@ const ProductGrid = () => {
 
                   <button
                     className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 items-end"
-                    onClick={(e) => handleFormSubmit(e,_id)}
+                    onClick={(e) => handleFormSubmit(e, _id)}
                   >
                     Add To Cart
                   </button>

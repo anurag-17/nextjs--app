@@ -9,6 +9,15 @@ const UpdateVendor = ({ _id }) => {
   const { slug } = router.query;
   const [editData, setEditData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
+  const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+  const openDrawerO = () => {
+    setIsDrawerOpenO(true);
+  };
+
+  const closeDrawerO = () => {
+    setIsDrawerOpenO(false);
+  };
+  
   const [updateVendor, setUpdateVendor] = useState({
     vendorName: "",
     companyName: "",
@@ -110,6 +119,10 @@ const UpdateVendor = ({ _id }) => {
 
   return (
     <div>
+     <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
+        <h2 className="text-2xl font-semibold pb-4">Update Vendor </h2>
+        <div className="mb-3 w-[40%]"></div>
+      </div>
       <form onSubmit={handleUpdateVendor} className=" bg-white border rounded-lg ">
         <div>
           <div className="flex w-full">
@@ -130,7 +143,8 @@ const UpdateVendor = ({ _id }) => {
                 required
                 minLength={3}
                 max={84}
-                className="border p-4 relative rounded-lg m-10 w-11/12 "
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+               
               />
             </div>
             <div className=" mb-3 w-6/12">
@@ -150,7 +164,7 @@ const UpdateVendor = ({ _id }) => {
                 required
                 minLength={3}
                 max={84}
-                className="border p-4 relative rounded-lg m-10 w-11/12 "
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
               />
             </div>
           </div>
@@ -170,7 +184,7 @@ const UpdateVendor = ({ _id }) => {
               required
               minLength={3}
               max={84}
-              className="border p-4 relative rounded-lg m-10 w-11/12"
+              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
             />
           </div>
 
@@ -189,7 +203,7 @@ const UpdateVendor = ({ _id }) => {
               required
               minLength={3}
               max={84}
-              className="border p-4 relative rounded-lg m-10 w-11/12"
+              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
             />
           </div>
 </div>
@@ -208,7 +222,7 @@ const UpdateVendor = ({ _id }) => {
               required
               minLength={3}
               max={84}
-              className="border p-4 relative rounded-lg m-10 w-11/12 "
+              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
             />
           </div>
 
@@ -222,7 +236,7 @@ const UpdateVendor = ({ _id }) => {
           >
             Update Vendor
           </button>
-          <button
+          <button onClick={closeDrawerO}
             type="submit"
             className="border py-2 px-4 m-2 rounded-lg bg-red-600 text-white text-[20px]"
           >

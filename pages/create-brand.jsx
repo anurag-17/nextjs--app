@@ -1,8 +1,8 @@
-import React from 'react'
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import React from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
-const createbrand = () => {
+const CreateBrand = () => {
   const [brand, setBrand] = useState("");
   const router = useRouter();
 
@@ -32,42 +32,40 @@ const createbrand = () => {
     } catch (error) {}
   };
 
-
   return (
     <div>
-       <form  onSubmit={handleSubmit} className=' bg-white border w-1/2 p-2 mx-auto'>
-      <div>
-        <label>Brand Name:</label><br/>
-        <input
-         onChange={(e) => setBrand(e.target.value)}
-          value={brand}
-          type="text"
-          name="name"
-          className='border p-1 m-2'
-
-        />
+      <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[50px] my-5 ">
+        <h2 className="text-2xl font-semibold pb-4">Add New Brand </h2>
+        <div className="mb-3 w-[40%]"></div>
       </div>
-      {/* <div className='my-2'>
-        <label>Brand Logo:</label><br/>
-        <input
-          type="file"
-          name="name"
-          className=' p-1 m-2'
-
-        />
-      </div> */}
-      {/* <div>
-        <label>Brand Description:</label><br/>
-        <textarea
-          className='border p-1 m-2'
-          name="description"
-         
-        />
-      </div> */}
-      <button type="submit" className='border p-1 m-2 rounded-lg bg-blue-600 text-white '>Create Brand</button>
-    </form>
+      <form
+        onSubmit={handleSubmit}
+        className=" bg-white border  rounded-lg p-2 mx-auto"
+      >
+        <div>
+          <div className="  ">
+            <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+              Brand Name
+            </label>
+            <input
+              onChange={(e) => setBrand(e.target.value)}
+              value={brand}
+              type="text"
+              name="name"
+              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+              required
+            />
+            <button
+              type="submit"
+              className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] "
+            >
+              Add Brand
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default createbrand
+export default CreateBrand;

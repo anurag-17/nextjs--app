@@ -66,7 +66,6 @@ const EditCate = ({ _id }) => {
     }
   };
 
-  
   const handleUpdateCategory = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -107,41 +106,50 @@ const EditCate = ({ _id }) => {
       });
   };
   return (
-    <div className="bg-white border w-1/3 p-2 mx-auto">
+    <>
       <ToastContainer />
-      <form onSubmit={handleUpdateCategory}>
-        <h1 className="text-2xl my-5">Edit Categories :</h1>
-        {isFetching ? (
-          <p>Loading...</p>
-        ) : (
-          <div>
-            <label>Update category:</label>
-            <br />
-            <input
-              type="text"
-              name="title"
-              className="border p-1 m-2"
-              value={productDetails.title}
-              defaultValue={
-                editData?.title ? editData?.title : productDetails.title
-              }
-              // value={productDetails.title}
-              onChange={inputHandler}
-              required
-              minLength={3}
-              max={84}
-            />
-          </div>
-        )}
-        <button
-          type="submit"
-          className="border p-1 m-2 rounded-lg bg-blue-600 text-white"
-          onClick={handleUpdateCategory}
-        >
-          Update Category
-        </button>
-      </form>
-    </div>
+
+      <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[50px] my-5 ">
+        <h2 className="text-2xl font-semibold pb-4">Edit Categories </h2>
+        <div className="mb-3 w-[40%]"></div>
+      </div>
+      <div className="bg-white border rounded-lg p-2 mx-auto">
+        <form onSubmit={handleUpdateCategory}>
+          {isFetching ? (
+            <p>Loading...</p>
+          ) : (
+            <div>
+              <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
+                {" "}
+                Categories Name:
+              </label>
+
+              <input
+                type="text"
+                name="title"
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                value={productDetails.title}
+                defaultValue={
+                  editData?.title ? editData?.title : productDetails.title
+                }
+                // value={productDetails.title}
+                onChange={inputHandler}
+                required
+                minLength={3}
+                max={84}
+              />
+            </div>
+          )}
+          <button
+            type="submit"
+            className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px]"
+            onClick={handleUpdateCategory}
+          >
+            Update Category
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

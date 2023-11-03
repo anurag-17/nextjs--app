@@ -7,9 +7,13 @@ import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
   PencilSquareIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import { Transition, Popover } from "@headlessui/react";
 import { Fragment } from "react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import CreateBrand from "./create-brand";
+import Editbrand from "./edit-brand/[slug]";
 
 const brandlist = () => {
   const [getallBrand, setGetallBrand] = useState([]);
@@ -19,10 +23,31 @@ const brandlist = () => {
   const [isRefresh, setRefresh] = useState(false);
   const [productSearch, setProductSearch] = useState(["All"]);
   const [selected, setSelected] = useState([]);
+  const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
 
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const openDrawerO = () => {
+    setIsDrawerOpenO(true);
+  };
+
+  const closeDrawerO = () => {
+    setIsDrawerOpenO(false);
+  };
+
+  const handleClose = () => {
+    closeModal();
+    refreshData();
+  };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-  console.log(selected); 
+  console.log(selected);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -94,8 +119,7 @@ const brandlist = () => {
         .catch(function (error) {
           console.error(error);
         });
-    }
-     else {
+    } else {
       defaultBrand();
     }
   };
@@ -172,24 +196,26 @@ const brandlist = () => {
         <h2 className="text-2xl font-semibold pb-4">Brand List </h2>
 
         <div className="mb-3 w-[40%]">
-        <input
-              type="search"
-              className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="button-addon1"
-              onChange={handleSearch}
-            />
+          <input
+            type="search"
+            className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+            placeholder="Search"
+            aria-label="Search"
+            aria-describedby="button-addon1"
+            onChange={handleSearch}
+          />
         </div>
         <h2>Welcome Back, Client</h2>
       </div>
       <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
         <div className="flex  justify-end mt-7 ">
-          <Link href="/create-brand">
-            <button className="rounded-md p-2 bg-sky-600 text-white cursor-pointer">
-              + Add Brand
-            </button>
-          </Link>
+          <Link href="/create-brand"></Link>
+          <button
+            onClick={openDrawer}
+            className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
+          >
+            + Add Brand
+          </button>
           <button
             onClick={allDelete}
             className="border border-1 mx-5 rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2 hover:border-none"
@@ -198,6 +224,95 @@ const brandlist = () => {
           </button>
         </div>
       </div>
+
+      {isDrawerOpen && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800 border rounded-lg"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawer}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div className="">
+            <CreateBrand />
+          </div>
+        </div>
+      )}
+
+      {isDrawerOpenO && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawerO}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div>
+            <Editbrand />
+          </div>
+        </div>
+      )}
+
+      {/* drawer component for edit brand */}
+      {/* {isDrawerOpen && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[50%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawer}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div>
+            <Editbrand/>
+          </div>
+        </div>
+      )} */}
+
       <table class="table-auto  bg-white  rounded-md mt-5">
         <thead className="">
           <label>
@@ -245,13 +360,19 @@ const brandlist = () => {
                   <button className="flex">
                     <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
-                    <Link href={`/edit-brand/${items?._id}`}>
-                      <button>
+                    <Link
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openDrawerO();
+                      }}
+                      href={`/edit-brand/${items?._id}`}
+                    >
+                      <button onClick={(e) => openDrawerO(items?._id)}>
                         <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                       </button>
                     </Link>
 
-                    <Popover className="relative">
+                    <Popover className="relative ">
                       <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
                         <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
                       </Popover.Button>
@@ -264,7 +385,7 @@ const brandlist = () => {
                         leaveFrom="transform scale-100"
                         leaveTo="transform scale-95"
                       >
-                        <Popover.Panel className="absolute -right-16 sm:right-72  z-50 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 max-w-xs sm:max-w-sm w-screen ">
+                        <Popover.Panel className="absolute sm:right-60 sm:top-4  z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3 sm:max-w-sm  w-screen ">
                           <div className="relative  p-3">
                             <div className="flex justify-center items-center w-full">
                               <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
@@ -277,7 +398,7 @@ const brandlist = () => {
                             </p>
                             <div className="flex justify-around">
                               <button
-                                className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
+                                className="border border-1 rounded-md border-sky-400 text-sky-700 hover:bg-sky-200 text-sm  p-1
                               hover:border-none"
                               >
                                 No, Keep It

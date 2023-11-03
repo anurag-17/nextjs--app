@@ -352,7 +352,7 @@ const ProductList = () => {
                     ))}
                 </select>
               </div>
-                      
+
               {/*----- filter by category start ------- */}
               <div className="w-auto flex flex-col items-center gap-1">
                 <label htmlFor="" className="whitespace-nowrap text-[14px]">
@@ -380,112 +380,112 @@ const ProductList = () => {
         {isShowComponent === "grid" ? (
           <>
             <div className=" w-full md:w-[85%] mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-              {allProduct?.map((items, ix) => (
-                <div
-                  className=" bg-white  border-[2px] border-gray rounded-[10px] m-4 hover:border-lightBlue-600"
-                  key={ix}
-                >
-                  <Link href={`/view-product/${items?._id}`}>
-                    <Image
-                      src="/img1.jpeg"
-                      alt=""
-                      className=" mx-auto rounded-[20px] "
-                      width={400}
-                      height={400}
-                    />
-                  </Link>
-                  <div className="bg-white px-4 pb-6 rounded-[20px]">
-                    <div className="flex justify-between items-center my-4">
-                      <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
-                        {items.title}
-                      </h6>
-                      {/* <button onClick={handleAddToCart}>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                {allProduct?.map((items, ix) => (
+                  <div
+                    className=" bg-white  border-[2px] border-gray rounded-[10px] m-4 hover:border-lightBlue-600"
+                    key={ix}
+                  >
+                    <Link href={`/view-product/${items?._id}`}>
+                      <Image
+                        src="/img1.jpeg"
+                        alt=""
+                        className=" mx-auto rounded-[20px] "
+                        width={400}
+                        height={400}
+                      />
+                    </Link>
+                    <div className="bg-white px-4 pb-6 rounded-[20px]">
+                      <div className="flex justify-between items-center my-4">
+                        <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                          {items.title}
+                        </h6>
+                        {/* <button onClick={handleAddToCart}>
                         <HeartIcon class="h-8 w-8 text-gray-500" />
                       </button> */}
-                    </div>
-
-                    <div className=" flex justify-between items-center">
-                      <p className="text-[16px]  capitalize  ">
-                        Brand : {items.brand}
-                      </p>
-                    </div>
-                    <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
-                      Offer Price : ₹{items.discountedPrice} <br />
-                    </p>
-                    <del className="text-sm font-semibold capitalize my-2 text-sky-600">
-                      {" "}
-                      Regular Price : ₹{items.price}{" "}
-                    </del>
-                    <p className="text-[18px]  capitalize my-2 ">
-                      Stock : {items.quantity}
-                    </p>
-                    <p className="text-[18px]  capitalize my-2 ">
-                      Category : {items.category}
-                    </p>
-                    <div className="flex">
-                      {" "}
-                      <h1 className="mt-1 mr-1 text-[18px]">Status : </h1>
-                      <p className=" bg-green-100  m-2 text-center rounded-xl text-green-700 w-20 h-[20px]">
-                        selling
-                      </p>
-                    </div>
-                    <p className="text-[18px]  capitalize my-2   flex gap-x-5">
-                      Colors :
-                      <div className="flex gap-x-2  ">
-                        {items.color?.map((opt, inx) => (
-                          <p className="">{opt}</p>
-                        ))}
                       </div>
-                    </p>
-                    <div className="flex justify-between pt-4">
-                      <button
-                        type="button"
-                        className=""
-                        data-te-toggle="tooltip"
-                        data-te-html="true"
-                        data-te-ripple-init=""
-                        data-te-ripple-color="light"
-                        title="View product"
-                      >
-                        <Link href={`/view-product/${items?._id}`}>
-                          <MagnifyingGlassPlusIcon className="cursor-pointer h-10 w-10 text-gray-800" />
-                        </Link>
-                      </button>
-                      <button
-                        type="button"
-                        className=""
-                        data-te-toggle="tooltip"
-                        data-te-html="true"
-                        data-te-ripple-init=""
-                        data-te-ripple-color="black"
-                        title="Edit"
-                      >
-                        <Link href={`/edit-product/${items?._id}`}>
-                          <PencilSquareIcon className="cursor-pointer h-10 w-10 text-gray-800" />
-                        </Link>
-                      </button>
 
-                      <button
-                        data-te-toggle="tooltip"
-                        data-te-html="true"
-                        data-te-ripple-init=""
-                        data-te-ripple-color="light"
-                        title="Delete "
-                        type="button"
-                        onClick={() => openModal(items?._id)}
-                        className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                      >
-                        <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
-                      </button>
-                    </div>
-                    {/* <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
+                      <div className=" flex justify-between items-center">
+                        <p className="text-[16px]  capitalize  ">
+                          Brand : {items.brand}
+                        </p>
+                      </div>
+                      <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
+                        Offer Price : ₹{items.discountedPrice} <br />
+                      </p>
+                      <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                        {" "}
+                        Regular Price : ₹{items.price}{" "}
+                      </del>
+                      <p className="text-[18px]  capitalize my-2 ">
+                        Stock : {items.quantity}
+                      </p>
+                      <p className="text-[18px]  capitalize my-2 ">
+                        Category : {items.category}
+                      </p>
+                      <div className="flex">
+                        {" "}
+                        <h1 className="mt-1 mr-1 text-[18px]">Status : </h1>
+                        <p className=" bg-green-100  m-2 text-center rounded-xl text-green-700 w-20 h-[20px]">
+                          selling
+                        </p>
+                      </div>
+                      <p className="text-[18px]  capitalize my-2   flex gap-x-5">
+                        Colors :
+                        <div className="flex gap-x-2  ">
+                          {items.color?.map((opt, inx) => (
+                            <p className="">{opt}</p>
+                          ))}
+                        </div>
+                      </p>
+                      <div className="flex justify-between pt-4">
+                        <button
+                          type="button"
+                          className=""
+                          data-te-toggle="tooltip"
+                          data-te-html="true"
+                          data-te-ripple-init=""
+                          data-te-ripple-color="light"
+                          title="View product"
+                        >
+                          <Link href={`/view-product/${items?._id}`}>
+                            <MagnifyingGlassPlusIcon className="cursor-pointer h-10 w-10 text-gray-800" />
+                          </Link>
+                        </button>
+                        <button
+                          type="button"
+                          className=""
+                          data-te-toggle="tooltip"
+                          data-te-html="true"
+                          data-te-ripple-init=""
+                          data-te-ripple-color="black"
+                          title="Edit"
+                        >
+                          <Link href={`/edit-product/${items?._id}`}>
+                            <PencilSquareIcon className="cursor-pointer h-10 w-10 text-gray-800" />
+                          </Link>
+                        </button>
+
+                        <button
+                          data-te-toggle="tooltip"
+                          data-te-html="true"
+                          data-te-ripple-init=""
+                          data-te-ripple-color="light"
+                          title="Delete "
+                          type="button"
+                          onClick={() => openModal(items?._id)}
+                          className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                        >
+                          <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
+                        </button>
+                      </div>
+                      {/* <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
                       Add To Cart
                     </button> */}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             </div>
           </>
         ) : (
@@ -545,7 +545,7 @@ const ProductList = () => {
                       </td>
                       <td className="py-5 text-[14px] font-normal ">
                         {/* <del className="text-red-500"> */}
-                          {item?.price ? item?.price : "-"}
+                        {item?.price ? item?.price : "-"}
                         {/* </del> */}
                       </td>
                       <td className="py-5 text-[14px] font-normal  text-green-500">
