@@ -1,35 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
 import UserNavbar from "./userNavbar";
+import { fetchApi } from "../../utlis/api";
+import axios from "axios";
 
 
 const UserProfile = () => {
+
+  const token = useSelector((state) => state.auth.token);
   const [getAllCustomer, setGetAllCustomer] = useState();
-  const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userDetails"))
-  );
 
   useEffect(() => {
     defaultCustomer();
   }, []);
 
-  const defaultCustomer = () => {
-    console.log(customerID);
-
+  const defaultCustomer = async() => {
     axios
       .get(
         "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-        // {
-        //   _id: customerID,
-        // },
         {
           headers: {
             "Content-Type": "application/json",
             "User-Agent": "PostmanRuntime/7.33.0",
+            "authorization": token,
           },
         }
       )
@@ -40,6 +36,15 @@ const UserProfile = () => {
       .catch((error) => {
         console.error(error);
       });
+
+    // try {
+    //   const data = await fetchApi('/auth/getaUser', {
+    //     // additional options if needed
+    //   });
+    //   console.log(data);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   return (

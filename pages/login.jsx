@@ -9,13 +9,16 @@ import Image from "next/image";
 import Cart from "./cart";
 
 import Cookies from 'js-cookie';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setToken } from "../redux/actions/auth";
 
 const setTokenInCookies = (token) => {
   Cookies.set('token', token, { expires: 7 }); // 'expires' sets the cookie expiration in days
 };
 
 const UserLogin = ({ API_URL }) => {
+
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
@@ -45,6 +48,8 @@ const UserLogin = ({ API_URL }) => {
       .then(function (response) {
 
         if (response?.status === 201) {
+
+          dispatch(setToken(response?.data?.token));
           // console.log(response.data.user._id);
           localStorage.setItem(
             "userToken",

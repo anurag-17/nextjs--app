@@ -6,7 +6,9 @@ import Head from "next/head";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
 import "./"
-
+import { Provider } from 'react-redux';
+import store from '../redux/store';
+import { createWrapper } from 'next-redux-wrapper';
 
 function MyApp({ Component, pageProps }) {
 
@@ -60,12 +62,17 @@ function MyApp({ Component, pageProps }) {
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,700&display=swap" rel="stylesheet"/>
 
       </Head>
+      <Provider store={store}>
       <Layout>
         <Component {...pageProps} />
       </Layout>
+    </Provider>
     </>
 
-  );
+);
 }
 
-export default MyApp;
+    const makeStore = () => store;
+const wrapper = createWrapper(makeStore);
+
+export default wrapper.withRedux(MyApp);
