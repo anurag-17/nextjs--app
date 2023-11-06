@@ -8,7 +8,6 @@ import Image from "next/image";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { fetchApiData, postApiData } from "../utils/api";
 
 
 const AdminLogin = ({ API_URL }) => {
