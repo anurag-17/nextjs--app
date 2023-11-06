@@ -33,9 +33,10 @@ const headItems = [
 
 const ProductList = () => {
   const [isOpenDelete, setOpenDelete] = useState(false);
-  const [allProduct, setAllProduct] = useState([]);
-  const [isRefresh, setRefresh] = useState(false);
   const [productID, setProductID] = useState("");
+  const [isRefresh, setRefresh] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [allProduct, setAllProduct] = useState([]);
   const [productCategory, setProductCategory] = useState(["All"]);
   const [productBrands, setProductBrands] = useState(["All"]);
   const [productSearch, setProductSearch] = useState(["All"]);
@@ -47,7 +48,6 @@ const ProductList = () => {
   const [quantity, setQuantity] = useState(1);
   const [isAllChecked, setAllChecked] = useState("");
 
-  const [selected, setSelected] = useState([]);
   // const [numSelected, setNumSelected] = useState(selected?.length || null);
   const [rowCount, setRowCount] = useState(allProduct?.length || null);
 
@@ -89,12 +89,6 @@ const ProductList = () => {
       .then(function (response) {
         if (response.status === 200) {
           setAllProduct(response?.data);
-          // const categories = response?.data?.map((product) => product.category);
-          // const uniqueCategories = [...new Set(categories)];
-          // setProductCategory([...productCategory, ...uniqueCategories]);
-          // const uniqueCategories = categories.filter((category, index) => {
-          //   return categories.indexOf(category) === index;
-          // });
 
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
@@ -505,7 +499,7 @@ const ProductList = () => {
                   />
                   {headItems.map((items, inx) => (
                     <th
-                      className="text-start py-5 text-[14px] font-medium  "
+                      className="text-start py-5 text-[14px] font-medium"
                       key={inx}
                     >
                       {items}
@@ -574,7 +568,6 @@ const ProductList = () => {
                           selling
                         </p>
                       </td>
-
                       {/* --------- view details button  ------- */}
                       <td className="py-5 text-[14px] font-normal ">
                         <button>
@@ -583,7 +576,6 @@ const ProductList = () => {
                           </Link>
                         </button>
                       </td>
-
                       <td className="py-5 ">
                         <div className="flex gap-5 items-center ">
                           {/* --------- edit  button  ------- */}
@@ -607,88 +599,6 @@ const ProductList = () => {
                 );
               })}
             </table>
-            {/*------- product list table start -------*/}
-
-            {/*------------ Pagination -------------*/}
-            {/* <nav
-              aria-label="Page navigation example"
-              className="m-5 mb-10 float-right"
-            >
-              <ul className="flex items-center -space-x-px h-8 text-sm">
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    <span className="sr-only">Previous</span>
-                    <svg
-                      className="w-2.5 h-2.5"
-                      aria-hidden="true"
-                      xmlns="#"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 1 1 5l4 4"
-                      />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-3 h-10 leading-tight text-gray-500 bg-white border border-gray-300   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white hover:text-blue-700 hover:border-blue-300 hover:bg-lightBlue-200"
-                  >
-                    1
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-3 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white hover:text-blue-700 hover:border-blue-300 hover:bg-lightBlue-200"
-                  >
-                    2
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    aria-current="page"
-                    className="z-10 flex items-center text-gray-500 justify-center px-3 h-10 leading-tight hover:text-blue-600 border border-gray-400 hover:border-blue-300 bg-blue-50  dark:border-gray-700  dark:text-white hover:bg-lightBlue-200"
-                  >
-                    3
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white "
-                  >
-                    <span className="sr-only">Next</span>
-                    <svg
-                      className="w-2.5 h-2.5"
-                      aria-hidden="true"
-                      xmlns="#"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="m1 9 4-4-4-4"
-                      />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </nav> */}
           </>
         )}
       </section>

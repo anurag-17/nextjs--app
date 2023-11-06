@@ -3,14 +3,15 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
-const Editbrand = ({ _id }) => {
+const Editbrand = ({ brandEID }) => {
+  const productID = "yourProductIDHere";
   const router = useRouter();
-  const { slug } = router.query;
+  // const { slug } = router.query;
   const [isLoading, setLoading] = useState(false);
   const [isRefresh, setRefresh] = useState(false);
   const [editData, setEditData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
-  const [productDetails, setProductDetails] = useState({
+  const [brandDetails, setBrandDetails] = useState({
     brand: "",
   });
 
@@ -22,18 +23,18 @@ const Editbrand = ({ _id }) => {
     const { name, value, brand } = e.target;
 
     if (brand === "color") {
-      setProductDetails({
-        ...productDetails,
+      setBrandDetails({
+        ...brandDetails,
         [brand]: value.split(","),
       });
     } else if (name === "brand") {
-      setProductDetails({
-        ...productDetails,
+      setBrandDetails({
+        ...brandDetails,
         [name]: value.toUpperCase(),
       });
     } else {
-      setProductDetails({
-        ...productDetails,
+      setBrandDetails({
+        ...brandDetails,
         [name]: value,
       });
     }
@@ -42,13 +43,13 @@ const Editbrand = ({ _id }) => {
   useEffect(() => {
     // Fetch the category data when the component mounts
     fetchBrand();
-  }, [_id]);
+  }, []);
 
   const fetchBrand = async () => {
     try {
       setIsFetching(true);
       const res = await fetch(
-        `https://e-commerce-backend-brown.vercel.app/api/brand/updateBrand/${slug}`,
+        `https://e-commerce-backend-brown.vercel.app/api/brand/updateBrand/${brandEID}`,
         {
           cache: "no-store",
         }
@@ -72,7 +73,7 @@ const Editbrand = ({ _id }) => {
 
     const options = {
       method: "PUT",
-      url: "https://e-commerce-backend-brown.vercel.app/api/brand/updateBrand",
+      url: `https://e-commerce-backend-brown.vercel.app/api/brand/updateBrand/${brandEID}`,
       headers: {
         cookie:
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
@@ -81,7 +82,7 @@ const Editbrand = ({ _id }) => {
         // Authorization: "Bearer " + token,
       },
       data: {
-        brand: productDetails?.brand ? productDetails?.brand : editData?.brand,
+        brand: brandDetails?.brand ? brandDetails?.brand : editData?.brand,
       },
     };
 
@@ -91,7 +92,7 @@ const Editbrand = ({ _id }) => {
         console.log(response);
         if (response.status === 200) {
           setLoading(false);
-          toast.success("Product updated successfully !");
+          toast.success("Brand updated successfully !");
           refreshData();
           router.push("/brand");
         } else {
@@ -127,9 +128,9 @@ const Editbrand = ({ _id }) => {
                 type="text"
                 name="brand"
                 className="px-3 py-2 rounded m-10   border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
-                value={productDetails.brand}
+                value={brandDetails.brand}
                 defaultValue={
-                  editData?.brand ? editData?.brand : productDetails.brand
+                  editData?.brand ? editData?.brand : brandDetails.brand
                 }
                 // value={productDetails.title}
                 onChange={inputHandler}

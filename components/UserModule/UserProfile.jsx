@@ -160,4 +160,4 @@ const UserProfile = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(UserProfile), { ssr: false });
+  export default dynamic(() => Promise.resolve(UserProfile), { ssr: false });
