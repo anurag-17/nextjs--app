@@ -2,9 +2,9 @@ import React, { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 
-const EditCurrency = () => {
+const EditCurrency = ({currencyEdit}) => {
   const router = useRouter();
-  const { _id } = router.query; 
+  // const { _id } = router.query; 
   // const [id, setId] = useState("");
   const [selectedCurrencyId, setSelectedCurrencyId] = useState(null);
   const [currencySign, setCurrencySign] = useState("");
@@ -16,7 +16,7 @@ const EditCurrency = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://e-commerce-backend-brown.vercel.app/api/currency/getCurrency/${_id}`
+          `https://e-commerce-backend-brown.vercel.app/api/currency/getCurrency/${currencyEdit}`
         );
 
         if (response.ok) {
@@ -34,19 +34,19 @@ const EditCurrency = () => {
 
     // Call the fetchData function
     fetchData();
-  }, [_id]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const currencyData = {
-        _id: _id,
+        _id: id,
         currencySign: currencySign,
         currencyName: currencyName,
       };
 
       const response = await fetch(
-        "https://e-commerce-backend-brown.vercel.app/api/currency/updateCurrency",
+        `https://e-commerce-backend-brown.vercel.app/api/currency/updateCurrency`,
         {
           method: "PUT",
           headers: {
