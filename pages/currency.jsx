@@ -2,10 +2,38 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
+import {
+  MagnifyingGlassPlusIcon,
+  TrashIcon,
+  PencilSquareIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
+import { Transition, Popover } from "@headlessui/react";
+import { Fragment } from "react";
+import CreateCurrency from "./create-currency";
+import EditCurrency from "./edit-currency";
+
 
 const Currency = () => {
   const [getCurrency, setGetCurrency] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const openDrawerO = () => {
+    setIsDrawerOpenO(true);
+  };
+
+  const closeDrawerO = () => {
+    setIsDrawerOpenO(false);
+  };
 
   const options = {
     method: "GET",
@@ -25,6 +53,36 @@ const Currency = () => {
         console.error(error);
       });
   };
+
+  const removeCurrency = async (_id) => {
+    console.log(_id);
+    try { 
+      const payload = {
+        id: _id
+      };
+      const response = await fetch(
+        `https://e-commerce-backend-brown.vercel.app/api/currency/deleteCurrency`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+  
+      if (response.ok) {
+        console.log("Currency deleted successfully!");
+        defaultCurrency();
+      } else {  
+        throw new Error("Failed to delete currency");
+      }
+    } catch (error) {  
+      console.error(error);
+    }
+  };
+  
 
   return (
     <>
@@ -46,9 +104,9 @@ const Currency = () => {
 
         <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <div className="flex justify-around">
-            <Link href="#"></Link>
+            <Link href="/currency"></Link>
             <button
-              // onClick={openDrawer}
+              onClick={openDrawer}
               className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4"
             >
               + Add Currency
@@ -84,7 +142,36 @@ const Currency = () => {
             <span className="sr-only bg-black">Close menu</span>
           </button>
           <div className="overflow-y-auto ">
-           {/* <AddVendor/> */}
+          <CreateCurrency/>
+          </div>
+        </div>
+      )}
+
+      {isDrawerOpenO && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={closeDrawerO}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div>
+            <EditCurrency/>
           </div>
         </div>
       )}
@@ -103,6 +190,9 @@ const Currency = () => {
                   <th scope="col" className="px- py-3">
                     Currency Sign
                   </th>
+                  <th scope="col" className="px- py-3">
+                    Action
+                  </th>
                 </tr>
               </thead>
               {getCurrency.map((item) => (
@@ -113,6 +203,71 @@ const Currency = () => {
                     </td>
                     <td className="px- py-4">{item?.currencyName}</td>
                     <td className="">{item?.currencySign}</td>
+
+                    <td className=" flex">
+                  <button className="flex">
+                    <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
+
+                    {/* <Link href={`/edit-brand/${items?._id}`}> */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          openDrawerO();
+                        }}
+                      >
+                        <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                      </button>
+                    {/* </Link> */}
+
+                    <Popover className=" ">
+                      <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
+                        <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform scale-95"
+                        enterTo="transform scale-100"
+                        leave="transition ease-in duration=75"
+                        leaveFrom="transform scale-100"
+                        leaveTo="transform scale-95"
+                      >
+                        <Popover.Panel className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-6/12 right-72 ">
+                          <div className="relative  p-3">
+                            <div className="flex justify-center items-center w-full">
+                              <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
+                            </div>
+                            <p>Are You Sure! Want to Delete?</p>
+                            <p className="text-sm text-gray-500 my-3">
+                              Do you really want to delete these records? You
+                              cant't view this in your list anymore if you
+                              delete!
+                            </p>
+                            <div className="flex justify-around">
+                              <button
+                                className="border border-1 rounded-md border-sky-400 text-sky-700 hover:bg-sky-200 text-sm  p-1
+                              hover:border-none"
+                              >
+                                No, Keep It
+                              </button>
+                              <button
+                                onClick={() => {
+                                  removeCurrency(item?._id);
+                                }}
+                                className="border border-1 rounded-md 
+                              text-sm 
+                              border-red-400 text-red-700 hover:bg-red-200  p-1
+                              hover:border-none"
+                              >
+                                Yes, Delete It
+                              </button>
+                            </div>
+                          </div>
+                        </Popover.Panel>
+                      </Transition>
+                    </Popover>
+                  </button>
+                </td>
                   </tr>
                 </tbody>
               ))}
