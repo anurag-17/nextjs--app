@@ -9,22 +9,27 @@ import {
   PencilSquareIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
-import { Transition, Popover } from "@headlessui/react";
+import { Transition, Dialog } from "@headlessui/react";
 import { Fragment } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import CreateBrand from "./create-brand";
-import Editbrand from "./edit-brand/[slug]";
+import Editbrand from "../pages/edit-brand/[slug]"
+import DeleteModuleB from "../components/AdminModule/Brand/deleteMudule";
+
+const headItems = ["NAME", "PUBLISHED", "ACTION"];
 
 const brandlist = () => {
   const [getallBrand, setGetallBrand] = useState([]);
   const [isChecked, setisChecked] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [allProduct, setAllProduct] = useState([]);
-  const [isRefresh, setRefresh] = useState(false);
   const [productSearch, setProductSearch] = useState(["All"]);
   const [selected, setSelected] = useState([]);
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isOpenDelete, setOpenDelete] = useState(false);
+  const [brandID, setBrandID] = useState("");
+  const [brandEID, setBrandEID] = useState("");
+  const [isRefresh, setRefresh] = useState(false);
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -33,7 +38,8 @@ const brandlist = () => {
     setIsDrawerOpen(false);
   };
 
-  const openDrawerO = () => {
+  const openDrawerO = (_id) => {
+    setBrandEID(_id);
     setIsDrawerOpenO(true);
   };
 
@@ -45,13 +51,25 @@ const brandlist = () => {
     closeModal();
     refreshData();
   };
+  const pageLimit = "15";
+  function closeModal() {
+    setOpenDelete(false);
+  }
+
+  function openModal(id) {
+    setBrandID(id);
+    setOpenDelete(true);
+  }
+  const refreshData = () => {
+    setRefresh(!isRefresh);
+  };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
   console.log(selected);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = allProduct?.map((n) => n?._id);
+      const newSelected = getallBrand?.map((n) => n?._id);
       setSelected(newSelected);
       return;
     }
@@ -65,6 +83,7 @@ const brandlist = () => {
   useEffect(() => {
     defaultBrand();
   }, []);
+
   const defaultBrand = () => {
     axios
       .request(options)
@@ -74,30 +93,6 @@ const brandlist = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-      });
-  };
-
-  const removeCategory = async (_id) => {
-    console.log(_id);
-    await fetch(
-      `https://e-commerce-backend-brown.vercel.app/api/brand/deleteBrand/${_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          defaultBrand();
-        } else {
-          throw new Error("failed to create");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
       });
   };
 
@@ -132,19 +127,16 @@ const brandlist = () => {
         { brandIds: selected }
       );
 
-      // Check the HTTP status code for success (2xx codes)
       if (response.status === 200) {
         console.log("Successfully deleted brands");
-        // Call the function to refresh your brand data
+
         defaultBrand();
       } else {
-        // Handle other status codes or error responses from the server
         console.error(
           "Failed to delete brands. Status code: " + response.status
         );
       }
     } catch (error) {
-      // Handle network errors or exceptions thrown during the request
       console.error("Error deleting brands:", error);
     }
   };
@@ -152,7 +144,6 @@ const brandlist = () => {
   const handleCheckbox = (e) => {
     const { value, checked } = e.target;
 
-    // If the header checkbox is clicked
     if (value === "selectAll") {
       setSelectAll(checked);
       if (checked) {
@@ -162,7 +153,6 @@ const brandlist = () => {
         setisChecked([]);
       }
     } else {
-      // If an item checkbox is clicked
       if (checked) {
         setisChecked([...isChecked, value]);
       } else {
@@ -190,6 +180,19 @@ const brandlist = () => {
     setSelected(newSelected);
   };
 
+  const EnhancedTableToolbar = ({ numLength }) => {
+    return (
+      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg h-[80px] bg-lightBlue-100 mt-4">
+        <h2 className="text-lg font-medium ">{numLength} Product selected</h2>
+        <button
+          onClick={allDelete}
+          className="border border-1 rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200 py-2 px-4 hover:border-none"
+        >
+          Delete All
+        </button>
+      </div>
+    );
+  };
   return (
     <>
       <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
@@ -207,24 +210,22 @@ const brandlist = () => {
         </div>
         <h2>Welcome Back, Client</h2>
       </div>
-      <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-        <div className="flex  justify-end mt-7 ">
-          <Link href="/create-brand"></Link>
-          <button
-            onClick={openDrawer}
-            className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
-          >
-            + Add Brand
-          </button>
-          <button
-            onClick={allDelete}
-            className="border border-1 mx-5 rounded-md text-sm border-red-400 text-red-700 hover:bg-red-200  p-2 hover:border-none"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
 
+      {selected?.length > 0 ? (
+        <EnhancedTableToolbar numLength={selected?.length} />
+      ) : (
+        <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
+          <div className="flex  justify-end mt-7 ">
+            <Link href="/create-brand"></Link>
+            <button
+              onClick={openDrawer}
+              className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
+            >
+              + Add Brand
+            </button>
+          </div>
+        </div>
+      )}
       {isDrawerOpen && (
         <div
           id="drawer-form"
@@ -253,7 +254,6 @@ const brandlist = () => {
           </div>
         </div>
       )}
-
       {isDrawerOpenO && (
         <div
           id="drawer-form"
@@ -278,123 +278,128 @@ const brandlist = () => {
             <span className="sr-only bg-black">Close menu</span>
           </button>
           <div>
-            <Editbrand />
+            <Editbrand brandEID={brandEID}/>
           </div>
         </div>
       )}
-
-      <table class="table-auto  bg-white  rounded-md mt-5 relative">
+      <table class="table-auto bg-white rounded-md mt-5  relative  ">
         <thead className="">
-          <label>
-            <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
-              <input
-                type="checkbox"
-                className="mx-3 my-5 cursor-pointer"
-                value="selectAll"
-                // checked={selectAll}
-                onChange={handleSelectAllClick}
-              />
-
-              <th className="text-start">NAME</th>
-              {/* <th className="text-start">DESCRIPTION</th> */}
-              <th className="text-start">PUBLISHED</th>
-              <th className="text-start">ACTION</th>
-            </tr>
-          </label>
+          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
+            <input
+              type="checkbox"
+              className="mx-3  cursor-pointer "
+              onChange={handleSelectAllClick}
+              inputProps={{
+                "aria-label": "select all desserts",
+              }}
+            />
+            {headItems.map((items, inx) => (
+              <th className="text-start py-5 text-[14px] font-medium" key={inx}>
+                {items}
+              </th>
+            ))}
+          </tr>
         </thead>
-        {getallBrand.map((items) => (
-          <tbody>
-            <label>
-              <tr className="flex gap-48">
-                <td className="">
-                  <input
-                    type="checkbox"
-                    // checked={selectDelete}
-                    className="mx-3 mt-5 cursor-pointer "
-                    value={items?._id}
-                    checked={items.isChecked}
-                    onClick={(event) => handleClick(event, items?._id)}
-                  />
-                </td>
-                <td className="py-5 text-[18px] w-[2%]">
-                  {" "}
-                  {items?.brand ? items?.brand : "-"}
-                </td>
-                <td className="py-5 text-[18px] tex">
-                  <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
-                    selling
-                  </p>
-                </td>
+        {getallBrand.map((items, index) => {
+          const isItemSelected = isSelected(items?._id);
+          const labelId = `enhanced-table-checkbox-${index}`;
+          return (
+            <tbody>
+              <label>
+                <tr
+                  className="flex gap-48 cursor-pointer"
+                  role="checkbox"
+                  onClick={(event) => handleClick(event, items?._id)}
+                  aria-checked={isItemSelected}
+                  selected={isItemSelected}
+                >
+                  <td className="">
+                    <input
+                      type="checkbox"
+                      className="mx-3 mt-5 cursor-pointer "
+                      value={items?._id}
+                      checked={isItemSelected}
+                      inputProps={{
+                        "aria-labelledby": labelId,
+                      }}
+                    />
+                  </td>
+                  <td className="py-5 text-[18px] w-[2%]">
+                    {" "}
+                    {items?.brand ? items?.brand : "-"}
+                  </td>
+                  <td className="py-5 text-[18px] tex">
+                    <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
+                      selling
+                    </p>
+                  </td>
 
-                <td className=" flex">
-                  <button className="flex">
-                    <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
+                  <td className=" flex">
+                    <button className="flex">
+                      <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
-                    <Link href={`/edit-brand/${items?._id}`}>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          openDrawerO();
-                        }}
-                      >
+                      <button onClick={() => openDrawerO(items?._id)}>
                         <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                       </button>
-                    </Link>
 
-                    <Popover className=" ">
-                      <Popover.Button className="outline-none mx-auto md:mr-8 cursor-pointer text-gray-700">
-                        <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
-                      </Popover.Button>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform scale-95"
-                        enterTo="transform scale-100"
-                        leave="transition ease-in duration=75"
-                        leaveFrom="transform scale-100"
-                        leaveTo="transform scale-95"
+                      <button
+                        type="button"
+                        onClick={() => openModal(items?._id)}
+                        className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                       >
-                        <Popover.Panel className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-6/12 right-72 ">
-                          <div className="relative  p-3">
-                            <div className="flex justify-center items-center w-full">
-                              <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
-                            </div>
-                            <p>Are You Sure! Want to Delete?</p>
-                            <p className="text-sm text-gray-500 my-3">
-                              Do you really want to delete these records? You
-                              cant't view this in your list anymore if you
-                              delete!
-                            </p>
-                            <div className="flex justify-around">
-                              <button
-                                className="border border-1 rounded-md border-sky-400 text-sky-700 hover:bg-sky-200 text-sm  p-1
-                              hover:border-none"
-                              >
-                                No, Keep It
-                              </button>
-                              <button
-                                onClick={() => {
-                                  removeCategory(items?._id);
-                                }}
-                                className="border border-1 rounded-md 
-                              text-sm 
-                              border-red-400 text-red-700 hover:bg-red-200  p-1
-                              hover:border-none"
-                              >
-                                Yes, Delete It
-                              </button>
-                            </div>
-                          </div>
-                        </Popover.Panel>
-                      </Transition>
-                    </Popover>
-                  </button>
-                </td>
-              </tr>
-            </label>
-          </tbody>
-        ))}
+                        <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
+                      </button>
+                    </button>
+                  </td>
+                </tr>
+              </label>
+            </tbody>
+          );
+        })}
       </table>
+      <Transition appear show={isOpenDelete} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
+                  >
+                    Are You Sure! Want to Delete?
+                  </Dialog.Title>
+                  <DeleteModuleB
+                    brandID={brandID}
+                    closeModal={closeModal}
+                    refreshData={refreshData}
+                  />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   );
 };

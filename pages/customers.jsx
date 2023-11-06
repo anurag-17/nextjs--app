@@ -8,12 +8,25 @@ import {
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
-import { Transition, Popover } from "@headlessui/react";
+import { Transition, Dialog } from "@headlessui/react";
 import axios from "axios";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import EditCustomer from "./edit-customer/[slug]";
+import DeleteModuleCustomer from "../components/AdminModule/Customer/deleteModule";
+
+const headItems = [
+  "CUSTOMER NAME",
+  "EMAIL",
+  "ADDRESS",
+  "PHONE NO.",
+  "COUNTRY",
+  "ACTION",
+];
 
 const Customers = () => {
+  const [isOpenDelete, setOpenDelete] = useState(false);
+  const [customerID, setCustomerID] = useState("");
+  const [isRefresh, setRefresh] = useState(false);
   const [getallCustomer, setGetallCustomer] = useState([]);
   const [searchCustomer, setSearchCustomer] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -29,6 +42,16 @@ const Customers = () => {
   useEffect(() => {
     defaultCustomer();
   }, []);
+
+  const pageLimit = "15";
+  function closeModal() {
+    setOpenDelete(false);
+  }
+
+  function openModal(id) {
+    setCustomerID(id);
+    setOpenDelete(true);
+  }
 
   const refreshData = () => {
     setRefresh(!isRefresh);
@@ -152,41 +175,48 @@ const Customers = () => {
       <table className="table bg-white w-full mt-5 gap-48 rounded-lg relative">
         <thead className=" bg-gray-200 text-gray-400">
           <tr className="gap-48 ">
-            {/* <label> */}
-            <th>
-              <input type="checkbox" className="cursor-pointer   " />
-            </th>
-            <th className="py-5 text-start">Customer Name</th>
-            <th className="py-5 text-start">Email</th>
-            <th className="py-5 text-start">Address</th>
-            <th className="py-5 text-start">Phone No.</th>
-            <th className="py-5 text-start">Country</th>
-            <th className="py-5 text-start">Action</th>
-            {/* </label> */}
+            {headItems.map((items, inx) => (
+              <th
+                className="text-start py-5 text-[14px] font-medium px-10 "
+                key={inx}
+              >
+                {items}
+              </th>
+            ))}
           </tr>
         </thead>
         {getallCustomer.map((items) => (
           <tbody>
             {/* <label> */}
             <tr className="">
-              <td className="text-center ">
-                <input type="checkbox" className="cursor-pointer  my-2" />
-              </td>
-              <td className="py-5 text-[18px] text-start">
+              <td className="py-5 text-[18px] text-start px-10">
                 {items?.firstname} {items?.lastname}
               </td>
-              <td className="py-5 text-[18px] text-start ">{items?.email}</td>
-              <td className="py-5 text-[18px] text-start  ">
+              <td className="py-5 text-[18px] text-start px-10">
+                {items?.email}
+              </td>
+              <td className="py-5 text-[18px] text-start px-10  ">
                 {items?.address}
               </td>
-              <td className="py-5 text-[18px] text-start ">{items?.mobile}</td>
-              <td className="py-5 text-[18px] text-start ">{items?.country}</td>
-              <td className="py-5 text-[18px] mx-auto flex  ">
+              <td className="py-5 text-[18px] text-start px-10 ">
+                {items?.mobile}
+              </td>
+              <td className="py-5 text-[18px] text-start px-10">
+                {items?.country}
+              </td>
+              <td className="py-5 text-[18px] mx-auto flex  px-10">
                 <Link href={`/edit-customer/${items?._id}`}></Link>
                 <button onClick={openDrawer}>
                   <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                 </button>
-                <Popover className="">
+                <button
+                  type="button"
+                  onClick={() => openModal(items?._id)}
+                  className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                  <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
+                </button>
+                {/* <Popover className="">
                   <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
                     <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
                   </Popover.Button>
@@ -199,7 +229,7 @@ const Customers = () => {
                     leaveFrom="transform scale-100"
                     leaveTo="transform scale-95"
                   >
-                    <Popover.Panel  className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-4/12 right-[40%] ">
+                    <Popover.Panel  className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-4/12 right-[40%]  ">
                       <div className="relative  p-3">
                         <div className="flex justify-center items-center w-full">
                           <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
@@ -231,13 +261,55 @@ const Customers = () => {
                       </div>
                     </Popover.Panel>
                   </Transition>
-                </Popover>
+                </Popover> */}
               </td>
             </tr>
-            {/* </label> */}
           </tbody>
         ))}
       </table>
+      <Transition appear show={isOpenDelete} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
+                  >
+                    Are You Sure! Want to Delete?
+                  </Dialog.Title>
+                  <DeleteModuleCustomer
+                    customerID={customerID}
+                    closeModal={closeModal}
+                    refreshData={refreshData}
+                  />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };

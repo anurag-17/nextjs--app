@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-const DeleteModal = ({ productID, closeModal, refreshData }) => {
+const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
 
   const handleClose = () => {
@@ -19,13 +19,10 @@ const DeleteModal = ({ productID, closeModal, refreshData }) => {
 
     const options = {
       method: "DELETE",
-      url: `https://e-commerce-backend-brown.vercel.app/api/product/deleteProduct/${productID}`,
+      url: `https://e-commerce-backend-brown.vercel.app/api/brand/deleteBrand/${brandID}`,
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
-      
       },
     };
 
@@ -35,7 +32,7 @@ const DeleteModal = ({ productID, closeModal, refreshData }) => {
         console.log(response);
         if (response.status === 200) {
           setLoading(false);
-          toast.success("Product deleted successfully !");
+          toast.success("brand deleted successfully !");
           handleClose();
         } else {
           setLoading(false);
@@ -95,4 +92,4 @@ const DeleteModal = ({ productID, closeModal, refreshData }) => {
   );
 };
 
-export default DeleteModal;
+export default DeleteModuleB;

@@ -172,7 +172,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   };
 
   return (
-    <div ref={ref} className="fixed w-[270px] bg-white shadow-sm  ">
+    <div ref={ref} className="fixed h-screen overflow-y-auto w-[270px] bg-white shadow-sm  ">
       <img
         src="/log.png"
         width={400}
@@ -250,7 +250,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         ))}
 
         <div
-          className={`pl-6 py-3 ml-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold overflow-y-scroll
+          className={`pl-6 py-3 ml-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold 
             ${
               router.pathname == "/admin-login"
                 ? "bg-sky-600 text-white"
