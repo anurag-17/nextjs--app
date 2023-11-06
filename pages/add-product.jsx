@@ -11,6 +11,7 @@ const AddProduct = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [getallBrand, setGetallBrand] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
+  const [getCurrency, setGetCurrency] = useState([]);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -60,6 +61,26 @@ const AddProduct = () => {
       });
     }
   };
+//---currency---
+const curr = {
+  method: "GET",
+  url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
+};
+useEffect(() => {
+  defaultCurrency();
+}, []);
+const defaultCurrency = () => {
+  axios
+    .request(curr)
+    .then((response) => {
+      setGetCurrency(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
 
   const option = {
     method: "GET",
@@ -229,11 +250,12 @@ const AddProduct = () => {
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  ">
                   <select className="bg-white list-none outline-none ">
-                    <option>₹</option>
-                    <option>$</option>
-                    <option>€</option>
-                    <option>¥</option>
-                    <option>د.إ</option>
+                 {getCurrency.map((item)=>(
+                  <option key={item.id} value={item.id}>
+                    {item.currencySign}
+                  </option>
+                 ))}
+                   
                   </select>
                 </span>
                 <input
@@ -257,11 +279,11 @@ const AddProduct = () => {
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
                   <select className="bg-white list-none outline-none ">
-                    <option>₹</option>
-                    <option>$</option>
-                    <option>€</option>
-                    <option>¥</option>
-                    <option>د.إ</option>
+                  {getCurrency.map((item)=>(
+                  <option key={item.id} value={item.id}>
+                    {item.currencySign}
+                  </option>
+                 ))}
                   </select>
                 </span>
                 <input
