@@ -3,15 +3,15 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
-const EditCate = ({ _id }) => {
+const EditCate = ({ cateEdit }) => {
   const router = useRouter();
-  const { slug } = router.query;
+  // const { slug } = router.query;
   const [isLoading, setLoading] = useState(false);
   const [isRefresh, setRefresh] = useState(false);
   const [editData, setEditData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
-  const [productDetails, setProductDetails] = useState({
-    title: "",
+  const [categoryDetails, setCategoryDetails] = useState({
+    category: "",
   });
 
   const refreshData = () => {
@@ -22,18 +22,18 @@ const EditCate = ({ _id }) => {
     const { name, value } = e.target;
 
     if (name === "color") {
-      setProductDetails({
-        ...productDetails,
+      setCategoryDetails({
+        ...categoryDetails,
         [name]: value.split(","),
       });
     } else if (name === "brand") {
-      setProductDetails({
-        ...productDetails,
+      setCategoryDetails({
+        ...categoryDetails,
         [name]: value.toUpperCase(),
       });
     } else {
-      setProductDetails({
-        ...productDetails,
+      setCategoryDetails({
+        ...categoryDetails,
         [name]: value,
       });
     }
@@ -41,13 +41,13 @@ const EditCate = ({ _id }) => {
 
   useEffect(() => {
     fetchCategory();
-  }, [_id]);
+  }, []);
 
   const fetchCategory = async () => {
     try {
       setIsFetching(true);
       const res = await fetch(
-        `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${slug}`,
+        `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${cateEdit}`,
         {
           cache: "no-store",
         }
@@ -72,7 +72,7 @@ const EditCate = ({ _id }) => {
 
     const options = {
       method: "PUT",
-      url: `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${slug}`,
+      url: `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${cateEdit}`,
       headers: {
         cookie:
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
@@ -81,7 +81,7 @@ const EditCate = ({ _id }) => {
         // Authorization: "Bearer " + token,
       },
       data: {
-        title: productDetails?.title ? productDetails?.title : editData?.title,
+        title: categoryDetails?.title ? categoryDetails?.title : editData?.title,
       },
     };
 
@@ -128,9 +128,9 @@ const EditCate = ({ _id }) => {
                 type="text"
                 name="title"
                 className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
-                value={productDetails.title}
+                value={categoryDetails.title}
                 defaultValue={
-                  editData?.title ? editData?.title : productDetails.title
+                  editData?.title ? editData?.title : categoryDetails.title
                 }
                 // value={productDetails.title}
                 onChange={inputHandler}

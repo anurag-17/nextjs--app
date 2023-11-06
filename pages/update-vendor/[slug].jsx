@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
-const UpdateVendor = ({ _id }) => {
+const UpdateVendor = ({ vendorEdit }) => {
   const router = useRouter();
   const { slug } = router.query;
   const [editData, setEditData] = useState({});
@@ -49,13 +50,13 @@ const UpdateVendor = ({ _id }) => {
 
   useEffect(() => {
     fetchVendor();
-  }, [_id]);
+  }, []);
 
   const fetchVendor = async () => {
     try {
       setIsFetching(true);
       const res = await fetch(
-        `https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors/${slug}`,
+        `https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors/${vendorEdit}`,
         {
           cache: "no-store",
         }
@@ -78,7 +79,7 @@ const UpdateVendor = ({ _id }) => {
 
     const options = {
       method: "put",
-      url: `https://e-commerce-backend-brown.vercel.app/api/vendor/updateVendor/${slug}`,
+      url: `https://e-commerce-backend-brown.vercel.app/api/vendor/updateVendor/${vendorEdit}`,
       headers: {
         cookie:
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
@@ -106,6 +107,9 @@ const UpdateVendor = ({ _id }) => {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
+          setLoading(false);
+          toast.success("Vendor updated successfully !");
+          refreshData();
           router.push("/vendor");
         } else {
           setLoading(false);
@@ -119,6 +123,7 @@ const UpdateVendor = ({ _id }) => {
 
   return (
     <div>
+       <ToastContainer />
      <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
         <h2 className="text-2xl font-semibold pb-4">Update Vendor </h2>
         <div className="mb-3 w-[40%]"></div>
