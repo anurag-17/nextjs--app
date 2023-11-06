@@ -1,1 +1,0 @@
-export const API_URL = 'https://e-commerce-backend-brown.vercel.app/api/auth';

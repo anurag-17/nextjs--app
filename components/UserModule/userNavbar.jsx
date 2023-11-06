@@ -1,11 +1,16 @@
 import React from "react";
 import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
 import Image from "next/image";
+import Link from "next/link";
+
+import {setToken } from "../../redux/slices/authSlice";
+
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import shoping from "../../public/shopingcart.svg";
 
-import Link from "next/link";
 
 const menuList = [
   {
@@ -80,6 +85,8 @@ const menuList = [
   },
 ];
 const UserNavbar = () => {
+  const router = useRouter();
+  const dispatch = useDispatch()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const openDrawer = () => {
@@ -89,6 +96,12 @@ const UserNavbar = () => {
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
+
+  const handleSignOut = ()=>{
+    dispatch(setToken(null))
+    localStorage.removeItem("token");
+    router.push('/login');
+  }
 
   return (
     <>
@@ -109,7 +122,7 @@ const UserNavbar = () => {
               </button>
             </div>
             <div>
-            <Link href="/user-cart">
+            <Link href="/cart">
                 <Image src={shoping}  className="w-12 mr-10"/>
               </Link>
             </div>
@@ -139,12 +152,21 @@ const UserNavbar = () => {
               <div className="">
                 <ul>
                   {menuList.map((item) => (
+                  <>
+                  {
+                    item.id === 7 ?
+                      <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500" 
+                      onClick={()=>handleSignOut(item.path)}>
+                        {item.label}
+                      </li>
+                      :
                     <Link href={item.path ? item.path : "#"}>
                       <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500">
-                        {" "}
                         {item.label}
                       </li>
                     </Link>
+                  }
+                  </>
                   ))}
                 </ul>
               </div>

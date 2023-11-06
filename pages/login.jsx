@@ -10,7 +10,7 @@ import Cart from "./cart";
 
 import Cookies from 'js-cookie';
 import { useSelector, useDispatch } from 'react-redux';
-import { setToken } from "../redux/actions/auth";
+import { setToken } from "../redux/slices/authSlice";
 
 const setTokenInCookies = (token) => {
   Cookies.set('token', token, { expires: 7 }); // 'expires' sets the cookie expiration in days

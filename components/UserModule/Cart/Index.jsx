@@ -1,43 +1,14 @@
 import dynamic from "next/dynamic";
 import React from "react";
-import UserNavbar from "../components/UserModule/userNavbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import UserNavbar from "../userNavbar";
 
-const usercart = () => {
-  const [getCartProduct, setGetCartProduct] = useState([0]);
+const Usercart = ({getCartProduct}) => {
   const [customerID, setCustomerID] = useState(
     JSON.parse(localStorage.getItem("userDetails"))
-  );
+    );
 
-  useEffect(() => {
-    defaultCustomer();
-  }, []);
-
-  const defaultCustomer = () => {
-    console.log("customerid", customerID);
-
-    axios
-      .post(
-        "https://e-commerce-backend-brown.vercel.app/api/auth/getUserCart",
-        {
-          _id: customerID,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "PostmanRuntime/7.33.0",
-          },
-        }
-      )
-      .then((res) => {
-        setGetCartProduct(res.data.products);
-        console.log("aa", res.data.products);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
   const removeWishlist = async () => {
     const _id = customerID;
@@ -167,4 +138,4 @@ const usercart = () => {
     </>
   );
 };
-export default dynamic(() => Promise.resolve(usercart), { ssr: false });
+export default dynamic(() => Promise.resolve(Usercart), { ssr: false });

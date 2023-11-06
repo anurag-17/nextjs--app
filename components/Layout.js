@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
   const router = useRouter();
-  console.log("router", router.pathname);
   const [showNav, setShowNav] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   // const [adminAccessToken, setAdminAccessToken] = useState(
@@ -68,8 +67,10 @@ export default function Layout({ children }) {
       router.pathname === "/userorder-detail" ||
       router.pathname === "/user-invoice" ||
       router.pathname === "/user-notifictionSet" ||
-      router.pathname === "/user-cart" ||
-      router.pathname.includes("user-productdetail") ? null : (
+      router.pathname === "/cart" 
+      ||
+      router.pathname.includes("product-details") 
+      ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
           <Transition
@@ -101,9 +102,10 @@ export default function Layout({ children }) {
             router.pathname === "/user-wishlist" ||
             router.pathname === "/user-setting" ||
             router.pathname === "/user-invoice" || 
-            router.pathname === "/user-cart" ||
+            router.pathname === "/cart" ||
             router.pathname === "/userorder-detail" ||
-            router.pathname === "/user-notifictionSet"
+            router.pathname === "/user-notifictionSet"||
+            router.pathname.includes("product-details") 
           )
             ? "pt-[4rem] pl-56"
             : ""
@@ -122,9 +124,10 @@ export default function Layout({ children }) {
               router.pathname === "/all-product" ||
               router.pathname === "/user-setting" ||
               router.pathname === "/user-invoice" ||
-              router.pathname === "/user-cart" ||
+              router.pathname === "/cart" ||
               router.pathname === "/userorder-detail" ||
-              router.pathname === "/user-notifictionSet"
+              router.pathname === "/user-notifictionSet"||
+              router.pathname.includes("product-details") 
             )
               ? "pl-4 md:pl-16 pr-4"
               : ""
