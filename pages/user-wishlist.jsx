@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { fetchApi } from "../utlis/api";
 
 const wishlist = () => {
-  const [getWishProduct, setGetWishProduct] = useState([0]);
+  const [getWishProduct, setGetWishProduct] = useState([]);
 
   useEffect(() => {
     defaultWishPro();
@@ -16,7 +16,8 @@ const wishlist = () => {
       const response = await fetchApi("/auth/wishlist");
       if (response.status === 200) {
         const data = await response.json();
-        setGetWishProduct(data?.products);
+        console.log(data)
+        setGetWishProduct(data?.products?.wishlist);
       }
     } catch (error) {
       console.error(error);
@@ -42,7 +43,7 @@ const wishlist = () => {
           </div>
           <hr className="my-5" />
           <div>
-            {getWishProduct.map((item) => (
+            {getWishProduct?.map((item) => (
               <div className=" flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer ">
                 <div>
                   <img
