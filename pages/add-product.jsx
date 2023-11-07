@@ -25,6 +25,7 @@ const AddProduct = () => {
     title: "",
     description: "",
     price: "",
+    currencyName:"",
     discountedPrice: "",
     category: "",
     brand: "",
@@ -39,6 +40,7 @@ const AddProduct = () => {
       title: "",
       description: "",
       price: "",
+      currencyName:"",
       category: "",
       brand: "",
       quantity: "",
@@ -249,9 +251,9 @@ const defaultCurrency = () => {
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  ">
-                  <select className="bg-white list-none outline-none ">
+                  <select className="bg-white list-none outline-none" name="currencyName" value={productDetails.currencyName}>
                  {getCurrency.map((item)=>(
-                  <option key={item.id} value={item.id}>
+                  <option key={item.id} value={item.id} selected={item.currencyName === productDetails.currencyName}>
                     {item.currencySign}
                   </option>
                  ))}
@@ -278,9 +280,9 @@ const defaultCurrency = () => {
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                  <select className="bg-white list-none outline-none ">
+                  <select className="bg-white list-none outline-none " name="currencyName" value={productDetails.currencyName}>
                   {getCurrency.map((item)=>(
-                  <option key={item.id} value={item.id}>
+                  <option key={item.id} value={item.id} selected={item.currencyName === productDetails.currencyName}>
                     {item.currencySign}
                   </option>
                  ))}

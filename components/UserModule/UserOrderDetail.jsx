@@ -199,7 +199,7 @@ const UserOrderDetail = () => {
           <div className="border  ">
             <p className="font-bold p-5 text-2xl bg-gray-400">
               {" "}
-              Custome Contact
+              Customer Contact
             </p>
             <div className=" rounded-lg bg-white  p-8 pb-16 ">
               <div className="flex">

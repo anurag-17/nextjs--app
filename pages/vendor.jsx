@@ -78,6 +78,29 @@ const vendor = () => {
         console.error("Error:", error);
       });
   };
+//------search---------
+const handleSearch = (e) => {
+  const search = e.target.value;
+  if (e.target.value !== "") {
+    const option = {
+      method: "GET",
+      url: `http://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors?search=${e.target.value}`,
+    };
+    axios
+      .request(option)
+      .then(function (response) {
+        if (response.status === 200) {
+          setgetAllVendors(response.data);
+          console.log("vendors", response.data);
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  } else {
+    defaultVendor();
+  }
+};
 
   return (
     <>
@@ -91,10 +114,11 @@ const vendor = () => {
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon1"
+              onChange={handleSearch}
             />
           </div>
 
-          <h2>Welcome Back, Client</h2>
+          <h2>Welcome Back, Admin</h2>
         </div>
         <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
           <div className="flex justify-around">
