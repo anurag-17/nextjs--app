@@ -18,8 +18,9 @@ import right from "/public/right-arrows.svg";
 const ProductGrid = () => {
   const dispatch = useDispatch();
   const cartStore = useSelector((state) => state || []);
-  // console.log(cart Store);
-  const [productCategory, setProductCategory] = useState(["All"]);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
+ 
+  const [productCategory, setProductCategory] = useState("");
   const [productBrands, setProductBrands] = useState(["All"]);
   const [allProduct, setAllProduct] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
@@ -28,13 +29,10 @@ const ProductGrid = () => {
   let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [customerID, setCustomerID] =
-    useState();
-    // JSON.parse(localStorage.getItem("userID"))
+  const [customerID, setCustomerID] = useState();
+  // JSON.parse(localStorage.getItem("userID"))
   const _id = productID;
-  const [token, setToken] =
-    useState();
-    // JSON.parse(localStorage.getItem("userToken"))
+
   const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
 
@@ -100,11 +98,10 @@ const ProductGrid = () => {
     getAllProducts();
   }, []);
 
-
-  const addToWishlist = ({productID}) => {
-    console.log("hello",productID);
+  const addToWishlist = ({ id }) => {
+    console.log("hello", id);
     setIsWished(!isWished);
-    const prodId = productID;
+    const prodId = id;
     const options = {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/product/addToWishlist",
@@ -113,13 +110,9 @@ const ProductGrid = () => {
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
+        "authorization" : token
       },
-      data: {
-        prodId:productID,
-        _id: customerID
-    }
     };
-
     axios
       .request(options)
       .then(function (response) {
@@ -147,12 +140,10 @@ const ProductGrid = () => {
     }));
     addToWishlist(productId);
   };
-
   const handleColorChange = (productId, selectedColor) => {
     const productIndex = productColorsArray.findIndex(
       (item) => item.productId === productId
     );
-
     if (productIndex !== -1) {
       const updatedArray = [...productColorsArray];
       updatedArray[productIndex].color = selectedColor;
@@ -184,11 +175,11 @@ const ProductGrid = () => {
 
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
-          setProductCategory(["All", ...uniqueCategories]);
+          setProductCategory([...uniqueCategories]);
 
           const brands = response?.data?.map((product) => product.brand);
           const uniqueBrands = [...new Set(brands)];
-          setProductBrands(["All", ...uniqueBrands]);
+          setProductBrands([...uniqueBrands]);
 
           const fields = response?.data?.map((product) => product.title);
           const uniqueFields = [...new Set(fields)];
@@ -199,7 +190,7 @@ const ProductGrid = () => {
         console.error(error);
       });
   };
- // ------ search products ------ //
+  // ------ search products ------ //
   const handleSearch = (e) => {
     const search = e.target.value;
     if (search.trim() === "") {
@@ -246,8 +237,7 @@ const ProductGrid = () => {
     }
   };
 
-   
-     // ------ filter products by category ------ //
+  // ------ filter products by category ------ //
   const handleSearchCategories = (e) => {
     const cate = e.target.value;
     if (cate === "All") {
@@ -278,19 +268,31 @@ const ProductGrid = () => {
 
       <section className="bg-gray-00 min-h-screen px-20 flex">
         <div className="space-y-9 w-[25%]">
+          {/*----- filter by category start ------- */}
           <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
             <p className="font-semibold text-2xl mb-4">Product Categories</p>
             <hr className="mb-2" />
             <div className="space-y-4 ">
-              {getallCategory.map((category) => (
-                <div
-                  className="text-[#645D64] flex hover:text-[#0284C7] cursor-pointer no-underline hover:underline"
-                  key={category.id}
-                >
-                  <Image className="w-3  " src={right} />
-                  {category.title}
-                </div>
-              ))}
+              <div className=" gap-1 ">
+                {productCategory?.length > 0 &&
+                  productCategory.map((cate) => (
+                    <div className="flex justify-start">
+                      <div className="flex my-2">
+                        <Image className="w-3  " src={right} />
+                        <button
+                          name="category"
+                          id="category"
+                          placeholder="Category"
+                          className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
+                          onClick={handleSearchCategories}
+                          value={cate}
+                        >
+                          {cate}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
 
@@ -311,128 +313,53 @@ const ProductGrid = () => {
               </div>
             </div>
           </div>
-
+          {/*----- filter by Brand start ------- */}
           <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4">
             <p className="font-semibold text-2xl mb-4">Product Brands</p>
             <hr className="mb-2" />
             <div className=" ">
               <div className=" justify-between text-[#645D64] space-y-4 ">
-                {getallBrand.map((brands) => (
-                  <div
-                    className="text-[#645D64] flex hover:text-[#0284C7] cursor-pointer no-underline hover:underline"
-                    key={brands}
-                  >
-                    <Image className="w-3  " src={right} />
-                    {brands?.brand}
-                  </div>
-                ))}
+                <div className="w-auto flex flex-col  gap-1">
+                  {productBrands?.length > 0 &&
+                    productBrands.map((bnd) => (
+                      <div className="flex justify-start">
+                        <div className="flex my-2">
+                          <Image className="w-3  " src={right} />
+                          <button
+                            name="brand"
+                            id="brand"
+                            placeholder="Brand"
+                            className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
+                            onClick={handleSearchBrand}
+                            value={bnd}
+                          >
+                            {bnd}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className=" w-full md:w-[85%] mx-auto">
-          {/* <div className="flex gap-3">
-            <div class=" w-1/4">
-              <div class="relative mb- flex w-full flex-wrap items-stretch">
-                <input
-                  type="search"
-                  class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                  placeholder="Search"
-                  aria-label="Search"
-                  aria-describedby="button-addon1"
-                />
-
-                <button
-                  class="relative z-[2] flex items-center rounded-r bg-primary px-3 py-2 text-xs font-medium uppercase leading-tight text-[#0284C7] hover:text-white border transition duration-150 ease-in-out hover:bg-[#0284C7] hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-                  type="button"
-                  id="button-addon1"
-                  data-te-ripple-init
-                  data-te-ripple-color="light"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="h-5 w-5"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div className="bg-white grid grid-cols-3 gap-4 items-center p-2 border">
-              <p className="cursor-pointer hover:text-[#0284C7] no-underline hover:underline ">
-                Top Rated{" "}
-              </p>
-              <p className="cursor-pointer hover:text-[#0284C7] no-underline hover:underline ">
-                Popular{" "}
-              </p>
-              <p className="cursor-pointer hover:text-[#0284C7] no-underline hover:underline ">
-                Newest
-              </p>
-            </div>
-          </div> */}
           <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-        <h2 className="text-2xl font-semibold pb-4">All Product </h2>
+            <h2 className="text-2xl font-semibold pb-4">All Product </h2>
 
-        <div className="mb-3 w-[40%]">
-          <input
-            type="search"
-            className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="button-addon1"
-            onChange={handleSearch}
-          />
-        </div>
-        <div className=" flex  gap-x-3">
-              {/*----- filter by Brand start ------- */}
-
-              <div className="w-auto flex flex-col  gap-1">
-                <label className="whitespace-nowrap text-start text-[14px]">
-                  Filter by Brand
-                </label>
-                <select
-                  name="brand"
-                  id="brand"
-                  placeholder="Brand"
-                  className="border border-gray-400 px-2 py-1 rounded-md w-12/12 bg-white cursor-pointer "
-                  onChange={handleSearchBrand}
-                >
-                  {productBrands?.length > 0 &&
-                    productBrands.map((bnd) => (
-                      <option value={bnd}>{bnd}</option>
-                    ))}
-                </select>
-              </div>
-
-              {/*----- filter by category start ------- */}
-              <div className="w-auto flex flex-col items-center gap-1">
-                <label htmlFor="" className="whitespace-nowrap text-[14px]">
-                  Filter by Category
-                </label>
-                <select
-                  name="category"
-                  id="category"
-                  placeholder="Category"
-                  className="border border-gray-400 px-2 py-1 rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
-                  onChange={handleSearchCategories}
-                >
-                  {productCategory?.length > 0 &&
-                    productCategory.map((cate) => (
-                      <option value={cate}>{cate}</option>
-                    ))}
-                </select>
-              </div>
-
+            <div className="mb-3 w-[40%]">
+              <input
+                type="search"
+                className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="button-addon1"
+                onChange={handleSearch}
+              />
             </div>
-      </div>
+            <div className=" flex  gap-x-3"></div>
+          </div>
 
           <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll ">
             {allProduct?.map((items, ix) => (
