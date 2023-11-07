@@ -19,7 +19,7 @@ const language = () => {
               aria-describedby="button-addon1"
             />
         </div>
-        <h2>Welcome Back, Client</h2>
+        <h2>Welcome Back, Admin</h2>
       </div>
       <div className="bg-white border border-gray-300 rounded-md p-4 flex flex-wrap ">
         <div className="bg-[#F0F3F8] flex justify-between p-5 w-[48%] m-4 rounded-lg">

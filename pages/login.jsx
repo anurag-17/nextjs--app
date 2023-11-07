@@ -19,6 +19,12 @@ const UserLogin = ({ API_URL }) => {
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
   const [userId, setUserId] = useState("");
+ 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   const ClearData = () => {
     setPassword("");
@@ -145,18 +151,22 @@ console.log(response);
                 xl:mt-4 xl:mb-2
                 lg:mt-3 lg:mb-2 
                 md:mt-4 md:mb-2 
-                sm:mt-4 sm:mb-2 "
+                sm:mt-4 sm:mb-2 relative "
                 >
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px]
-                    md:h-[60px]
-                    sm:h-[50px]"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                       <input
+        type={showPassword ? 'text' : 'password'}
+        placeholder="Password"
+        value={password}
+        className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px] md:h-[60px] sm:h-[50px]"
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+      <button type="button"
+        className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+        onClick={handleToggle}
+      >
+        {showPassword ? 'Hide' : 'Show'}
+      </button>
                 </div>
 
                 <div

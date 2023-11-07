@@ -208,7 +208,7 @@ const brandlist = () => {
             onChange={handleSearch}
           />
         </div>
-        <h2>Welcome Back, Client</h2>
+        <h2>Welcome Back, Admin</h2>
       </div>
 
       {selected?.length > 0 ? (

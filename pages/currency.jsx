@@ -99,7 +99,7 @@ const Currency = () => {
             />
           </div>
 
-          <h2>Welcome Back, Client</h2>
+          <h2>Welcome Back, Admin</h2>
         </div>
 
         <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">

@@ -14,7 +14,12 @@ const AdminLogin = ({ API_URL }) => {
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
   const router = useRouter();
-  
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
   const addFormHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -115,9 +120,9 @@ const AdminLogin = ({ API_URL }) => {
 
 
 
-                <div className="mt-5">
+                <div className="mt-5 relative">
   <input
-    type="password"
+   type={showPassword ? 'text' : 'password'}
     placeholder="Password"
     value={password}
     className="custom-input xl:h-[60px]"
@@ -125,6 +130,12 @@ const AdminLogin = ({ API_URL }) => {
     required
   >
   </input>
+  <button type="button"
+        className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+        onClick={handleToggle}
+      >
+        {showPassword ? 'Hide' : 'Show'}
+      </button>
 </div>
 
 <div className="py-5 xl:text-[18px] lg:[text-[16px] mt-6">

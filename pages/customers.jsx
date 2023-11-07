@@ -139,7 +139,7 @@ const Customers = () => {
             onChange={handleSearch}
           />
         </div>
-        <h2>Welcome Back, Client</h2>
+        <h2>Welcome Back, Admin</h2>
       </div>
       <div className="border">
         {isDrawerOpen && (
@@ -189,9 +189,10 @@ const Customers = () => {
           <tbody>
             {/* <label> */}
             <tr className="">
+              <Link href="/admin-showorder">
               <td className="py-5 text-[18px] text-start px-10">
                 {items?.firstname} {items?.lastname}
-              </td>
+              </td></Link>
               <td className="py-5 text-[18px] text-start px-10">
                 {items?.email}
               </td>

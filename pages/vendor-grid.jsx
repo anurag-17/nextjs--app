@@ -42,7 +42,7 @@ const vendorgrid = () => {
             />
         </div>
 
-        <h2>Welcome Back, Client</h2>
+        <h2>Welcome Back, Admin</h2>
       </div>
       <div className="flex flex-wrap  justify-evenly ">
         {getAllVendor.map((item) => (
