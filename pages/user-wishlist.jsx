@@ -17,7 +17,7 @@ const wishlist = () => {
       if (response.status === 200) {
         const data = await response.json();
         console.log(data)
-        setGetWishProduct(data?.products?.wishlist);
+        setGetWishProduct(data?.wishlist);
       }
     } catch (error) {
       console.error(error);

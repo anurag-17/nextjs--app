@@ -1,5 +1,6 @@
 import React from "react";
 import UserNavbar from "./userNavbar";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import UserUpdatePaymentM from "./UserUpdatePaymentM";
 import UserNotificationSetting from "./UserNotificationSetting";
@@ -97,5 +98,4 @@ const UserSetting = () => {
     </>
   );
 };
-
-export default UserSetting;
+export default dynamic(() => Promise.resolve(UserSetting), { ssr: false });
