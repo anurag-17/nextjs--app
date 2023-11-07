@@ -189,7 +189,7 @@ const Customers = () => {
           <tbody>
             {/* <label> */}
             <tr className="">
-              <Link href="/admin-customorder[]">
+              <Link href="#">
               <td className="py-5 text-[18px] text-start px-10">
                 {items?.firstname} {items?.lastname}
               </td></Link>
