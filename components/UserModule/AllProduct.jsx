@@ -19,7 +19,8 @@ const ProductGrid = () => {
   const dispatch = useDispatch();
   const cartStore = useSelector((state) => state || []);
   // console.log(cart Store);
-
+  const [productCategory, setProductCategory] = useState(["All"]);
+  const [productBrands, setProductBrands] = useState(["All"]);
   const [allProduct, setAllProduct] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
@@ -27,13 +28,13 @@ const ProductGrid = () => {
   let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [customerID, setCustomerID] = useState(
+  const [customerID, setCustomerID] =
+    useState();
     // JSON.parse(localStorage.getItem("userID"))
-  );
   const _id = productID;
-  const [token, setToken] = useState(
+  const [token, setToken] =
+    useState();
     // JSON.parse(localStorage.getItem("userToken"))
-  );
   const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
 
@@ -81,6 +82,7 @@ const ProductGrid = () => {
       });
   };
 
+  const pageLimit = "15";
   function closeModal() {
     setOpenDelete(false);
   }
@@ -98,33 +100,11 @@ const ProductGrid = () => {
     getAllProducts();
   }, []);
 
-  const getAllProducts = async () => {
-    const options = {
-      method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct",
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "User-Agent": "insomnia/2023.5.8",
-      },
-    };
 
-    axios
-      .request(options)
-      .then(function (response) {
-        if (response.status === 200) {
-          setAllProduct(response?.data);
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
-
-  const addToWishlist = (id) => {
-    console.log(id);
-    setWished(!isWished);
-    const prodId = id;
+  const addToWishlist = ({productID}) => {
+    console.log("hello",productID);
+    setIsWished(!isWished);
+    const prodId = productID;
     const options = {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/product/addToWishlist",
@@ -135,9 +115,9 @@ const ProductGrid = () => {
         "User-Agent": "insomnia/2023.5.8",
       },
       data: {
-        prodId: id,
-        _id: customerID,
-      },
+        prodId:productID,
+        _id: customerID
+    }
     };
 
     axios
@@ -165,9 +145,8 @@ const ProductGrid = () => {
       ...prevIsWished,
       [productId]: !prevIsWished[productId], // Toggle the state for the specified product
     }));
-    addToWishlist(productId)
+    addToWishlist(productId);
   };
-
 
   const handleColorChange = (productId, selectedColor) => {
     const productIndex = productColorsArray.findIndex(
@@ -186,7 +165,111 @@ const ProductGrid = () => {
       setProductColorsArray(updatedArray);
     }
   };
+  const getAllProducts = async (page) => {
+    const options = {
+      method: "GET",
+      url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
+      headers: {
+        cookie:
+          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        "User-Agent": "insomnia/2023.5.8",
+      },
+    };
 
+    axios
+      .request(options)
+      .then(function (response) {
+        if (response.status === 200) {
+          setAllProduct(response?.data);
+
+          const categories = response?.data?.map((product) => product.category);
+          const uniqueCategories = [...new Set(categories)];
+          setProductCategory(["All", ...uniqueCategories]);
+
+          const brands = response?.data?.map((product) => product.brand);
+          const uniqueBrands = [...new Set(brands)];
+          setProductBrands(["All", ...uniqueBrands]);
+
+          const fields = response?.data?.map((product) => product.title);
+          const uniqueFields = [...new Set(fields)];
+          setProductSearch(["All", ...uniqueFields]);
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+ // ------ search products ------ //
+  const handleSearch = (e) => {
+    const search = e.target.value;
+    if (search.trim() === "") {
+      refreshData();
+    } else {
+      const options = {
+        method: "GET",
+        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?search=${search}`,
+      };
+      axios
+        .request(options)
+        .then(function (response) {
+          if (response.status === 200) {
+            setAllProduct(response.data);
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+  };
+
+  // ------ filter products by brand ------ //
+  const handleSearchBrand = (e) => {
+    const bnd = e.target.value;
+    if (bnd === "All") {
+      refreshData();
+    } else {
+      const options = {
+        method: "GET",
+        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?brand=${bnd}`,
+      };
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response.data);
+          if (response.status === 200) {
+            setAllProduct(response.data);
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+  };
+
+   
+     // ------ filter products by category ------ //
+  const handleSearchCategories = (e) => {
+    const cate = e.target.value;
+    if (cate === "All") {
+      refreshData();
+    } else {
+      const options = {
+        method: "GET",
+        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${cate}`,
+      };
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log("hell", response.data);
+          if (response.status === 200) {
+            setAllProduct(response.data);
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <>
@@ -249,7 +332,7 @@ const ProductGrid = () => {
         </div>
 
         <div className=" w-full md:w-[85%] mx-auto">
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3">
             <div class=" w-1/4">
               <div class="relative mb- flex w-full flex-wrap items-stretch">
                 <input
@@ -260,7 +343,6 @@ const ProductGrid = () => {
                   aria-describedby="button-addon1"
                 />
 
-                {/* <!--Search button--> */}
                 <button
                   class="relative z-[2] flex items-center rounded-r bg-primary px-3 py-2 text-xs font-medium uppercase leading-tight text-[#0284C7] hover:text-white border transition duration-150 ease-in-out hover:bg-[#0284C7] hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
                   type="button"
@@ -295,7 +377,62 @@ const ProductGrid = () => {
                 Newest
               </p>
             </div>
-          </div>
+          </div> */}
+          <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
+        <h2 className="text-2xl font-semibold pb-4">All Product </h2>
+
+        <div className="mb-3 w-[40%]">
+          <input
+            type="search"
+            className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+            placeholder="Search"
+            aria-label="Search"
+            aria-describedby="button-addon1"
+            onChange={handleSearch}
+          />
+        </div>
+        <div className=" flex  gap-x-3">
+              {/*----- filter by Brand start ------- */}
+
+              <div className="w-auto flex flex-col  gap-1">
+                <label className="whitespace-nowrap text-start text-[14px]">
+                  Filter by Brand
+                </label>
+                <select
+                  name="brand"
+                  id="brand"
+                  placeholder="Brand"
+                  className="border border-gray-400 px-2 py-1 rounded-md w-12/12 bg-white cursor-pointer "
+                  onChange={handleSearchBrand}
+                >
+                  {productBrands?.length > 0 &&
+                    productBrands.map((bnd) => (
+                      <option value={bnd}>{bnd}</option>
+                    ))}
+                </select>
+              </div>
+
+              {/*----- filter by category start ------- */}
+              <div className="w-auto flex flex-col items-center gap-1">
+                <label htmlFor="" className="whitespace-nowrap text-[14px]">
+                  Filter by Category
+                </label>
+                <select
+                  name="category"
+                  id="category"
+                  placeholder="Category"
+                  className="border border-gray-400 px-2 py-1 rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
+                  onChange={handleSearchCategories}
+                >
+                  {productCategory?.length > 0 &&
+                    productCategory.map((cate) => (
+                      <option value={cate}>{cate}</option>
+                    ))}
+                </select>
+              </div>
+
+            </div>
+      </div>
 
           <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll ">
             {allProduct?.map((items, ix) => (
@@ -303,13 +440,13 @@ const ProductGrid = () => {
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
               >
-                  <Image
-                    src="/img1.jpeg"
-                    alt=""
-                    className=" mx-auto rounded-[20px] "
-                    width={400}
-                    height={400}
-                  />
+                <Image
+                  src="/img1.jpeg"
+                  alt=""
+                  className=" mx-auto rounded-[20px] "
+                  width={400}
+                  height={400}
+                />
                 <div className="bg-white px-10 pb-6 rounded-[20px] ">
                   <div className="flex justify-between items-center my-4">
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">

@@ -366,10 +366,10 @@ const ProductList = () => {
                 </select>
               </div>
 
-              {/*--------- show by grid or list ---------*/}
             </div>
           </div>
         )}
+              {/*--------- show by grid or list ---------*/}
 
         {isShowComponent === "grid" ? (
           <>

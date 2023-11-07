@@ -166,7 +166,7 @@ const CategoryList = () => {
   };
   const EnhancedTableToolbar = ({ numLength }) => {
     return (
-      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg h-[80px] bg-lightBlue-100 mt-4">
+      <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg h-[100px] bg-lightBlue-100 mt-5">
         <h2 className="text-lg font-medium ">{numLength} Product selected</h2>
         <button
           onClick={allDeleteC}
