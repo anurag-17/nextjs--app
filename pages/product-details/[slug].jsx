@@ -167,6 +167,11 @@ const Userdetail = () => {
       setProductQuantity((productQuantity += 1));
     }
   };
+  const handleMinusCounter = (productId) => {
+    if (productQuantity > 1) {
+      setProductQuantity((productQuantity -= 1));
+    }
+  };
 
   const handleGoToCart = () => {
     router.push("/cart");
@@ -240,7 +245,6 @@ const Userdetail = () => {
                         Brand :
                       </div>
                       <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
-                        {" "}
                         {productDetail?.brand}
                       </div>
                     </div>
@@ -250,7 +254,6 @@ const Userdetail = () => {
                         Category :
                       </div>
                       <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
-                        {" "}
                         {productDetail?.category}
                       </div>
                     </div>
@@ -262,6 +265,12 @@ const Userdetail = () => {
                       <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
                         <p className="font-semibold px-2">{productQuantity}</p>
                         <button
+                          onClick={handleMinusCounter}
+                          className="border border-black px-3 ml-3"
+                        >
+                          -
+                        </button>
+                        <button
                           onClick={handleCounter}
                           className="border border-black px-3 ml-3"
                         >
@@ -272,16 +281,13 @@ const Userdetail = () => {
 
                     <div className="flex text-left mt-3">
                       <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
-                        {" "}
-                        Price :{" "}
+                        Price :
                       </div>
                       <div className="flex gap-x-5">
                         <del className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
-                          {" "}
                           ₹{productDetail?.price}
                         </del>
                         <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
-                          {" "}
                           ₹{productDetail?.discountedPrice}
                         </div>
                       </div>
@@ -330,11 +336,10 @@ const Userdetail = () => {
                     </div>
 
                     <div className=" text-left mt-4 mb-4">
-                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="w-[170px] text-[20px] font-normal leadinng-[28px]">
                         Summary :
                       </div>
                       <div className="text-[18px] xl:text-[20px] font-medium leadinng-[28px] capitalize mt-2 pl-6">
-                        {" "}
                         {productDetail?.description}
                       </div>
                     </div>
