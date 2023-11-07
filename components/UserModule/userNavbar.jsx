@@ -98,7 +98,6 @@ const UserNavbar = () => {
   const dispatch = useDispatch()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { token } = useSelector((state) => state.auth.userDetails || null);
-console.log(token);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -176,10 +175,17 @@ console.log(token);
                   <>
                   {
                     item.id === 7 ?
+                    <>
+                    {
+                      !token || token == undefined ?
+                      null :
+
                       <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500" 
                       onClick={()=>handleSignOut(item.path)}>
                         {item.label}
                       </li>
+                    }
+                    </>
                       :
                     <Link href={item.path ? item.path : "#"}>
                       <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500">

@@ -26,8 +26,6 @@ export const fetchApi = async (url, options = {}) => {
       ...options,
     });
     
-    console.log(headers);
-
     
     // if (!response.ok) {
     //   throw new Error(`API request failed with status ${response.status}`);

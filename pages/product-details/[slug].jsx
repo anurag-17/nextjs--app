@@ -20,24 +20,35 @@ const Userdetail = () => {
   const [productDetail, setProductDetail] = useState({});
   const [productColor, setProductColor] = useState("");
   let [productQuantity, setProductQuantity] = useState(1);
-  const [customerID, setCustomerID] =
-  useState();
+  const [customerID, setCustomerID] = useState();
   // JSON.parse(localStorage.getItem("userID"))
   const storedProduct = useSelector((state) => state.auth.cart || []);
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [isSessionAdded, setSessionAdded] = useState(false);
-  const [sessionCartProduct, setsessionCartProduct] = useState((JSON.parse("addToCart")));
+  const [sessionCartProduct, setsessionCartProduct] = useState([]);
+  const [newArray, setnewArray] = useState([]);
 
-  console.log(JSON.parse(sessionCartProduct));
+  const updateCart = () => {
+    setsessionCartProduct(
+      JSON.parse(sessionStorage.getItem("addToCart")) || []
+    );
+  };
+  // console.log(sessionCartProduct);
 
   useEffect(() => {
-    if(!token || token == undefined){
-     const sessCartProduct =  JSON.parse(sessionCartProduct)
-     console.log(sessCartProduct);
-     const isInSession = sessCartProduct.filter((items)=>items?._id === slug)
+    updateCart();
+    if (!token || token == undefined) {
+      const sessionCart = JSON.parse(sessionStorage.getItem("addToCart")) || [];
+
+      const productInCart = sessionCart.find((item) => item?._id === slug);
+
+      if (productInCart) {
+        console.log("Product is already in the cart");
+        setSessionAdded(true);
+      } else {
+        setSessionAdded(false);
+      }
     }
-    // console.log(sessCartProduct.filter((items)=>items?._id === slug));
-    
   }, []);
 
   useEffect(() => {
@@ -72,21 +83,34 @@ const Userdetail = () => {
   const handleAddToCart = async (e, produc) => {
     e.preventDefault();
     setLoading(true);
+    console.log(produc);
+    if (!token || token == undefined) {
+      if (!productColor) {
+        setShowErr(true);
+        setLoading(false);
+      } else {
+        const cartProduct = {
+          _id: produc?._id,
+          count: productQuantity || 1,
+          color: productColor,
+          product: produc,
+        };
 
-    if(!token || token == undefined){
+        const updatedCart = [...sessionCartProduct, cartProduct];
+        // console.log(updatedCart)
 
-      const  cartProduct = [
-          {
-            _id: produc?._id,
-            count: productQuantity || 1,
-            color: productColor,
-          },
-        ]
+        sessionStorage.setItem("addToCart", JSON.stringify(updatedCart));
+        setSessionAdded(true);
+        updateCart();
 
-        sessionStorage.setItem("addToCart",JSON.stringify(cartProduct))
-        setSessionAdded(true)
-    }
-    else{
+        setTimeout(() => {
+          router.push("/cart");
+        }, 500);
+      }
+    } else {
+
+      const use_ID = JSON.parse(localStorage.getItem("userID"))
+
       if (!productColor) {
         setShowErr(true);
         setLoading(false);
@@ -109,10 +133,10 @@ const Userdetail = () => {
                 color: productColor,
               },
             ],
-            _id: customerID || null,
+            // _id: use_ID || null,
           },
         };
-        console.log(options);
+        // console.log(options);
         axios
           .request(options)
           .then(function (response) {
@@ -120,6 +144,11 @@ const Userdetail = () => {
             if (response.status === 200) {
               toast.success("Product added into cart !!");
               setAddIntoCart(true);
+
+        setTimeout(() => {
+          router.push("/cart");
+        }, 500);
+
               refreshData();
             } else {
               return;
@@ -150,7 +179,7 @@ const Userdetail = () => {
   const getCartProducts = async () => {
     try {
       const response = await fetchApi("/auth/getUserCart");
-      console.log(response);
+      // console.log(response);
       if (response?.status === 200) {
         dispatch(cartProducts(response?.data?.products));
         // const isProdInCart = storedProduct?.filter(
@@ -309,7 +338,7 @@ const Userdetail = () => {
                       </div>
                     </div>
 
-                    {isAddIntoCart || isSessionAdded   ? (
+                    {isAddIntoCart || isSessionAdded ? (
                       <button
                         className="w-full border p-3 rounded-lg hover:text-white border-sky-600 text-sky-900   hover:bg-sky-600 my-2 mt-4 items-end"
                         onClick={handleGoToCart}
