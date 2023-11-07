@@ -6,8 +6,8 @@ const BASE_URL = 'https://e-commerce-backend-brown.vercel.app/api';
 export const fetchApi = async (url, options = {}) => {
   try {
 
-  const accessToken = localStorage.getItem("userToken")
-  
+  const accessToken = JSON.parse(localStorage.getItem("userToken")
+  )
   // const token = useSelector((state) => state);
   
   const headers = {
@@ -26,6 +26,7 @@ export const fetchApi = async (url, options = {}) => {
       ...options,
     });
     
+    console.log("headers",headers);
     
     // if (!response.ok) {
     //   throw new Error(`API request failed with status ${response.status}`);
@@ -36,7 +37,6 @@ export const fetchApi = async (url, options = {}) => {
     return response;
   } catch (error) {
     throw error;
-    console.log("notokyy");
     
   }
 };

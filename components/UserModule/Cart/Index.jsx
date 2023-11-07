@@ -10,7 +10,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token }) => {
   
   // const allProduct = sessionCartProduct?.produc;
   const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userID"))
+    JSON.parse(localStorage.getItem("userID") ) || null
   );
 
   const removeWishlist = async () => {

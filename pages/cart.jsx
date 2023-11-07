@@ -10,7 +10,7 @@ const Cart = () => {
 
   const defaultCustomer = async () => {
     try {
-      const response = await fetchApi("/auth/getUserCart");
+      const response = await fetchApi("/auth/getUserCart", token);
       const data = await response.json();
       console.log(data);
       if (response?.status === 200) {

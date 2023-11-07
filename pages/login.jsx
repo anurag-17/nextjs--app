@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,18 +10,16 @@ import Link from "next/link";
 
 import { setUserDetails } from "../redux/slices/authSlice";
 
-
 const UserLogin = ({ API_URL }) => {
-
   const router = useRouter();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
   const [userId, setUserId] = useState("");
- 
-  const [showPassword, setShowPassword] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
   const handleToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -48,13 +46,23 @@ const UserLogin = ({ API_URL }) => {
     axios
       .request(options)
       .then(function (response) {
-console.log(response);
+        console.log(response);
 
         if (response?.status === 201) {
           dispatch(setUserDetails(response?.data));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-          router.push("/all-product");
+
+          const sessionCart =
+            JSON.parse(sessionStorage.getItem("addToCart")) || [];
+
+          if (sessionCart?.length > 0) {
+            console.log("");
+            addToCart(sessionCart)
+            router.push("/cart");
+          } else {
+            router.push("/all-product");
+          }
         } else {
           setLoading(false);
           return;
@@ -64,6 +72,52 @@ console.log(response);
         setLoading(false);
         console.error(error);
         toast.error("Failed, Invalid Credentials!");
+      });
+  };
+
+  const addToCart = (data) => {
+console.log(data);
+
+    const options = {
+      method: "POST",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
+      headers: {
+        cookie:
+          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/2023.5.8",
+        "authorization" : token
+
+      },
+      data:  {
+        cart: [
+          {
+            _id: data[0]?._id,
+            count: data[0]?.count,
+            color: data[0]?.color
+          }
+        ]
+      }
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response);
+        if (response.status === 200) {
+          toast.success("Product added into cart !!");
+
+          setTimeout(() => {
+            // router.push("/cart");
+          }, 500);
+
+          refreshData();
+        } else {
+          return;
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
       });
   };
 
@@ -153,20 +207,21 @@ console.log(response);
                 md:mt-4 md:mb-2 
                 sm:mt-4 sm:mb-2 relative "
                 >
-                       <input
-        type={showPassword ? 'text' : 'password'}
-        placeholder="Password"
-        value={password}
-        className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px] md:h-[60px] sm:h-[50px]"
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="button"
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
-        onClick={handleToggle}
-      >
-        {showPassword ? 'Hide' : 'Show'}
-      </button>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px] md:h-[60px] sm:h-[50px]"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={handleToggle}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
                 </div>
 
                 <div
@@ -207,7 +262,6 @@ console.log(response);
                       Register Now
                     </p>
                   </Link>
-
 
                   <div className=" flex justify-center">
                     <Link href="https://www.facebook.com/" target="_blank">

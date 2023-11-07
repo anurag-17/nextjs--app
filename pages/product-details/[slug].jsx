@@ -124,6 +124,7 @@ const Userdetail = () => {
               "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
             "Content-Type": "application/json",
             "User-Agent": "insomnia/2023.5.8",
+            "authorization" : token
           },
           data: {
             cart: [

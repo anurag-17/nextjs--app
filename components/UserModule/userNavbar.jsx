@@ -109,7 +109,9 @@ const UserNavbar = () => {
 
   const handleSignOut = ()=>{
     dispatch(setUserDetails({}))
-    localStorage.removeItem("token");
+    localStorage.removeItem("wishList");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("userToken");
     router.push('/login');
   }
   const handleLogin = ()=>{
