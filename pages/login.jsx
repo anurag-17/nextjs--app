@@ -53,16 +53,9 @@ const UserLogin = ({ API_URL }) => {
           setLoading(false);
           toast.success("Success, Login Successfully!");
 
-          const sessionCart =
-            JSON.parse(sessionStorage.getItem("addToCart")) || [];
-
-          if (sessionCart?.length > 0) {
-            console.log("");
-            addToCart(sessionCart)
-            router.push("/cart");
-          } else {
+          
             router.push("/all-product");
-          }
+   
         } else {
           setLoading(false);
           return;
@@ -75,51 +68,7 @@ const UserLogin = ({ API_URL }) => {
       });
   };
 
-  const addToCart = (data) => {
-console.log(data);
 
-    const options = {
-      method: "POST",
-      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
-        "authorization" : token
-
-      },
-      data:  {
-        cart: [
-          {
-            _id: data[0]?._id,
-            count: data[0]?.count,
-            color: data[0]?.color
-          }
-        ]
-      }
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response);
-        if (response.status === 200) {
-          toast.success("Product added into cart !!");
-
-          setTimeout(() => {
-            // router.push("/cart");
-          }, 500);
-
-          refreshData();
-        } else {
-          return;
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
 
   return (
     <div>

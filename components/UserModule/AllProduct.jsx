@@ -14,12 +14,15 @@ import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
 
 import right from "/public/right-arrows.svg";
+import { useRouter } from "next/router";
 
 const ProductGrid = () => {
+
+  const router = useRouter();
   const dispatch = useDispatch();
   const cartStore = useSelector((state) => state || []);
   const { token } = useSelector((state) => state.auth.userDetails || null);
- 
+
   const [productCategory, setProductCategory] = useState("");
   const [productBrands, setProductBrands] = useState(["All"]);
   const [allProduct, setAllProduct] = useState([]);
@@ -110,7 +113,7 @@ const ProductGrid = () => {
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-        "authorization" : token
+        authorization: token,
       },
     };
     axios
@@ -259,6 +262,66 @@ const ProductGrid = () => {
           console.error(error);
         });
     }
+  };
+
+  useEffect(() => {
+    addtoCartBySession();
+  }, []);
+
+  const addtoCartBySession = () => {
+    const sessionCart = JSON.parse(sessionStorage.getItem("addToCart")) || [];
+
+    if (sessionCart?.length > 0 && token) {
+      console.log("");
+      addToCart(sessionCart);
+      // router.push("/cart");
+    } else {
+    }
+  };
+
+  const addToCart = (data) => {
+    console.log(data);
+
+    const options = {
+      method: "POST",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
+      headers: {
+        cookie:
+          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/2023.5.8",
+        authorization: token,
+      },
+      data: {
+        cart: [
+          {
+            _id: data[0]?._id,
+            count: data[0]?.count,
+            color: data[0]?.color,
+          },
+        ],
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response);
+        if (response.status === 200) {
+          // toast.success("Product added into cart !!");
+sessionStorage.removeItem("addToCart")
+          setTimeout(() => {
+            // router.push("/cart");
+          }, 500);
+
+          refreshData();
+        } else {
+          return;
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   return (
