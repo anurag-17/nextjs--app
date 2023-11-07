@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { setCookie } from "cookie";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
