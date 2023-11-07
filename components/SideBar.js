@@ -160,10 +160,10 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   const handleSignout = () => {
     console.log("Logging out...");
 
-    // Remove user token from local storage
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userDetails");
-    localStorage.removeItem("userToken");
+    // // Remove user token from local storage
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("userDetails");
+    // localStorage.removeItem("userToken");
 
     setUserToken(null);
     setUserDetails(null);

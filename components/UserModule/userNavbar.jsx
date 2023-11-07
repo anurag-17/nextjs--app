@@ -1,18 +1,26 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Image from "next/image";
 import Link from "next/link";
 
-import {setToken } from "../../redux/slices/authSlice";
+import {setToken, setUserDetails } from "../../redux/slices/authSlice";
 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import shoping from "../../public/shopingcart.svg";
 
 
 const menuList = [
+  {
+    id: 0,
+    label: "All Products ",
+    component: "",
+    icon: "fa fa-users",
+    imagePath: "",
+    path: "/all-product",
+  },
   {
     id: 1,
     label: "Your Account",
@@ -62,14 +70,6 @@ const menuList = [
     path: "/userFAQ",
   },
   {
-    id: 7,
-    label: "Sign Out",
-    component: "",
-    icon: "fa fa-phone-square",
-    imagePath: "/social.svg",
-    path: "/",
-  },
-  {
     id: 8,
     label: "Invoice",
     component: "",
@@ -83,11 +83,22 @@ const menuList = [
     icon: "fa fa-phone-square",
     path: "/userorder-detail",
   },
+  {
+    id: 7,
+    label: "Sign Out",
+    component: "",
+    icon: "fa fa-phone-square",
+    imagePath: "/social.svg",
+    path: "/",
+  },
 ];
+
 const UserNavbar = () => {
   const router = useRouter();
   const dispatch = useDispatch()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
+console.log(token);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -98,8 +109,11 @@ const UserNavbar = () => {
   };
 
   const handleSignOut = ()=>{
-    dispatch(setToken(null))
+    dispatch(setUserDetails({}))
     localStorage.removeItem("token");
+    router.push('/login');
+  }
+  const handleLogin = ()=>{
     router.push('/login');
   }
 
@@ -121,8 +135,15 @@ const UserNavbar = () => {
                 </div>
               </button>
             </div>
-            <div>
-            <Link href="/cart">
+            <div className="flex items-cente gap-[20px]">
+              {
+              ( !token || token == undefined ) && 
+                <div className="bg-lightBlue-500 text-white rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer" 
+                onClick={handleLogin}>Login
+                </div>
+           
+              }
+              <Link href="/cart">
                 <Image src={shoping}  className="w-12 mr-10"/>
               </Link>
             </div>
@@ -146,7 +167,7 @@ const UserNavbar = () => {
 
                 <span className="sr-only bg-black">Close menu</span>
               </button>
-              <Link href="/all-product">
+              <Link href="/">
                 <img src="/log.png" className=" p-0" />
               </Link>
               <div className="">

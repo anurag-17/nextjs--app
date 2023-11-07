@@ -1,29 +1,25 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import axios from "axios";
-import { setCookie } from "cookie";
+import { useDispatch } from 'react-redux';
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import Cart from "./cart";
+import Link from "next/link";
 
-import Cookies from 'js-cookie';
-import { useSelector, useDispatch } from 'react-redux';
-import { setToken } from "../redux/slices/authSlice";
+import { setUserDetails } from "../redux/slices/authSlice";
 
-const setTokenInCookies = (token) => {
-  Cookies.set('token', token, { expires: 7 }); // 'expires' sets the cookie expiration in days
-};
 
 const UserLogin = ({ API_URL }) => {
 
+  const router = useRouter();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
   const [userId, setUserId] = useState("");
-  const router = useRouter();
+
   const ClearData = () => {
     setPassword("");
     setEmail("");
@@ -46,27 +42,12 @@ const UserLogin = ({ API_URL }) => {
     axios
       .request(options)
       .then(function (response) {
+console.log(response);
 
         if (response?.status === 201) {
-
-          dispatch(setToken(response?.data?.token));
-          // console.log(response.data.user._id);
-          localStorage.setItem(
-            "userToken",
-            JSON.stringify(response?.data?.token)
-          );
-          localStorage.setItem(
-            "userDetails",
-            JSON.stringify(response?.data?.user?._id)
-          );
-          localStorage.setItem(
-            "wishList",
-            JSON.stringify(response?.data?.user?.wishlist)
-          );
-          setTokenInCookies(response?.data?.token);
+          dispatch(setUserDetails(response?.data));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-
           router.push("/all-product");
         } else {
           setLoading(false);
@@ -178,25 +159,6 @@ const UserLogin = ({ API_URL }) => {
                   />
                 </div>
 
-                <div className="2xl:py-5 xl:text-[16px] lg:[text-[14px]  xl:py-3 first-letter: lg:py-2 md:py-2 sm:py-2">
-                  <label>
-                    <input
-                      type="checkbox"
-                      className="border border-gray-400 2xl:mr-2 xl:mr-1 lg:mr-1 md:mr-1 sm:mr-1"
-                    />
-                    <span>
-                      I accept the
-                      <a href="#" className="text-cyan-600 font-semibold">
-                        Terms of Use
-                      </a>
-                      &nbsp; &amp; &nbsp;
-                      <a href="#" className="text-cyan-600 font-semibold">
-                        Privacy Policy
-                      </a>
-                    </span>
-                  </label>
-                </div>
-
                 <div
                   className="2xl:mt-8
                 xl:mt-2
@@ -235,6 +197,8 @@ const UserLogin = ({ API_URL }) => {
                       Register Now
                     </p>
                   </Link>
+
+
                   <div className=" flex justify-center">
                     <Link href="https://www.facebook.com/" target="_blank">
                       <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">

@@ -56,6 +56,7 @@ export default function Layout({ children }) {
   return (
     <>
       {router.pathname === "/admin-login" ||
+      router.pathname === "/" ||
       router.pathname === "/signup" ||
       router.pathname === "/login" ||
       router.pathname === "/all-product" ||
@@ -93,6 +94,7 @@ export default function Layout({ children }) {
           !isMobile &&
           !(
             router.pathname === "/admin-login" ||
+            router.pathname === "/" ||
             router.pathname === "/signup" ||
             router.pathname === "/login" ||
             router.pathname === "/all-product" ||
@@ -115,6 +117,7 @@ export default function Layout({ children }) {
           className={
             !(
               router.pathname === "/admin-login" ||
+              router.pathname === "/" ||
               router.pathname === "/signup" ||
               router.pathname === "/login" ||
               router.pathname === "/userFAQ" ||

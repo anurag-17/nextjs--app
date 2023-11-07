@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const authToken = sessionStorage.getItem("accessToken");
+    const authToken = sessionStorage.getItem("token");
     console.log("authToken", authToken);
     if (authToken) {
       setIsAuthenticated(true);

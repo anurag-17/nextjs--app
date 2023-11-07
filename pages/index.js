@@ -1,17 +1,13 @@
 import { useEffect } from "react";
-import Admindashboard from "./admin-dashboard";
 import { useRouter } from "next/router";
+import AllProduct from "../components/UserModule/AllProduct";
 
 export default function Home() {
-
   const router = useRouter();
-  useEffect(() => {
-    router.push("/login")
-  })
+
   return (
     <>
-      {/* <Admindashboard/> */}
-
+      <AllProduct />
     </>
   );
 }

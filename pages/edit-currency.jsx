@@ -11,6 +11,7 @@ const EditCurrency = ({currencyEdit}) => {
   const [currencyName, setCurrencyName] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [isRefresh, setRefresh] = useState(false);
+console.log(currencyEdit);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +38,11 @@ const EditCurrency = ({currencyEdit}) => {
   }, []);
 
   const handleSubmit = async (e) => {
+    alert("ok")
     e.preventDefault();
     try {
       const currencyData = {
-        _id: id,
+        _id: currencyEdit,
         currencySign: currencySign,
         currencyName: currencyName,
       };
@@ -57,6 +59,7 @@ const EditCurrency = ({currencyEdit}) => {
       );
 
       const responseData = await response.json();
+console.log(response);
 
       if (response.ok) {
         setLoading(false);

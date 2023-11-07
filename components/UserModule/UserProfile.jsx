@@ -1,51 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { or, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
 import UserNavbar from "./userNavbar";
-import { fetchApi } from "../../utlis/api";
-import axios from "axios";
 
 
-const UserProfile = () => {
-
-  const token = useSelector((state) => state.auth.token);
-  const [getAllCustomer, setGetAllCustomer] = useState();
-
-  useEffect(() => {
-    defaultCustomer();
-  }, []);
-
-  const defaultCustomer = async() => {
-    axios
-      .get(
-        "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "PostmanRuntime/7.33.0",
-            "authorization": token,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data.getaUser);
-        setGetAllCustomer(res.data.getaUser);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    // try {
-    //   const data = await fetchApi('/auth/getaUser', {
-    //     // additional options if needed
-    //   });
-    //   console.log(data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
+const UserProfile = ({getAllCustomer}) => {
 
   return (
     <>

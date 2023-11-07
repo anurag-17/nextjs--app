@@ -9,14 +9,14 @@ export const fetchApi = async (url, options = {}) => {
   const accessToken = localStorage.getItem("userToken")
   
   // const token = useSelector((state) => state);
-    
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': 'PostmanRuntime/7.33.0',
-    };
-    
-    if (accessToken) {
-      headers['authorization'] = accessToken.replace(/"/g, '');
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    'User-Agent': 'PostmanRuntime/7.33.0',
+  };
+  
+  if (accessToken) {
+      headers['authorization'] = accessToken ;
     }
 
 
@@ -26,6 +26,7 @@ export const fetchApi = async (url, options = {}) => {
       ...options,
     });
     
+    console.log(headers);
 
     
     // if (!response.ok) {

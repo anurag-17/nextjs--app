@@ -10,8 +10,8 @@ const CreateCurrency = () => {
     e.preventDefault();
     try {
         const currencyData = {
-          currencySign:currency,
-          currencyName: currencyLogo
+          currencySign:currencyLogo,
+          currencyName:currency,
         };
     
         const response = await fetch('https://e-commerce-backend-brown.vercel.app/api/currency/createCurrency', {
@@ -74,13 +74,13 @@ const CreateCurrency = () => {
                 className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
                 required
               />
+            </div>
               <button
                 type="submit"
-                className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] "
+                className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] px-4"
               >
-                Add Currency / Sign
+                Save 
               </button>
-            </div>
           </div>
         </form>
       </div>

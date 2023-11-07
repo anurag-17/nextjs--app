@@ -20,12 +20,25 @@ const Userdetail = () => {
   const [productDetail, setProductDetail] = useState({});
   const [productColor, setProductColor] = useState("");
   let [productQuantity, setProductQuantity] = useState(1);
-  const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userDetails"))
-  );
+  const [customerID, setCustomerID] =
+  useState();
+  // JSON.parse(localStorage.getItem("userID"))
   const storedProduct = useSelector((state) => state.auth.cart || []);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
+  const [isSessionAdded, setSessionAdded] = useState(false);
+  const [sessionCartProduct, setsessionCartProduct] = useState((JSON.parse("addToCart")));
 
-  console.log(storedProduct);
+  console.log(JSON.parse(sessionCartProduct));
+
+  useEffect(() => {
+    if(!token || token == undefined){
+     const sessCartProduct =  JSON.parse(sessionCartProduct)
+     console.log(sessCartProduct);
+     const isInSession = sessCartProduct.filter((items)=>items?._id === slug)
+    }
+    // console.log(sessCartProduct.filter((items)=>items?._id === slug));
+    
+  }, []);
 
   useEffect(() => {
     getAllProducts();
@@ -60,48 +73,62 @@ const Userdetail = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!productColor) {
-      setShowErr(true);
-      setLoading(false);
-    } else {
-      setShowErr(false);
-      const options = {
-        method: "POST",
-        url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
-        headers: {
-          cookie:
-            "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-          "Content-Type": "application/json",
-          "User-Agent": "insomnia/2023.5.8",
-        },
-        data: {
-          cart: [
-            {
-              _id: produc?._id,
-              count: productQuantity || 1,
-              color: productColor,
-            },
-          ],
-          _id: customerID || null,
-        },
-      };
-      console.log(options);
+    if(!token || token == undefined){
 
-      axios
-        .request(options)
-        .then(function (response) {
-          console.log(response);
-          if (response.status === 200) {
-            toast.success("Product added into cart !!");
-            setAddIntoCart(true)
-            refreshData();
-          } else {
-            return;
-          }
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+      const  cartProduct = [
+          {
+            _id: produc?._id,
+            count: productQuantity || 1,
+            color: productColor,
+          },
+        ]
+
+        sessionStorage.setItem("addToCart",JSON.stringify(cartProduct))
+        setSessionAdded(true)
+    }
+    else{
+      if (!productColor) {
+        setShowErr(true);
+        setLoading(false);
+      } else {
+        setShowErr(false);
+        const options = {
+          method: "POST",
+          url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
+          headers: {
+            cookie:
+              "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+            "Content-Type": "application/json",
+            "User-Agent": "insomnia/2023.5.8",
+          },
+          data: {
+            cart: [
+              {
+                _id: produc?._id,
+                count: productQuantity || 1,
+                color: productColor,
+              },
+            ],
+            _id: customerID || null,
+          },
+        };
+        console.log(options);
+        axios
+          .request(options)
+          .then(function (response) {
+            console.log(response);
+            if (response.status === 200) {
+              toast.success("Product added into cart !!");
+              setAddIntoCart(true);
+              refreshData();
+            } else {
+              return;
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
     }
   };
 
@@ -126,10 +153,10 @@ const Userdetail = () => {
       console.log(response);
       if (response?.status === 200) {
         dispatch(cartProducts(response?.data?.products));
-        const isProdInCart = storedProduct?.filter(
-          (prod) => prod?._id === response?.data?.products?._id
-        );
-        console.log(isProdInCart);
+        // const isProdInCart = storedProduct?.filter(
+        //   (prod) => prod?._id === response?.data?.products?._id
+        // );
+        // console.log(isProdInCart);
         // setAddIntoCart(isProdInCart)
       }
     } catch (error) {
@@ -282,7 +309,7 @@ const Userdetail = () => {
                       </div>
                     </div>
 
-                    {isAddIntoCart ? (
+                    {isAddIntoCart || isSessionAdded   ? (
                       <button
                         className="w-full border p-3 rounded-lg hover:text-white border-sky-600 text-sky-900   hover:bg-sky-600 my-2 mt-4 items-end"
                         onClick={handleGoToCart}

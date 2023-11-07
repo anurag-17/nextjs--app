@@ -2,28 +2,42 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const getTokenFromLocalStorage = () => {
-    if (typeof window !== "undefined") {
-      // Check if the code is running in a browser environment
-      return localStorage.getItem("token") || null;
-    }
-    return null;
-  };
-
-const initialState = {
-    token: getTokenFromLocalStorage(),
-  cart: [],
-  totalCartItems : 0,
+  if (typeof window !== "undefined") {
+    // Check if the code is running in a browser environment
+    return localStorage.getItem("userToken") || null;
+  }
+  return null;
 };
 
+const initialState = {
+  userDetails : {
+    token: getTokenFromLocalStorage(),
+    userID: null,
+    userWishList: [],
+  },
+  cart: [],
+  totalCartItems: 0,
+};
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
+    setUserDetails: (state, action) => {
+      state.userDetails.token = action.payload?.token;
+      state.userDetails.userID = action.payload?.user?._id ;
+      state.userDetails.userWishList = action.payload?.user?.wishlist ;
       if (typeof window !== "undefined") {
-        localStorage.setItem("token", action?.payload);
+        localStorage.setItem("userToken", JSON.stringify(action?.payload?.token));
+      }
+      if (typeof window !== "undefined") {
+        localStorage.setItem("userID", JSON.stringify(action?.payload?.user?._id));
+      }
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "wishList",
+          JSON.stringify(action?.payload?.user?.wishlist)
+        );
       }
     },
     addToCart: (state, action) => {
@@ -36,13 +50,14 @@ const authSlice = createSlice({
       );
     },
     cartProducts: (state, action) => {
-        // console.log(action)
-        state.cart = action.payload || [];
-        state.totalCartItems = action.payload?.length || 0
-      },
+      // console.log(action)
+      state.cart = action.payload || [];
+      state.totalCartItems = action.payload?.length || 0;
+    },
   },
 });
 console.log(authSlice.actions);
 
-export const { setToken, addToCart, removeFromCart , cartProducts} = authSlice.actions;
+export const {addToCart, removeFromCart, cartProducts,setUserDetails } =
+  authSlice.actions;
 export default authSlice.reducer;

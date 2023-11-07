@@ -23,26 +23,21 @@ const ProductGrid = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
-  const [addInWishlist, setAddInWishlist] = useState();
   let [productID, setProductID] = useState("");
   let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userDetails"))
+    // JSON.parse(localStorage.getItem("userID"))
   );
   const _id = productID;
   const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem("userToken"))
+    // JSON.parse(localStorage.getItem("userToken"))
   );
   const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
 
-  const [productQuantitiesArray, setProductQuantitiesArray] = useState([]);
   const [productColorsArray, setProductColorsArray] = useState([]);
-  const [isAddedCart, setAdedCart] = useState(false);
-  const [isAddIntoCartID, setAddIntoCartID] = useState(false);
-  const [isShowErr, setShowErr] = useState(false);
 
   const option = {
     method: "GET",
@@ -170,27 +165,9 @@ const ProductGrid = () => {
       ...prevIsWished,
       [productId]: !prevIsWished[productId], // Toggle the state for the specified product
     }));
+    addToWishlist(productId)
   };
 
-  const handleCounter = (productId) => {
-    const productIndex = productQuantitiesArray.findIndex(
-      (item) => item.productId === productId
-    );
-
-    if (productIndex !== -1) {
-      // If the product is already in the array, update its quantity
-      const updatedArray = [...productQuantitiesArray];
-      updatedArray[productIndex].quantity += 1;
-      setProductQuantitiesArray(updatedArray);
-    } else {
-      // If the product is not in the array, add it with a quantity of 1
-      const updatedArray = [
-        ...productQuantitiesArray,
-        { productId, quantity: 1 },
-      ];
-      setProductQuantitiesArray(updatedArray);
-    }
-  };
 
   const handleColorChange = (productId, selectedColor) => {
     const productIndex = productColorsArray.findIndex(
@@ -198,12 +175,10 @@ const ProductGrid = () => {
     );
 
     if (productIndex !== -1) {
-      // If the product is already in the array, update its color
       const updatedArray = [...productColorsArray];
       updatedArray[productIndex].color = selectedColor;
       setProductColorsArray(updatedArray);
     } else {
-      // If the product is not in the array, add it with the selected color
       const updatedArray = [
         ...productColorsArray,
         { productId, color: selectedColor },
@@ -211,67 +186,6 @@ const ProductGrid = () => {
       setProductColorsArray(updatedArray);
     }
   };
-
-  const handleAddToCart = async (e, produc) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const filterArry = productQuantitiesArray?.filter((item) => {
-      if (item?.productId === produc?._id) return item?.quantity;
-    });
-
-    const filterColor = productColorsArray?.filter((item) => {
-      if (item?.productId === produc?._id) return item?.color;
-    });
-    console.log(filterColor);
-
-    if (filterColor.length == 0) {
-      setShowErr(true);
-    } else {
-      const options = {
-        method: "POST",
-        url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
-        headers: {
-          cookie:
-            "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-          "Content-Type": "application/json",
-          "User-Agent": "insomnia/2023.5.8",
-        },
-        data: {
-          cart: [
-            {
-              _id: produc?._id,
-              count: filterArry?.quantity || 1,
-              color: filterColor?.color,
-            },
-          ],
-          _id: customerID,
-        },
-      };
-      try {
-        axios
-          .request(options)
-          .then(function (response) {
-            console.log(response);
-            if (response.status === 200) {
-              toast.success("Product added into cart !!");
-              // dispatch(addToCart(response?.data))
-              // refreshData();
-            } else {
-              setLoading(false);
-              return;
-            }
-          })
-          .catch(function (error) {
-            console.error(error);
-            toast.error("Failed !");
-          });
-      } catch {
-        console.log("error");
-      }
-    }
-  };
-
 
 
   return (

@@ -9,7 +9,7 @@ const profile = () => {
   const [id, setId] = useState("");
   const [response, setResponse] = useState("");
   const [getAllCustomer, setGetAllCustomer] = useState();
-  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userDetails")))
+  const [customerID, setCustomerID] = useState(JSON.parse(localStorage.getItem("userID")))
  
 
   useEffect(() => {

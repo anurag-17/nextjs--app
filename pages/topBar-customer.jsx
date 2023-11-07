@@ -24,9 +24,9 @@ export default function TopBarCustomer({ showNav, setShowNav }) {
 
   const handleSignout = () => {
     console.log("Logging out...");
-    // Remove access token from local storage
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userDetails");
+    // // Remove access token from local storage
+    // localStorage.removeItem("userToken");
+    // localStorage.removeItem("userDetails");
 
     // sessionStorage.removeItem('accessToken');
     // sessionStorage.removeItem('userDetails');

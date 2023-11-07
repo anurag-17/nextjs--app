@@ -7,7 +7,7 @@ import axios from "axios";
 const wishlist = () => {
   const [getWishProduct, setGetWishProduct] = useState([0]);
   const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userDetails"))
+    JSON.parse(localStorage.getItem("userID"))
   );
 
   useEffect(() => {
