@@ -13,6 +13,10 @@ import { useSelector } from "react-redux";
 const Userdetail = () => {
   const router = useRouter();
   const { slug } = router.query;
+  console.log(router);
+  console.log(router.query);
+  
+  
   const [isLoading, setLoading] = useState(false);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
   const [isAddedCart, setAddedCart] = useState(false);
@@ -53,7 +57,7 @@ const Userdetail = () => {
 
   useEffect(() => {
     getAllProducts();
-  }, []);
+  }, [router?.query?.slug]);
 
   const getAllProducts = async () => {
     const options = {
@@ -64,17 +68,25 @@ const Userdetail = () => {
         "User-Agent": "insomnia/2023.5.8",
       },
     };
+console.log(router?.query?.slug);
+try {
+ if(router?.query?.slug){
+  fetch(
+    `https://e-commerce-backend-brown.vercel.app/api/product/getaProduct/${router?.query?.slug}`,
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      setProductDetail(response);
+    })
+    .catch((err) => console.error(err));
+ }
+} catch (error) {
+console.log(error);
 
-    fetch(
-      `https://e-commerce-backend-brown.vercel.app/api/product/getaProduct/${slug}`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setProductDetail(response);
-      })
-      .catch((err) => console.error(err));
-  };
+};
+  
+}
 
   const handleColorChange = (productId, selectedColor) => {
     setProductColor(selectedColor);
@@ -179,7 +191,7 @@ const Userdetail = () => {
 
   //---- cart products api ----
   useEffect(() => {
-    getCartProducts();
+    // getCartProducts();
   }, []);
 
   const getCartProducts = async () => {
