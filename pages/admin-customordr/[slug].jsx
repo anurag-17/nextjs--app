@@ -2,9 +2,9 @@ import React from 'react';
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
-import dress1 from "../../public/dress1.svg";
-import dress2 from "../../public/dress2.svg";
-import dress3 from "../../public/dress3.svg";
+// import dress1 from "../../public/dress1.svg";
+// import dress2 from "../../public/dress2.svg";
+// import dress3 from "../../public/dress3.svg";
 
 const AdminCutomerOrder = () => {
     const [getallCustomer, setGetallCustomer] = useState([]);
@@ -70,7 +70,7 @@ Partially Fullfilled
 <tbody className="border bg-white">
 <tr className="text-center border-b">
 <td className="flex justify-center mt-7">
-<Image src={dress1} />
+{/* <Image src={dress1} /> */}
 </td>
 <td className="py-4">
 Sweter For Women
@@ -84,7 +84,7 @@ Color:Black
 </tr>
 <tr className="text-center border-b">
 <td className="flex justify-center mt-7">
-<Image src={dress2} />
+{/* <Image src={dress2} /> */}
 </td>
 <td className="py-4">
 Sweter For Women
@@ -98,7 +98,7 @@ Color:Black
 </tr>
 <tr className="text-center border-b">
 <td className="flex justify-center mt-6">
-<Image src={dress3} />
+{/* <Image src={dress3} /> */}
 </td>
 <td className="py-4">
 Convert for man shoe
