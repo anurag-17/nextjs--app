@@ -499,7 +499,7 @@ const ProductGrid = () => {
                     Brand :{" "}
                     <p className="font-semibold px-2"> {items.brand} </p>
                   </p>
-                  <p className="text-[20px] flex font-semibold capitalize my-2 text-sky-600">
+                  <p className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
                     Offer price :{" "}
                     <p className="text-sky-800 px-2 font-bold">
                       ₹{items.discountedPrice}{" "}
@@ -527,7 +527,7 @@ const ProductGrid = () => {
                     </p>
                   </div>
                   <div className="flex gap-x-5 mt-3">
-                    <label for="color" className="text-[18px] capitalize my-2">
+                    <label for="color" className="text-[18px] capitalize my-2 whitespace-nowrap">
                       Colors :
                     </label>
                     <div className="w-[240px]">

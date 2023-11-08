@@ -12,21 +12,30 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
   const [customerID, setCustomerID] = useState(
     JSON.parse(localStorage.getItem("userID")) || null
   );
+
+
   let subtotal = 0;
+  const [grandTotal, setGrandTotal] = useState(0);
 
 
-  // useEffect(()=>{
+  useEffect(()=> { updateGrandTotal()},[])
 
-  // },[])
+  console.log(grandTotal);
 
-  // const getSubTotal = () => {
-  //   {getCartProduct?.map((item, inx) => {
-  //     const itemTotalPrice = item?.price * item?.count;
-  //     subtotal += itemTotalPrice; 
-  //     return (
-  //     );
-  //   })}
-  // }
+  
+    // Function to calculate the subtotal for each product
+    const calculateSubtotal = (item) => {
+      return item?.price * item?.count;
+    };
+  
+    // Function to update the grand total
+    const updateGrandTotal = () => {
+      const subtotalArray = getCartProduct?.map((item) => calculateSubtotal(item));
+      console.log(subtotalArray);
+      
+      const total = subtotalArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      setGrandTotal(total);
+    };
 
   const removeWishlist = async () => {
     if (!token || token === undefined) {
@@ -231,7 +240,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                 <hr className="my-5" />
                 <div>
                   {getCartProduct?.length > 0 &&
-                    getCartProduct?.map((item, inx) => (
+                    getCartProduct?.map((item, inx) => {
+                      // const itemTotalPrice = item?.price * item?.count;
+                      // subtotal += itemTotalPrice;
+                      return(
                       <div
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
@@ -296,7 +308,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                               </p>
   
                               <p className="text-md font-semibold capitalize mt-2 text-sky-600">
-                                Total Price : ₹ {Number(item?.price * item?.count)}
+                                Total Price : ₹ {item?.price * item?.count}
                               </p>
   
                             </div>
@@ -309,7 +321,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                           />
                         </div>
                     </div>
-                    ))}
+                    )}
+                    )}
                 </div>
                 <div className="grid grid-cols-2 py-4">
                   <div className=""></div>
@@ -317,7 +330,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                     <div className=""></div>
                     <div className="text-[18px] font-normal">
                       <div className="flex">
-                        <p className="">Subtotal :  </p>
+                        <p className="">Subtotal : ₹ {grandTotal} </p>
                         <p className="px-2"> {subtotal} </p>
                       </div>
                       <div className="flex mt-2 gap-x-10">
@@ -326,11 +339,11 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                       </div>
                       <div className="flex mt-2 gap-x-10">
                         <p className=""> Shipping Charge : </p>
-                        <p className=""> 75 </p>
+                        <p className=""> ₹ 75 </p>
                       </div>
                       <div className="flex mt-2 gap-x-10">
                         <p className=""> Grand Total : </p>
-                        <p className=""> {subtotal + 75} </p>
+                        <p className=""> ₹ {grandTotal + 75} </p>
                       </div>
                       <div className="mt-5">
                         <button className="px-5 py-2 rounded bg-lightBlue-500 text-white font-semibold hover:bg-lightBlue-700 w-[50%]">
