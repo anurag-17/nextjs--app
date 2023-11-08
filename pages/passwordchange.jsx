@@ -3,16 +3,14 @@ import dynamic from "next/dynamic";
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { data } from "autoprefixer";
 
 const PasswordChange = () => {
-  const { token } = useSelector(
-    (state) => state.auth.userDetails.userToken || null
-  );
-  console.log("userToken", token);
+  const { userToken } = useSelector((state) => state.userToken || null);
+  console.log("passssss", userToken);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [userId, setUserId] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,12 +18,19 @@ const PasswordChange = () => {
     try {
       const response = await axios.post(
         "https://e-commerce-backend-brown.vercel.app/api/auth/updatePassword",
-
         {
-          authorization: token,
-          "Content-Type": "application/json",
+          headers: {
+            cookie:
+              "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+            "Content-Type": "application/json",
+            "User-Agent": "insomnia/2023.5.8",
+            Authorization: userToken,
+          },
+          data: {
+            currentPassword: "currentPassword",
+            newPassword: "newPassword",
+          },
         }
-      
       );
 
       if (response.status === 201) {
@@ -33,6 +38,7 @@ const PasswordChange = () => {
       } else {
         setMessage("Password change failed: " + response.data.error);
       }
+
       console.log(response);
     } catch (error) {
       setMessage(
@@ -40,7 +46,6 @@ const PasswordChange = () => {
       );
     }
   };
-  console.log("hhh", _id);
 
   return (
     <>
@@ -91,7 +96,11 @@ const PasswordChange = () => {
           </div>
         </div>
         <div className="w-6/12 my-auto">
-          <img src="/changePassword.png" className="w-9/12 mx-auto"></img>
+          <img
+            src="/changePassword.png"
+            alt="img"
+            className="w-9/12 mx-auto"
+          ></img>
         </div>
       </div>
       <div id="message" className="m-3 ml-6 text-red-700">
