@@ -25,6 +25,7 @@ const PasswordChange = () => {
           authorization: token,
           "Content-Type": "application/json",
         }
+      
       );
 
       if (response.status === 201) {

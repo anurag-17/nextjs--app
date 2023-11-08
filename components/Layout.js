@@ -68,8 +68,8 @@ export default function Layout({ children }) {
       router.pathname === "/userorder-detail" ||
       router.pathname === "/user-invoice" ||
       router.pathname === "/user-notifictionSet" ||
-      router.pathname === "/cart" 
-      ||
+      router.pathname === "/product-filter/[slug]" ||
+      router.pathname === "/cart" ||
       router.pathname.includes("product-details") 
       ? null : (
         <>
@@ -107,6 +107,7 @@ export default function Layout({ children }) {
             router.pathname === "/cart" ||
             router.pathname === "/userorder-detail" ||
             router.pathname === "/user-notifictionSet"||
+            router.pathname === "/product-filter/[slug]" ||
             router.pathname.includes("product-details") 
           )
             ? "pt-[4rem] pl-56"
@@ -130,6 +131,7 @@ export default function Layout({ children }) {
               router.pathname === "/cart" ||
               router.pathname === "/userorder-detail" ||
               router.pathname === "/user-notifictionSet"||
+              router.pathname === "/product-filter/[slug]" ||
               router.pathname.includes("product-details") 
             )
               ? "pl-4 md:pl-16 pr-4"

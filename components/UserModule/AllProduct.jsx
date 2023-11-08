@@ -6,18 +6,15 @@ import dynamic from "next/dynamic";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
-
 import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
 import UserNavbar from "./userNavbar";
 import Slider from "./sliderrange";
 import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
-
 import right from "/public/right-arrows.svg";
 import { useRouter } from "next/router";
 
 const ProductGrid = () => {
-
   const router = useRouter();
   const dispatch = useDispatch();
   const cartStore = useSelector((state) => state || []);
@@ -76,7 +73,6 @@ const ProductGrid = () => {
       .request(options)
       .then((response) => {
         setGetallCategory(response.data);
-        handleClose();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -101,8 +97,8 @@ const ProductGrid = () => {
     getAllProducts();
   }, []);
 
-  const addToWishlist = ({ id }) => {
-    console.log("hello", id);
+  const addToWishlist = (id) => {
+    console.log("prodID", id);
     setIsWished(!isWished);
     const prodId = id;
     const options = {
@@ -114,6 +110,9 @@ const ProductGrid = () => {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
         authorization: token,
+      },
+      data: {
+        prodId: id,
       },
     };
     axios
@@ -186,7 +185,7 @@ const ProductGrid = () => {
 
           const fields = response?.data?.map((product) => product.title);
           const uniqueFields = [...new Set(fields)];
-          setProductSearch(["All", ...uniqueFields]);
+          ["All", ...uniqueFields];
         }
       })
       .catch(function (error) {
@@ -195,13 +194,13 @@ const ProductGrid = () => {
   };
   // ------ search products ------ //
   const handleSearch = (e) => {
-    const search = e.target.value;
-    if (search.trim() === "") {
+    const title = e.target.value;
+    if (title.trim() === "") {
       refreshData();
     } else {
       const options = {
         method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?search=${search}`,
+        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?search=${title}`,
       };
       axios
         .request(options)
@@ -309,7 +308,7 @@ const ProductGrid = () => {
         console.log(response);
         if (response.status === 200) {
           // toast.success("Product added into cart !!");
-              sessionStorage.removeItem("addToCart")
+          sessionStorage.removeItem("addToCart");
           setTimeout(() => {
             // router.push("/cart");
           }, 500);
@@ -339,7 +338,8 @@ const ProductGrid = () => {
               <div className=" gap-1 ">
                 {productCategory?.length > 0 &&
                   productCategory.map((cate) => (
-                    <div className="flex justify-start">
+                   <Link href={`/product-filter/${cate}`}>
+                   <div className="flex justify-start">
                       <div className="flex my-2">
                         <Image className="w-3  " src={right} />
                         <button
@@ -354,6 +354,7 @@ const ProductGrid = () => {
                         </button>
                       </div>
                     </div>
+                   </Link>
                   ))}
               </div>
             </div>
@@ -450,7 +451,7 @@ const ProductGrid = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1}
                           stroke="currentColor"
-                          className="w-6 h-6 fill-[#ed8080]"
+                          className="w-6 h-6 fill-[#c61f1f]"
                         >
                           <path
                             strokeLinecap="round"
@@ -465,7 +466,7 @@ const ProductGrid = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1}
                           stroke="currentColor"
-                          className="w-6 h-6"
+                          className="w-6 h-6 "
                         >
                           <path
                             strokeLinecap="round"

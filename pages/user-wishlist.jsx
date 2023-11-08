@@ -134,12 +134,6 @@ const wishlist = () => {
                       Colors : {item?.color}
                     </p>
                   </div>
-                  <div>
-                    <img
-                      src="cross.svg"
-                      className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
-                    />
-                  </div>
                 </div>
               </div>
             ))}
