@@ -84,7 +84,7 @@ const handleSearch = (e) => {
   if (e.target.value !== "") {
     const option = {
       method: "GET",
-      url: `http://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors?search=${e.target.value}`,
+      url: `https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors?search=${e.target.value}`,
     };
     axios
       .request(option)
