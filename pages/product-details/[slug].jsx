@@ -231,9 +231,9 @@ const Userdetail = () => {
                             key={inx}
                             src={img?.url}
                             alt=""
-                            className="rounded-xl h-auto w-[500px]"
-                            width={400}
-                            height={400}
+                            className="rounded-xl h-auto "
+                            width={300}
+                            height={300}
                           />
                         </div>
                       ))

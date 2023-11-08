@@ -433,14 +433,14 @@ const ProductGrid = () => {
               >
                 {
                   items?.images?.length>0 ? items?.images?.map((img,inx)=>(
-                    <div className="h-[400px]">
+                    <div className="h-[400px] p-2">
                     <Image
                     key={inx}
                       src={img?.url}
                       alt=""
-                      className=" mx-auto rounded-[20px] h-[400px] "
-                      width={400}
-                      height={400}
+                      className=" mx-auto rounded-[20px]"
+                      width={300}
+                      height={300}
                     />
                     </div>
                   ))
@@ -455,7 +455,7 @@ const ProductGrid = () => {
                     />
                   </div>
                 }
-                <div className="bg-white px-10 pb-6 rounded-[20px] ">
+                <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
                   <div className="flex justify-between items-center my-4">
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                       {items.title}

@@ -5,6 +5,7 @@ import axios from "axios";
 import UserNavbar from "../userNavbar";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import Link from "next/link";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) => {
 
@@ -248,31 +249,35 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
                     >
-                        
-                        {item?.product?.images?.length > 0 ? (
-                      item?.product?.images?.map((img, inx) => (
-                        <div className="w-[30%]">
-                          <Image
-                            key={inx}
-                            src={img?.url}
-                            alt=""
-                            className="rounded-[20px] "
-                            width={400}
-                            height={400}
-                          />
-                        </div>
-                      ))
-                    ) : (
-                      <div className="w-[30%]">
-                        <Image
-                          src="/img1.jpeg"
-                          alt=""
-                          className=" rounded-[20px] "
-                          width={400}
-                          height={400}
-                        />
-                      </div>
-                    )}
+                          {item?.product?.images?.length > 0 ? (
+                            item?.product?.images?.map((img, inx) => (
+                              <div className="w-[30%] py-2 px-4">
+                                    <Link href={`/product-details/${item?.product?._id}`}>
+                                        <Image
+                                          key={inx}
+                                          src={img?.url}
+                                          alt=""
+                                          className="rounded-[20px] "
+                                          width={250}
+                                          height={300}
+                                        />
+                                   </Link> 
+                                </div>
+                              ))
+                              ) : (
+                                <div className="w-[30%]">
+                                  <Link href={`/product-details/${item?.product?._id}`}>
+                                    <Image
+                                      src="/img1.jpeg"
+                                      alt=""
+                                      className=" rounded-[20px] "
+                                      width={400}
+                                      height={400}
+                                    />
+                                  </Link>
+                                </div>
+                            )}
+                      
                           <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
                             
                             <div className="">
@@ -330,23 +335,23 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                     <div className=""></div>
                     <div className="text-[18px] font-normal">
                       <div className="flex">
-                        <p className="">Subtotal : ₹ {grandTotal} </p>
-                        <p className="px-2"> {subtotal} </p>
+                        <p className="w-[200px]">Subtotal : </p>
+                        <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded"> ₹ {grandTotal}  </p>
                       </div>
-                      <div className="flex mt-2 gap-x-10">
-                        <p className=""> Sales Tax : </p>
-                        <p className=""> </p>
+                      <div className="flex mt-2">
+                        <p className="w-[200px]"> Sales Tax : </p>
+                        <p className="text-right w-[150px]"> </p>
                       </div>
-                      <div className="flex mt-2 gap-x-10">
-                        <p className=""> Shipping Charge : </p>
-                        <p className=""> ₹ 75 </p>
+                      <div className="flex mt-2">
+                        <p className="w-[200px]"> Shipping Charge : </p>
+                        <p className="text-right w-[150px] px-2 py-1"> ₹ 75 </p>
                       </div>
-                      <div className="flex mt-2 gap-x-10">
-                        <p className=""> Grand Total : </p>
-                        <p className=""> ₹ {grandTotal + 75} </p>
+                      <div className="flex mt-2">
+                        <p className="w-[200px]"> Grand Total : </p>
+                        <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x"> ₹ {grandTotal + 75} </p>
                       </div>
                       <div className="mt-5">
-                        <button className="px-5 py-2 rounded bg-lightBlue-500 text-white font-semibold hover:bg-lightBlue-700 w-[50%]">
+                        <button className="px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%]">
                           Checkout
                         </button>
                       </div>
