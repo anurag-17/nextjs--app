@@ -13,9 +13,6 @@ import { useSelector } from "react-redux";
 const Userdetail = () => {
   const router = useRouter();
   const { slug } = router.query;
-  console.log(router);
-  console.log(router.query);
-  
   
   const [isLoading, setLoading] = useState(false);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
@@ -68,7 +65,6 @@ const Userdetail = () => {
         "User-Agent": "insomnia/2023.5.8",
       },
     };
-console.log(router?.query?.slug);
 try {
  if(router?.query?.slug){
   fetch(
@@ -95,7 +91,6 @@ console.log(error);
   const handleAddToCart = async (e, produc) => {
     e.preventDefault();
     setLoading(true);
-    console.log(produc);
     if (!token || token == undefined) {
       if (!productColor) {
         setShowErr(true);
@@ -109,15 +104,10 @@ console.log(error);
         };
 
         const updatedCart = [...sessionCartProduct, cartProduct];
-        // console.log(updatedCart)
 
         sessionStorage.setItem("addToCart", JSON.stringify(updatedCart));
         setSessionAdded(true);
         updateCart();
-
-        setTimeout(() => {
-          router.push("/cart");
-        }, 500);
       }
     } else {
 

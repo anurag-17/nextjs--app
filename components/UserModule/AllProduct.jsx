@@ -309,7 +309,7 @@ const ProductGrid = () => {
         console.log(response);
         if (response.status === 200) {
           // toast.success("Product added into cart !!");
-sessionStorage.removeItem("addToCart")
+              sessionStorage.removeItem("addToCart")
           setTimeout(() => {
             // router.push("/cart");
           }, 500);

@@ -6,7 +6,13 @@ import { fetchApi } from "../utlis/api";
 
 const Cart = () => {
   const [getCartProduct, setGetCartProduct] = useState([]);
+  const [isRefresh, setRefresh] = useState(false);
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
+
+
+  const refreshData = () => {
+    setRefresh(!isRefresh)
+  }
 
   const defaultCustomer = async () => {
     try {
@@ -33,7 +39,7 @@ const Cart = () => {
     } else {
       defaultCustomer();
     }
-  }, []);
+  }, [isRefresh]);
   // console.log(sessionCartProduct);
 
   useEffect(() => {
@@ -70,6 +76,7 @@ const Cart = () => {
        token = {token}
         getCartProduct={getCartProduct}
         sessionCartProduct={sessionCartProduct || []}
+        refreshData = {refreshData}
       />
     </>
   );
