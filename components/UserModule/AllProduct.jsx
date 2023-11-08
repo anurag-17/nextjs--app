@@ -530,7 +530,7 @@ const ProductGrid = () => {
                     <label for="color" className="text-[18px] capitalize my-2">
                       Colors :
                     </label>
-                    <div className="w-[250px]">
+                    <div className="w-[240px]">
                       <select
                         onChange={(e) =>
                           handleColorChange(items._id, e.target.value)
