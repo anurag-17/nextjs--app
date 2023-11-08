@@ -18,7 +18,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
   const [grandTotal, setGrandTotal] = useState(0);
 
 
-  useEffect(()=> { updateGrandTotal()},[])
+  useEffect(()=> { updateGrandTotal()},[getCartProduct])
 
   console.log(grandTotal);
 
