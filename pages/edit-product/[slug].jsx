@@ -257,7 +257,7 @@ export default function EditProduct() {
                       name="discountedPrice"
                       placeholder="OfferPrice"
                       className="custom-input"
-                      value={productDetails.discountedPrice}
+                      // value={productDetails.discountedPrice}
                       defaultValue={
                         editData?.discountedPrice
                           ? editData?.discountedPrice
@@ -353,7 +353,7 @@ export default function EditProduct() {
                 </div>
               </div>
 
-              {/*------ brand -----*/}
+              {/*------ color -----*/}
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <label htmlFor="" className="custom-input-label">
                   Product Colour
