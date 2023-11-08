@@ -431,13 +431,30 @@ const ProductGrid = () => {
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
               >
-                <Image
-                  src="/img1.jpeg"
-                  alt=""
-                  className=" mx-auto rounded-[20px] "
-                  width={400}
-                  height={400}
-                />
+                {
+                  items?.images?.length>0 ? items?.images?.map((img,inx)=>(
+                    <div className="h-[400px]">
+                    <Image
+                    key={inx}
+                      src={img?.url}
+                      alt=""
+                      className=" mx-auto rounded-[20px] h-[400px] "
+                      width={400}
+                      height={400}
+                    />
+                    </div>
+                  ))
+                  :
+                  <div className="h-[400px]">
+                    <Image
+                      src="/img1.jpeg"
+                      alt=""
+                      className=" mx-auto rounded-[20px] h-[400px] "
+                      width={400}
+                      height={400}
+                    />
+                  </div>
+                }
                 <div className="bg-white px-10 pb-6 rounded-[20px] ">
                   <div className="flex justify-between items-center my-4">
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">

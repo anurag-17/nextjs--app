@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 const AddProduct = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [getallBrand, setGetallBrand] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getCurrency, setGetCurrency] = useState([]);
-
-  const openDrawer = () => {
-    setIsDrawerOpen(true);
-  };
-
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
+  const [selectedImages, setSelectedImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [imageUrls, setImageUrls] = useState("");
   const [productDetails, setProductDetails] = useState({
     title: "",
     description: "",
@@ -31,10 +25,27 @@ const AddProduct = () => {
     brand: "",
     quantity: "",
     color: [],
+    images: [
+      {
+        "public_id": "",
+        "url": "",
+      },
+    ],
   });
-  // const [token, setToken] = useState(
-  //   JSON.parse(sessionStorage.getItem("accessToken"))
-  // );
+
+  console.log(productDetails);
+  
+  const { token } = useSelector((state) => state?.auth?.userDetails || null);
+  
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
   const refreshData = () => {
     setProductDetails({
       title: "",
@@ -64,19 +75,20 @@ const AddProduct = () => {
     }
   };
 //---currency---
-const curr = {
-  method: "GET",
-  url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
-};
+
 useEffect(() => {
   defaultCurrency();
 }, []);
 const defaultCurrency = () => {
+  const curr = {
+    method: "GET",
+    url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
+  };
   axios
     .request(curr)
     .then((response) => {
       setGetCurrency(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     })
     .catch((error) => {
       console.error(error);
@@ -84,21 +96,19 @@ const defaultCurrency = () => {
 };
 
 
-  const option = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
-  };
-
-  useEffect(() => {
-    defaultCategory();
+useEffect(() => {
+  defaultCategory();
   }, []);
-
+  
   const defaultCategory = () => {
+    const option = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+    };
     axios
       .request(option)
       .then((response) => {
         setGetallCategory(response.data);
-        console.log(response.data);
         handleClose();
       })
       .catch((error) => {
@@ -106,31 +116,28 @@ const defaultCurrency = () => {
       });
   };
 
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
-  };
   useEffect(() => {
     defaultBrand();
   }, []);
   const defaultBrand = () => {
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+    };
     axios
       .request(options)
       .then((response) => {
         setGetallBrand(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-  };
+  };  
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setProductDetails({
-      ...productDetails,
-      discountedPrice: ""
-    });
+ 
     setLoading(true);
 
     const options = {
@@ -149,7 +156,7 @@ const defaultCurrency = () => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           notify();
           setLoading(false);
@@ -162,7 +169,7 @@ const defaultCurrency = () => {
       .catch(function (error) {
         setLoading(false);
         console.error(error);
-        toast.success("Failed. Can not repeat product name!", {
+        toast.error("Failed. Can not repeat product name!", {
           position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -186,6 +193,50 @@ const defaultCurrency = () => {
       progress: undefined,
       theme: "dark",
     });
+  };
+
+  const handleImageUpload = async (event) => {
+    const files = event.target.files;
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('images', files[i]);
+    }
+    console.log(formData);
+    
+
+    try {
+      const res = await uploadImage(formData);
+      // console.log(res.data?.imageUrls);
+      setImageUrls(res.data?.imageUrls)
+      setProductDetails((prevProductDetails) => ({
+        ...prevProductDetails,
+        images: res?.data?.imageUrls?.map((url) => ({
+          public_id: url , 
+          url: url,
+        })),
+      }));
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  };
+
+  const uploadImage = async (formData) => {
+    try {
+      const response = await axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/upload", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          "authorization" : token
+        },
+      });
+  
+      return response;
+    } catch (error) {
+      console.error('Image upload error', error);
+      throw error;
+    }
   };
 
   return (
@@ -243,6 +294,19 @@ const defaultCurrency = () => {
                 max={500}
               ></textarea>
             </div>
+          </div>
+
+          {/*------ Image -----*/}
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+             <label className="custom-input-label">Product Images</label>
+              <div className="col-span-8 sm:col-span-4">
+                <div className="w-full text-center custom-input flex justify-center items-center h-[100px]">
+                  <label className="text-lg font-semibold bg-slate-100 p-1 rounded cursor-pointer" htmlFor="fileUpload">
+                    <input type="file" className="hidden" id="fileUpload" muiltiple onChange={handleImageUpload}/>
+                    Upload File
+                  </label>
+                </div>
+              </div>
           </div>
 
           {/*------ price -----*/}
@@ -346,8 +410,6 @@ const defaultCurrency = () => {
                 value={productDetails.quantity}
                 onChange={inputHandler}
                 required
-                minLength={10}
-                max={32}
               />
             </div>
           </div>

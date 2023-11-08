@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import UserNavbar from "../userNavbar";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) => {
 
@@ -11,6 +12,21 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
   const [customerID, setCustomerID] = useState(
     JSON.parse(localStorage.getItem("userID")) || null
   );
+  let subtotal = 0;
+
+
+  // useEffect(()=>{
+
+  // },[])
+
+  // const getSubTotal = () => {
+  //   {getCartProduct?.map((item, inx) => {
+  //     const itemTotalPrice = item?.price * item?.count;
+  //     subtotal += itemTotalPrice; 
+  //     return (
+  //     );
+  //   })}
+  // }
 
   const removeWishlist = async () => {
     if (!token || token === undefined) {
@@ -55,18 +71,18 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
     else{
       try {
         
-        await axios
-          .delete(
-            "https://e-commerce-backend-brown.vercel.app/api/auth/remove-cart",
-            {
-              data: { productId: id },
-              headers: {
-                Accept: "*/*",
-                "Content-Type": "application/json",
-                "authorization" : token
-              },
-            }
-          )
+        const options = {
+          method: "POST",
+          url: "https://e-commerce-backend-brown.vercel.app/api/auth/remove-cart",
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "insomnia/2023.5.8",
+            "authorization": token,
+          },
+          data: { productId: id },
+        };
+
+        await axios(options)
           .then((response) => {
             if (response.status === 200) {
               toast.success("Remove product from cart !")
@@ -109,17 +125,32 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                  <>
                   <div
                     key={inx}
-                    className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
+                    className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
                   >
-                        <div className="w-[30%]"> 
-                        <img
+                    {item?.product?.images?.length > 0 ? (
+                      item?.product?.images?.map((img, inx) => (
+                        <div className="w-[30%]">
+                          <Image
+                            key={inx}
+                            src={img?.url}
+                            alt=""
+                            className="rounded-[20px] "
+                            width={400}
+                            height={400}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div className="w-[30%]">
+                        <Image
                           src="/img1.jpeg"
                           alt=""
-                          className="rounded-[20px] "
+                          className=" rounded-[20px] "
                           width={400}
                           height={400}
                         />
                       </div>
+                    )}
                       
                         <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
                           
@@ -205,16 +236,31 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
                     >
-                          <div className="w-[30%]"> 
-                          <img
-                            src="/img1.jpeg"
+                        
+                        {item?.product?.images?.length > 0 ? (
+                      item?.product?.images?.map((img, inx) => (
+                        <div className="w-[30%]">
+                          <Image
+                            key={inx}
+                            src={img?.url}
                             alt=""
                             className="rounded-[20px] "
                             width={400}
                             height={400}
                           />
                         </div>
-                        
+                      ))
+                    ) : (
+                      <div className="w-[30%]">
+                        <Image
+                          src="/img1.jpeg"
+                          alt=""
+                          className=" rounded-[20px] "
+                          width={400}
+                          height={400}
+                        />
+                      </div>
+                    )}
                           <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
                             
                             <div className="">
@@ -256,7 +302,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                             </div>
   
                         </div>
-                        <div onClick={() => removeFromCart(item?._id)} className="">
+                        <div onClick={() => removeFromCart(item?.product?._id)} className="">
                           <img
                             src="cross.svg"
                             className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
@@ -265,27 +311,26 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                     </div>
                     ))}
                 </div>
-
                 <div className="grid grid-cols-2 py-4">
                   <div className=""></div>
                   <div className="grid grid-cols-2">
                     <div className=""></div>
                     <div className="text-[18px] font-normal">
                       <div className="flex">
-                        <p className="">Subtotal : </p>
-                        <p className=""> </p>
+                        <p className="">Subtotal :  </p>
+                        <p className="px-2"> {subtotal} </p>
                       </div>
                       <div className="flex mt-2 gap-x-10">
                         <p className=""> Sales Tax : </p>
                         <p className=""> </p>
                       </div>
                       <div className="flex mt-2 gap-x-10">
-                        <p className=""> Shipping Charge: </p>
-                        <p className=""> </p>
+                        <p className=""> Shipping Charge : </p>
+                        <p className=""> 75 </p>
                       </div>
                       <div className="flex mt-2 gap-x-10">
-                        <p className=""> Grand Total: </p>
-                        <p className=""> </p>
+                        <p className=""> Grand Total : </p>
+                        <p className=""> {subtotal + 75} </p>
                       </div>
                       <div className="mt-5">
                         <button className="px-5 py-2 rounded bg-lightBlue-500 text-white font-semibold hover:bg-lightBlue-700 w-[50%]">
@@ -298,7 +343,14 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
               </div>
             </div>
           ) : (
-            <div className="py-5">Your cart is empty</div>
+            <div className="py-5">
+              <div className="flex flex-col justify-center items-center">
+                <p className="text-[30px] font-semibold mt-5">Your cart is empty</p>
+                <div className="mt-2">
+                   <Image src="/images/empty.svg" alt="Empty cart" width={500} height={400}/>
+                </div>
+              </div>
+            </div>
           )}
         </>
       )}

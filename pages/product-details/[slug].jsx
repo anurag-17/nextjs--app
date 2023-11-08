@@ -9,11 +9,12 @@ import axios from "axios";
 import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 const Userdetail = () => {
   const router = useRouter();
   const { slug } = router.query;
-  
+
   const [isLoading, setLoading] = useState(false);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
   const [isAddedCart, setAddedCart] = useState(false);
@@ -65,24 +66,22 @@ const Userdetail = () => {
         "User-Agent": "insomnia/2023.5.8",
       },
     };
-try {
- if(router?.query?.slug){
-  fetch(
-    `https://e-commerce-backend-brown.vercel.app/api/product/getaProduct/${router?.query?.slug}`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      setProductDetail(response);
-    })
-    .catch((err) => console.error(err));
- }
-} catch (error) {
-console.log(error);
-
-};
-  
-}
+    try {
+      if (router?.query?.slug) {
+        fetch(
+          `https://e-commerce-backend-brown.vercel.app/api/product/getaProduct/${router?.query?.slug}`,
+          options
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            setProductDetail(response);
+          })
+          .catch((err) => console.error(err));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleColorChange = (productId, selectedColor) => {
     setProductColor(selectedColor);
@@ -110,8 +109,7 @@ console.log(error);
         updateCart();
       }
     } else {
-
-      const use_ID = JSON.parse(localStorage.getItem("userID"))
+      const use_ID = JSON.parse(localStorage.getItem("userID"));
 
       if (!productColor) {
         setShowErr(true);
@@ -126,7 +124,7 @@ console.log(error);
               "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
             "Content-Type": "application/json",
             "User-Agent": "insomnia/2023.5.8",
-            "authorization" : token
+            authorization: token,
           },
           data: {
             cart: [
@@ -148,9 +146,9 @@ console.log(error);
               toast.success("Product added into cart !!");
               setAddIntoCart(true);
 
-        setTimeout(() => {
-          router.push("/cart");
-        }, 500);
+              setTimeout(() => {
+                router.push("/cart");
+              }, 500);
 
               refreshData();
             } else {
@@ -226,11 +224,30 @@ console.log(error);
               <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
                 <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden gap-20 mt-4">
                   <div className="flex-shrink-0 flex justify-center h-auto">
-                    <img
-                      src="/img1.jpeg"
-                      alt="product"
-                      className=" rounded-xl h-auto w-[500px]"
-                    />
+                    {productDetail?.images?.length > 0 ? (
+                      productDetail?.images?.map((img, inx) => (
+                        <div className="w-[500px] h-[400px]">
+                          <Image
+                            key={inx}
+                            src={img?.url}
+                            alt=""
+                            className="rounded-xl h-auto w-[500px]"
+                            width={400}
+                            height={400}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div className="w-[500px] h-[400px]">
+                        <Image
+                          src="/img1.jpeg"
+                          alt=""
+                          className=" rounded-xl h-auto w-[500px]"
+                          width={400}
+                          height={400}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="w-full flex flex-col px-5 md:px-8 text-left">
