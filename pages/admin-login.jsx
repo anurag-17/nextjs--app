@@ -7,6 +7,7 @@ import Image from "next/image";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { EyeIcon,EyeSlashIcon } from "@heroicons/react/24/outline";
 
 
 const AdminLogin = ({ API_URL }) => {
@@ -131,10 +132,10 @@ const AdminLogin = ({ API_URL }) => {
   >
   </input>
   <button type="button"
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
         onClick={handleToggle}
       >
-        {showPassword ? 'Hide' : 'Show'}
+       {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon class="h-6 w-6 text-gray-500" />}
       </button>
 </div>
 

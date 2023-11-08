@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { EyeIcon,EyeSlashIcon } from "@heroicons/react/24/outline";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -166,10 +167,10 @@ const UserLogin = ({ API_URL }) => {
                   />
                   <button
                     type="button"
-                    className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+                    className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
                     onClick={handleToggle}
                   >
-                    {showPassword ? "Hide" : "Show"}
+                   {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon class="h-6 w-6 text-gray-500" />}
                   </button>
                 </div>
 
