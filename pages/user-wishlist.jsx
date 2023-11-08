@@ -3,9 +3,13 @@ import React from "react";
 import UserNavbar from "../components/UserModule/userNavbar";
 import { useState, useEffect } from "react";
 import { fetchApi } from "../utlis/api";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const wishlist = () => {
   const [getWishProduct, setGetWishProduct] = useState([]);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
+  console.log("userToken", token);
 
   useEffect(() => {
     defaultWishPro();
@@ -16,12 +20,39 @@ const wishlist = () => {
       const response = await fetchApi("/auth/wishlist");
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         setGetWishProduct(data?.wishlist);
       }
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(
+        "https://e-commerce-backend-brown.vercel.app/api/product/deleteAllWishlistItems",
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setLoading(false);
+          toast.success("Wishlist items deleted successfully !");
+          handleClose();
+        } else {
+          setLoading(false);
+          return;
+        }
+      })
+      .catch((error) => {
+        console.error("Request error:", error);
+      });
   };
 
   return (
@@ -34,7 +65,10 @@ const wishlist = () => {
               <h1 className="text-[35px] font-semibold"> Your Wishlist</h1>
             </div>
 
-            <button className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer">
+            <button
+              onClick={handleDelete}
+              className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer"
+            >
               <p className="text-[22px] mx-1 flex">
                 Clear Wishlist
                 <img src="cross.svg" className="w-7   mx-1" />
