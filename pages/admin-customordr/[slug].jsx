@@ -2,9 +2,9 @@ import React from 'react';
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
-import dress1 from "../public/dress1.svg";
-import dress2 from "../public/dress2.svg";
-import dress3 from "../public/dress3.svg";
+import dress1 from "../../public/dress1.svg";
+import dress2 from "../../public/dress2.svg";
+import dress3 from "../../public/dress3.svg";
 
 const AdminCutomerOrder = () => {
     const [getallCustomer, setGetallCustomer] = useState([]);
