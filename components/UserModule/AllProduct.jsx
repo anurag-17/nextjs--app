@@ -21,7 +21,7 @@ const ProductGrid = () => {
   const { token } = useSelector((state) => state.auth.userDetails || null);
 
   const [productCategory, setProductCategory] = useState("");
-  const [productBrands, setProductBrands] = useState(["All"]);
+  const [productBrands, setProductBrands] = useState("");
   const [allProduct, setAllProduct] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
@@ -336,11 +336,22 @@ const ProductGrid = () => {
             <hr className="mb-2" />
             <div className="space-y-4 ">
               <div className=" gap-1 ">
-              {/* <Link href={`/product-filter/${cate}`}></Link> */}
-
+                {/* <Link href={`/product-filter/${cate}`}></Link> */}
+                <div className="flex">
+                  <Image className="w-3  " src={right} />
+                  <button
+                    name="category"
+                    id="category"
+                    placeholder="Category"
+                    className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
+                    onClick={getAllProducts}
+                  >
+                    All
+                  </button>
+                </div>
                 {productCategory?.length > 0 &&
                   productCategory.map((cate) => (
-                   <div className="flex justify-start">
+                    <div className="flex flex-col-reverse">
                       <div className="flex my-2">
                         <Image className="w-3  " src={right} />
                         <button
@@ -355,7 +366,6 @@ const ProductGrid = () => {
                         </button>
                       </div>
                     </div>
-                   
                   ))}
               </div>
             </div>
@@ -372,7 +382,7 @@ const ProductGrid = () => {
                     Range:{" "}
                     <span className="font-semibold text-black"> $0- $1000</span>
                   </p>
-                  <Slider min={0} max={1000} />
+                  <Slider max={1000} min={0}  />
                 </div>
                 {/* <p>15</p> */}
               </div>
@@ -385,9 +395,21 @@ const ProductGrid = () => {
             <div className=" ">
               <div className=" justify-between text-[#645D64] space-y-4 ">
                 <div className="w-auto flex flex-col  gap-1">
+                <div className="flex">
+                  <Image className="w-3  " src={right} />
+                  <button
+                    name="category"
+                    id="category"
+                    placeholder="Category"
+                    className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
+                    onClick={getAllProducts}
+                  >
+                    All
+                  </button>
+                </div>
                   {productBrands?.length > 0 &&
                     productBrands.map((bnd) => (
-                      <div className="flex justify-start">
+                      <div className="flex flex-col-reverse">
                         <div className="flex my-2">
                           <Image className="w-3  " src={right} />
                           <button
@@ -432,20 +454,20 @@ const ProductGrid = () => {
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
               >
-                {
-                  items?.images?.length>0 ? items?.images?.map((img,inx)=>(
+                {items?.images?.length > 0 ? (
+                  items?.images?.map((img, inx) => (
                     <div className="h-[400px] p-2">
-                    <Image
-                    key={inx}
-                      src={img?.url}
-                      alt=""
-                      className=" mx-auto rounded-[20px]"
-                      width={300}
-                      height={300}
-                    />
+                      <Image
+                        key={inx}
+                        src={img?.url}
+                        alt=""
+                        className=" mx-auto rounded-[20px]"
+                        width={300}
+                        height={300}
+                      />
                     </div>
                   ))
-                  :
+                ) : (
                   <div className="h-[400px]">
                     <Image
                       src="/img1.jpeg"
@@ -455,7 +477,7 @@ const ProductGrid = () => {
                       height={400}
                     />
                   </div>
-                }
+                )}
                 <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
                   <div className="flex justify-between items-center my-4">
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
@@ -528,7 +550,10 @@ const ProductGrid = () => {
                     </p>
                   </div>
                   <div className="flex gap-x-5 mt-3">
-                    <label for="color" className="text-[18px] capitalize my-2 whitespace-nowrap">
+                    <label
+                      for="color"
+                      className="text-[18px] capitalize my-2 whitespace-nowrap"
+                    >
                       Colors :
                     </label>
                     <div className="w-[240px]">

@@ -23,21 +23,16 @@ const PasswordChange = () => {
 
         {
           headers: {
-            cookie:
-              "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ9...",
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
-            "authorization": "token",
+            authorization: token,
           },
         }
       );
-
       if (response.status === 201) {
         setMessage("Password changed successfully.");
       } else {
         setMessage("Password change failed: " + response.data.error);
       }
-
       console.log(response);
     } catch (error) {
       setMessage(
