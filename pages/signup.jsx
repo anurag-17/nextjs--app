@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
+import { EyeIcon,EyeSlashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,6 +19,11 @@ const Signup = () => {
   const [language, setLanguage] = useState("");
   const [about, setAbout] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   const router = useRouter();
 
@@ -116,15 +122,22 @@ const Signup = () => {
                       required
                     />
                   </div>
-                  <div className="mt-5">
+                  <div className="mt-5 relative">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="Password"
                       className="custom-input w-full"
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}
                       required
                     />
+                    <button
+                    type="button"
+                    className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                    onClick={handleToggle}
+                  >
+                   {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon class="h-6 w-6 text-gray-500" />}
+                  </button>
                   </div>
                   <div className="mt-5">
                     <input
