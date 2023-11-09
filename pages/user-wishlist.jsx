@@ -77,7 +77,7 @@ const wishlist = () => {
             </button>
           </div>
           <hr className="my-5" />
-          <div>
+          <div className="flex flex-col-reverse">
             {getWishProduct?.map((item) => (
               <div className=" flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer ">
                 <div>
