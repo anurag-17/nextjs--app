@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import UserUpdatePaymentM from "./UserUpdatePaymentM";
 import UserNotificationSetting from "./UserNotificationSetting";
-import UserUpdatePassword from "./UserUpdatePassword";
+import Passwordchange from "../../pages/passwordchange";
 
 const UserSetting = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
@@ -41,7 +41,7 @@ const UserSetting = () => {
     {
       id: 3,
       label: "Change Password",
-      component: <UserUpdatePassword />,
+      component: <Passwordchange />,
       icon: "fa fa-phone-square",
       imagePath: "/keylock.svg",
       path: "/user-password",
