@@ -336,9 +336,10 @@ const ProductGrid = () => {
             <hr className="mb-2" />
             <div className="space-y-4 ">
               <div className=" gap-1 ">
+              {/* <Link href={`/product-filter/${cate}`}></Link> */}
+
                 {productCategory?.length > 0 &&
                   productCategory.map((cate) => (
-                   <Link href={`/product-filter/${cate}`}>
                    <div className="flex justify-start">
                       <div className="flex my-2">
                         <Image className="w-3  " src={right} />
@@ -354,7 +355,7 @@ const ProductGrid = () => {
                         </button>
                       </div>
                     </div>
-                   </Link>
+                   
                   ))}
               </div>
             </div>
