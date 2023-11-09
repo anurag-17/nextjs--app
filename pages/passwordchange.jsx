@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const PasswordChange = () => {
   const { token } = useSelector((state) => state.auth.userDetails || {});
@@ -28,21 +29,20 @@ const PasswordChange = () => {
           },
         }
       );
-      if (response.status === 201) {
-        setMessage("Password changed successfully.");
+      if (response.status === 200) {
+        toast.success("Password change successfully !");
       } else {
-        setMessage("Password change failed: " + response.data.error);
+      
       }
       console.log(response);
     } catch (error) {
-      setMessage(
-        "An error occurred while changing the password: " + error.message + "!"
-      );
+      toast.error("Password change failed: ");
     }
   };
 
   return (
     <>
+       <ToastContainer />
       <div className="flex bg-white ml-5 ">
         <div className="w-6/12">
           <div className="bg-white  p-5  ">
