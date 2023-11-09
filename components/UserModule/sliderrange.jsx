@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 
-
 const Slider = ({ min, max }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
@@ -11,7 +10,7 @@ const Slider = ({ min, max }) => {
 
   // Convert to percentage
   const getPercent = useCallback(
-    value => Math.round(((value - min) / (max - min)) * 100),
+    (value) => Math.round(((value - min) / (max - min)) * 100),
     [min, max]
   );
 
@@ -43,7 +42,7 @@ const Slider = ({ min, max }) => {
         min={min}
         max={max}
         value={minVal}
-        onChange={event => {
+        onChange={(event) => {
           const value = Math.min(Number(event.target.value), maxVal - 1);
           setMinVal(value);
           minValRef.current = value;
@@ -56,7 +55,7 @@ const Slider = ({ min, max }) => {
         min={min}
         max={max}
         value={maxVal}
-        onChange={event => {
+        onChange={(event) => {
           const value = Math.max(Number(event.target.value), minVal + 1);
           setMaxVal(value);
           maxValRef.current = value;
@@ -67,8 +66,8 @@ const Slider = ({ min, max }) => {
       <div className="slider">
         <div className="slider__track" />
         <div ref={range} className="slider__range" />
-        <div className="slider__left-value">{minVal}</div>
-        <div className="slider__right-value">{maxVal}</div>
+        <div className="slider__left-value">{maxVal}</div>
+        <div className="slider__right-value">$1000</div>
       </div>
     </div>
   );
@@ -76,7 +75,7 @@ const Slider = ({ min, max }) => {
 
 Slider.propTypes = {
   min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired
+  max: PropTypes.number.isRequired,
 };
 
 export default Slider;

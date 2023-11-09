@@ -1,14 +1,11 @@
-"use client";
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { useState } from "react";
-import { data } from "autoprefixer";
-import { useDispatch, useSelector } from "react-redux";
 
 const PasswordChange = () => {
-  const { token } = useSelector((state) => state.auth.userDetails || null);
-  console.log("pa", token);
+  const { token } = useSelector((state) => state.auth.userDetails || {});
+  console.log(token);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -20,30 +17,26 @@ const PasswordChange = () => {
       const response = await axios.post(
         "https://e-commerce-backend-brown.vercel.app/api/auth/updatePassword",
         {
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        },
+
+        {
           headers: {
-            cookie:
-            "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
-            Authorization: token,
-          },  
-          data: {
-            currentPassword: "currentPassword",
-            newPassword: "newPassword",
+            authorization: token,
           },
         }
       );
-
       if (response.status === 201) {
         setMessage("Password changed successfully.");
       } else {
         setMessage("Password change failed: " + response.data.error);
       }
-
       console.log(response);
     } catch (error) {
       setMessage(
-        "An error occurred while changing the password: " + error.message + " !"
+        "An error occurred while changing the password: " + error.message + "!"
       );
     }
   };
@@ -63,6 +56,7 @@ const PasswordChange = () => {
                     Current Password
                   </label>
                   <input
+                    name="currentPassword"
                     type="password"
                     id="currentPassword"
                     value={currentPassword}
@@ -77,6 +71,7 @@ const PasswordChange = () => {
                     New Password
                   </label>
                   <input
+                    name="newPassword"
                     type="password"
                     id="newPassword"
                     value={newPassword}

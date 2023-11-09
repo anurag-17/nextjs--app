@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { fetchApi } from "../utlis/api";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Image from "next/image";
 
 const wishlist = () => {
   const [getWishProduct, setGetWishProduct] = useState([]);
@@ -76,17 +77,34 @@ const wishlist = () => {
             </button>
           </div>
           <hr className="my-5" />
-          <div>
+          <div className="flex flex-col-reverse">
             {getWishProduct?.map((item) => (
               <div className=" flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer ">
                 <div>
-                  <img
-                    src="/img1.jpeg"
-                    alt=""
-                    className="rounded-[20px] "
-                    width={400}
-                    height={400}
-                  />
+                  {item?.images?.length > 0 ? (
+                    item?.images?.map((img, inx) => (
+                      <div className=" p-5">
+                        <Image
+                          key={inx}
+                          src={img?.url}
+                          alt=""
+                          className=" mx-auto rounded-[20px]"
+                          width={300}
+                          height={300}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="h-[400px]">
+                      <Image
+                        src="/img1.jpeg"
+                        alt=""
+                        className=" mx-auto rounded-[20px] h-[400px] "
+                        width={400}
+                        height={400}
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex justify-between w-full">
                   <div className="bg-white px-10 pb-6 rounded-[20px] ">
