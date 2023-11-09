@@ -14,6 +14,7 @@ const initialState = {
     token: getTokenFromLocalStorage(),
     userID: null,
     userWishList: [],
+    userAddress: "",
   },
   cart: [],
   totalCartItems: 0,
@@ -23,17 +24,19 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setToken: (state, action) => {
+      state.userDetails.token = action.payload;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("userToken", JSON.stringify(action?.payload));
+      }
+    },
     setUserDetails: (state, action) => {
-      state.userDetails.token = action.payload?.token;
-      state.userDetails.userID = action.payload?.user?._id ;
-      state.userDetails.userWishList = action.payload?.user?.wishlist ;
+      state.userDetails.userID = action.payload?._id ;
+      state.userDetails.userWishList = action.payload?.wishlist ;
+      state.userDetails.userAddress = action.payload?.address ;
       if (typeof window !== "undefined") {
-        localStorage.setItem("userToken", JSON.stringify(action?.payload?.token));
-      }
-      if (typeof window !== "undefined") {
-        localStorage.setItem("userID", JSON.stringify(action?.payload?.user?._id));
-      }
-      if (typeof window !== "undefined") {
+        localStorage.setItem("userID", JSON.stringify(action?.payload?._id));
+        localStorage.setItem("userAdd", JSON.stringify(action?.payload?.address));
         localStorage.setItem(
           "wishList",
           JSON.stringify(action?.payload?.user?.wishlist)
@@ -58,6 +61,6 @@ const authSlice = createSlice({
 });
 console.log(authSlice.actions);
 
-export const {addToCart, removeFromCart, cartProducts,setUserDetails } =
+export const {addToCart, removeFromCart, cartProducts,setUserDetails,setToken} =
   authSlice.actions;
 export default authSlice.reducer;

@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-import { setUserDetails } from "../redux/slices/authSlice";
+import { setToken, setUserDetails } from "../redux/slices/authSlice";
 
 const UserLogin = ({ API_URL }) => {
   const router = useRouter();
@@ -40,7 +40,7 @@ const UserLogin = ({ API_URL }) => {
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-      },
+      },  
       data: { email: email, password: password }, // Use _id here
     };
 
@@ -50,7 +50,8 @@ const UserLogin = ({ API_URL }) => {
         console.log(response);
 
         if (response?.status === 201) {
-          dispatch(setUserDetails(response?.data));
+          dispatch(setToken(response?.data?.token));
+          dispatch(setUserDetails(response?.data?.user));
           setLoading(false);
           toast.success("Success, Login Successfully!");
 

@@ -18,6 +18,7 @@ import Grid from "./svg/Grid";
 import List from "./svg/List";
 import Image from "next/image";
 
+
 const headItems = [
   "PRODUCT NAME",
   "CATEGORY",

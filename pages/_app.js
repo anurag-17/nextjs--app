@@ -10,10 +10,12 @@ import "../styles/globals.css";
 import { store } from "../redux/store/store";
 import Layout from "../components/Layout";
 
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  
   useEffect(() => {
     const authToken = sessionStorage.getItem("token");
     console.log("authToken", authToken);

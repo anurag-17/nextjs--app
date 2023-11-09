@@ -1,42 +1,43 @@
-import dynamic from "next/dynamic";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import UserNavbar from "../userNavbar";
-import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+import { ToastContainer, toast } from "react-toastify";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Dialog, Transition } from "@headlessui/react";
+
+import UserNavbar from "../userNavbar";
+import AddressModal from "../Address/addressPopup";
+import { useSelector } from "react-redux";
+
 
 const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) => {
 
-
-  const [customerID, setCustomerID] = useState(
-    JSON.parse(localStorage.getItem("userID")) || null
-  );
-
-
-  let subtotal = 0;
   const [grandTotal, setGrandTotal] = useState(0);
-
+  const [isOpenAdd, setOpenAdd] = useState(false);
+  const {userAddress} = useSelector((state)=>state.auth?.userDetails || "")
 
   useEffect(()=> { updateGrandTotal()},[getCartProduct])
 
-  console.log(grandTotal);
+  const openAddModal = () => {
+    setOpenAdd(true)
+  }
 
+  const closeModal = () => {
+    setOpenAdd(false)
+  }
+
+  const calculateSubtotal = (item) => {
+    return item?.price * item?.count;
+  };
   
-    // Function to calculate the subtotal for each product
-    const calculateSubtotal = (item) => {
-      return item?.price * item?.count;
-    };
-  
-    // Function to update the grand total
-    const updateGrandTotal = () => {
-      const subtotalArray = getCartProduct?.map((item) => calculateSubtotal(item));
-      console.log(subtotalArray);
-      
-      const total = subtotalArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-      setGrandTotal(total);
-    };
+  const updateGrandTotal = () => {
+    const subtotalArray = getCartProduct?.map((item) => calculateSubtotal(item));
+    
+    const total = subtotalArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    setGrandTotal(total);
+  };
 
   const removeWishlist = async () => {
     if (!token || token === undefined) {
@@ -109,20 +110,28 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
 
   return (
     <>
-      <UserNavbar />
+    <ToastContainer/>
+    {!token || token == undefined  ? null : <UserNavbar />}
+
       {!token || token == undefined ? (
         <div className=" px-20">
           <div className="border rounded-lg bg-white p-5">
             <div className="flex justify-between">
               <div>
-                <h1 className="text-[35px] font-semibold"> Your Cart</h1>
+                <h1 className="text-[35px] font-semibold"> Your Cart </h1>
+                  <button
+                    type="button"
+                    onClick={openAddModal}
+                  >
+                    <p className="underline text-[18px] font-medium"> Add your address</p>
+                  </button>
               </div>
 
               <button
                 onClick={removeWishlist}
-                className=" border   rounded-lg hover:bg-lightBlue-100 mr-4 cursor-pointer"
+                className="  mr-4 cursor-pointer"
               >
-                <p className="text-[20px] mx-1 flex font-medium px-4">
+                <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100" >
                   Clear Cart
                   {/* <img src="cross.svg" className="w-7   mx-1" /> */}
                 </p>
@@ -224,8 +233,14 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
                   <div>
                     <h1 className="text-[35px] font-semibold">
                       {" "}
-                      Your Cart ( {getCartProduct?.length} items){" "}
+                      Your Cart ( {getCartProduct?.length} items )
                     </h1>
+                    <button
+                    type="button"
+                    onClick={openAddModal}
+                  >
+                    <p className="underline text-[18px] font-medium"> Add your address</p>
+                  </button>
                   </div>
 
                   <button
@@ -370,8 +385,55 @@ const Usercart = ({ getCartProduct, sessionCartProduct, token, refreshData }) =>
               </div>
             </div>
           )}
+
         </>
       )}
+
+
+        {/* --------------   Address modal    --------------------- */}
+          <Transition appear show={isOpenAdd} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                      <Dialog.Title
+                        as="h3"
+                        className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 "
+                      >
+                       Update your address
+                      </Dialog.Title>
+                      <AddressModal
+                        closeModal={closeModal}
+                        userAdd = {userAddress}
+                      />
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
+
     </>
   );
 };

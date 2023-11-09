@@ -38,6 +38,19 @@ const ProductGrid = () => {
 
   const [productColorsArray, setProductColorsArray] = useState([]);
 
+
+  const [isOpenLogin, setOpenLogin] = useState(false);
+
+
+  const openLoginModal = () => {
+    setOpenLogin(true)
+  }
+
+  const closeLoginModal = () => {
+    setOpenLogin(false)
+  }
+
+
   const option = {
     method: "GET",
     url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
@@ -460,6 +473,25 @@ const ProductGrid = () => {
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                       {items.title}
                     </h6>
+                    {
+                      !token || token === undefined ? 
+                      <div className="cursor-pointer" onClick={openLoginModal}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1}
+                          stroke="currentColor"
+                          className="w-6 h-6 "
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                          />
+                        </svg>
+                    </div>
+                      :
                     <button onClick={() => toggleWishlist(items._id)}>
                       {isWished[items._id] ? (
                         <svg
@@ -493,6 +525,7 @@ const ProductGrid = () => {
                         </svg>
                       )}
                     </button>
+                    }
                   </div>
 
                   <p className="text-[18px]  flex capitalize  ">
@@ -567,6 +600,64 @@ const ProductGrid = () => {
         </div>
       </section>
 
+
+  {/* --------------   Login modal    --------------------- */}
+          <Transition appear show={isOpenLogin} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeLoginModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                      <Dialog.Title
+                        as="h4"
+                        className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4"
+                      >
+                       Please login to add into wishlist
+                      </Dialog.Title>
+                    
+                      <div className="flex justify-between gap-x-5 pt-4">
+                        <button
+                          className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
+                          onClick={closeLoginModal}
+                        >
+                          No
+                        </button>
+                        <Link href="/login" className="w-full" >
+                          <button
+                            className="w-full border border-1 rounded-md  text-sm  border-red-400 text-red-700 hover:bg-red-200  px-2 py-3 hover:border-none"
+                           >
+                          Ok
+                          </button>
+                        </Link>
+                      </div>
+
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
+          
       <Transition appear show={isOpenDelete} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
