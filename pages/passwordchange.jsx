@@ -4,10 +4,11 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { data } from "autoprefixer";
+import { useDispatch, useSelector } from "react-redux";
 
 const PasswordChange = () => {
-  const { userToken } = useSelector((state) => state.userToken || null);
-  console.log("passssss", userToken);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
+  console.log("pa", token);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -21,11 +22,11 @@ const PasswordChange = () => {
         {
           headers: {
             cookie:
-              "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+            "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
             "Content-Type": "application/json",
             "User-Agent": "insomnia/2023.5.8",
-            Authorization: userToken,
-          },
+            Authorization: token,
+          },  
           data: {
             currentPassword: "currentPassword",
             newPassword: "newPassword",
