@@ -15,7 +15,8 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
   const [isShowErr, setShowErr] = useState(false);
   let [productQuantity, setProductQuantity] = useState(1);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
-
+  const [itemQuantities, setItemQuantities] = useState({});
+  
   const handleDelete = () => {
     axios
       .delete(
@@ -40,14 +41,22 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
       });
   };
 
-  const handleCounter = () => {
+  const handleCounter = (itemId) => {
     if (productQuantity !== -1) {
       setProductQuantity((productQuantity += 1));
+      setItemQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [itemId]: (prevQuantities[itemId] || 0) + 1,
+      }));
     }
   };
-  const handleMinusCounter = () => {
+  const handleMinusCounter = (itemId) => {
     if (productQuantity > 1) {
       setProductQuantity((productQuantity -= 1));
+      setItemQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [itemId]: prevQuantities[itemId] - 1,
+      }));
     }
   };
 
@@ -85,7 +94,9 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
           console.log(response);
           if (response.status === 200) {
             setAddIntoCart(true);
-            refreshData();
+            removeFromWishlist(data?._id)
+            // refreshData();
+            setProductColor('')
           } else {
             toast.error("Failed, Token is expired")
             return;
@@ -211,15 +222,15 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                         Quantity :
                       </div>
                       <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
-                        <p className="font-semibold px-2">{productQuantity}</p>
+                        <p className="font-semibold px-2"> {itemQuantities[item?._id] || 0}</p>
                         <button
-                          onClick={handleMinusCounter}
+                          onClick={() => handleMinusCounter(item?._id)}
                           className="border border-black px-3 ml-3"
                         >
                           -
                         </button>
                         <button
-                          onClick={handleCounter}
+                          onClick={()=>handleCounter(item?._id)}
                           className="border border-black px-3 ml-3"
                         >
                           +
@@ -270,7 +281,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                     </div>
                   </div>
                   <div className="">
-                    {
+                    {/* {
                       isAddIntoCart ? 
                      <Link href="/cart">
                       <button
@@ -278,14 +289,14 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                     >
                       Go to Cart
                     </button>
-                     </Link> :
+                     </Link> : */}
                     <button
                       onClick={() => addToCart(item)}
                       className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold bg-lightBlue-700 text-white border hover:bg-white hover:text-lightBlue-700 border-lightBlue-700 lg:w-[300px] w-full"
                   >
-                    Add to Cart
+                    Move to Cart
                   </button>
-                    }
+                    {/* } */}
                     
                     <button
                     onClick={()=>removeFromWishlist(item?._id)}
