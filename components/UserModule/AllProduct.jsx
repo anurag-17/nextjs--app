@@ -556,13 +556,12 @@ const ProductGrid = () => {
                   <p className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
                     Offer price :{" "}
                     <p className="text-sky-800 px-2 font-bold">
-                      ₹{items.discountedPrice}{" "}
+                      {items?.offerPriceCurr} {items.discountedPrice}
                     </p>
                     <br />
                   </p>
                   <del className="text-md font-semibold capitalize my-2 text-sky-600">
-                    {" "}
-                    Regular Price : ₹{items.price}
+                    Regular Price :  {items?.regPriceCurr} {items.price}
                   </del>
 
                   <p className="text-[18px] flex capitalize my-2 ">
@@ -574,7 +573,6 @@ const ProductGrid = () => {
                     <p className="font-semibold px-2">{items.category}</p>
                   </p>
                   <div className="flex mt-3">
-                    {" "}
                     <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
                     <p className=" bg-sky-200 p-1 text-center font-semibold rounded-xl text-sky-600 w-20">
                       selling
@@ -682,49 +680,49 @@ const ProductGrid = () => {
             </Dialog>
           </Transition>
           
-      <Transition appear show={isOpenDelete} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <Transition appear show={isOpenDelete} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeModal}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
                 leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
               >
-                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
-                  >
-                    Are You Sure! Want to Delete?
-                  </Dialog.Title>
-                  <DeleteModal
-                    productID={productID}
-                    closeModal={closeModal}
-                    refreshData={refreshData}
-                  />
-                </Dialog.Panel>
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
               </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                      <Dialog.Title
+                        as="h3"
+                        className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
+                      >
+                        Are You Sure! Want to Delete?
+                      </Dialog.Title>
+                      <DeleteModal
+                        productID={productID}
+                        closeModal={closeModal}
+                        refreshData={refreshData}
+                      />
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
     </>
   );
 };

@@ -53,7 +53,6 @@ const ProductList = () => {
   const [rowCount, setRowCount] = useState(allProduct?.length || null);
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-  console.log(selected);
 
   const pageLimit = "15";
   function closeModal() {
@@ -122,7 +121,6 @@ const ProductList = () => {
       axios
         .request(options)
         .then(function (response) {
-          console.log("hell", response.data);
           if (response.status === 200) {
             setAllProduct(response.data);
           }
@@ -146,7 +144,6 @@ const ProductList = () => {
       axios
         .request(options)
         .then(function (response) {
-          console.log(response.data);
           if (response.status === 200) {
             setAllProduct(response.data);
           }
@@ -192,16 +189,14 @@ const ProductList = () => {
       );
 
       if (response.status === 200) {
-        console.log("Successfully deleted brands");
+        toast.success("Successfully deleted all products");
 
         getAllProducts();
       } else {
-        console.error(
-          "Failed to delete brands. Status code: " + response.status
-        );
+        toast.error( "Failed to delete brands");
       }
     } catch (error) {
-      console.error("Error deleting brands:", error);
+      toast.error("Error deleting brands:");
     }
   };
   const handleSelectAllClick = (event) => {
@@ -376,7 +371,7 @@ const ProductList = () => {
           <>
             <div className=" w-full md:w-[85%] mx-auto">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                {allProduct?.map((items, ix) => (
+                {allProduct?.length > 0 && allProduct?.map((items, ix) => (
                   <div
                     className=" bg-white  border-[2px] border-gray rounded-[10px] m-4 hover:border-lightBlue-600"
                     key={ix}
@@ -413,7 +408,7 @@ const ProductList = () => {
                     <div className="bg-white px-4 pb-6 rounded-[20px]">
                       <div className="flex justify-between items-center my-4">
                         <h6 className="text-25px[] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
-                          {items.title}
+                          {items?.title}
                         </h6>
                         {/* <button onClick={handleAddToCart}>
                         <HeartIcon class="h-8 w-8 text-gray-500" />
@@ -422,21 +417,20 @@ const ProductList = () => {
 
                       <div className=" flex justify-between items-center">
                         <p className="text-[16px]  capitalize  ">
-                          Brand : {items.brand}
+                          Brand : {items?.brand}
                         </p>
                       </div>
                       <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
-                        Offer Price : ₹{items.discountedPrice} <br />
+                        Offer Price : {items?.offerPriceCurr} {items?.discountedPrice} 
                       </p>
                       <del className="text-sm font-semibold capitalize my-2 text-sky-600">
-                        {" "}
-                        Regular Price : ₹{items.price}{" "}
+                        Regular Price : {items?.regPriceCurr} {items?.price}
                       </del>
                       <p className="text-[18px]  capitalize my-2 ">
-                        Stock : {items.quantity}
+                        Stock : {items?.quantity}
                       </p>
                       <p className="text-[18px]  capitalize my-2 ">
-                        Category : {items.category}
+                        Category : {items?.category}
                       </p>
                       <div className="flex">
                         {" "}

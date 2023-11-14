@@ -5,38 +5,38 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 const AddProduct = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [getallBrand, setGetallBrand] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getCurrency, setGetCurrency] = useState([]);
-  const [selectedImages, setSelectedImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [isUploadingImg, setUploadingImg] = useState(false);
+  const [isPriceError, setPriceError] = useState(false);
+  const [isCurrError, setCurrError] = useState(false);
   const [imageUrls, setImageUrls] = useState("");
   const [productDetails, setProductDetails] = useState({
     title: "",
     description: "",
     price: "",
-    currencyName:"",
     discountedPrice: "",
+    regPriceCurr: "",
+    offerPriceCurr: "",
     category: "",
     brand: "",
     quantity: "",
     color: [],
     images: [
       {
-        "public_id": "",
-        "url": "",
+        public_id: "",
+        url: "",
       },
     ],
   });
 
-  console.log(productDetails);
-  
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
-  
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -51,55 +51,45 @@ const AddProduct = () => {
       title: "",
       description: "",
       price: "",
-      currencyName:"",
+      currencyName: "",
+      discountedPrice: "",
       category: "",
       brand: "",
       quantity: "",
       color: [],
+      images: [],
+      regPriceCurr: "",
+      offerPriceCurr: "",
     });
   };
 
-  const inputHandler = (e) => {
-    const { name, value } = e.target;
+  //---currency---
 
-    if (name === "color") {
-      setProductDetails({
-        ...productDetails,
-        [name]: value.split(","),
-      });
-    } else {
-      setProductDetails({
-        ...productDetails,
-        [name]: value,
-      });
-    }
-  };
-//---currency---
-
-useEffect(() => {
-  defaultCurrency();
-}, []);
-const defaultCurrency = () => {
-  const curr = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
-  };
-  axios
-    .request(curr)
-    .then((response) => {
-      setGetCurrency(response.data);
-      // console.log(response.data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
-
-
-useEffect(() => {
-  defaultCategory();
+  useEffect(() => {
+    defaultCurrency();
   }, []);
-  
+
+  const defaultCurrency = () => {
+    const curr = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
+    };
+    axios
+      .request(curr)
+      .then((response) => {
+        if (response?.status === 200) {
+          setGetCurrency(response?.data);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    defaultCategory();
+  }, []);
+
   const defaultCategory = () => {
     const option = {
       method: "GET",
@@ -108,7 +98,7 @@ useEffect(() => {
     axios
       .request(option)
       .then((response) => {
-        setGetallCategory(response.data);
+        setGetallCategory(response?.data);
         handleClose();
       })
       .catch((error) => {
@@ -119,6 +109,7 @@ useEffect(() => {
   useEffect(() => {
     defaultBrand();
   }, []);
+
   const defaultBrand = () => {
     const options = {
       method: "GET",
@@ -128,57 +119,9 @@ useEffect(() => {
       .request(options)
       .then((response) => {
         setGetallBrand(response.data);
-        // console.log(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
-      });
-  };  
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
- 
-    setLoading(true);
-
-    const options = {
-      method: "POST",
-      url: "https://e-commerce-backend-brown.vercel.app/api/product/createProduct",
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
-        // Authorization: "Bearer " + token,
-      },
-      data: productDetails,
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        // console.log(response);
-        if (response.status === 200) {
-          notify();
-          setLoading(false);
-          refreshData();
-        } else {
-          setLoading(false);
-          return;
-        }
-      })
-      .catch(function (error) {
-        setLoading(false);
-        console.error(error);
-        toast.error("Failed. Can not repeat product name!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
       });
   };
 
@@ -196,46 +139,110 @@ useEffect(() => {
   };
 
   const handleImageUpload = async (event) => {
+    setUploadingImg(true);
     const files = event.target.files;
     const formData = new FormData();
 
     for (let i = 0; i < files.length; i++) {
-      formData.append('images', files[i]);
+      formData.append("images", files[i]);
     }
-    console.log(formData);
-    
-
     try {
       const res = await uploadImage(formData);
-      // console.log(res.data?.imageUrls);
-      setImageUrls(res.data?.imageUrls)
-      setProductDetails((prevProductDetails) => ({
-        ...prevProductDetails,
-        images: res?.data?.imageUrls?.map((url) => ({
-          public_id: url , 
-          url: url,
-        })),
-      }));
-      
+      if (res?.status === 200) {
+        setUploadingImg(false);
+        setImageUrls(res.data?.imageUrls);
+        setProductDetails((prevProductDetails) => ({
+          ...prevProductDetails,
+          images: res?.data?.imageUrls?.map((url) => ({
+            public_id: url,
+            url: url,
+          })),
+        }));
+      } else {
+        toast.error("Failed !!");
+        setUploadingImg(false);
+      }
     } catch (error) {
       console.log(error);
-      
+      setUploadingImg(false);
     }
   };
 
   const uploadImage = async (formData) => {
     try {
-      const response = await axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/upload", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          "authorization" : token
-        },
-      });
-  
+      const response = await axios.post(
+        "https://e-commerce-backend-brown.vercel.app/api/auth/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: token,
+          },
+        }
+      );
+
       return response;
     } catch (error) {
-      console.error('Image upload error', error);
+      console.error("Image upload error", error);
       throw error;
+    }
+  };
+
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "color") {
+      setProductDetails({
+        ...productDetails,
+        [name]: value.split(","),
+      });
+    } else {
+      setProductDetails({
+        ...productDetails,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (productDetails?.regPriceCurr !== productDetails?.offerPriceCurr) {
+      setCurrError(true);
+    }
+   else if (productDetails?.discountedPrice >= productDetails?.price) {
+      setPriceError(true);
+    } else {
+      setLoading(true);
+      setPriceError(false);
+      setCurrError(false);
+      const options = {
+        method: "POST",
+        url: "https://e-commerce-backend-brown.vercel.app/api/product/createProduct",
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent": "insomnia/2023.5.8",
+        },
+        data: productDetails,
+      };
+
+      axios
+        .request(options)
+        .then(function (response) {
+          if (response.status === 200) {
+            notify();
+            setLoading(false);
+            refreshData();
+          } else {
+            setLoading(false);
+            return;
+          }
+        })
+        .catch(function (error) {
+          setLoading(false);
+          console.error(error);
+          toast.error("Failed. Can not repeat product name!");
+        });
     }
   };
 
@@ -298,30 +305,59 @@ useEffect(() => {
 
           {/*------ Image -----*/}
           <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-             <label className="custom-input-label">Product Images</label>
-              <div className="col-span-8 sm:col-span-4">
-                <div className="w-full text-center custom-input flex justify-center items-center h-[100px]">
-                  <label className="text-lg font-semibold bg-slate-100 p-1 rounded cursor-pointer" htmlFor="fileUpload">
-                    <input type="file" className="hidden" id="fileUpload" muiltiple onChange={handleImageUpload}/>
-                    Upload File
-                  </label>
-                </div>
+            <label className="custom-input-label">Product Images</label>
+            <div className="col-span-8 sm:col-span-4">
+              <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
+                {imageUrls === "" ? (
+                  <>
+                    {isUploadingImg ? (
+                      <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
+                        Uploading ...
+                      </button>
+                    ) : (
+                      <label
+                        className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
+                        htmlFor="fileUpload"
+                      >
+                        <input
+                          type="file"
+                          className="hidden"
+                          id="fileUpload"
+                          muiltiple
+                          onChange={handleImageUpload}
+                          accept="image/png,image/jpg, image/jpeg"
+                        />
+                        Upload product image
+                      </label>
+                    )}
+                  </>
+                ) : (
+                  <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
+                    Image Uploaded
+                  </button>
+                )}
               </div>
+            </div>
           </div>
 
-          {/*------ price -----*/}
+          {/*------ regiular price -----*/}
           <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
             <label className="custom-input-label">Regular Price</label>
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  ">
-                  <select className="bg-white list-none outline-none" name="currencyName" value={productDetails.currencyName}>
-                 {getCurrency.map((item)=>(
-                  <option key={item.id} value={item.id} selected={item.currencyName === productDetails.currencyName}>
-                    {item.currencySign}
-                  </option>
-                 ))}
-                   
+                  <select
+                    className="bg-white list-none outline-none"
+                    name="regPriceCurr"
+                    value={productDetails?.regPriceCurr}
+                    onChange={inputHandler}
+                  >
+                    <option value=""> curr </option>
+                    {getCurrency?.map((item) => (
+                      <option key={item?.id} value={item?.currencySign}>
+                        {item?.currencySign}
+                      </option>
+                    ))}
                   </select>
                 </span>
                 <input
@@ -344,12 +380,18 @@ useEffect(() => {
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
                 <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                  <select className="bg-white list-none outline-none " name="currencyName" value={productDetails.currencyName}>
-                  {getCurrency.map((item)=>(
-                  <option key={item.id} value={item.id} selected={item.currencyName === productDetails.currencyName}>
-                    {item.currencySign}
-                  </option>
-                 ))}
+                  <select
+                    className="bg-white list-none outline-none "
+                    name="offerPriceCurr"
+                    value={productDetails.offerPriceCurr}
+                    onChange={inputHandler}
+                  >
+                    <option value=""> curr </option>
+                    {getCurrency?.map((item) => (
+                      <option key={item?.id} value={item?.currencySign}>
+                        {item?.currencySign}
+                      </option>
+                    ))}
                   </select>
                 </span>
                 <input
@@ -361,8 +403,20 @@ useEffect(() => {
                   onChange={inputHandler}
                   required
                   minLength={1}
+                  maxLength={productDetails?.price}
                 />
               </div>
+              {isPriceError && (
+                <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
+                  Offer price should be less than regular price
+                </span>
+              )}
+              <br/>
+              {isCurrError && (
+                <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
+                  Offer price currency should be same as regular price
+                </span>
+              )}
             </div>
           </div>
 
@@ -382,7 +436,9 @@ useEffect(() => {
                 minLength={3}
                 max={32}
               >
-              <option value="" disabled>Select Category</option>
+                <option value="" disabled>
+                  Select Category
+                </option>
                 {getallCategory.map((item) => (
                   <option
                     key={item.id}
@@ -432,7 +488,9 @@ useEffect(() => {
                   minLength={3}
                   max={32}
                 >
-                <option value="" disabled>Select Brands</option>
+                  <option value="" disabled>
+                    Select Brands
+                  </option>
                   {getallBrand.map((items) => (
                     <option
                       key={items.id}

@@ -11,19 +11,24 @@ export default function EditProduct() {
   const [isLoading, setLoading] = useState(false);
   const [isRefresh, setRefresh] = useState(false);
   const [editData, setEditData] = useState({});
+  const [getCurrency, setGetCurrency] = useState([]);
+
   const [productDetails, setProductDetails] = useState({
     title: "",
     description: "",
     price: "",
     discountedPrice: "",
+    regPriceCurr: "",
+    offerPriceCurr: "",
     category: "",
     brand: "",
     quantity: "",
     color: [],
   });
 
-  console.log("editData", editData);
-  console.log("slug", slug);
+
+  console.log(productDetails?.offerPriceCurr);
+  
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
@@ -69,7 +74,6 @@ export default function EditProduct() {
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         setEditData(response);
       })
       .catch((err) => console.error(err));
@@ -83,12 +87,10 @@ export default function EditProduct() {
       method: "PUT",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/updateProduct/${slug}`,
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-        // Authorization: "Bearer " + token,
       },
+      // data: productDetails,
       data: {
         title: productDetails?.title ? productDetails?.title : editData?.title,
         description: productDetails?.description
@@ -106,13 +108,14 @@ export default function EditProduct() {
           ? productDetails?.quantity
           : editData?.quantity,
         color: productDetails?.color ? productDetails?.color : editData?.color,
+        regPriceCurr: productDetails?.regPriceCurr ? productDetails?.regPriceCurr : editData?.regPriceCurr,
+        offerPriceCurr: productDetails?.offerPriceCurr ? productDetails?.offerPriceCurr : editData?.offerPriceCurr,
       },
     };
 
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
         if (response.status === 200) {
           setLoading(false);
           toast.success("Product updated successfully !");
@@ -130,6 +133,30 @@ export default function EditProduct() {
       });
   };
 
+
+    //---currency---
+
+    useEffect(() => {
+      defaultCurrency();
+    }, []);
+  
+    const defaultCurrency = () => {
+      const curr = {
+        method: "GET",
+        url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
+      };
+      axios
+        .request(curr)
+        .then((response) => {
+          if (response?.status === 200) {
+            setGetCurrency(response?.data);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+  
   return (
     <>
       <section className="bg-gray-100 min-h-screen">
@@ -208,18 +235,22 @@ export default function EditProduct() {
                 </div>
               </div>
 
-              {/*------ price -----*/}
+              {/*----- Regular price -----*/}
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <label className="custom-input-label">Product Price</label>
                 <div className="col-span-8 sm:col-span-4">
                   <div className="flex flex-row">
                     <span className="inline-flex items-center px-1 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                      <select className="bg-white list-none outline-none ">
-                        <option>₹</option>
-                        <option>$</option>
-                        <option>€</option>
-                        <option>¥</option>
-                        <option>د.إ</option>
+                      <select className="bg-white list-none outline-none "
+                      name="regPriceCurr"
+                        defaultValue={editData?.regPriceCurr ? editData?.regPriceCurr : productDetails?.regPriceCurr}
+                        onChange={inputHandler}
+                       >
+                   {getCurrency?.map((item) => (
+                      <option key={item?.id} value={item?.currencySign}>
+                        {item?.currencySign}
+                      </option>
+                    ))}
                       </select>
                     </span>
                     <input
@@ -244,12 +275,16 @@ export default function EditProduct() {
                 <div className="col-span-8 sm:col-span-4">
                   <div className="flex flex-row">
                     <span className="inline-flex items-center px-1 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                      <select className="bg-white list-none outline-none ">
-                        <option>₹</option>
-                        <option>$</option>
-                        <option>€</option>
-                        <option>¥</option>
-                        <option>د.إ</option>
+                      <select className="bg-white list-none outline-none "
+                       name="offerPriceCurr"
+                         defaultValue={editData?.regPriceCurr ? editData?.regPriceCurr : productDetails?.regPriceCurr}
+                          onChange={inputHandler}
+                         >
+                      {getCurrency?.map((item) => (
+                      <option key={item?.id} value={item?.currencySign}>
+                        {item?.currencySign}
+                      </option>
+                    ))}
                       </select>
                     </span>
                     <input
@@ -257,7 +292,6 @@ export default function EditProduct() {
                       name="discountedPrice"
                       placeholder="OfferPrice"
                       className="custom-input"
-                      // value={productDetails.discountedPrice}
                       defaultValue={
                         editData?.discountedPrice
                           ? editData?.discountedPrice
