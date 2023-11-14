@@ -78,18 +78,18 @@ const menuList = [
     subData: [
       {
         id: "1",
-        label: "Vendor List",
+        label: "All Vendors",
         component: "",
         icon: `fa fa-users`,
         path: "/vendor",
       },
-      {
-        id: "2",
-        label: "Vendor Grid",
-        component: "",
-        icon: `fa fa-users`,
-        path: "/vendor-grid",
-      },
+      // {
+      //   id: "2",
+      //   label: "Vendor Grid",
+      //   component: "",
+      //   icon: `fa fa-users`,
+      //   path: "/vendor-grid",
+      // },
       {
         id: "3",
         label: "Vendor Profile",

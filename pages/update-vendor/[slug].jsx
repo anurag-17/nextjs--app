@@ -27,6 +27,7 @@ const UpdateVendor = ({ vendorEdit }) => {
     address: "",
   });
 
+  
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -53,27 +54,31 @@ const UpdateVendor = ({ vendorEdit }) => {
   }, []);
 
   const fetchVendor = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        cookie:
+          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
+        "User-Agent": "insomnia/2023.5.8",
+      },
+    };
     try {
-      setIsFetching(true);
-      const res = await fetch(
+      const response = await fetch(
         `https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors/${vendorEdit}`,
-        {
-          cache: "no-store",
-        }
+        options
       );
-      if (!res.ok) {
-        throw new Error("Failed to fetch category");
+      if (!response.ok) {
+        throw new Error("Failed to fetch vendor");
       }
-
-      const data = await res.json();
-      setIsFetching(data.name);
+      const responseData = await response.json();
+      setEditData(responseData);
+      console.log(responseData);
     } catch (error) {
-      console.log(error);
-    } finally {
-      setIsFetching(false);
+      console.error(error);
     }
   };
-
+  
+  
   const handleUpdateVendor = async (e) => {
     e.preventDefault();
 
