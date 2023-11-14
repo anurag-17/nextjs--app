@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,9 +9,12 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { EyeIcon,EyeSlashIcon } from "@heroicons/react/24/outline";
+import { setAdminDetails } from "../redux/slices/adminAuthSlice";
 
 
 const AdminLogin = ({ API_URL }) => {
+
+  const dispatch = useDispatch()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
@@ -42,6 +46,8 @@ const AdminLogin = ({ API_URL }) => {
           console.log(response.data);
           localStorage.setItem('accessToken', JSON.stringify(response.data.token));
           localStorage.setItem('userDetails', JSON.stringify(response?.data?.user?._id));
+          dispatch(setAdminToken(response?.data?.token))
+          dispatch(setAdminDetails(response?.data?.user))
           setLoading(false);
           toast.success('Success. Login Successfully!');
           router.push('/admin-dashboard');

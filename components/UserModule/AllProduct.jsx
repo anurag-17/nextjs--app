@@ -37,8 +37,6 @@ const ProductGrid = () => {
   const [isWished, setIsWished] = useState({});
 
   const [productColorsArray, setProductColorsArray] = useState([]);
-
-
   const [isOpenLogin, setOpenLogin] = useState(false);
 
 
