@@ -120,11 +120,9 @@ const Userdetail = () => {
           method: "POST",
           url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
           headers: {
-            cookie:
-              "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
             "Content-Type": "application/json",
             "User-Agent": "insomnia/2023.5.8",
-            authorization: token,
+            "authorization": token,
           },
           data: {
             cart: [
@@ -137,7 +135,6 @@ const Userdetail = () => {
             // _id: use_ID || null,
           },
         };
-        // console.log(options);
         axios
           .request(options)
           .then(function (response) {
@@ -145,11 +142,6 @@ const Userdetail = () => {
             if (response.status === 200) {
               toast.success("Product added into cart !!");
               setAddIntoCart(true);
-
-              setTimeout(() => {
-                router.push("/cart");
-              }, 500);
-
               refreshData();
             } else {
               return;

@@ -112,7 +112,7 @@ const UserNavbar = () => {
     localStorage.removeItem("wishList");
     localStorage.removeItem("userID");
     localStorage.removeItem("userToken");
-    router.push('/');
+    window.location.reload()
   }
   const handleLogin = ()=>{
     router.push('/login');

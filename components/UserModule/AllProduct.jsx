@@ -36,6 +36,8 @@ const ProductGrid = () => {
   const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
 
+  console.log(isWished);
+  
   const [productColorsArray, setProductColorsArray] = useState([]);
   const [isOpenLogin, setOpenLogin] = useState(false);
 
@@ -109,8 +111,6 @@ const ProductGrid = () => {
   }, []);
 
   const addToWishlist = (id) => {
-    console.log("prodID", id);
-    setIsWished(!isWished);
     const prodId = id;
     const options = {
       method: "POST",
@@ -131,7 +131,7 @@ const ProductGrid = () => {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          toast.success("Success. Product added successfully!");
+          toast.success("Success. Product added in wishlist!");
           setLoading(false);
           refreshData();
         } else {
@@ -142,7 +142,7 @@ const ProductGrid = () => {
       .catch(function (error) {
         setLoading(false);
         console.error(error);
-        toast.error("Failed. Can not repeat product name!");
+        toast.error("Failed. try again!");    
       });
   };
 
@@ -296,11 +296,9 @@ const ProductGrid = () => {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-        authorization: token,
+        "authorization": token,
       },
       data: {
         cart: [
@@ -390,7 +388,7 @@ const ProductGrid = () => {
                 <div className=" ">
                   {/* <Image className="w-3 " src={right} /> */}
                   <p className="text-[#645D64]  no-underline hover:underline mb-3">
-                    Range:{" "}
+                    Range:
                     <span className="font-semibold text-black"> $0- $1000</span>
                   </p>
                   <Slider max={1000} min={0}  />
@@ -521,7 +519,7 @@ const ProductGrid = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1}
                           stroke="currentColor"
-                          className="w-6 h-6 fill-[#c61f1f]"
+                          className="w-6 h-6 fill-[#f16e6e] "
                         >
                           <path
                             strokeLinecap="round"
@@ -536,7 +534,7 @@ const ProductGrid = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1}
                           stroke="currentColor"
-                          className="w-6 h-6 "
+                          className="w-6 h-6 b"
                         >
                           <path
                             strokeLinecap="round"
@@ -550,11 +548,11 @@ const ProductGrid = () => {
                   </div>
 
                   <p className="text-[18px]  flex capitalize  ">
-                    Brand :{" "}
+                    Brand :
                     <p className="font-semibold px-2"> {items.brand} </p>
                   </p>
                   <p className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
-                    Offer price :{" "}
+                    Offer price :
                     <p className="text-sky-800 px-2 font-bold">
                       {items?.offerPriceCurr} {items.discountedPrice}
                     </p>
@@ -565,11 +563,11 @@ const ProductGrid = () => {
                   </del>
 
                   <p className="text-[18px] flex capitalize my-2 ">
-                    Stock :{" "}
+                    Stock :
                     <p className="px-2 font-semibold">{items.quantity}</p>
                   </p>
                   <p className="text-[18px] flex capitalize my-2 ">
-                    Category :{" "}
+                    Category :
                     <p className="font-semibold px-2">{items.category}</p>
                   </p>
                   <div className="flex mt-3">
