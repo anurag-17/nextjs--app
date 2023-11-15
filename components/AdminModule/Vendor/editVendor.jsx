@@ -78,7 +78,7 @@ const UpdateVendor = ({ editData, closeDrawer, vendorEdit, refreshData }) => {
 
   return (
     <div>
-      <ToastContainer />
+   
       <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
         <h2 className="text-2xl font-semibold pb-4">Update Vendor </h2>
         <div className="mb-3 w-[40%]"></div>

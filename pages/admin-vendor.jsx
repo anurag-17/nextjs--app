@@ -1,22 +1,21 @@
-"use client";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,Fragment } from "react";
 import Link from "next/link";
-import {
-  TrashIcon,
-  PencilSquareIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/24/outline";
-import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import Grid from "../components/AdminModule/Product/svg/Grid";
 import List from "../components/AdminModule/Product/svg/List";
 import DeleteModuleV from "../components/AdminModule/Vendor/deleteModule";
 import UpdateVendor from "../components/AdminModule/Vendor/editVendor";
 import AddVendor from "../components/AdminModule/Vendor/addVendor";
+
+import {
+  TrashIcon,
+  PencilSquareIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
 
 const headItems = [
   "VENDOR NAME",
@@ -135,6 +134,7 @@ const vendor = () => {
 
   return (
     <>
+       <ToastContainer />
       <div>
         <div className="flex justify-between items-center px-10 pt-4 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
           <h2 className="text-2xl font-semibold pb-4">All Vendors</h2>
