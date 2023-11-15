@@ -144,19 +144,21 @@ const ProductGrid = () => {
       const response = await addToWishlist(productId);
 
       if (response.status === 200) {
-        const message = isWished[productId]
-          ? "Success. Product removed from wishlist!"
-          : "Success. Product added to wishlist!";
-        toast.success(message);
+        // const message = isWished[productId]
+        //   ? "Success. Product removed from wishlist!"
+        //   : "Success. Product added to wishlisttt!";
+        //   console.log("qqq",response.data.message);
+        toast.success(response.data.message);
         setLoading(false);
         refreshData();
       } else {
+
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.error(error);
-      toast.error("Failed. Try again!");
+      toast.error(response.data.message);
     }
   };
 
