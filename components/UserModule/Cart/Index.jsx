@@ -16,6 +16,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [isOpenAdd, setOpenAdd] = useState(false);
   const { userAddress } = useSelector((state) => state.auth?.userDetails || "");
 
+  console.log(getCartProduct);
+  
   useEffect(() => {
     updateGrandTotal();
   }, [getCartProduct]);
@@ -76,7 +78,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   };
 
   const removeFromCart = async (id) => {
-    console.log(token);
 
     if (!token || token === 200) {
       const sessionCart = JSON.parse(sessionStorage.getItem("addToCart")) || [];
@@ -233,12 +234,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                 <div className="flex justify-between">
                   <div>
                     <h1 className="text-[35px] font-semibold">
-                      {" "}
                       Your Cart ( {getCartProduct?.length} items )
                     </h1>
                     <button type="button" onClick={openAddModal}>
                       <p className="underline text-[18px] font-medium">
-                        {" "}
                         Add your address
                       </p>
                     </button>
@@ -267,20 +266,26 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         >
                           {item?.product?.images?.length > 0 ? (
                             item?.product?.images?.map((img, inx) => (
-                              <div className="w-[30%] py-2 px-4">
-                                <Link
-                                  href={`/product-details/${item?.product?._id}`}
-                                >
-                                  <Image
-                                    key={inx}
-                                    src={img?.url}
-                                    alt=""
-                                    className="rounded-[20px] "
-                                    width={250}
-                                    height={300}
-                                  />
-                                </Link>
-                              </div>
+                              <>
+                              {console.log( getCartProduct?.color)}
+                                {
+                                  item?.color == img?.color &&
+                                <div className="w-[30%] py-2 px-4">
+                                  <Link
+                                    href={`/product-details/${item?.product?._id}`}
+                                  >
+                                    <Image
+                                      key={inx}
+                                      src={img?.url}
+                                      alt=""
+                                      className="rounded-[20px] "
+                                      width={250}
+                                      height={300}
+                                    />
+                                  </Link>
+                                </div>
+                                }
+                              </>
                             ))
                           ) : (
                             <div className="w-[30%]">
@@ -358,7 +363,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       <div className="flex">
                         <p className="w-[200px]">Subtotal : </p>
                         <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                          {" "}
                           ₹ {grandTotal}{" "}
                         </p>
                       </div>
@@ -373,7 +377,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       <div className="flex mt-2">
                         <p className="w-[200px]"> Grand Total : </p>
                         <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
-                          {" "}
                           ₹ {grandTotal + 75}{" "}
                         </p>
                       </div>
