@@ -31,7 +31,9 @@ const CreateBrand = () => {
         });
     } catch (error) {}
   };
-
+  const handleClose = () => {
+    closeDrawer();
+  };
   return (
     <div>
       <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[50px] my-5 ">

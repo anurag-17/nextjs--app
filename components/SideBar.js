@@ -58,6 +58,12 @@ const menuList = [
         ],
         icon: `fa fa-usd`,
       },
+      {
+        id: "04",
+        label: "color",
+        component: <New />,
+        path: "/color",
+      },
     ],
     icon: `fa fa-usd`,
   },

@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { Dialog, Transition } from "@headlessui/react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React from "react";
+import { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
-const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
+const DeleteColor = ({ colorID, closeModal, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
 
   const handleClose = () => {
@@ -19,20 +17,24 @@ const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
 
     const options = {
       method: "DELETE",
-      url: `https://e-commerce-backend-brown.vercel.app/api/brand/deleteBrand/${brandID}`,
+      url: "https://e-commerce-backend-brown.vercel.app/api/color/deleteColor",
       headers: {
-        Accept: "application/json",
+        Accept: "*/*",
         "Content-Type": "application/json",
+      },
+      data: {
+        id: colorID,
       },
     };
 
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
+        console.log("Response:", response);
+
         if (response.status === 200) {
           setLoading(false);
-          toast.success("brand deleted successfully !");
+          toast.success("Brand deleted successfully!");
           handleClose();
         } else {
           setLoading(false);
@@ -41,14 +43,14 @@ const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
       })
       .catch(function (error) {
         setLoading(false);
-        console.error(error);
-        toast.error("Failed. something went wrong!");
+        console.error("Error:", error);
+        toast.error("Failed. Something went wrong!");
       });
   };
 
   return (
     <>
-      <ToastContainer/>
+        <ToastContainer />
       <div className="mt-2">
         <p className="lg:text-[18px] text-[16px] font-normal leading-[30px] text-gray-500 mt-4">
           Do you really want to delete these records? You cant't view this in
@@ -76,6 +78,7 @@ const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
             </button>
           ) : (
             <button
+              // onClick={productDelete(id)}
               className="w-full border border-1 rounded-md 
                               text-sm 
                               border-red-400 text-red-700 hover:bg-red-200  px-2 py-3
@@ -91,4 +94,4 @@ const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
   );
 };
 
-export default DeleteModuleB;
+export default DeleteColor;

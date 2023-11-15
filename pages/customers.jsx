@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import EditCustomer from "./edit-customer/[slug]";
@@ -115,6 +116,8 @@ const Customers = () => {
       .then((res) => {
         if (res.ok) {
           defaultCustomer();
+          toast.success("User Delete Successfully !");
+          refreshData();
         } else {
           throw new Error("failed to create");
         }
@@ -126,6 +129,7 @@ const Customers = () => {
 
   return (
     <div>
+      <ToastContainer />s
       <div className="flex justify-between items-center px-10 pt-4 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
         <h2 className="text-2xl font-semibold pb-4">Customer List </h2>
 
