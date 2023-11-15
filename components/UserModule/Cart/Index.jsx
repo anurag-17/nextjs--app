@@ -151,16 +151,25 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                     >
                       {item?.product?.images?.length > 0 ? (
                         item?.product?.images?.map((img, inx) => (
-                          <div className="w-[30%]">
-                            <Image
-                              key={inx}
-                              src={img?.url}
-                              alt=""
-                              className="rounded-[20px] "
-                              width={400}
-                              height={400}
-                            />
+                          <>
+                          {
+                            item?.color == img?.color &&
+                          <div className="w-[30%] py-2 px-4">
+                            <Link
+                              href={`/product-details/${item?.product?._id}`}
+                            >
+                              <Image
+                                key={inx}
+                                src={img?.url}
+                                alt=""
+                                className="rounded-[20px] "
+                                width={250}
+                                height={300}
+                              />
+                            </Link>
                           </div>
+                          }
+                        </>
                         ))
                       ) : (
                         <div className="w-[30%]">
@@ -267,7 +276,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           {item?.product?.images?.length > 0 ? (
                             item?.product?.images?.map((img, inx) => (
                               <>
-                              {console.log( getCartProduct?.color)}
                                 {
                                   item?.color == img?.color &&
                                 <div className="w-[30%] py-2 px-4">
