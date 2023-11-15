@@ -17,12 +17,10 @@ import Editbrand from "../pages/edit-brand/[slug]"
 import DeleteModuleB from "../components/AdminModule/Brand/deleteMudule";
 
 const headItems = ["NAME", "PUBLISHED", "ACTION"];
-
 const brandlist = () => {
   const [getallBrand, setGetallBrand] = useState([]);
   const [isChecked, setisChecked] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [productSearch, setProductSearch] = useState(["All"]);
   const [selected, setSelected] = useState([]);
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -47,10 +45,10 @@ const brandlist = () => {
     setIsDrawerOpenO(false);
   };
 
-  const handleClose = () => {
-    closeModal();
-    refreshData();
-  };
+  // const handleClose = () => {
+  //   closeModal();
+  //   refreshData();
+  // };
   const pageLimit = "15";
   function closeModal() {
     setOpenDelete(false);
@@ -179,7 +177,6 @@ const brandlist = () => {
     }
     setSelected(newSelected);
   };
-
   const EnhancedTableToolbar = ({ numLength }) => {
     return (
       <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg h-[100px] bg-lightBlue-100 mt-5">
