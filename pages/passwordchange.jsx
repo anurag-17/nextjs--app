@@ -21,7 +21,6 @@ const PasswordChange = () => {
           currentPassword: currentPassword,
           newPassword: newPassword,
         },
-
         {
           headers: {
             "Content-Type": "application/json",
@@ -32,17 +31,15 @@ const PasswordChange = () => {
       if (response.status === 200) {
         toast.success("Password change successfully !");
       } else {
-      
       }
-      console.log(response);
     } catch (error) {
-      toast.error("Password change failed: ");
+      toast.error("Password change failed !");
     }
   };
 
   return (
     <>
-       <ToastContainer />
+      <ToastContainer />
       <div className="flex bg-white ml-5 ">
         <div className="w-6/12">
           <div className="bg-white  p-5  ">
