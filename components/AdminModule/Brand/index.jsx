@@ -6,7 +6,6 @@ import { Fragment } from "react";
 import {
   MagnifyingGlassPlusIcon,
   TrashIcon,
-  CheckIcon,
   PencilSquareIcon,
   ArrowUpTrayIcon,
   ArrowDownTrayIcon,

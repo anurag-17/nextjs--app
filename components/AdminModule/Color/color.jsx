@@ -1,13 +1,19 @@
+import dynamic from "next/dynamic";
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ArrowRightIcon, TrashIcon, PencilSquareIcon} from "@heroicons/react/24/outline";
+import {
+  ArrowRightIcon,
+  TrashIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import AddColor from "./add-color";
 import DeleteColor from "./deleteColor";
 import Editcolor from "./edit-color";
 
+const headItems = ["COLOR NAME", "COLOR", "ACTION"];
 const Color = () => {
   const [getallColor, setGetallColor] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -15,6 +21,7 @@ const Color = () => {
   const [colorID, setColorID] = useState("");
   const [colorEID, setColorEID] = useState("");
   const [isRefresh, setRefresh] = useState(false);
+  const [selected, setSelected] = useState([]);
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -62,15 +69,25 @@ const Color = () => {
         console.error("Error:", error);
       });
   };
+
   return (
     <div>
-    
-      <button
-        onClick={openDrawer}
-        className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
-      >
-        + Add Color
-      </button>
+      <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
+        <h2 className="text-2xl font-semibold pb-4">Color List </h2>
+
+        <h2>Welcome Back, Admin</h2>
+      </div>
+      <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white w-full h-[100px] mt-5">
+        <div className="flex  mt-7 ">
+          <button
+            onClick={openDrawer}
+            className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
+          >
+            + Add Color
+          </button>
+        </div>
+      </div>
+
       {isDrawerOpen && (
         <div
           id="drawer-form"
@@ -123,27 +140,74 @@ const Color = () => {
             <span className="sr-only bg-black">Close menu</span>
           </button>
           <div>
-            <Editcolor colorEID={colorEID}/>
+            <Editcolor colorEID={colorEID} />
           </div>
         </div>
       )}
-      {getallColor.map((item) => (
-        <div className="border  w-2/12 rounded-md p-2 my-5">
-          <div>
-            <h1 className="text-center">{item.color}</h1>
-          </div>
-          <button onClick={() => openDrawerO(item?._id)}>
+      <table class="table-auto bg-white rounded-md mt-5  relative w-6/12">
+        <thead className="">
+          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between gap-28 ">
+            <input
+              type="checkbox"
+              className="mx-3  cursor-pointer "
+              // onChange={handleSelectAllClick}
+              inputProps={{
+                "aria-label": "select all desserts",
+              }}
+            />
+            {headItems.map((items, inx) => (
+              <th
+                className="text-start py-5 text-[16px] font-medium w-4/12 "
+                key={inx}
+              >
+                {items}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        {getallColor.map((item) => (
+          <tbody>
+            <label>
+              <tr className="text-start flex justify-between gap-28">
+                <td className="my-auto">
+                  <input type="checkbox" className="mx-3  cursor-pointer " />
+                </td>
+                <td className="text-[18px] w-3/12 my-auto">{item.color}</td>
+                <td className="text-[18px] w-3/12 my-auto ml-3 ">
+                  <div
+                    className="border w-2/12 p-4 rounded-full"
+                    style={{
+                      marginTop: "20px",
+                      width: "30px",
+                      height: "30px",
+                      backgroundColor:item.color ||"",
+                    }}
+                  ></div>
+                </td>
+                <td className=" text-[18px] w-3/12 ">
+                  <div className="flex my-3">
+                    <div>
+                      <button onClick={() => openDrawerO(item?._id)}>
                         <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                       </button>
-          <button
-            type="button"
-            onClick={() => openModal(item?._id)}
-            className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-          >
-            <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
-          </button>
-        </div>
-      ))}
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => openModal(item?._id)}
+                        className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                      >
+                        <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </label>
+          </tbody>
+        ))}
+      </table>
+
       <Transition appear show={isOpenDelete} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -191,4 +255,4 @@ const Color = () => {
   );
 };
 
-export default Color;
+export default dynamic(() => Promise.resolve(Color), { ssr: false });
