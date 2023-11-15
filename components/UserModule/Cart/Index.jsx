@@ -114,7 +114,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   return (
     <>
       <ToastContainer />
-      {!token || token == undefined ? null : <UserNavbar />}
+      <UserNavbar />
 
       {!token || token == undefined ? (
         <div className=" px-20">
