@@ -1,11 +1,20 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
 <svg width="800px" height="800px" viewBox="-3.2 -3.2 38.40 38.40" enable-background="new 0 0 32 32" id="Editable-line" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-<g id="SVGRepo_bgCarrier" stroke-width="0">
-<rect x="-3.2" y="-3.2" width="38.40" height="38.40" rx="19.2" fill="#1e81b0" strokewidth="0"/>
-</g>
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier">
-<path d=" M16,8.064c-2.974-2.753-7.796-2.753-10.77,0s-2.974,7.215,0,9.968L16,28l10.77-9.968c2.974-2.753,2.974-7.215,0-9.968 S18.974,5.312,16,8.064z" fill="none" id="XMLID_49_" stroke="#f8f7f7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-</g>
-</svg>
+
+<g id="SVGRepo_bgCarrier" strokeWidth="0">
+strokeLinecap
+<rect x="-3.2" y="-3.2" width="38.40" height="38.40" rx="19.2" fill="#1e81b0" strokewidth="0"/>
+strokeLinecap
+</g>
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" strokeLinejoin="round"/>
+
+<g id="SVGRepo_iconCarrier">
+
+<path d=" M16,8.064c-2.974-2.753-7.796-2.753-10.77,0s-2.974,7.215,0,9.968L16,28l10.77-9.968c2.974-2.753,2.974-7.215,0-9.968 S18.974,5.312,16,8.064z" fill="none" id="XMLID_49_" stroke="#f8f7f7" stroke-linecap="round" strokeLinejoin="round" stroke-miterlimit="10" strokeWidth="2"/>
+
+</g>
+
+</svg>

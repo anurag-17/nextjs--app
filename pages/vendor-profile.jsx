@@ -10,10 +10,9 @@ import Logactivity from "./logactivity";
 import AboutVendor from "./about-vendor";
 import ActiveProduct from "./active-product";
 import HiddenProduct from "./hidden-product";
-import updateVendor from "./update-vendor/[slug]";
-import UpdateVendor from "./update-vendor/[slug]";
 
 import { useState } from "react";
+import UpdateVendor from "../components/AdminModule/Vendor/editVendor";
 
 const vendorprofile = ({ showNav }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);

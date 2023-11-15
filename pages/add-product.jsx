@@ -32,6 +32,7 @@ const AddProduct = () => {
       {
         public_id: "",
         url: "",
+        color:""
       },
     ],
   });

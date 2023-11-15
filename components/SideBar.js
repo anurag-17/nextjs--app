@@ -81,7 +81,7 @@ const menuList = [
         label: "All Vendors",
         component: "",
         icon: `fa fa-users`,
-        path: "/vendor",
+        path: "/admin-vendor",
       },
       // {
       //   id: "2",

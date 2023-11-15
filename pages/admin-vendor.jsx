@@ -11,11 +11,12 @@ import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import axios from "axios";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import AddVendor from "./add-vendor";
+
 import Grid from "../components/AdminModule/Product/svg/Grid";
 import List from "../components/AdminModule/Product/svg/List";
-import UpdateVendor from "./update-vendor/[slug]";
 import DeleteModuleV from "../components/AdminModule/Vendor/deleteModule";
+import UpdateVendor from "../components/AdminModule/Vendor/editVendor";
+import AddVendor from "../components/AdminModule/Vendor/addVendor";
 
 const headItems = [
   "VENDOR NAME",
@@ -33,15 +34,39 @@ const vendor = () => {
   const [getAllVendors, setgetAllVendors] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [vendorEdit, setVendorEdit] = useState("");
-  const [isShowComponent, setShowComponent] = useState("grid");
+  const [isShowComponent, setShowComponent] = useState("list");
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
-  const openDrawerO = (_id) => {
-    setVendorEdit(_id);
-    setIsDrawerOpenO(true);
+  const [editData, setEditData] = useState({});
+
+  const openDrawerO = async (_id) => {
+    setVendorEdit(_id)
+    try {
+      const options = {
+        method: "POST",
+        url: "https://e-commerce-backend-brown.vercel.app/api/vendor/getaVendor",
+        headers: {
+          "User-Agent": "insomnia/2023.5.8",
+        },
+        data: {
+          id: _id,
+        },
+      };
+      const response = await axios.request(options);
+      if (response.status === 200) {
+        setEditData(response?.data?.result);
+        setIsDrawerOpenO(true);
+      } else {
+        console.error("Error: Unexpected response status");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   const closeDrawerO = () => {
     setIsDrawerOpenO(false);
   };
+
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -61,21 +86,19 @@ const vendor = () => {
     setRefresh(!isRefresh);
   };
 
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors",
-  };
-
   useEffect(() => {
     defaultVendor();
-  }, []);
+  }, [isRefresh]);
 
   const defaultVendor = () => {
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors",
+    };
     axios
       .request(options)
       .then((response) => {
         setgetAllVendors(response.data);
-        console.log(response);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -95,7 +118,6 @@ const vendor = () => {
         .then(function (response) {
           if (response.status === 200) {
             setgetAllVendors(response.data);
-            console.log("vendors", response.data);
           }
         })
         .catch(function (error) {
@@ -155,7 +177,6 @@ const vendor = () => {
             </div>
           </div>
           <div className="flex justify-around">
-            <Link href="/add-vendor"></Link>
             <button
               onClick={openDrawer}
               className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4"
@@ -193,7 +214,7 @@ const vendor = () => {
               <span className="sr-only bg-black">Close menu</span>
             </button>
             <div className="overflow-y-auto ">
-              <AddVendor />
+              <AddVendor   refreshData={refreshData} closeDrawer = {closeDrawer} />
             </div>
           </div>
         )}
@@ -222,7 +243,7 @@ const vendor = () => {
               <span className="sr-only bg-black">Close menu</span>
             </button>
             <div className="overflow-y-auto ">
-              <UpdateVendor vendorEdit={vendorEdit} />
+              <UpdateVendor editData={editData} closeDrawer={closeDrawerO} vendorEdit = {vendorEdit}    refreshData={refreshData}/>
             </div>
           </div>
         )}
@@ -309,7 +330,7 @@ const vendor = () => {
                   ))}
                 </tr>
               </thead>
-              {getAllVendors.map((items) => (
+              {getAllVendors?.map((items) => (
                 <tbody>
                   <tr className="">
                     <td className="py-5 text-[18px] px-10">

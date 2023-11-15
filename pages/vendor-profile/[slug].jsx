@@ -5,7 +5,6 @@ import { useEffect } from "react";
 // import AboutVendor from "./about-vendor";
 // import ActiveProduct from "./active-product";
 // import HiddenProduct from "./hidden-product";
-// import UpdateVendor from "./update-vendor/[slug]";
 import axios from "axios";
 
 const VendorProfile = ({ showNav }) => {

@@ -1,33 +1,20 @@
-import React from "react";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
-const UpdateVendor = ({ vendorEdit }) => {
-  const router = useRouter();
-  const { slug } = router.query;
-  const [editData, setEditData] = useState({});
-  const [isFetching, setIsFetching] = useState(false);
-  const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
-  const openDrawerO = () => {
-    setIsDrawerOpenO(true);
-  };
 
-  const closeDrawerO = () => {
-    setIsDrawerOpenO(false);
-  };
-  
+const UpdateVendor = ({ editData, closeDrawer, vendorEdit, refreshData }) => {
+
+
+  const [isLoading, setLoading] = useState(false)
   const [updateVendor, setUpdateVendor] = useState({
-    vendorName: "",
-    companyName: "",
-    email: "",
-    phone: "",
-    address: "",
+    vendorName: editData?.vendorName || "",
+    companyName:  editData?.companyName || "",
+    email:  editData?.email || "",
+    phone:  editData?.phone || "",
+    address:  editData?.address || "",
   });
 
-  
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -49,62 +36,18 @@ const UpdateVendor = ({ vendorEdit }) => {
     }
   };
 
-  useEffect(() => {
-    fetchVendor();
-  }, []);
-
-  const fetchVendor = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "User-Agent": "insomnia/2023.5.8",
-      },
-    };
-    try {
-      const response = await fetch(
-        `https://e-commerce-backend-brown.vercel.app/api/vendor/getAllVendors/${vendorEdit}`,
-        options
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch vendor");
-      }
-      const responseData = await response.json();
-      setEditData(responseData);
-      console.log(responseData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  
   const handleUpdateVendor = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     const options = {
       method: "put",
       url: `https://e-commerce-backend-brown.vercel.app/api/vendor/updateVendor/${vendorEdit}`,
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-        // Authorization: "Bearer " + token,
       },
-      data: {
-        vendorName: updateVendor?.vendorName
-          ? updateVendor?.vendorName
-          : editData?.vendorName,
-        companyName: updateVendor?.companyName
-          ? updateVendor?.companyName
-          : editData?.companyName,
-        email: updateVendor?.email ? updateVendor?.email : editData?.email,
-        phone: updateVendor?.phone ? updateVendor?.phone : editData?.phone,
-        address: updateVendor?.address
-          ? updateVendor?.address
-          : editData?.address,
-      },
+      data : updateVendor
     };
 
     axios
@@ -114,26 +57,36 @@ const UpdateVendor = ({ vendorEdit }) => {
         if (response.status === 200) {
           setLoading(false);
           toast.success("Vendor updated successfully !");
+          handleClose()
           refreshData();
-          router.push("/vendor");
         } else {
-          setLoading(false);
+          setLoading(false)
+          toast.error("Failed!");
           return;
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.error(error);
+        toast.error("Failed!");
       });
   };
 
+  const handleClose = () => {
+    closeDrawer()
+  }
+
   return (
     <div>
-       <ToastContainer />
-     <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
+      <ToastContainer />
+      <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[70px] my-5 ">
         <h2 className="text-2xl font-semibold pb-4">Update Vendor </h2>
         <div className="mb-3 w-[40%]"></div>
       </div>
-      <form onSubmit={handleUpdateVendor} className=" bg-white border rounded-lg ">
+      <form
+        onSubmit={handleUpdateVendor}
+        className=" bg-white border rounded-lg "
+      >
         <div>
           <div className="flex w-full">
             <div className=" mb-3 w-6/12">
@@ -154,7 +107,6 @@ const UpdateVendor = ({ vendorEdit }) => {
                 minLength={3}
                 max={84}
                 className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
-               
               />
             </div>
             <div className=" mb-3 w-6/12">
@@ -180,43 +132,43 @@ const UpdateVendor = ({ vendorEdit }) => {
           </div>
           <div className="flex w-full">
             <div className=" mb-3 w-6/12">
-            <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
-              Email
-            </label>
-            <input
-              onChange={inputHandler}
-              value={updateVendor.email}
-              defaultValue={
-                editData?.email ? editData?.email : updateVendor.email
-              }
-              type="text"
-              name="email"
-              required
-              minLength={3}
-              max={84}
-              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
-            />
-          </div>
+              <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
+                Email
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateVendor.email}
+                defaultValue={
+                  editData?.email ? editData?.email : updateVendor.email
+                }
+                type="text"
+                name="email"
+                required
+                minLength={3}
+                max={84}
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+              />
+            </div>
 
-          <div className=" mb-3 w-6/12">
-            <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
-              Phone No
-            </label>
-            <input
-              onChange={inputHandler}
-              value={updateVendor.phone}
-              defaultValue={
-                editData?.phone ? editData?.phone : updateVendor.phone
-              }
-              type="number"
-              name="phone"
-              required
-              minLength={3}
-              max={84}
-              className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
-            />
+            <div className=" mb-3 w-6/12">
+              <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white">
+                Phone No
+              </label>
+              <input
+                onChange={inputHandler}
+                value={updateVendor.phone}
+                defaultValue={
+                  editData?.phone ? editData?.phone : updateVendor.phone
+                }
+                type="number"
+                name="phone"
+                required
+                minLength={3}
+                max={84}
+                className="px-3 py-2 rounded  m-10  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+              />
+            </div>
           </div>
-</div>
           <div className=" mb-3 w-6/12 ">
             <label className="absolute mt-7 ml-14 z-20 text-[18px] text-gray-500 bg-white ">
               Address
@@ -240,18 +192,30 @@ const UpdateVendor = ({ vendorEdit }) => {
         </div>
         <div className=" flex justify-end mb-5 mr-5">
           <button
+            onClick={handleClose}
+            type="submit"
+            className="border py-2 px-4 m-2 rounded-lg bg-red-600 text-white text-[20px]"
+          >
+            Cancel
+          </button>
+          {
+            isLoading ?
+          <button
+            type="button"
+            className="border p-3 m-2 rounded-lg bg-gray-500 text-white text-[20px]"
+          >
+           Loading...
+          </button>
+          :
+          <button
             type="submit"
             onClick={handleUpdateVendor}
             className="border p-3 m-2 rounded-lg bg-sky-600 text-white text-[20px]"
           >
             Update Vendor
           </button>
-          <button onClick={closeDrawerO}
-            type="submit"
-            className="border py-2 px-4 m-2 rounded-lg bg-red-600 text-white text-[20px]"
-          >
-            Cancel
-          </button>
+
+          }
         </div>
       </form>
     </div>
