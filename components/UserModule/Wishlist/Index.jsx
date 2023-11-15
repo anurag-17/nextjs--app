@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const UserWishlist = ({ getWishProduct, refreshData }) => {
   const { token } = useSelector((state) => state.auth.userDetails || null);
-
+  const [itemStates, setItemStates] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [productColor, setProductColor] = useState("");
   const [isShowErr, setShowErr] = useState(false);
@@ -60,13 +60,23 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
     }
   };
 
-  const handleColorChange = (e) => {
-    setProductColor(e.target.value);
+  const handleColorChange = (itemId, e) => {
+    const color = e.target.value;
+    setItemStates((prevItemStates) => ({
+      ...prevItemStates,
+      [itemId]: { ...prevItemStates[itemId], color, isShowErr: false },
+    }));
   };
 
   const addToCart = (data) => {
-    if (!productColor) {
-      setShowErr(true);
+    const itemId = data?._id;
+    const { color } = itemStates[itemId] || {};
+    if (!color) {
+      setItemStates((prevItemStates) => ({
+        ...prevItemStates,
+        [itemId]: { ...prevItemStates[itemId], isShowErr: true },
+      }));
+      
       setLoading(false);
     } else{
       const options = {
@@ -106,6 +116,10 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
           console.error(error);
           toast.error("Failed, Token is expired")
         });
+        setItemStates((prevItemStates) => ({
+          ...prevItemStates,
+          [itemId]: { ...prevItemStates[itemId], color: "", showErr: false },
+        }));
     }
  
   };
@@ -250,7 +264,8 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                       <div className="ml-4">
                         <div className="w-[250px]">
                           <select
-                            onChange={handleColorChange }
+                              onChange={(e) => handleColorChange(item?._id, e)}
+                        value={itemStates[item?._id]?.color || ""}
                             // value={selectedColor}
                             className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm capitalize"
                           >
@@ -272,7 +287,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                               ))}
                           </select>
                         </div>
-                        {isShowErr && (
+                        {itemStates[item?._id]?.isShowErr && (
                           <p className="text-sm font-medium py-1 bg-red-100 text-red-600 px-4 rounded mt-2 w-[250px]">
                             Please choose color
                           </p>
