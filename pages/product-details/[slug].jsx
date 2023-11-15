@@ -20,7 +20,7 @@ const Userdetail = () => {
   const [isAddedCart, setAddedCart] = useState(false);
   const [isShowErr, setShowErr] = useState(false);
   const [productDetail, setProductDetail] = useState({});
-  const [productColor, setProductColor] = useState("");
+  const [productColor, setProductColor] = useState("Black" || "");
   let [productQuantity, setProductQuantity] = useState(1);
   const [customerID, setCustomerID] = useState();
   // JSON.parse(localStorage.getItem("userID"))
@@ -30,6 +30,8 @@ const Userdetail = () => {
   const [sessionCartProduct, setsessionCartProduct] = useState([]);
   const [newArray, setnewArray] = useState([]);
 
+  console.log(productColor);
+  
   const updateCart = () => {
     setsessionCartProduct(
       JSON.parse(sessionStorage.getItem("addToCart")) || []
@@ -218,7 +220,8 @@ const Userdetail = () => {
                   <div className="flex-shrink-0 flex justify-center h-auto">
                     {productDetail?.images?.length > 0 ? (
                       productDetail?.images?.map((img, inx) => (
-                        <div className="w-[500px] h-[400px]">
+                          img?.color ===  productColor ?
+                          <div className="w-[500px] h-[400px]">
                           <Image
                             key={inx}
                             src={img?.url}
@@ -228,6 +231,8 @@ const Userdetail = () => {
                             height={300}
                           />
                         </div>
+                        :
+                       ""
                       ))
                     ) : (
                       <div className="w-[500px] h-[400px]">

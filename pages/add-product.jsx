@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Select from "react-select";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 const AddProduct = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -17,6 +17,7 @@ const AddProduct = () => {
   const [isPriceError, setPriceError] = useState(false);
   const [isCurrError, setCurrError] = useState(false);
   const [imageUrls, setImageUrls] = useState("");
+  const [selectedColor, setSelectedColor] = useState("")
   const [productDetails, setProductDetails] = useState({
     title: "",
     description: "",
@@ -28,14 +29,19 @@ const AddProduct = () => {
     brand: "",
     quantity: "",
     color: [],
-    images: [
-      {
-        public_id: "",
-        url: "",
-        color:""
-      },
+    images: [ 
     ],
   });
+
+  const [selectColor, setSelectColor] = useState([]);
+  const [allColors, setColors] = useState([]);
+  const [imgFiles, setImageFiles] = useState([]);
+  const [imgByColor, setImgBycolor] = useState({
+    public_id: "",
+    url: "",
+    color: "",
+  });
+  
 
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
 
@@ -100,7 +106,6 @@ const AddProduct = () => {
       .request(option)
       .then((response) => {
         setGetallCategory(response?.data);
-        handleClose();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -139,56 +144,6 @@ const AddProduct = () => {
     });
   };
 
-  const handleImageUpload = async (event) => {
-    setUploadingImg(true);
-    const files = event.target.files;
-    const formData = new FormData();
-
-    for (let i = 0; i < files.length; i++) {
-      formData.append("images", files[i]);
-    }
-    try {
-      const res = await uploadImage(formData);
-      if (res?.status === 200) {
-        setUploadingImg(false);
-        setImageUrls(res.data?.imageUrls);
-        setProductDetails((prevProductDetails) => ({
-          ...prevProductDetails,
-          images: res?.data?.imageUrls?.map((url) => ({
-            public_id: url,
-            url: url,
-          })),
-        }));
-      } else {
-        toast.error("Failed !!");
-        setUploadingImg(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setUploadingImg(false);
-    }
-  };
-
-  const uploadImage = async (formData) => {
-    try {
-      const response = await axios.post(
-        "https://e-commerce-backend-brown.vercel.app/api/auth/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            authorization: token,
-          },
-        }
-      );
-
-      return response;
-    } catch (error) {
-      console.error("Image upload error", error);
-      throw error;
-    }
-  };
-
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -210,8 +165,7 @@ const AddProduct = () => {
 
     if (productDetails?.regPriceCurr !== productDetails?.offerPriceCurr) {
       setCurrError(true);
-    }
-   else if (productDetails?.discountedPrice >= productDetails?.price) {
+    } else if (productDetails?.discountedPrice >= productDetails?.price) {
       setPriceError(true);
     } else {
       setLoading(true);
@@ -246,6 +200,97 @@ const AddProduct = () => {
         });
     }
   };
+
+  //----- color -------
+
+  const handleImageUpload = async (event) => {
+    setImageFiles(event.target.files);
+  };
+
+  const imageUploader = async () => {
+    const formData = new FormData();
+
+    for (let i = 0; i < imgFiles.length; i++) {
+      formData.append("images", imgFiles[i]);
+    }
+    try {
+      const res = await uploadImage(formData);
+      console.log(res);
+
+      if (res?.status === 200) {
+        productDetails.images.push({
+          public_id : "",
+          url:res?.data?.imageUrls[0],
+          color:selectColor
+        })
+      setSelectedColor("")
+      setImageFiles([])
+      } else {
+        toast.error("Failed !!");
+        setUploadingImg(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setUploadingImg(false);
+    }
+  };
+
+  const uploadImage = async (formData) => {
+    try {
+      const response = await axios.post(
+        "https://e-commerce-backend-brown.vercel.app/api/auth/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: token,
+          },
+        }
+      );
+
+      return response;
+    } catch (error) {
+      console.error("Image upload error", error);
+      throw error;
+    }
+  };
+
+  const getAllColors = () => {
+    const option = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/color/getColors",
+    };
+    axios
+      .request(option)
+      .then((response) => {
+        if (response.status === 200) {
+          setColors(response?.data);
+        } else {
+          return;
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    getAllColors();
+  }, []);
+
+  const handleWarnaChange = async (e) => {
+    setSelectedColor(e)
+    setSelectColor(e?.value);
+    setImgBycolor({...imgByColor , ["color"]: e?.value})
+  };
+
+  const handleMultiSelect = async (e) => {
+    let newColor = e.map((item) => item?.value);
+    console.log(newColor);
+    setProductDetails({...productDetails,["color"]: newColor})
+    // productDetails.color.push(newColor)
+  };
+
 
   return (
     <section className="bg-gray-100 min-h-screen">
@@ -305,10 +350,17 @@ const AddProduct = () => {
           </div>
 
           {/*------ Image -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 justify-center items-center">
             <label className="custom-input-label">Product Images</label>
-            <div className="col-span-8 sm:col-span-4">
+            <div className="col-span-1 sm:col-span-2">
+              {
+                imgFiles.length>0 ?
+                 <div className="custom-input text-center bg-gray-300 flex gap-x-5 justify-center items-center text-black fonr-medium"> {imgFiles[0]?.name }
+                 <p className="font-bold cursor-pointer" onClick={()=>setImageFiles([])}>x</p>
+                  </div>
+                 : 
               <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
+                
                 {imageUrls === "" ? (
                   <>
                     {isUploadingImg ? (
@@ -324,11 +376,10 @@ const AddProduct = () => {
                           type="file"
                           className="hidden"
                           id="fileUpload"
-                          muiltiple
                           onChange={handleImageUpload}
                           accept="image/png,image/jpg, image/jpeg"
                         />
-                        Upload product image
+                       Upload product image
                       </label>
                     )}
                   </>
@@ -338,6 +389,38 @@ const AddProduct = () => {
                   </button>
                 )}
               </div>
+              }
+            </div>
+            <div className="col-span-1 sm:col-span-1">
+              {/* <div className="custom-input"></div> */}
+              <Select
+                id="selectWarna"
+                instanceId="selectWarna"
+                // isMulti
+                isSearchable
+                name="colors"
+                className="basic-multi-select capitalize "
+                classNamePrefix="select"
+                options={allColors.map((item) => ({
+                  value: item.color,
+                  label: item.color,
+                }))}
+                onChange={handleWarnaChange}
+                placeholder="Select color"
+                value={selectedColor}
+              />
+            </div>
+            <div className="col-span-1 sm:col-span-1">
+              {
+               ( imgFiles.length>0 && selectedColor !== "") &&
+              <button
+                type="button"
+                className="px-4 py-2 rounded-sm font-medium text-[15px] bg-black text-white flex justify-center items-center"
+                onClick={imageUploader}
+              >
+                Upload
+              </button>
+              }
             </div>
           </div>
 
@@ -412,7 +495,7 @@ const AddProduct = () => {
                   Offer price should be less than regular price
                 </span>
               )}
-              <br/>
+              <br />
               {isCurrError && (
                 <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
                   Offer price currency should be same as regular price
@@ -506,20 +589,26 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/*------ brand -----*/}
+          {/*------ color -----*/}
           <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
             <label htmlFor="" className="custom-input-label">
               Product Colour
             </label>
             <div className="col-span-8 sm:col-span-4">
-              <input
-                type="text"
-                name="color"
-                placeholder="Enter colors separated by commas"
-                className="custom-input"
-                value={productDetails.color}
-                onChange={inputHandler}
-                required
+            <Select
+                id="selectWarna"
+                instanceId="selectWarna"
+                isMulti
+                isSearchable
+                name="colors"
+                className="basic-multi-select capitalize "
+                classNamePrefix="select"
+                options={allColors.map((item) => ({
+                  value: item.color,
+                  label: item.color,
+                }))}
+                onChange={handleMultiSelect}
+                placeholder="Select color"
               />
             </div>
           </div>

@@ -37,19 +37,17 @@ const ProductGrid = () => {
   const [isWished, setIsWished] = useState({});
 
   console.log(isWished);
-  
+
   const [productColorsArray, setProductColorsArray] = useState([]);
   const [isOpenLogin, setOpenLogin] = useState(false);
 
-
   const openLoginModal = () => {
-    setOpenLogin(true)
-  }
+    setOpenLogin(true);
+  };
 
   const closeLoginModal = () => {
-    setOpenLogin(false)
-  }
-
+    setOpenLogin(false);
+  };
 
   const option = {
     method: "GET",
@@ -110,7 +108,7 @@ const ProductGrid = () => {
     getAllProducts();
   }, []);
 
-  const addToWishlist = async(id) => {
+  const addToWishlist = async (id) => {
     const prodId = id;
     const options = {
       method: "POST",
@@ -141,10 +139,10 @@ const ProductGrid = () => {
       ...prevIsWished,
       [productId]: !prevIsWished[productId], // Toggle the state for the specified product
     }));
-  
+
     try {
       const response = await addToWishlist(productId);
-  
+
       if (response.status === 200) {
         const message = isWished[productId]
           ? "Success. Product removed from wishlist!"
@@ -161,7 +159,6 @@ const ProductGrid = () => {
       toast.error("Failed. Try again!");
     }
   };
-
 
   const handleColorChange = (productId, selectedColor) => {
     const productIndex = productColorsArray.findIndex(
@@ -308,7 +305,7 @@ const ProductGrid = () => {
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-        "authorization": token,
+        authorization: token,
       },
       data: {
         cart: [
@@ -414,18 +411,18 @@ const ProductGrid = () => {
             <div className=" ">
               <div className=" justify-between text-[#645D64] space-y-4 ">
                 <div className="w-auto flex flex-col  gap-1">
-                <div className="flex">
-                  <Image className="w-3  " src={right} />
-                  <button
-                    name="category"
-                    id="category"
-                    placeholder="Category"
-                    className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
-                    onClick={getAllProducts}
-                  >
-                    All
-                  </button>
-                </div>
+                  <div className="flex">
+                    <Image className="w-3  " src={right} />
+                    <button
+                      name="category"
+                      id="category"
+                      placeholder="Category"
+                      className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
+                      onClick={getAllProducts}
+                    >
+                      All
+                    </button>
+                  </div>
                   {productBrands?.length > 0 &&
                     productBrands.map((bnd) => (
                       <div className="flex flex-col-reverse">
@@ -474,18 +471,17 @@ const ProductGrid = () => {
                 key={ix}
               >
                 {items?.images?.length > 0 ? (
-                  items?.images?.map((img, inx) => (
-                    <div className="h-[400px] p-2">
+                  <div className="h-[400px] p-2 overflow-hidden">
+                    <Link href={`/view-product/${items?._id}`}>
                       <Image
-                        key={inx}
-                        src={img?.url}
+                        src={items?.images[0]?.url}
                         alt=""
-                        className=" mx-auto rounded-[20px]"
+                        className=" mx-auto rounded-[20px] overflow-hidden  "
                         width={300}
                         height={300}
                       />
-                    </div>
-                  ))
+                    </Link>
+                  </div>
                 ) : (
                   <div className="h-[400px]">
                     <Image
@@ -502,8 +498,7 @@ const ProductGrid = () => {
                     <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                       {items.title}
                     </h6>
-                    {
-                      !token || token === undefined ? 
+                    {!token || token === undefined ? (
                       <div className="cursor-pointer" onClick={openLoginModal}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -519,47 +514,46 @@ const ProductGrid = () => {
                             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                           />
                         </svg>
-                    </div>
-                      :
-                    <button onClick={() => toggleWishlist(items._id)}>
-                      {isWished[items._id] ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1}
-                          stroke="currentColor"
-                          className="w-6 h-6 fill-[#f16e6e] "
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                          />
-                        </svg>
-                      ) : (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1}
-                          stroke="currentColor"
-                          className="w-6 h-6 b"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                          />
-                        </svg>
-                      )}
-                    </button>
-                    }
+                      </div>
+                    ) : (
+                      <button onClick={() => toggleWishlist(items._id)}>
+                        {isWished[items._id] ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1}
+                            stroke="currentColor"
+                            className="w-6 h-6 fill-[#f16e6e] "
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1}
+                            stroke="currentColor"
+                            className="w-6 h-6 b"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                            />
+                          </svg>
+                        )}
+                      </button>
+                    )}
                   </div>
 
                   <p className="text-[18px]  flex capitalize  ">
-                    Brand :
-                    <p className="font-semibold px-2"> {items.brand} </p>
+                    Brand :<p className="font-semibold px-2"> {items.brand} </p>
                   </p>
                   <p className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
                     Offer price :
@@ -569,7 +563,7 @@ const ProductGrid = () => {
                     <br />
                   </p>
                   <del className="text-md font-semibold capitalize my-2 text-sky-600">
-                    Regular Price :  {items?.regPriceCurr} {items.price}
+                    Regular Price : {items?.regPriceCurr} {items.price}
                   </del>
 
                   <p className="text-[18px] flex capitalize my-2 ">
@@ -586,7 +580,7 @@ const ProductGrid = () => {
                       selling
                     </p>
                   </div>
-                  <div className="flex gap-x-5 mt-3">
+                  {/* <div className="flex gap-x-5 mt-3">
                     <label
                       for="color"
                       className="text-[18px] capitalize my-2 whitespace-nowrap"
@@ -617,7 +611,7 @@ const ProductGrid = () => {
                         ))}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   <Link href={`/product-details/${items?._id}`}>
                     <button className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end">
                       View Details
@@ -630,107 +624,103 @@ const ProductGrid = () => {
         </div>
       </section>
 
+      {/* --------------   Login modal    --------------------- */}
+      <Transition appear show={isOpenLogin} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeLoginModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
 
-  {/* --------------   Login modal    --------------------- */}
-          <Transition appear show={isOpenLogin} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeLoginModal}>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
                 leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
-
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h4"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4"
                   >
-                    <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                      <Dialog.Title
-                        as="h4"
-                        className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4"
-                      >
-                       Please login to add into wishlist
-                      </Dialog.Title>
-                    
-                      <div className="flex justify-between gap-x-5 pt-4">
-                        <button
-                          className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
-                          onClick={closeLoginModal}
-                        >
-                          No
-                        </button>
-                        <Link href="/login" className="w-full" >
-                          <button
-                            className="w-full border border-1 rounded-md  text-sm  border-red-400 text-red-700 hover:bg-red-200  px-2 py-3 hover:border-none"
-                           >
-                          Ok
-                          </button>
-                        </Link>
-                      </div>
+                    Please login to add into wishlist
+                  </Dialog.Title>
 
-                    </Dialog.Panel>
-                  </Transition.Child>
-                </div>
-              </div>
-            </Dialog>
-          </Transition>
-          
-          <Transition appear show={isOpenDelete} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                  <div className="flex justify-between gap-x-5 pt-4">
+                    <button
+                      className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
+                      onClick={closeLoginModal}
+                    >
+                      No
+                    </button>
+                    <Link href="/login" className="w-full">
+                      <button className="w-full border border-1 rounded-md  text-sm  border-red-400 text-red-700 hover:bg-red-200  px-2 py-3 hover:border-none">
+                        Ok
+                      </button>
+                    </Link>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
+      <Transition appear show={isOpenDelete} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
                 leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
-
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
                   >
-                    <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                      <Dialog.Title
-                        as="h3"
-                        className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
-                      >
-                        Are You Sure! Want to Delete?
-                      </Dialog.Title>
-                      <DeleteModal
-                        productID={productID}
-                        closeModal={closeModal}
-                        refreshData={refreshData}
-                      />
-                    </Dialog.Panel>
-                  </Transition.Child>
-                </div>
-              </div>
-            </Dialog>
-          </Transition>
+                    Are You Sure! Want to Delete?
+                  </Dialog.Title>
+                  <DeleteModal
+                    productID={productID}
+                    closeModal={closeModal}
+                    refreshData={refreshData}
+                  />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   );
 };

@@ -23,7 +23,7 @@ const menuList = [
         id: "01",
         label: "All Product",
         component: <New />,
-        path: "/product-list",
+        path: "/admin-product",
       },
 
       {

@@ -120,7 +120,7 @@ export default function EditProduct() {
           setLoading(false);
           toast.success("Product updated successfully !");
           refreshData();
-          router.push("/product-list");
+          router.push("/admin-product");
         } else {
           setLoading(false);
           return;
