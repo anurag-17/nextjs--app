@@ -119,7 +119,7 @@ const Editcolor = ({ colorEID }) => {
           ) : (
             <div>
               <label className="absolute mt-6 bg-white  ml-14 z-20 text-[18px] text-gray-800 bg-">
-                color Name:
+                Color Name:
               </label>
 
               <input
@@ -143,7 +143,7 @@ const Editcolor = ({ colorEID }) => {
             className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] "
             onClick={handleUpdatecolor}
           >
-            Update color
+            Update Color
           </button>
         </form>
       </div>
