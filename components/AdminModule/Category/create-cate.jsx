@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
 
 const CreateCategoryForm = ({closeDrawer, refreshData}) => {
   const [title, setTitle] = useState("");
@@ -23,6 +24,7 @@ const CreateCategoryForm = ({closeDrawer, refreshData}) => {
         .then((res) => {
           if (res.ok) {
             router.push("/categories");
+            toast.success("Category Create successfully !");
             refreshData();
             setDrawerOpen(false);
             handleClose();

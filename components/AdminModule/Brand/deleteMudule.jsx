@@ -32,7 +32,7 @@ const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
         console.log(response);
         if (response.status === 200) {
           setLoading(false);
-          toast.success("brand deleted successfully !");
+          toast.success("Brand Deleted successfully !");
           handleClose();
           refreshData();
         } else {

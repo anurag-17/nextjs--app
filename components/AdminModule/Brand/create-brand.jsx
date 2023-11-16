@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
 
 const CreateBrand = ({closeDrawer, refreshData }) => {
   const [brand, setBrand] = useState("");
@@ -22,6 +23,7 @@ const CreateBrand = ({closeDrawer, refreshData }) => {
       )
         .then((res) => {
           if (res.ok) {
+            toast.success("Brand Create successfully !");
             handleClose();
             refreshData();
             setDrawerOpen(false);
