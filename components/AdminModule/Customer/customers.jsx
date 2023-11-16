@@ -38,36 +38,37 @@ const Customers = () => {
   const openDrawer = async (_id) => {
     setCustomerEID(_id);
     try {
-      const token = localStorage.getItem("accessToken");  
+      const token = JSON.parse(localStorage.getItem("accessToken"));  
       if (token) {
         console.log("Token:", token);
+        const option = {
+          method: "GET",
+          url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
+          headers: {
+           
+            "Content-Type": "application/json",
+            "User-Agent": "PostmanRuntime/7.35.0",
+            "authorization": token,
+          },
+          data: {
+            id: _id,
+          },
+        };
+  
+        const response = await axios.request(option);
+        if(response.status==200){
+          setEditData(response?.data);
+          setIsDrawerOpen(true);
+          console.log(response?.data);
+  
+        }else{
+          console.log("erro:unexpected response");
+        }
       } else {
         console.log("Token not found in local storage");
       }
       
-      const option = {
-        method: "GET",
-        url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
-        headers: {
-         
-          "Content-Type": "application/json",
-          "User-Agent": "PostmanRuntime/7.35.0",
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          id: _id,
-        },
-      };
-
-      const response = await axios.request(option);
-      if(response.status==200){
-        setEditData(response?.data);
-        setIsDrawerOpen(true);
-        console.log(response?.data);
-
-      }else{
-        console.log("erro:unexpected response");
-      }
+     
     } catch (error) {
       console.error(error);
     }

@@ -44,7 +44,7 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
 
   useEffect(() => {
     fetchCustomer();
-  }, [_id]);
+  }, []);
 
   const fetchCustomer = async () => {
     try {
