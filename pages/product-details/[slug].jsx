@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import Image from "next/image";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.css";
 import dynamic from "next/dynamic";
 import UserNavbar from "../../components/UserModule/userNavbar";
-import axios from "axios";
 import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
-import { useSelector } from "react-redux";
-import Image from "next/image";
+import ProductDetailsCarousel from "../../components/UserModule/Product/ProductDetailsCarousel";
 
 const Userdetail = () => {
   const router = useRouter();
@@ -17,21 +18,14 @@ const Userdetail = () => {
 
   const [isLoading, setLoading] = useState(false);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
-  const [isAddedCart, setAddedCart] = useState(false);
   const [isShowErr, setShowErr] = useState(false);
   const [productDetail, setProductDetail] = useState({});
-  const [productColor, setProductColor] = useState("Black" || "");
+  const [productColor, setProductColor] = useState("");
   let [productQuantity, setProductQuantity] = useState(1);
-  const [customerID, setCustomerID] = useState();
-  // JSON.parse(localStorage.getItem("userID"))
-  const storedProduct = useSelector((state) => state.auth.cart || []);
-  const { token } = useSelector((state) => state.auth.userDetails || null);
   const [isSessionAdded, setSessionAdded] = useState(false);
   const [sessionCartProduct, setsessionCartProduct] = useState([]);
-  const [newArray, setnewArray] = useState([]);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
 
-  console.log(productColor);
-  
   const updateCart = () => {
     setsessionCartProduct(
       JSON.parse(sessionStorage.getItem("addToCart")) || []
@@ -77,6 +71,10 @@ const Userdetail = () => {
           .then((response) => response.json())
           .then((response) => {
             setProductDetail(response);
+            // console.log(response);
+            if(Array.isArray(response.color)&& response.color.length>0){
+              setProductColor(response?.color[0])
+            }
           })
           .catch((err) => console.error(err));
       }
@@ -124,7 +122,7 @@ const Userdetail = () => {
           headers: {
             "Content-Type": "application/json",
             "User-Agent": "insomnia/2023.5.8",
-            "authorization": token,
+            authorization: token,
           },
           data: {
             cart: [
@@ -168,7 +166,7 @@ const Userdetail = () => {
   };
 
   const handleGoToCart = () => {
-    router.push("/cart");
+    router.push("/user-cart");
   };
 
   //---- cart products api ----
@@ -211,45 +209,24 @@ const Userdetail = () => {
         </div>
         <div className="container mx-auto">
           <main className="h-full overflow-y-auto pt-[40px]">
-            {/* <h1 className="my-6 text-[40px] font-bold text-gray-700 dark:text-gray-300">
-              Product Details
-            </h1> */}
             <div className="grid px-6 mx-auto">
               <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
-                <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden gap-20 mt-4">
-                  <div className="flex-shrink-0 flex justify-center h-auto">
-                    {productDetail?.images?.length > 0 ? (
-                      productDetail?.images?.map((img, inx) => (
-                          img?.color ===  productColor ?
-                          <div className="w-[500px] h-[400px]">
-                          <Image
-                            key={inx}
-                            src={img?.url}
-                            alt=""
-                            className="rounded-xl h-auto "
-                            width={300}
-                            height={300}
-                          />
-                        </div>
-                        :
-                       ""
-                      ))
-                    ) : (
-                      <div className="w-[500px] h-[400px]">
-                        <Image
-                          src="/img1.jpeg"
-                          alt=""
-                          className=" rounded-xl h-auto w-[500px]"
-                          width={400}
-                          height={400}
-                        />
-                      </div>
-                    )}
+               
+                <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px] mt-4">
+                 
+                 
+                  {/* left column start */}
+                  <div className="w-full md:w-auto flex-[1] max-w-[500px] lg:max-w-full mx-auto lg:mx-0">
+                    <ProductDetailsCarousel
+                      images={productDetail?.images || []}
+                      productColor = {productColor}
+                    />
                   </div>
 
-                  <div className="w-full flex flex-col px-5 md:px-8 text-left">
+                 
+                  {/* right column start */}
+                  <div className="flex-[1] py-3 text-left">
                     <div className="flex text-left mb-4">
-                      {/* <div className="w-[200px] text-[18px] font-normal leadinng-[28px]">Product Title :</div> */}
                       <div className="lg:text-[40px] flex gap-5 leading-8 text-lightBlue-600 font-bold  py-2  w-full  rounded">
                         {" "}
                         {productDetail?.title}
@@ -322,7 +299,7 @@ const Userdetail = () => {
                                 e.target.value
                               )
                             }
-                            // value={selectedColor}
+                            value={productColor}
                             className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm"
                           >
                             <option
@@ -393,6 +370,8 @@ const Userdetail = () => {
           </main>
         </div>
       </section>
+
+    
     </>
   );
 };

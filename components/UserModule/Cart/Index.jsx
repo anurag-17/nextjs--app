@@ -11,13 +11,10 @@ import { useSelector } from "react-redux";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const { token } = useSelector((state) => state.auth.userDetails || {});
-  console.log("helll", token);
   const [grandTotal, setGrandTotal] = useState(0);
   const [isOpenAdd, setOpenAdd] = useState(false);
   const { userAddress } = useSelector((state) => state.auth?.userDetails || "");
 
-  console.log(getCartProduct);
-  
   useEffect(() => {
     updateGrandTotal();
   }, [getCartProduct]);
@@ -78,7 +75,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   };
 
   const removeFromCart = async (id) => {
-
     if (!token || token === 200) {
       const sessionCart = JSON.parse(sessionStorage.getItem("addToCart")) || [];
       const filterCart = sessionCart?.filter((item) => item?._id !== id);
@@ -149,39 +145,27 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
                     >
-                      {item?.product?.images?.length > 0 ? (
+                      {item?.product?.images?.length > 0 &&
                         item?.product?.images?.map((img, inx) => (
                           <>
-                          {
-                            item?.color == img?.color &&
-                          <div className="w-[30%] py-2 px-4">
-                            <Link
-                              href={`/product-details/${item?.product?._id}`}
-                            >
-                              <Image
-                                key={inx}
-                                src={img?.url}
-                                alt=""
-                                className="rounded-[20px] "
-                                width={250}
-                                height={300}
-                              />
-                            </Link>
-                          </div>
-                          }
-                        </>
-                        ))
-                      ) : (
-                        <div className="w-[30%]">
-                          <Image
-                            src="/img1.jpeg"
-                            alt=""
-                            className=" rounded-[20px] "
-                            width={400}
-                            height={400}
-                          />
-                        </div>
-                      )}
+                            {item?.color == img?.color && (
+                              <div className="w-[30%] py-2 px-4">
+                                <Link
+                                  href={`/product-details/${item?.product?._id}`}
+                                >
+                                  <Image
+                                    key={inx}
+                                    src={img?.url[0]}
+                                    alt=""
+                                    className="rounded-[20px] "
+                                    width={250}
+                                    height={300}
+                                  />
+                                </Link>
+                              </div>
+                            )}
+                          </>
+                        ))}
 
                       <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
                         <div className="">
@@ -273,43 +257,27 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           key={inx}
                           className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
                         >
-                          {item?.product?.images?.length > 0 ? (
+                          {item?.product?.images?.length > 0 &&
                             item?.product?.images?.map((img, inx) => (
                               <>
-                                {
-                                  item?.color == img?.color &&
-                                <div className="w-[30%] py-2 px-4">
-                                  <Link
-                                    href={`/product-details/${item?.product?._id}`}
-                                  >
-                                    <Image
-                                      key={inx}
-                                      src={img?.url}
-                                      alt=""
-                                      className="rounded-[20px] "
-                                      width={250}
-                                      height={300}
-                                    />
-                                  </Link>
-                                </div>
-                                }
+                                {item?.color == img?.color && (
+                                  <div className="w-[30%] py-2 px-4">
+                                    <Link
+                                      href={`/product-details/${item?.product?._id}`}
+                                    >
+                                      <Image
+                                        key={inx}
+                                        src={img?.url[0]}
+                                        alt=""
+                                        className="rounded-[20px] "
+                                        width={250}
+                                        height={300}
+                                      />
+                                    </Link>
+                                  </div>
+                                )}
                               </>
-                            ))
-                          ) : (
-                            <div className="w-[30%]">
-                              <Link
-                                href={`/product-details/${item?.product?._id}`}
-                              >
-                                <Image
-                                  src="/img1.jpeg"
-                                  alt=""
-                                  className=" rounded-[20px] "
-                                  width={400}
-                                  height={400}
-                                />
-                              </Link>
-                            </div>
-                          )}
+                            ))}
 
                           <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
                             <div className="">

@@ -470,27 +470,15 @@ const ProductGrid = () => {
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
               >
-                {items?.images?.length > 0 ? (
+                {items?.images?.length > 0 && (
                   <div className="h-[400px] p-2 overflow-hidden">
-                    <Link href={`/view-product/${items?._id}`}>
                       <Image
-                        src={items?.images[0]?.url}
+                        src={items?.images[0]?.url[0]}
                         alt=""
                         className=" mx-auto rounded-[20px] overflow-hidden  "
                         width={300}
                         height={300}
                       />
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="h-[400px]">
-                    <Image
-                      src="/img1.jpeg"
-                      alt=""
-                      className=" mx-auto rounded-[20px] h-[400px] "
-                      width={400}
-                      height={400}
-                    />
                   </div>
                 )}
                 <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">

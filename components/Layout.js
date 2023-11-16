@@ -59,7 +59,7 @@ export default function Layout({ children }) {
       router.pathname === "/" ||
       router.pathname === "/signup" ||
       router.pathname === "/login" ||
-      router.pathname === "/all-product" ||
+      router.pathname === "/user-product" ||
       router.pathname === "/user-wishlist" ||
       router.pathname === "/user-order" ||
       router.pathname === "/userFAQ" ||
@@ -69,7 +69,7 @@ export default function Layout({ children }) {
       router.pathname === "/user-invoice" ||
       router.pathname === "/user-notifictionSet" ||
       router.pathname === "/product-filter/[slug]" ||
-      router.pathname === "/cart" ||
+      router.pathname === "/user-cart" ||
       router.pathname.includes("product-details") 
       ? null : (
         <>
@@ -97,14 +97,14 @@ export default function Layout({ children }) {
             router.pathname === "/" ||
             router.pathname === "/signup" ||
             router.pathname === "/login" ||
-            router.pathname === "/all-product" ||
+            router.pathname === "/user-product" ||
             router.pathname === "/userFAQ" ||
             router.pathname === "/user-profile" ||
             router.pathname === "/user-order" ||
             router.pathname === "/user-wishlist" ||
             router.pathname === "/user-setting" ||
             router.pathname === "/user-invoice" || 
-            router.pathname === "/cart" ||
+            router.pathname === "/user-cart" ||
             router.pathname === "/userorder-detail" ||
             router.pathname === "/user-notifictionSet"||
             router.pathname === "/product-filter/[slug]" ||
@@ -125,10 +125,10 @@ export default function Layout({ children }) {
               router.pathname === "/user-profile" ||
               router.pathname === "/user-wishlist" ||
               router.pathname === "/user-order" ||
-              router.pathname === "/all-product" ||
+              router.pathname === "/user-product" ||
               router.pathname === "/user-setting" ||
               router.pathname === "/user-invoice" ||
-              router.pathname === "/cart" ||
+              router.pathname === "/user-cart" ||
               router.pathname === "/userorder-detail" ||
               router.pathname === "/user-notifictionSet"||
               router.pathname === "/product-filter/[slug]" ||

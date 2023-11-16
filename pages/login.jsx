@@ -56,7 +56,7 @@ const UserLogin = ({ API_URL }) => {
           toast.success("Success, Login Successfully!");
 
           
-            router.push("/all-product");
+            router.push("/user-product");
    
         } else {
           setLoading(false);

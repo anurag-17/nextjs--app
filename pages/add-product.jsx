@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddProduct = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [getallBrand, setGetallBrand] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getCurrency, setGetCurrency] = useState([]);
@@ -17,7 +16,7 @@ const AddProduct = () => {
   const [isPriceError, setPriceError] = useState(false);
   const [isCurrError, setCurrError] = useState(false);
   const [imageUrls, setImageUrls] = useState("");
-  const [selectedColor, setSelectedColor] = useState("")
+  const [selectedColor, setSelectedColor] = useState("");
   const [productDetails, setProductDetails] = useState({
     title: "",
     description: "",
@@ -29,8 +28,7 @@ const AddProduct = () => {
     brand: "",
     quantity: "",
     color: [],
-    images: [ 
-    ],
+    images: [],
   });
 
   const [selectColor, setSelectColor] = useState([]);
@@ -38,20 +36,11 @@ const AddProduct = () => {
   const [imgFiles, setImageFiles] = useState([]);
   const [imgByColor, setImgBycolor] = useState({
     public_id: "",
-    url: "",
+    url: [],
     color: "",
   });
-  
 
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
-
-  const openDrawer = () => {
-    setIsDrawerOpen(true);
-  };
-
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
 
   const refreshData = () => {
     setProductDetails({
@@ -204,7 +193,7 @@ const AddProduct = () => {
   //----- color -------
 
   const handleImageUpload = async (event) => {
-    setImageFiles(event.target.files);
+    setImageFiles([...imgFiles,event.target.files[0]]);
   };
 
   const imageUploader = async () => {
@@ -219,12 +208,12 @@ const AddProduct = () => {
 
       if (res?.status === 200) {
         productDetails.images.push({
-          public_id : "",
-          url:res?.data?.imageUrls[0],
-          color:selectColor
-        })
-      setSelectedColor("")
-      setImageFiles([])
+          public_id: "",
+          url: res?.data?.imageUrls,
+          color: selectColor,
+        });
+        setSelectedColor("");
+        setImageFiles([]);
       } else {
         toast.error("Failed !!");
         setUploadingImg(false);
@@ -279,18 +268,16 @@ const AddProduct = () => {
   }, []);
 
   const handleWarnaChange = async (e) => {
-    setSelectedColor(e)
+    setSelectedColor(e);
     setSelectColor(e?.value);
-    setImgBycolor({...imgByColor , ["color"]: e?.value})
+    setImgBycolor({ ...imgByColor, ["color"]: e?.value });
   };
 
   const handleMultiSelect = async (e) => {
     let newColor = e.map((item) => item?.value);
-    console.log(newColor);
-    setProductDetails({...productDetails,["color"]: newColor})
+    setProductDetails({ ...productDetails, ["color"]: newColor });
     // productDetails.color.push(newColor)
   };
-
 
   return (
     <section className="bg-gray-100 min-h-screen">
@@ -353,43 +340,55 @@ const AddProduct = () => {
           <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 justify-center items-center">
             <label className="custom-input-label">Product Images</label>
             <div className="col-span-1 sm:col-span-2">
-              {
-                imgFiles.length>0 ?
-                 <div className="custom-input text-center bg-gray-300 flex gap-x-5 justify-center items-center text-black fonr-medium"> {imgFiles[0]?.name }
-                 <p className="font-bold cursor-pointer" onClick={()=>setImageFiles([])}>x</p>
-                  </div>
-                 : 
-              <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
-                
-                {imageUrls === "" ? (
-                  <>
-                    {isUploadingImg ? (
-                      <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
-                        Uploading ...
-                      </button>
-                    ) : (
-                      <label
-                        className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
-                        htmlFor="fileUpload"
-                      >
-                        <input
-                          type="file"
-                          className="hidden"
-                          id="fileUpload"
-                          onChange={handleImageUpload}
-                          accept="image/png,image/jpg, image/jpeg"
-                        />
-                       Upload product image
-                      </label>
-                    )}
-                  </>
-                ) : (
-                  <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
-                    Image Uploaded
-                  </button>
-                )}
-              </div>
-              }
+           
+                <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
+                  {imageUrls === "" ? (
+                    <>
+                      {isUploadingImg ? (
+                        <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
+                          Uploading ...
+                        </button>
+                      ) : (
+                        <label
+                          className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
+                          htmlFor="fileUpload"
+                        >
+                          <input
+                            type="file"
+                            className="hidden"
+                            multiple
+                            id="fileUpload"
+                            onChange={handleImageUpload}
+                            accept="image/png,image/jpg, image/jpeg"
+                          />
+                          Upload product image
+                        </label>
+                      )}
+                    </>
+                  ) : (
+                    <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
+                      Image Uploaded
+                    </button>
+                  )}
+                </div>
+
+                {
+                  imgFiles.length > 0 && (
+                    <div className="text-center bg-gray-300 text-black fonr-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
+                      {imgFiles?.map((urls,inx)=>(
+                        <div className="flex gap-x-2 justify-center items-center">
+                            <p className=" whitespace-nowrap text-ellipsis overflow-hidden" key={inx}>{urls.name}</p>
+                            <p
+                              className="font-bold cursor-pointer"
+                              onClick={() => setImageFiles([])}
+                            >
+                              x
+                            </p>
+                        </div>
+                      ))}
+                    </div>
+                )}  
+
             </div>
             <div className="col-span-1 sm:col-span-1">
               {/* <div className="custom-input"></div> */}
@@ -411,16 +410,15 @@ const AddProduct = () => {
               />
             </div>
             <div className="col-span-1 sm:col-span-1">
-              {
-               ( imgFiles.length>0 && selectedColor !== "") &&
-              <button
-                type="button"
-                className="px-4 py-2 rounded-sm font-medium text-[15px] bg-black text-white flex justify-center items-center"
-                onClick={imageUploader}
-              >
-                Upload
-              </button>
-              }
+              {imgFiles.length > 0 && selectedColor !== "" && (
+                <button
+                  type="button"
+                  className="px-4 py-2 rounded-sm font-medium text-[15px] bg-black text-white flex justify-center items-center"
+                  onClick={imageUploader}
+                >
+                  Upload
+                </button>
+              )}
             </div>
           </div>
 
@@ -595,7 +593,7 @@ const AddProduct = () => {
               Product Colour
             </label>
             <div className="col-span-8 sm:col-span-4">
-            <Select
+              <Select
                 id="selectWarna"
                 instanceId="selectWarna"
                 isMulti

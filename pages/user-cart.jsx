@@ -35,7 +35,7 @@ const Cart = () => {
   useEffect(() => {
     updateCart();
     if (!token || token == undefined) {
-      setGetCartProduct(sessionCartProduct);
+        (sessionCartProduct);
     } else {
       defaultCustomer();
     }
