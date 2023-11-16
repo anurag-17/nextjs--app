@@ -11,6 +11,7 @@ import UserNavbar from "../../components/UserModule/userNavbar";
 import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
 import ProductDetailsCarousel from "../../components/UserModule/Product/ProductDetailsCarousel";
+import { getDiscountedPricePercentage } from "../../components/UserModule/Discount";
 
 const Userdetail = () => {
   const router = useRouter();
@@ -72,8 +73,8 @@ const Userdetail = () => {
           .then((response) => {
             setProductDetail(response);
             // console.log(response);
-            if(Array.isArray(response.color)&& response.color.length>0){
-              setProductColor(response?.color[0])
+            if (Array.isArray(response.color) && response.color.length > 0) {
+              setProductColor(response?.color[0]);
             }
           })
           .catch((err) => console.error(err));
@@ -211,19 +212,15 @@ const Userdetail = () => {
           <main className="h-full overflow-y-auto pt-[40px]">
             <div className="grid px-6 mx-auto">
               <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
-               
                 <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px] mt-4">
-                 
-                 
                   {/* left column start */}
                   <div className="w-full md:w-auto flex-[1] max-w-[500px] lg:max-w-full mx-auto lg:mx-0">
                     <ProductDetailsCarousel
                       images={productDetail?.images || []}
-                      productColor = {productColor}
+                      productColor={productColor}
                     />
                   </div>
 
-                 
                   {/* right column start */}
                   <div className="flex-[1] py-3 text-left">
                     <div className="flex text-left mb-4">
@@ -272,7 +269,7 @@ const Userdetail = () => {
                       </div>
                     </div>
 
-                    <div className="flex text-left mt-3">
+                    <div className="flex items-center text-left mt-3">
                       <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
                         Price :
                       </div>
@@ -282,6 +279,15 @@ const Userdetail = () => {
                         </del>
                         <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
                           ₹{productDetail?.discountedPrice}
+                        </div>
+                        <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
+                          <p className="ml-auto  font-medium text-green-500 whitespace-nowrap">
+                            {getDiscountedPricePercentage(
+                              productDetail?.price,
+                              productDetail?.discountedPrice
+                            )}
+                            % off
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -370,8 +376,6 @@ const Userdetail = () => {
           </main>
         </div>
       </section>
-
-    
     </>
   );
 };

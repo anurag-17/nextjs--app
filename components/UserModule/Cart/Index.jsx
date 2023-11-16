@@ -15,9 +15,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [isOpenAdd, setOpenAdd] = useState(false);
   const { userAddress } = useSelector((state) => state.auth?.userDetails || "");
 
-  useEffect(() => {
-    updateGrandTotal();
-  }, [getCartProduct]);
+  console.log(getCartProduct);
+  
 
   const openAddModal = () => {
     setOpenAdd(true);
@@ -29,18 +28,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
   const calculateSubtotal = (item) => {
     return item?.price * item?.count;
-  };
-
-  const updateGrandTotal = () => {
-    const subtotalArray = getCartProduct?.map((item) =>
-      calculateSubtotal(item)
-    );
-
-    const total = subtotalArray.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    );
-    setGrandTotal(total);
   };
 
   const removeWishlist = async () => {
@@ -62,9 +49,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
           )
           .then((response) => {
             if (response.status === 200) {
-              toast.success("Successfully clear cart !");
               refreshData();
-            } else {
+            }  else {
               toast.error("Failed to delete");
             }
           });
@@ -221,24 +207,26 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         </div>
       ) : (
         <>
-          {getCartProduct?.length > 0 ? (
+          {getCartProduct?.products
+?.length > 0 ? (
             <div className=" px-20">
               <div className="border rounded-lg bg-white p-5">
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center" >
                   <div>
                     <h1 className="text-[35px] font-semibold">
-                      Your Cart ( {getCartProduct?.length} items )
+                      Your Cart ( {getCartProduct?.products
+?.length} items )
                     </h1>
                     <button type="button" onClick={openAddModal}>
                       <p className="underline text-[18px] font-medium">
-                        Add your address
+                        Update your address
                       </p>
                     </button>
                   </div>
 
                   <button
                     onClick={removeWishlist}
-                    className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer"
+                    className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer h-[53px] px-6"
                   >
                     <p className="text-[16px] mx-1 flex font-semibold">
                       Clear Cart
@@ -248,8 +236,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                 </div>
                 <hr className="my-5" />
                 <div>
-                  {getCartProduct?.length > 0 &&
-                    getCartProduct?.map((item, inx) => {
+                  {getCartProduct?.products
+?.length > 0 &&
+                    getCartProduct?.products
+?.map((item, inx) => {
                       // const itemTotalPrice = item?.price * item?.count;
                       // subtotal += itemTotalPrice;
                       return (
@@ -339,7 +329,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       <div className="flex">
                         <p className="w-[200px]">Subtotal : </p>
                         <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                          ₹ {grandTotal}{" "}
+                          ₹ {getCartProduct?.cartTotal}
                         </p>
                       </div>
                       <div className="flex mt-2">
@@ -353,7 +343,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       <div className="flex mt-2">
                         <p className="w-[200px]"> Grand Total : </p>
                         <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
-                          ₹ {grandTotal + 75}{" "}
+                          ₹ {(getCartProduct?.cartTotal) + 75}{" "}
                         </p>
                       </div>
                       <div className="mt-5">
