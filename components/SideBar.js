@@ -108,7 +108,7 @@ const menuList = [
   {
     id: 5,
     label: "customers",
-    component: <Customers />,
+    component:<Customers/>,
     icon: `fa fa-phone-square`,
     path: "/customers",
   },
