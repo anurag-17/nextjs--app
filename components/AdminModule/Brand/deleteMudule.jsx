@@ -34,6 +34,7 @@ const DeleteModuleB = ({ brandID, closeModal, refreshData }) => {
           setLoading(false);
           toast.success("brand deleted successfully !");
           handleClose();
+          refreshData();
         } else {
           setLoading(false);
           return;

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { Dialog, Transition } from "@headlessui/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -34,6 +32,7 @@ const DeleteModuleC = ({ categoryID, closeModal, refreshData }) => {
           setLoading(false);
           toast.success("category deleted successfully !");
           handleClose();
+          refreshData();
         } else {
           setLoading(false);
           return;

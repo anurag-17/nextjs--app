@@ -19,10 +19,36 @@ const Color = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isOpenDelete, setOpenDelete] = useState(false);
   const [colorID, setColorID] = useState("");
-  const [colorEID, setColorEID] = useState("");
+  const [colorEdit, setColorEdit] = useState("");
   const [isRefresh, setRefresh] = useState(false);
-  const [selected, setSelected] = useState([]);
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+  const [editData, setEditData] = useState([]);
+
+  const openDrawerO = async (_id) => {
+    setColorEdit(_id);
+    try {
+      const options = {
+        method: "POST",
+        url: "https://e-commerce-backend-brown.vercel.app/api/color/getaColor",
+        headers: {
+          "User-Agent": "PostmanRuntime/7.35.0",
+        },
+        data: {
+          id: _id,
+        },
+      };
+      const response = await axios.request(options);
+      if (response.status === 200) {
+        setEditData(response?.data?.result);
+        setIsDrawerOpenO(true);
+      } else {
+        console.error("Error: Unexpected response status");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -41,11 +67,6 @@ const Color = () => {
     setRefresh(!isRefresh);
   };
 
-  const openDrawerO = (_id) => {
-    setColorEID(_id);
-    setIsDrawerOpenO(true);
-  };
-
   const closeDrawerO = () => {
     setIsDrawerOpenO(false);
   };
@@ -56,7 +77,7 @@ const Color = () => {
   };
   useEffect(() => {
     defaultColor();
-  }, []);
+  }, [isRefresh]);
 
   const defaultColor = () => {
     axios
@@ -78,7 +99,7 @@ const Color = () => {
         <h2>Welcome Back, Admin</h2>
       </div>
       <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white w-full h-[100px] mt-5">
-        <div className="flex  mt-7 ">
+        <div className="flex justify-end mt-7 ">
           <button
             onClick={openDrawer}
             className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
@@ -112,7 +133,7 @@ const Color = () => {
             <span className="sr-only bg-black">Close menu</span>
           </button>
           <div className="">
-            <AddColor />
+            <AddColor closeDrawer={closeDrawer} refreshData={refreshData} />
           </div>
         </div>
       )}
@@ -140,7 +161,12 @@ const Color = () => {
             <span className="sr-only bg-black">Close menu</span>
           </button>
           <div>
-            <Editcolor colorEID={colorEID} />
+            <Editcolor
+              colorEdit={colorEdit}
+              closeDrawer={closeDrawerO}
+              refreshData={refreshData}
+              editData={editData}
+            />
           </div>
         </div>
       )}
@@ -180,7 +206,7 @@ const Color = () => {
                       marginTop: "20px",
                       width: "30px",
                       height: "30px",
-                      backgroundColor:item.color ||"",
+                      backgroundColor: item.color || "",
                     }}
                   ></div>
                 </td>

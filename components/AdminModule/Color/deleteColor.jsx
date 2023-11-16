@@ -36,6 +36,8 @@ const DeleteColor = ({ colorID, closeModal, refreshData }) => {
           setLoading(false);
           toast.success("Brand deleted successfully!");
           handleClose();
+          refreshData();
+          // window.location.reload(); 
         } else {
           setLoading(false);
           return;
@@ -50,7 +52,7 @@ const DeleteColor = ({ colorID, closeModal, refreshData }) => {
 
   return (
     <>
-        <ToastContainer />
+      
       <div className="mt-2">
         <p className="lg:text-[18px] text-[16px] font-normal leading-[30px] text-gray-500 mt-4">
           Do you really want to delete these records? You cant't view this in
