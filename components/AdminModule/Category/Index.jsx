@@ -99,7 +99,7 @@ const CategoryList = () => {
   };
   useEffect(() => {
     defaultCategory();
-  }, [isRefresh]);
+  }, []);
 
   const options = {
     method: "GET",
