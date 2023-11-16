@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-const CreateCategoryForm = () => {
+const CreateCategoryForm = ({closeDrawer, refreshData}) => {
   const [title, setTitle] = useState("");
   const router = useRouter();
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     try {
       await fetch(
         "https://e-commerce-backend-brown.vercel.app/api/category/createCategory",
@@ -22,6 +23,9 @@ const CreateCategoryForm = () => {
         .then((res) => {
           if (res.ok) {
             router.push("/categories");
+            refreshData();
+            setDrawerOpen(false);
+            handleClose();
           } else {
             throw new Error("failed to create");
           }
@@ -32,6 +36,9 @@ const CreateCategoryForm = () => {
     } catch (error) {}
   };
 
+  const handleClose = () => {
+    closeDrawer();
+  };
   return (
     <>
        <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[50px] my-5 ">
@@ -61,6 +68,10 @@ const CreateCategoryForm = () => {
       <button
         type="submit"
         className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] "
+        onClick={() => {
+              handleSubmit();
+              setDrawerOpen(false);
+            }}
       >
         Add Category
       </button>

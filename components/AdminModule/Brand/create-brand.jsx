@@ -2,12 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-const CreateBrand = () => {
+const CreateBrand = ({closeDrawer, refreshData }) => {
   const [brand, setBrand] = useState("");
   const router = useRouter();
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     try {
       await fetch(
         "https://e-commerce-backend-brown.vercel.app/api/brand/createBrand",
@@ -21,7 +22,9 @@ const CreateBrand = () => {
       )
         .then((res) => {
           if (res.ok) {
-            router.push("/brand");
+            handleClose();
+            refreshData();
+            setDrawerOpen(false);
           } else {
             throw new Error("failed to create");
           }
@@ -60,6 +63,10 @@ const CreateBrand = () => {
             <button
               type="submit"
               className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px] "
+              onClick={() => {
+                  handleSubmit();
+                  setDrawerOpen(false);
+                }}
             >
               Add Brand
             </button>

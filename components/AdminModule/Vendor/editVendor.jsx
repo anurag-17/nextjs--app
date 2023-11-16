@@ -4,8 +4,6 @@ import axios from "axios";
 
 
 const UpdateVendor = ({ editData, closeDrawer, vendorEdit, refreshData }) => {
-
-
   const [isLoading, setLoading] = useState(false)
   const [updateVendor, setUpdateVendor] = useState({
     vendorName: editData?.vendorName || "",

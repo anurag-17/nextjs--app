@@ -12,9 +12,10 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import CreateCategoryForm from "../../../pages/create-cate";
-import EditCate from "../../../pages/edit-cate/[slug]";
+import CreateCategoryForm from "../Category/create-cate";
+
 import DeleteModuleC from "./deleteMudule";
+import EditCate from "./edit-category";
 
 const headItems = ["NAME", "PUBLISHED", "ACTION"];
 
@@ -24,20 +25,39 @@ const CategoryList = () => {
   const [isRefresh, setRefresh] = useState(false);
   const [getallCategory, setGetallCategory] = useState([]);
   const [isChecked, setisChecked] = useState([]);
-  const [brandIds, setBrandIds] = useState("");
-  const [selectDelete, setSelectDelete] = useState("");
   const [selected, setSelected] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [cateEdit, setCateEdit]=useState("");
+  const [cateEdit, setCateEdit] = useState("");
+  const [editData, setEditData] = useState([]);
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
-  const openDrawerO = (_id) => {
+
+  const openDrawerO = async (_id) => {
     setCateEdit(_id);
-    setIsDrawerOpenO(true);
+    try {
+      const options = {
+        method: "POST",
+        url: "https://e-commerce-backend-brown.vercel.app/api/category/getCategory",
+        headers: {
+          "User-Agent": "PostmanRuntime/7.35.0",
+        },
+        data: {
+          id: _id,
+        },
+      };
+      const response = await axios.request(options);
+      if (response.status === 200) {
+        setEditData(response?.data);
+        setIsDrawerOpenO(true);
+      } else {
+        console.error("Error: Unexpected response status");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const closeDrawerO = () => {
-    
     setIsDrawerOpenO(false);
   };
 
@@ -49,7 +69,6 @@ const CategoryList = () => {
     setIsDrawerOpen(false);
   };
 
-  const pageLimit = "15";
   function closeModal() {
     setOpenDelete(false);
   }
@@ -61,7 +80,6 @@ const CategoryList = () => {
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
-
   const handleClose = () => {
     closeModal();
     refreshData();
@@ -78,15 +96,14 @@ const CategoryList = () => {
     }
     setSelected([]);
   };
+  useEffect(() => {
+    defaultCategory();
+  }, [isRefresh]);
 
   const options = {
     method: "GET",
     url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
   };
-
-  useEffect(() => {
-    defaultCategory();
-  }, []);
 
   const defaultCategory = () => {
     axios
@@ -109,19 +126,16 @@ const CategoryList = () => {
         { CategoryIds: selected }
       );
 
-      // Check the HTTP status code for success (2xx codes)
       if (response.status === 200) {
         console.log("Successfully deleted Catagory");
-        // Call the function to refresh your brand data
+        refreshData();
         defaultCategory();
       } else {
-        // Handle other status codes or error responses from the server
         console.error(
           "Failed to delete catagory. Status code: " + response.status
         );
       }
     } catch (error) {
-      // Handle network errors or exceptions thrown during the request
       console.error("Error deleting catagory:", error);
     }
   };
@@ -233,7 +247,10 @@ const CategoryList = () => {
               <span className="sr-only bg-black">Close menu</span>
             </button>
             <div>
-              <CreateCategoryForm />
+              <CreateCategoryForm
+                closeDrawer={closeDrawer}
+                refreshData={refreshData}
+              />
             </div>
           </div>
         )}
@@ -262,14 +279,18 @@ const CategoryList = () => {
               <span className="sr-only bg-black">Close menu</span>
             </button>
             <div>
-              <EditCate  cateEdit={cateEdit}/>
+              <EditCate
+                cateEdit={cateEdit}
+                closeDrawer={closeDrawerO}
+                refreshData={refreshData}
+                editData={editData}
+              />
             </div>
           </div>
         )}
 
         <table class="table-auto bg-white rounded-md mt-5  relative  ">
           <thead className="">
-          
             <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
               <input
                 type="checkbox"
@@ -326,7 +347,6 @@ const CategoryList = () => {
                       <button className="flex">
                         <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
-                    
                         <button onClick={() => openDrawerO(items?._id)}>
                           <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
                         </button>
