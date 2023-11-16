@@ -34,7 +34,7 @@ const DeleteColor = ({ colorID, closeModal, refreshData }) => {
 
         if (response.status === 200) {
           setLoading(false);
-          toast.success("Brand deleted successfully!");
+          toast.success("Color deleted successfully!");
           handleClose();
           refreshData();
           // window.location.reload(); 

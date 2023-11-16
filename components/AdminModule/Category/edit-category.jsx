@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
@@ -47,6 +48,7 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
       console.log(response);
 
       if (response.status === 200) {
+        toast.success("Category Update successfully !");
         setLoading(false);
         handleClose();
         refreshData();

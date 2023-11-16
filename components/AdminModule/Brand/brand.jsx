@@ -12,7 +12,7 @@ import {
 import { Transition, Dialog } from "@headlessui/react";
 import { Fragment } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-
+import { ToastContainer } from "react-toastify";
 import Editbrand from "../Brand/edit-brand";
 import DeleteModuleB from "../Brand/deleteMudule";
 import CreateBrand from "../Brand/create-brand";
@@ -210,6 +210,7 @@ const brandlist = () => {
   };
   return (
     <>
+    <ToastContainer/>
       <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
         <h2 className="text-2xl font-semibold pb-4">Brand List </h2>
 

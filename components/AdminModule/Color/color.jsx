@@ -11,6 +11,7 @@ import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import AddColor from "./add-color";
 import DeleteColor from "./deleteColor";
+import { ToastContainer } from "react-toastify";
 import Editcolor from "./edit-color";
 
 const headItems = ["COLOR NAME", "COLOR", "ACTION"];
@@ -93,6 +94,7 @@ const Color = () => {
 
   return (
     <div>
+    <ToastContainer/>
       <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
         <h2 className="text-2xl font-semibold pb-4">Color List </h2>
 

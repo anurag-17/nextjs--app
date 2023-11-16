@@ -16,6 +16,7 @@ import CreateCategoryForm from "../Category/create-cate";
 
 import DeleteModuleC from "./deleteMudule";
 import EditCate from "./edit-category";
+import { ToastContainer } from "react-toastify";
 
 const headItems = ["NAME", "PUBLISHED", "ACTION"];
 
@@ -193,6 +194,7 @@ const CategoryList = () => {
   };
   return (
     <>
+    <ToastContainer/>
       <section>
         <div className="flex justify-between items-center pt-4 px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
           <h2 className="text-2xl font-semibold pb-4">Category List </h2>

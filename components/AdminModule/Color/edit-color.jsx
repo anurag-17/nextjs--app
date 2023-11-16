@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Editcolor = ({ editData, colorEdit, closeDrawer, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
@@ -36,6 +37,7 @@ const Editcolor = ({ editData, colorEdit, closeDrawer, refreshData }) => {
       console.log(response);
 
       if (response.status === 200) {
+        toast.success("Color Update successfully !");
         setLoading(false);
         handleClose();
         refreshData();
