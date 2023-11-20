@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Editcolor = ({ editData, colorEdit, closeDrawer, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
@@ -10,13 +10,12 @@ const Editcolor = ({ editData, colorEdit, closeDrawer, refreshData }) => {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-  
+
     setColorDetails((prevDetails) => ({
       ...prevDetails,
       [name]: name === "color" ? value : value.toUpperCase(),
     }));
   };
-  
 
   const handleUpdateColor = async (e) => {
     e.preventDefault();
@@ -24,8 +23,11 @@ const Editcolor = ({ editData, colorEdit, closeDrawer, refreshData }) => {
 
     try {
       const response = await axios.put(
-        `https://e-commerce-backend-brown.vercel.app/api/color/updateColor/${colorEdit}`,
-        colorDetails,
+        "https://e-commerce-backend-brown.vercel.app/api/color/updateColor",
+        {
+          id: colorEdit,
+          ...colorDetails,
+        },
         {
           headers: {
             "Content-Type": "application/json",

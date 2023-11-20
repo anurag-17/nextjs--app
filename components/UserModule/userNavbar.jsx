@@ -1,16 +1,13 @@
 import React from "react";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-
 import Image from "next/image";
 import Link from "next/link";
-
-import {setToken, setUserDetails } from "../../redux/slices/authSlice";
-
+import { setUserDetails } from "../../redux/slices/authSlice";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import shoping from "../../public/shopingcart.svg";
-
+import { Dialog, Transition } from "@headlessui/react";
 
 const menuList = [
   {
@@ -28,6 +25,7 @@ const menuList = [
     icon: "fa fa-users",
     imagePath: "",
     path: "/user-profile",
+    show: true,
   },
   {
     id: 2,
@@ -36,6 +34,7 @@ const menuList = [
     icon: "fa fa-users",
     imagePath: "",
     path: "/user-wishlist",
+    show: true,
   },
   {
     id: 3,
@@ -43,6 +42,7 @@ const menuList = [
     component: "",
     icon: "fa fa-phone-square",
     path: "/user-order",
+    show: true,
   },
 
   {
@@ -82,6 +82,7 @@ const menuList = [
     component: "",
     icon: "fa fa-phone-square",
     path: "/userorder-detail",
+    show: true,
   },
   {
     id: 7,
@@ -90,14 +91,25 @@ const menuList = [
     icon: "fa fa-phone-square",
     imagePath: "/social.svg",
     path: "/",
+    show: true,
   },
 ];
 
 const UserNavbar = () => {
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { token } = useSelector((state) => state.auth.userDetails || null);
+  const [isOpenLogin, setOpenLogin] = useState(false);
+  const [isShow, setShow] = useState(false);
+
+  const openLoginModal = () => {
+    setOpenLogin(true);
+  };
+
+  const closeLoginModal = () => {
+    setOpenLogin(false);
+  };
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -107,16 +119,16 @@ const UserNavbar = () => {
     setIsDrawerOpen(false);
   };
 
-  const handleSignOut = ()=>{
-    dispatch(setUserDetails({}))
+  const handleSignOut = () => {
+    dispatch(setUserDetails({}));
     localStorage.removeItem("wishList");
     localStorage.removeItem("userID");
     localStorage.removeItem("userToken");
-    window.location.reload()
-  }
-  const handleLogin = ()=>{
-    router.push('/login');
-  }
+    window.location.reload();
+  };
+  const handleLogin = () => {
+    router.push("/login");
+  };
 
   return (
     <>
@@ -137,15 +149,16 @@ const UserNavbar = () => {
               </button>
             </div>
             <div className="flex items-cente gap-[20px]">
-              {
-              ( !token || token == undefined ) && 
-                <div className="bg-lightBlue-500 text-white rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer" 
-                onClick={handleLogin}>Login
+              {(!token || token == undefined) && (
+                <div
+                  className="bg-lightBlue-500 text-white rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer"
+                  onClick={handleLogin}
+                >
+                  Login
                 </div>
-           
-              }
+              )}
               <Link href="/user-cart">
-                <Image src={shoping}  className="w-12 mr-10"/>
+                <Image src={shoping} className="w-12 mr-10" />
               </Link>
             </div>
           </div>
@@ -174,38 +187,96 @@ const UserNavbar = () => {
               <div className="">
                 <ul>
                   {menuList.map((item) => (
-                  <>
-                  {
-                    item.id === 7 ?
-                    <>
-                    {
-                      !token || token == undefined ?
-                      null :
-
-                      <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500" 
-                      onClick={()=>handleSignOut(item.path)}>
-                        {item.label}
-                      </li>
-                    }
-                    </>
-                      :
-                    <Link href={item.path ? item.path : "#"}>
-                      <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500">
-                        {item.label}
-                      </li>
-                    </Link>
-                  }
-                  </>
+                    <React.Fragment key={item.id}>
+                      {item.id === 7 ? (
+                        !token || token === undefined ? null : (
+                          <li
+                            className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500 text-gray-500"
+                            onClick={() => handleSignOut(item.path)}
+                          >
+                            {item.label}
+                          </li>
+                        )
+                      ) : (
+                        <>
+                          {item.show &&
+                            (!token || token === undefined ? null : (
+                              <Link href={item.path ? item.path : "#"}>
+                                <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500 text-gray-500">
+                                  {item.label}
+                                </li>
+                              </Link>
+                            ))}
+                          {!item.show && (
+                            <Link href={item.path ? item.path : "#"}>
+                              <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500 text-gray-500">
+                                {item.label}
+                              </li>
+                            </Link>
+                          )}
+                        </>
+                      )}
+                    </React.Fragment>
                   ))}
                 </ul>
               </div>
             </div>
           )}
         </ul>
-        {/* <ul className="flex justify-end">
-          <input type="text" placeholder="Search" className="p-1 border rounded-lg"/>
-        </ul> */}
       </nav>
+
+      <Transition appear show={isOpenLogin} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeLoginModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h4"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4"
+                  >
+                    Please login to Open wishlist
+                  </Dialog.Title>
+
+                  <div className="flex justify-between gap-x-5 pt-4">
+                    <button
+                      className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
+                      onClick={closeLoginModal}
+                    >
+                      No
+                    </button>
+                    <Link href="/login" className="w-full">
+                      <button className="w-full border border-1 rounded-md  text-sm  border-red-400 text-red-700 hover:bg-red-200  px-2 py-3 hover:border-none">
+                        Ok
+                      </button>
+                    </Link>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   );
 };
