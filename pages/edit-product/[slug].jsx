@@ -12,6 +12,8 @@ export default function EditProduct() {
   const [isRefresh, setRefresh] = useState(false);
   const [editData, setEditData] = useState({});
   const [getCurrency, setGetCurrency] = useState([]);
+  const [getallCategory, setGetallCategory] = useState([]);
+  const [getallBrand, setGetallBrand] = useState([]);
 
   const [productDetails, setProductDetails] = useState({
     title: "",
@@ -26,9 +28,8 @@ export default function EditProduct() {
     color: [],
   });
 
-
   console.log(productDetails?.offerPriceCurr);
-  
+
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
@@ -53,6 +54,44 @@ export default function EditProduct() {
       });
     }
   };
+  useEffect(() => {
+    defaultCategory();
+  }, []);
+
+  const defaultCategory = () => {
+    const option = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+    };
+    axios
+      .request(option)
+      .then((response) => {
+        setGetallCategory(response?.data);
+        console.log("herry", response?.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    defaultBrand();
+  }, []);
+
+  const defaultBrand = () => {
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+    };
+    axios
+      .request(options)
+      .then((response) => {
+        setGetallBrand(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   useEffect(() => {
     getAllProducts();
@@ -60,7 +99,7 @@ export default function EditProduct() {
 
   const getAllProducts = async () => {
     const options = {
-      method: "GET", 
+      method: "GET",
       headers: {
         cookie:
           "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
@@ -108,8 +147,12 @@ export default function EditProduct() {
           ? productDetails?.quantity
           : editData?.quantity,
         color: productDetails?.color ? productDetails?.color : editData?.color,
-        regPriceCurr: productDetails?.regPriceCurr ? productDetails?.regPriceCurr : editData?.regPriceCurr,
-        offerPriceCurr: productDetails?.offerPriceCurr ? productDetails?.offerPriceCurr : editData?.offerPriceCurr,
+        regPriceCurr: productDetails?.regPriceCurr
+          ? productDetails?.regPriceCurr
+          : editData?.regPriceCurr,
+        offerPriceCurr: productDetails?.offerPriceCurr
+          ? productDetails?.offerPriceCurr
+          : editData?.offerPriceCurr,
       },
     };
 
@@ -133,30 +176,29 @@ export default function EditProduct() {
       });
   };
 
+  //---currency---
 
-    //---currency---
+  useEffect(() => {
+    defaultCurrency();
+  }, []);
 
-    useEffect(() => {
-      defaultCurrency();
-    }, []);
-  
-    const defaultCurrency = () => {
-      const curr = {
-        method: "GET",
-        url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
-      };
-      axios
-        .request(curr)
-        .then((response) => {
-          if (response?.status === 200) {
-            setGetCurrency(response?.data);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const defaultCurrency = () => {
+    const curr = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
     };
-  
+    axios
+      .request(curr)
+      .then((response) => {
+        if (response?.status === 200) {
+          setGetCurrency(response?.data);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <section className="bg-gray-100 min-h-screen">
@@ -241,16 +283,21 @@ export default function EditProduct() {
                 <div className="col-span-8 sm:col-span-4">
                   <div className="flex flex-row">
                     <span className="inline-flex items-center px-1 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                      <select className="bg-white list-none outline-none "
-                      name="regPriceCurr"
-                        defaultValue={editData?.regPriceCurr ? editData?.regPriceCurr : productDetails?.regPriceCurr}
+                      <select
+                        className="bg-white list-none outline-none "
+                        name="regPriceCurr"
+                        defaultValue={
+                          editData?.regPriceCurr
+                            ? editData?.regPriceCurr
+                            : productDetails?.regPriceCurr
+                        }
                         onChange={inputHandler}
-                       >
-                   {getCurrency?.map((item) => (
-                      <option key={item?.id} value={item?.currencySign}>
-                        {item?.currencySign}
-                      </option>
-                    ))}
+                      >
+                        {getCurrency?.map((item) => (
+                          <option key={item?.id} value={item?.currencySign}>
+                            {item?.currencySign}
+                          </option>
+                        ))}
                       </select>
                     </span>
                     <input
@@ -275,16 +322,21 @@ export default function EditProduct() {
                 <div className="col-span-8 sm:col-span-4">
                   <div className="flex flex-row">
                     <span className="inline-flex items-center px-1 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-                      <select className="bg-white list-none outline-none "
-                       name="offerPriceCurr"
-                         defaultValue={editData?.regPriceCurr ? editData?.regPriceCurr : productDetails?.regPriceCurr}
-                          onChange={inputHandler}
-                         >
-                      {getCurrency?.map((item) => (
-                      <option key={item?.id} value={item?.currencySign}>
-                        {item?.currencySign}
-                      </option>
-                    ))}
+                      <select
+                        className="bg-white list-none outline-none "
+                        name="offerPriceCurr"
+                        defaultValue={
+                          editData?.regPriceCurr
+                            ? editData?.regPriceCurr
+                            : productDetails?.regPriceCurr
+                        }
+                        onChange={inputHandler}
+                      >
+                        {getCurrency?.map((item) => (
+                          <option key={item?.id} value={item?.currencySign}>
+                            {item?.currencySign}
+                          </option>
+                        ))}
                       </select>
                     </span>
                     <input
@@ -326,12 +378,18 @@ export default function EditProduct() {
                     minLength={3}
                     max={32}
                   >
-                    <option value="Watch">WATCH</option>
-                    <option value="Laptop">LAPTOP</option>
-                    <option value="Mobile">MOBILE</option>
-                    <option value="Cate" selected>
-                      CATE
+                    <option value="" disabled>
+                      Select Category
                     </option>
+                    {getallCategory.map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.title}
+                        selected={item.title === productDetails.category}
+                      >
+                        {item.title}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -379,9 +437,18 @@ export default function EditProduct() {
                       minLength={3}
                       max={32}
                     >
-                      <option value="apple">Apple</option>
-                      <option value="dell">DELL</option>
-                      <option value="Demo Product">Demo Product</option>
+                      <option value="" disabled>
+                        Select Brands
+                      </option>
+                      {getallBrand.map((items) => (
+                        <option
+                          key={items.id}
+                          value={items.brand}
+                          selected={items.brand === productDetails.brand}
+                        >
+                          {items.brand}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
