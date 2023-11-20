@@ -4,10 +4,9 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import axios from "axios";
 
-const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => {
+const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
   const router = useRouter();
-  // const { slug } = router.query;
-   
+ 
   const [isFetching, setIsFetching] = useState(false);
   const [updateCustomer, setUpdateCustomer] = useState({
     id:customerEID,
@@ -23,6 +22,7 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
   });
 
   const inputHandler = (e) => {
+
     const { name, value } = e.target;
   
     if (name === "color") {
@@ -71,20 +71,22 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
   //     setIsFetching(false);
   //   }
   // };
-
+  const userID = JSON.parse(localStorage.getItem("userDetails"));
+  console.log("user",userID);
   const handleUpdateCustomer = async (e) => {
     e.preventDefault();
-
+    const token = JSON.parse(localStorage.getItem("accessToken"));
+  console.log("wqwq",token);
     const options = {
       method: "put",
-      url: `https://e-commerce-backend-brown.vercel.app/api/auth/edit-user/${customerEID}`,
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/edit-user",
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
         "authorization": token,
       },
       data: {
-        id: customerEID, 
+        id: userID,
         updateCustomer,
       },
     };
@@ -92,7 +94,7 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
     axios
       .request(options)
       .then(function (response) {
-        console.log("abc",response.data);
+        console.log("abc",response);
         if (response.status === 200) {
           router.push("/customer");
           handleClose();
@@ -131,11 +133,11 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.firstname}
-                defaultValue={
-                  editData?.firstname
-                    ? editData?.firstname
-                    : updateCustomer.firstname
-                }
+                // defaultValue={
+                //   editData?.firstname
+                //     ? editData?.firstname
+                //     : updateCustomer.firstname
+                // }
                 type="text"
                 name="firstname"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -152,11 +154,11 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.lastname}
-                defaultValue={
-                  editData?.lastname
-                    ? editData?.lastname
-                    : updateCustomer.lastname
-                }
+                // defaultValue={
+                //   editData?.lastname
+                //     ? editData?.lastname
+                //     : updateCustomer.lastname
+                // }
                 type="text"
                 name="lastname"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -172,9 +174,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.email}
-                defaultValue={
-                  editData?.email ? editData?.email : updateCustomer.email
-                }
+                // defaultValue={
+                //   editData?.email ? editData?.email : updateCustomer.email
+                // }
                 type="text"
                 name="email"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -188,9 +190,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.mobile}
-                defaultValue={
-                  editData?.mobile ? editData?.mobile : updateCustomer.mobile
-                }
+                // defaultValue={
+                //   editData?.mobile ? editData?.mobile : updateCustomer.mobile
+                // }
                 type="number"
                 name="mobile"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -206,9 +208,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.address}
-                defaultValue={
-                  editData?.address ? editData?.address : updateCustomer.address
-                }
+                // defaultValue={
+                //   editData?.address ? editData?.address : updateCustomer.address
+                // }
                 type="text"
                 name="address"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -222,9 +224,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.dob}
-                defaultValue={
-                  editData?.dob ? editData?.dob : updateCustomer.dob
-                }
+                // defaultValue={
+                //   editData?.dob ? editData?.dob : updateCustomer.dob
+                // }
                 type="text"
                 name="dob"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -240,9 +242,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.country}
-                defaultValue={
-                  editData?.country ? editData?.country : updateCustomer.country
-                }
+                // defaultValue={
+                //   editData?.country ? editData?.country : updateCustomer.country
+                // }
                 type="text"
                 name="country"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -256,11 +258,11 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
               <input
                 onChange={inputHandler}
                 value={updateCustomer.language}
-                defaultValue={
-                  editData?.language
-                    ? editData?.language
-                    : updateCustomer.language
-                }
+                // defaultValue={
+                //   editData?.language
+                //     ? editData?.language
+                //     : updateCustomer.language
+                // }
                 type="text"
                 name="language"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -275,9 +277,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => 
             <input
               onChange={inputHandler}
               value={updateCustomer.about}
-              defaultValue={
-                editData?.about ? editData?.about : updateCustomer.about
-              }
+              // defaultValue={
+              //   editData?.about ? editData?.about : updateCustomer.about
+              // }
               type="text"
               name="about"
               className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"

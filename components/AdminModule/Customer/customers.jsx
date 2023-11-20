@@ -34,12 +34,12 @@ const Customers = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editData, setEditData] = useState({});
   const [customerEID,setCustomerEID]=useState("")
-  const getTokenFromLocalStorage = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("accessToken") || null;
-    }
-    return null;
-  };
+  // const getTokenFromLocalStorage = () => {
+  //   if (typeof window !== "undefined") {
+  //     return localStorage.getItem("accessToken") || null;
+  //   }
+  //   return null;
+  // };
   const openDrawer = async (_id) => {
     setCustomerEID(_id);
     try {
@@ -219,7 +219,7 @@ const Customers = () => {
                 customerEID={customerEID}
                 closeDrawer={closeDrawer}
                 refreshData={refreshData}
-                token={getTokenFromLocalStorage()}
+                // token={getTokenFromLocalStorage}
 
               />
             </div>
