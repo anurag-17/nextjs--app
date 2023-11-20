@@ -33,9 +33,8 @@ const AddressModal = ({closeModal,userAdd}) => {
         axios
           .request(options)
           .then(function (response) {
-            console.log(response);
             if (response.status === 200) {
-              toast.success("Password updated successfully!");
+              toast.success("Address updated successfully!");
               dispatch(setUserDetails(response?.data));
               closeModal()
             } else {

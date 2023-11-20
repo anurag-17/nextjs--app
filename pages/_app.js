@@ -9,6 +9,7 @@ import Head from "next/head";
 import "../styles/globals.css";
 import { store } from "../redux/store/store";
 import Layout from "../components/Layout";
+import Script from "next/script";
 
 
 function MyApp({ Component, pageProps }) {
@@ -47,6 +48,7 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js"/>
       <Provider store={store}>
           <Layout>
             <Component {...pageProps} />

@@ -8,6 +8,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import UserNavbar from "../userNavbar";
 import AddressModal from "../Address/addressPopup";
 import { useSelector } from "react-redux";
+import BuyProduct from "../../razorpay/BuyProduct";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const { token } = useSelector((state) => state.auth.userDetails || {});
@@ -342,9 +343,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         </p>
                       </div>
                       <div className="mt-5">
-                        <button className="px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%]">
-                          Checkout
-                        </button>
+                      <div className="mt-5">
+                         <BuyProduct buyItem = {getCartProduct || []}/>
+                      </div>
                       </div>
                     </div>
                   </div>
