@@ -94,7 +94,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
             {
               _id: data?._id,
               count: productQuantity || 1,
-              color: productColor,
+              color: color,
             },
           ],
         },

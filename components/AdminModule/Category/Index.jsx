@@ -81,10 +81,6 @@ const CategoryList = () => {
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
-  const handleClose = () => {
-    closeModal();
-    refreshData();
-  };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
   console.log(selected);
@@ -99,7 +95,7 @@ const CategoryList = () => {
   };
   useEffect(() => {
     defaultCategory();
-  }, []);
+  }, [isRefresh]);
 
   const options = {
     method: "GET",
@@ -112,7 +108,6 @@ const CategoryList = () => {
       .then((response) => {
         setGetallCategory(response.data);
         console.log(response.data);
-        handleClose();
       })
       .catch((error) => {
         console.error("Error:", error);

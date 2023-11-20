@@ -11,7 +11,7 @@ const Editbrand = ({ editData, brandEdit, closeDrawer, refreshData }) => {
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
-    if (name === "color") {
+    if (name === "brand") {
       setBrandDetails({
         ...brandDetails,
         [name]: value.split(","),

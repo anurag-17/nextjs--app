@@ -144,10 +144,6 @@ const ProductGrid = () => {
       const response = await addToWishlist(productId);
 
       if (response.status === 200) {
-        // const message = isWished[productId]
-        //   ? "Success. Product removed from wishlist!"
-        //   : "Success. Product added to wishlisttt!";
-        //   console.log("qqq",response.data.message);
         toast.success(response.data.message);
         setLoading(false);
         refreshData();
@@ -389,23 +385,7 @@ const ProductGrid = () => {
             </div>
           </div>
 
-          {/* <div className="bg-white p-5 py-12 rounded-sm w-96 mr-4 ">
-            <p className="font-semibold text-2xl mb-4">Price Range</p>
-            <hr className="mb-2" />
-            <div className=" ">
-              <div className="flex justify-between text-[#645D64]  ">
-                <div className=" ">
-                  
-                  <p className="text-[#645D64]  no-underline hover:underline mb-3">
-                    Range:
-                    <span className="font-semibold text-black"> $0- $1000</span>
-                  </p>
-                  <Slider max={1000} min={0}  />
-                </div>
-               
-              </div>
-            </div>
-          </div> */}
+         
           {/*----- filter by Brand start ------- */}
           <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4">
             <p className="font-semibold text-2xl mb-4">Product Brands</p>

@@ -57,8 +57,9 @@ const Color = () => {
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
-  function openModal(id) {
-    setColorID(id);
+  function openModal(_id) {
+    setColorID(_id);
+    console.log("hhhh",_id)
     setOpenDelete(true);
   }
   function closeModal() {
@@ -168,6 +169,7 @@ const Color = () => {
               closeDrawer={closeDrawerO}
               refreshData={refreshData}
               editData={editData}
+              colorID={colorID}
             />
           </div>
         </div>

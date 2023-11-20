@@ -16,7 +16,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const { userAddress } = useSelector((state) => state.auth?.userDetails || "");
 
   console.log(getCartProduct);
-  
 
   const openAddModal = () => {
     setOpenAdd(true);
@@ -50,7 +49,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
           .then((response) => {
             if (response.status === 200) {
               refreshData();
-            }  else {
+            } else {
               toast.error("Failed to delete");
             }
           });
@@ -131,8 +130,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
                     >
-                      {item?.product?.images?.length > 0 &&
-                        item?.product?.images?.map((img, inx) => (
+                      {item?.product?.images?.url?.length > 0 &&
+                        item?.product?.images?.url?.map((img, inx) => (
                           <>
                             {item?.color == img?.color && (
                               <div className="w-[30%] py-2 px-4">
@@ -207,15 +206,13 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         </div>
       ) : (
         <>
-          {getCartProduct?.products
-?.length > 0 ? (
+          {getCartProduct?.products?.length > 0 ? (
             <div className=" px-20">
               <div className="border rounded-lg bg-white p-5">
-                <div className="flex justify-between items-center" >
+                <div className="flex justify-between items-center">
                   <div>
                     <h1 className="text-[35px] font-semibold">
-                      Your Cart ( {getCartProduct?.products
-?.length} items )
+                      Your Cart ( {getCartProduct?.products?.length} items )
                     </h1>
                     <button type="button" onClick={openAddModal}>
                       <p className="underline text-[18px] font-medium">
@@ -236,10 +233,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                 </div>
                 <hr className="my-5" />
                 <div>
-                  {getCartProduct?.products
-?.length > 0 &&
-                    getCartProduct?.products
-?.map((item, inx) => {
+                  {getCartProduct?.products?.length > 0 &&
+                    getCartProduct?.products?.map((item, inx) => {
                       // const itemTotalPrice = item?.price * item?.count;
                       // subtotal += itemTotalPrice;
                       return (
@@ -343,7 +338,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       <div className="flex mt-2">
                         <p className="w-[200px]"> Grand Total : </p>
                         <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
-                          ₹ {(getCartProduct?.cartTotal) + 75}{" "}
+                          ₹ {getCartProduct?.cartTotal + 75}{" "}
                         </p>
                       </div>
                       <div className="mt-5">
