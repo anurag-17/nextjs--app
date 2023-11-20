@@ -34,7 +34,12 @@ const Customers = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editData, setEditData] = useState({});
   const [customerEID,setCustomerEID]=useState("")
-
+  const getTokenFromLocalStorage = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("accessToken") || null;
+    }
+    return null;
+  };
   const openDrawer = async (_id) => {
     setCustomerEID(_id);
     try {
@@ -42,8 +47,8 @@ const Customers = () => {
       if (token) {
         console.log("Token:", token);
         const option = {
-          method: "GET",
-          url: "https://e-commerce-backend-brown.vercel.app/api/auth/getaUser",
+          method: "POST",
+          url: "https://e-commerce-backend-brown.vercel.app/api/auth/getUserById",
           headers: {
            
             "Content-Type": "application/json",
@@ -51,18 +56,19 @@ const Customers = () => {
             "authorization": token,
           },
           data: {
-            id: _id,
+            _id: _id,
           },
         };
   
         const response = await axios.request(option);
         if(response.status==200){
-          setEditData(response?.data);
+          setEditData(response?.data?.user);
+
           setIsDrawerOpen(true);
-          console.log(response?.data);
+          console.log("aaaa",response?.data?.user);
   
         }else{
-          console.log("erro:unexpected response");
+          console.log("error:unexpected response");
         }
       } else {
         console.log("Token not found in local storage");
@@ -213,6 +219,8 @@ const Customers = () => {
                 customerEID={customerEID}
                 closeDrawer={closeDrawer}
                 refreshData={refreshData}
+                token={getTokenFromLocalStorage()}
+
               />
             </div>
           </div>
@@ -353,7 +361,7 @@ const Customers = () => {
                     closeModal={closeModal}
                     refreshData={refreshData}
                   />
-                </Dialog.Panel>
+                 </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>
