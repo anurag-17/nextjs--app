@@ -366,19 +366,19 @@ export default function EditProduct() {
                 <div className="col-span-8 sm:col-span-4">
                   <select
                     name="category"
-                    placeholder="Add Category"
+                    placeholder="Category"
                     className="custom-input"
                     defaultValue={
                       editData?.category
                         ? editData?.category
                         : productDetails.category
-                    }
+                    } 
                     onChange={inputHandler}
                     required
-                    minLength={3}
+                    minLength={4}
                     max={32}
                   >
-                    <option value="" disabled>
+<option value="" disabled>
                       Select Category
                     </option>
                     {getallCategory.map((item) => (
@@ -437,7 +437,7 @@ export default function EditProduct() {
                       minLength={3}
                       max={32}
                     >
-                      <option value="" disabled>
+<option value="" disabled>
                         Select Brands
                       </option>
                       {getallBrand.map((items) => (
@@ -457,7 +457,7 @@ export default function EditProduct() {
               {/*------ color -----*/}
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <label htmlFor="" className="custom-input-label">
-                  Product Colour
+                  Product Color
                 </label>
                 <div className="col-span-8 sm:col-span-4">
                   <input
@@ -471,6 +471,8 @@ export default function EditProduct() {
                     // value={productDetails.color}
                     onChange={inputHandler}
                     required
+                    minLength={30}
+                    max={60}
                   />
                 </div>
               </div>
@@ -503,3 +505,5 @@ export default function EditProduct() {
     </>
   );
 }
+
+
