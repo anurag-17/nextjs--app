@@ -73,12 +73,14 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
   // };
   const userID = JSON.parse(localStorage.getItem("userDetails"));
   console.log("user",userID);
+  const token = JSON.parse(localStorage.getItem("accessToken"));
+console.log("wqwq",token);
+
+
   const handleUpdateCustomer = async (e) => {
     e.preventDefault();
-    const token = JSON.parse(localStorage.getItem("accessToken"));
-  console.log("wqwq",token);
     const options = {
-      method: "put",
+      method: "PUT",
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/edit-user",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +88,7 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
         "authorization": token,
       },
       data: {
-        id: userID,
+        _id: userID,
         updateCustomer,
       },
     };
@@ -96,7 +98,6 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
       .then(function (response) {
         console.log("abc",response);
         if (response.status === 200) {
-          router.push("/customer");
           handleClose();
           refreshData();
         } else {
