@@ -4,12 +4,13 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import axios from "axios";
 
-const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
+const EditCustomer = ({editData,closeDrawer,refreshData, customerEID,token}) => {
   const router = useRouter();
-  const { slug } = router.query;
-    // const [editData, setEditData] = useState({});
+  // const { slug } = router.query;
+   
   const [isFetching, setIsFetching] = useState(false);
   const [updateCustomer, setUpdateCustomer] = useState({
+    id:customerEID,
     firstname:editData?.firstname || "",
     lastname:editData?.lastname || "",
     email:editData?.email || "",
@@ -23,13 +24,14 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-
+  
     if (name === "color") {
       setUpdateCustomer({
         ...updateCustomer,
         [name]: value.split(","),
       });
     } else if (name === "brand") {
+     
       setUpdateCustomer({
         ...updateCustomer,
         [name]: value.toUpperCase(),
@@ -41,33 +43,34 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
       });
     }
   };
+  
 
-  useEffect(() => {
-    fetchCustomer();
-  }, []);
+  // useEffect(() => {
+  //   fetchCustomer();
+  // }, []);
 
-  const fetchCustomer = async () => {
-    try {
-      setIsFetching(true);
-      const res = await axios.get(
-        `https://e-commerce-backend-brown.vercel.app/api/auth/all-users/${slug}`,
-        {
-          cache: "no-store",
-        }
-      );
+  // const fetchCustomer = async () => {
+  //   try {
+  //     setIsFetching(true);
+  //     const res = await axios.get(
+  //       `https://e-commerce-backend-brown.vercel.app/api/auth/all-users/${slug}`,
+  //       {
+  //         cache: "no-store",
+  //       }
+  //     );
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch customer");
-      }
+  //     if (!res.ok) {
+  //       throw new Error("Failed to fetch customer");
+  //     }
 
-      const data = await res.json();
-      setIsFetching(data.name);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsFetching(false);
-    }
-  };
+  //     const data = await res.json();
+  //     setIsFetching(data.name);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setIsFetching(false);
+  //   }
+  // };
 
   const handleUpdateCustomer = async (e) => {
     e.preventDefault();
@@ -76,48 +79,24 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
       method: "put",
       url: `https://e-commerce-backend-brown.vercel.app/api/auth/edit-user/${customerEID}`,
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-        // Authorization: "Bearer " + token,
+        "authorization": token,
       },
-      data: updateCustomer
-      // {
-      //   id:customerEID,
-      //   firstname: updateCustomer?.firstname
-      //     ? updateCustomer?.firstname
-      //     : editData?.firstname,
-
-      //   lastname: updateCustomer?.lastname
-      //     ? updateCustomer?.lastname
-      //     : editData?.lastname,
-
-      //   email: updateCustomer?.email ? updateCustomer?.email : editData?.email,
-
-      //   mobile: updateCustomer?.mobile
-      //     ? updateCustomer?.mobile
-      //     : editData?.mobile,
-      //   address: updateCustomer?.address
-      //     ? updateCustomer?.address
-      //     : editData?.address,
-      //   dob: updateCustomer?.dob ? updateCustomer?.dob : editData?.dob,
-      //   country: updateCustomer?.country
-      //     ? updateCustomer?.country
-      //     : editData?.country,
-      //   language: updateCustomer?.language
-      //     ? updateCustomer?.language
-      //     : editData?.language,
-      //   about: updateCustomer?.about ? updateCustomer?.about : editData?.about,
-      // },
+      data: {
+        id: customerEID, 
+        updateCustomer,
+      },
     };
-
+      
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
+        console.log("abc",response.data);
         if (response.status === 200) {
           router.push("/customer");
+          handleClose();
+          refreshData();
         } else {
           setLoading(false);
           return;
@@ -127,6 +106,9 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
         console.error(error);
       });
   };
+  const handleClose = () => {
+    closeDrawer();
+  }
 
   return (
     <div>
@@ -144,7 +126,7 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
           <div className="flex">
             <div className="w-full">
               <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
-              Customer Name:
+              First Name:
               </label>
               <input
                 onChange={inputHandler}
@@ -165,7 +147,7 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
             </div>
             <div className="w-full">
               <label className="absolute mt-1 bg-white  ml-8 z-20 text-[18px] text-gray-800 bg-">
-                Company Name:
+                Last Name:
               </label>
               <input
                 onChange={inputHandler}
