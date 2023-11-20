@@ -374,7 +374,7 @@ const AddProduct = () => {
 
                 {
                   imgFiles.length > 0 && (
-                    <div className="text-center bg-gray-300 text-black fonr-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
+                    <div className="text-center bg-gray-300 text-black font-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
                       {imgFiles?.map((urls,inx)=>(
                         <div className="flex gap-x-2 justify-center items-center">
                             <p className=" whitespace-nowrap text-ellipsis overflow-hidden" key={inx}>{urls.name}</p>
