@@ -25,7 +25,6 @@ const DeleteModuleCustomer = ({ customerID, closeModal, refreshData }) => {
         "Content-Type": "application/json",
       },
     };
-
     axios
       .request(options)
       .then(function (response) {

@@ -18,6 +18,7 @@ const menuList = [
     label: "products",
     component: "",
     submenu: true,
+    path: "/admin-product",
     subData: [
       {
         id: "01",
@@ -81,6 +82,7 @@ const menuList = [
     component: "",
     icon: `fa fa-users`,
     submenu: true,
+    path: "/admin-vendor",
     subData: [
       {
         id: "1",
