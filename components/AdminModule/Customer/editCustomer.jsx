@@ -44,35 +44,11 @@ const EditCustomer = ({editData,closeDrawer,refreshData, customerEID}) => {
     }
   };
   
+  
 
-  // useEffect(() => {
-  //   fetchCustomer();
-  // }, []);
-
-  // const fetchCustomer = async () => {
-  //   try {
-  //     setIsFetching(true);
-  //     const res = await axios.get(
-  //       `https://e-commerce-backend-brown.vercel.app/api/auth/all-users/${slug}`,
-  //       {
-  //         cache: "no-store",
-  //       }
-  //     );
-
-  //     if (!res.ok) {
-  //       throw new Error("Failed to fetch customer");
-  //     }
-
-  //     const data = await res.json();
-  //     setIsFetching(data.name);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsFetching(false);
-  //   }
-  // };
-  const userID = JSON.parse(localStorage.getItem("userDetails"));
-  console.log("user",userID);
+  
+  // const userID = JSON.parse(localStorage.getItem("userDetails"));
+  // console.log("user",userID);
   const token = JSON.parse(localStorage.getItem("accessToken"));
 console.log("wqwq",token);
 
@@ -88,15 +64,15 @@ console.log("wqwq",token);
         "authorization": token,
       },
       data: {
-        _id: userID,
-        updateCustomer,
+        _id: customerEID,
+        ...updateCustomer,
       },
     };
       
     axios
       .request(options)
       .then(function (response) {
-        console.log("abc",response);
+        console.log("abc",response.data);
         if (response.status === 200) {
           handleClose();
           refreshData();
@@ -134,11 +110,11 @@ console.log("wqwq",token);
               <input
                 onChange={inputHandler}
                 value={updateCustomer.firstname}
-                // defaultValue={
-                //   editData?.firstname
-                //     ? editData?.firstname
-                //     : updateCustomer.firstname
-                // }
+                defaultValue={
+                  editData?.firstname
+                    ? editData?.firstname
+                    : updateCustomer.firstname
+                }
                 type="text"
                 name="firstname"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
@@ -155,11 +131,12 @@ console.log("wqwq",token);
               <input
                 onChange={inputHandler}
                 value={updateCustomer.lastname}
-                // defaultValue={
-                //   editData?.lastname
-                //     ? editData?.lastname
-                //     : updateCustomer.lastname
-                // }
+                
+                defaultValue={
+                  editData?.lastname
+                    ? editData?.lastname
+                    : updateCustomer.lastname
+                }
                 type="text"
                 name="lastname"
                 className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"

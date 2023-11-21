@@ -133,6 +133,14 @@ const AddProduct = () => {
     });
   };
 
+  const handleImageDelete = (indexToDelete) => {
+    const updatedImgFiles = imgFiles.filter(
+      (_, index) => index !== indexToDelete
+    );
+
+    setImageFiles(updatedImgFiles);
+  };
+
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -193,7 +201,7 @@ const AddProduct = () => {
   //----- color -------
 
   const handleImageUpload = async (event) => {
-    setImageFiles([...imgFiles,event.target.files[0]]);
+    setImageFiles([...imgFiles, event.target.files[0]]);
   };
 
   const imageUploader = async () => {
@@ -340,55 +348,57 @@ const AddProduct = () => {
           <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 justify-center items-center">
             <label className="custom-input-label">Product Images</label>
             <div className="col-span-1 sm:col-span-2">
-           
-                <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
-                  {imageUrls === "" ? (
-                    <>
-                      {isUploadingImg ? (
-                        <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
-                          Uploading ...
-                        </button>
-                      ) : (
-                        <label
-                          className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
-                          htmlFor="fileUpload"
-                        >
-                          <input
-                            type="file"
-                            className="hidden"
-                            multiple
-                            id="fileUpload"
-                            onChange={handleImageUpload}
-                            accept="image/png,image/jpg, image/jpeg"
-                          />
-                          Upload product image
-                        </label>
-                      )}
-                    </>
-                  ) : (
-                    <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
-                      Image Uploaded
-                    </button>
-                  )}
-                </div>
+              <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
+                {imageUrls === "" ? (
+                  <>
+                    {isUploadingImg ? (
+                      <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
+                        Uploading ...
+                      </button>
+                    ) : (
+                      <label
+                        className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
+                        htmlFor="fileUpload"
+                      >
+                        <input
+                          type="file"
+                          className="hidden"
+                          multiple
+                          id="fileUpload"
+                          onChange={handleImageUpload}
+                          accept="image/png,image/jpg, image/jpeg"
+                        />
+                        Upload product image
+                      </label>
+                    )}
+                  </>
+                ) : (
+                  <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
+                    Image Uploaded
+                  </button>
+                )}
+              </div>
 
-                {
-                  imgFiles.length > 0 && (
-                    <div className="text-center bg-gray-300 text-black font-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
-                      {imgFiles?.map((urls,inx)=>(
-                        <div className="flex gap-x-2 justify-center items-center">
-                            <p className=" whitespace-nowrap text-ellipsis overflow-hidden" key={inx}>{urls?.name}</p>
-                            <p
-                              className="font-bold cursor-pointer"
-                              onClick={() => setImageFiles([])}
-                            >
-                              x
-                            </p>
-                        </div>
-                      ))}
+              {imgFiles.length > 0 && (
+                <div className="text-center bg-gray-300 text-black font-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
+                  {imgFiles?.map((urls, inx) => (
+                    <div
+                      className="flex gap-x-2 justify-center items-center"
+                      key={inx}
+                    >
+                      <p className="whitespace-nowrap text-ellipsis overflow-hidden">
+                        {urls?.name}
+                      </p>
+                      <p
+                        className="font-bold cursor-pointer"
+                        onClick={() => handleImageDelete(inx)}
+                      >
+                        x
+                      </p>
                     </div>
-                )}  
-
+                  ))}
+                </div>
+              )}
             </div>
             <div className="col-span-1 sm:col-span-1">
               {/* <div className="custom-input"></div> */}

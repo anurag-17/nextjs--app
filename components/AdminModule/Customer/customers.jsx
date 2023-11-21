@@ -108,13 +108,14 @@ const Customers = () => {
   };
   useEffect(() => {
     defaultCustomer();
-  }, []);
+  }, [isRefresh]);
 
   const defaultCustomer = () => {
     axios
       .request(options)
       .then((response) => {
         setGetallCustomer(response.data);
+        
         console.log(response.data);
       })
       .catch((error) => {
