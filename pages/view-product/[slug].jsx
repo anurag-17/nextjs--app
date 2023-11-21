@@ -1,4 +1,5 @@
 import axios from "axios";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,14 +8,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/AdminModule/Header";
 
-export default function EditProduct() {
+const EditProduct = () => {
   const router = useRouter();
   const { slug } = router.query;
   const [isLoading, setLoading] = useState(false);
   const [productDetail, setProductDetail] = useState({});
   console.log("productDetail", productDetail);
 
-  
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -41,13 +41,14 @@ export default function EditProduct() {
       .catch((err) => console.error(err));
   };
 
-
-
   return (
     <>
       <section className="bg-gray-100 min-h-screen">
         <ToastContainer />
-        <Header headTitle="Product Details" subTitle="Add your product and necessary information from here" />
+        <Header
+          headTitle="Product Details"
+          subTitle="Add your product and necessary information from here"
+        />
         <main className="h-full overflow-y-auto pt-[40px]">
           <div className="container grid px-6 mx-auto">
             {/* <h1 className="my-6 text-[40px] font-bold text-gray-700 dark:text-gray-300">
@@ -56,13 +57,21 @@ export default function EditProduct() {
             <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
               <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden gap-20">
                 <div className="flex-shrink-0 flex items-center justify-center h-auto">
-                  <img src="/img1.jpeg" alt="product" className=" rounded-xl w-[350px] h-auto" />
+                  {productDetail &&
+                    productDetail.images &&
+                    productDetail.images[0] &&
+                    productDetail.images[0].url && (
+                      <img
+                        src={productDetail?.images[0]?.url[0]}
+                        alt="product"
+                        className="rounded-xl w-[350px] h-auto"
+                      />
+                    )}
                 </div>
                 <div className="w-full flex flex-col p-5 md:p-8 text-left">
                   <div className="mb-5 block ">
                     <div className="font-serif font-semibold py-1 lg:text-[18px] text-sm ">
                       <p className="lg:text-[30px]  text-gray-500  flex gap-5 leading-8 ">
-                        {/* Status: */}
                         <span className="text-lightBlue-600 leading-8 text-[30px]">
                           {productDetail?.title} Showing
                         </span>
@@ -82,7 +91,6 @@ export default function EditProduct() {
                     </p>
                     <br />
                     <del className="inline-block text-2xl mt-2">
-                      
                       Regular Price : ₹{productDetail.price}
                     </del>
                   </div>
@@ -142,4 +150,5 @@ export default function EditProduct() {
       </section>
     </>
   );
-}
+};
+export default dynamic(() => Promise.resolve(EditProduct), { ssr: false });
