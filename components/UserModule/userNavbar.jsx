@@ -124,6 +124,9 @@ const UserNavbar = () => {
     localStorage.removeItem("wishList");
     localStorage.removeItem("userID");
     localStorage.removeItem("userToken");
+    localStorage.removeItem("userNum");
+    localStorage.removeItem("userAdd");
+    localStorage.removeItem("userMail");
     window.location.reload();
   };
   const handleLogin = () => {
