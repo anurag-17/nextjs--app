@@ -10,11 +10,15 @@ console.log(process.env.RAZORPAY_API_KEY);
 
 
 async function handler(req, res) {
-    console.log(req);
+  const orderDetail = JSON.parse(req.body);
+
+  console.log("Cart Total:", orderDetail);
     
   const payment_capture = 1;
-  const amount = 1 * 100;
+  const amount = orderDetail?.grandTotal ;
+  // const amount = 1  ;
   const currency = "INR";
+  
   const options = {
     amount: amount.toString(),
     currency,
@@ -22,8 +26,8 @@ async function handler(req, res) {
     payment_capture,
     notes: {
       paymentFor: "example_ebook",
-      userId: "user_id_here",
-      productId: "your_product_id",
+      userId: orderDetail?.orderby,
+      orderId: orderDetail?._id,
     },
   };
 

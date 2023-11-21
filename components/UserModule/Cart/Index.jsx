@@ -7,16 +7,34 @@ import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import UserNavbar from "../userNavbar";
 import AddressModal from "../Address/addressPopup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BuyProduct from "../../razorpay/BuyProduct";
+import ShippingAddress from "../Address/shippingAddress";
+import { setShippingDetails } from "../../../redux/slices/orderSlice";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || {});
-  const [grandTotal, setGrandTotal] = useState(0);
   const [isOpenAdd, setOpenAdd] = useState(false);
-  const { userAddress } = useSelector((state) => state.auth?.userDetails || "");
+  const [shippingCharge, setShippingCharge] = useState(0);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-  console.log(getCartProduct);
+  const [userAddress, setUserAddress] = useState("");
+  const [userNumber, setUserNumber] = useState("");
+  const [userMail, setUserMail] = useState("");
+
+  const [orderShippingDetails, setOrderShippingDetails] = useState({});
+
+  const [isCartUpdated, setCartUpdated] = useState(false);
+
+  useEffect(() => {
+    setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
+    setUserAddress(JSON.parse(localStorage.getItem("userAdd")));
+    setUserNumber(JSON.parse(localStorage.getItem("userNum")));
+    setUserMail(JSON.parse(localStorage.getItem("userMail")));
+
+    if (getCartProduct?.cartTotal < 500) setShippingCharge(75);
+  }, []);
 
   const openAddModal = () => {
     setOpenAdd(true);
@@ -24,10 +42,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
   const closeModal = () => {
     setOpenAdd(false);
-  };
-
-  const calculateSubtotal = (item) => {
-    return item?.price * item?.count;
   };
 
   const removeWishlist = async () => {
@@ -91,6 +105,49 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         console.error(error);
       }
     }
+  };
+
+  const handlePlaceOrder = () => {};
+
+  const openDrawer = () => {
+    setDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+  };
+
+  const updateCart = async ({ shippingDetails }) => {
+    const options = {
+      method: "PUT",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/update-cart",
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/2023.5.8",
+        authorization: token,
+      },
+      data: {
+        shippingDetails: shippingDetails,
+      },
+    };
+
+    dispatch(setShippingDetails(shippingDetails));
+    closeDrawer();
+    setCartUpdated(true);
+    axios
+      .request()
+      .then(function (response) {
+        if (response.status === 200) {
+          toast.success("Address updated successfully!");
+          closeDrawer();
+          setCartUpdated(true);
+        } else {
+          return;
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   return (
@@ -289,7 +346,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                               <p className="text-[18px]  flex capitalize  mt-2">
                                 Qty:
                                 <p className="font-semibold px-2">
-                                  {item?.count}{" "}
+                                  {item?.count}
                                 </p>
                               </p>
                             </div>
@@ -334,18 +391,46 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       </div>
                       <div className="flex mt-2">
                         <p className="w-[200px]"> Shipping Charge : </p>
-                        <p className="text-right w-[150px] px-2 py-1"> ₹ 75 </p>
+                        <p className="text-right w-[150px] px-2 py-1">
+                          {" "}
+                          ₹ {shippingCharge}{" "}
+                        </p>
                       </div>
                       <div className="flex mt-2">
                         <p className="w-[200px]"> Grand Total : </p>
                         <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
-                          ₹ {getCartProduct?.cartTotal + 75}{" "}
+                          ₹ {getCartProduct?.cartTotal + shippingCharge}{" "}
                         </p>
                       </div>
                       <div className="mt-5">
-                      <div className="mt-5">
-                         <BuyProduct buyItem = {getCartProduct || []}/>
+                        <div className="mt-5">
+                          <button
+                            className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${isCartUpdated ? "bg-lightBlue-200" :""}`}
+                            onClick={isCartUpdated ? null : openDrawer} 
+                          >
+                            Place Order
+                          </button>
+                        </div>
                       </div>
+
+                      <div className="my-4">
+                        {isCartUpdated && (
+                          <>
+                            <div className="">
+                              <h6 className="text-[24px] font-medium">Shipping Addres : </h6>
+                              <p className="mt-4 text-[18px] font-normal">  {orderShippingDetails?.address} </p>
+                              <p className="text-[18px] font-normal">{orderShippingDetails?.number}</p>
+                              <p className="text-[18px] font-normal">{orderShippingDetails?.email}</p>
+                            </div>
+                            <BuyProduct
+                              buyItem={getCartProduct || []}
+                              grandTotal={
+                                getCartProduct?.cartTotal + shippingCharge || ""
+                              }
+                              orderShipDetails={orderShippingDetails || {}}
+                            />
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -371,6 +456,53 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
           )}
         </>
       )}
+
+      {/* --------------   Address modal    --------------------- */}
+      <Transition appear show={isDrawerOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeDrawer}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 "
+                  >
+                    Choose your address
+                  </Dialog.Title>
+                  <ShippingAddress
+                    closeModal={closeDrawer}
+                    userAdd={userAddress}
+                    updateCart={updateCart}
+                    userNumber={userNumber}
+                    userEmail={userMail}
+                  />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
 
       {/* --------------   Address modal    --------------------- */}
       <Transition appear show={isOpenAdd} as={Fragment}>

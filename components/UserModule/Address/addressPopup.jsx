@@ -12,8 +12,6 @@ const AddressModal = ({closeModal,userAdd}) => {
     const [address, setAddress] = useState("")
     const {token} = useSelector((state)=>state.auth?.userDetails || "")
 
-    console.log(token);
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
     

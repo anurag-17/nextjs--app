@@ -15,6 +15,8 @@ const initialState = {
     userID: null,
     userWishList: [],
     userAddress: "",
+    userNumber: "",
+    userEmail: "",
   },
   cart: [],
   totalCartItems: 0,
@@ -34,13 +36,14 @@ const authSlice = createSlice({
       state.userDetails.userID = action.payload?._id ;
       state.userDetails.userWishList = action.payload?.wishlist ;
       state.userDetails.userAddress = action.payload?.address ;
+      state.userDetails.userNumber = action.payload?.mobile ;
+      state.userDetails.userEmail = action.payload?.email ;
       if (typeof window !== "undefined") {
         localStorage.setItem("userID", JSON.stringify(action?.payload?._id));
         localStorage.setItem("userAdd", JSON.stringify(action?.payload?.address));
-        localStorage.setItem(
-          "wishList",
-          JSON.stringify(action?.payload?.user?.wishlist)
-        );
+        localStorage.setItem("userNum", JSON.stringify(action?.payload?.mobile));
+        localStorage.setItem("userMail", JSON.stringify(action?.payload?.email));
+        localStorage.setItem( "wishList",JSON.stringify(action?.payload?.user?.wishlist) );
       }
     },
     addToCart: (state, action) => {
