@@ -7,19 +7,17 @@ import { useState } from "react";
 const ProductDetailsCarousel = ({ images, productColor }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]?.url[0] || "");
   const [selectedColor, setselectedColor] = useState("");
-  
 
   const handleClick = (url) => {
     setSelectedImage(url);
-    
   };
 
   useEffect(() => {
-    const firstImageUrl = images.find((image) => image.color === productColor)?.url[0];
-    
+    const firstImageUrl = images.find((image) => image.color === productColor)
+      ?.url[0];
+
     setSelectedImage(firstImageUrl || "");
   }, [productColor, images]);
-
 
   return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
@@ -65,7 +63,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                 height={400}
               />
             ) : (
-                <Image
+              <Image
                 src={selectedImage}
                 alt="selectedImage"
                 className="rounded-xl h-auto "

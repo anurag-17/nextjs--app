@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { EyeIcon,EyeSlashIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,9 +18,9 @@ const UserLogin = ({ API_URL }) => {
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState("");
   const [userId, setUserId] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
-  const { token } = useSelector((state) => state.auth.userDetails || null);
+  // const { token } = useSelector((state) => state.auth.userDetails || {});
+
   const handleToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -40,24 +40,19 @@ const UserLogin = ({ API_URL }) => {
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
-      },  
+      },
       data: { email: email, password: password }, // Use _id here
     };
 
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
-
         if (response?.status === 201) {
           dispatch(setToken(response?.data?.token));
           dispatch(setUserDetails(response?.data?.user));
           setLoading(false);
           toast.success("Success, Login Successfully!");
-
-          
-            router.push("/user-product");
-   
+          router.push("/user-product");
         } else {
           setLoading(false);
           return;
@@ -69,13 +64,9 @@ const UserLogin = ({ API_URL }) => {
         toast.error("Failed, Invalid Credentials!");
       });
   };
-
-
-
   return (
     <div>
       <ToastContainer />
-
       <div
         className="2xl:min-h-screen 2xl:py-40 bg-[#DFF9FF]   xl:min-h-screen xl:py-20
         lg:min-h-screen lg:py-16
@@ -171,7 +162,11 @@ const UserLogin = ({ API_URL }) => {
                     className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
                     onClick={handleToggle}
                   >
-                   {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon class="h-6 w-6 text-gray-500" />}
+                    {showPassword ? (
+                      <EyeIcon className="h-6 w-6 text-gray-500" />
+                    ) : (
+                      <EyeSlashIcon class="h-6 w-6 text-gray-500" />
+                    )}
                   </button>
                 </div>
 

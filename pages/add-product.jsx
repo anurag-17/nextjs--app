@@ -177,7 +177,6 @@ const AddProduct = () => {
         },
         data: productDetails,
       };
-
       axios
         .request(options)
         .then(function (response) {
