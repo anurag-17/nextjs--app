@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
-const Editbrand = ({ editData, brandEdit, closeDrawer, refreshData }) => {
+const Editbrand = ({ editData, closeDrawer, refreshData, brandEdit }) => {
   const [isLoading, setLoading] = useState(false);
   const [brandDetails, setBrandDetails] = useState({
     brand: editData?.brand || "",
@@ -14,12 +14,7 @@ const Editbrand = ({ editData, brandEdit, closeDrawer, refreshData }) => {
     if (name === "brand") {
       setBrandDetails({
         ...brandDetails,
-        [name]: value.split(","),
-      });
-    } else if (name === "brand") {
-      setBrandDetails({
-        ...brandDetails,
-        [name]: value.toUpperCase(),
+        [name]: value,
       });
     } else {
       setBrandDetails({
@@ -35,12 +30,15 @@ const Editbrand = ({ editData, brandEdit, closeDrawer, refreshData }) => {
 
     try {
       const response = await axios.put(
-        `https://e-commerce-backend-brown.vercel.app/api/brand/updateBrand/${brandEdit}`,
-        brandDetails,
+        "https://e-commerce-backend-brown.vercel.app/api/brand/updateBrand",
+        {
+          _id: brandEdit,
+          ...brandDetails,
+        },
         {
           headers: {
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
+            "User-Agent": "PostmanRuntime/7.35.0",
           },
         }
       );
