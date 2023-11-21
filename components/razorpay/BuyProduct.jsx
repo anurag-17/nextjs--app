@@ -20,7 +20,8 @@ const BuyProduct = ({ buyItem, grandTotal,orderShipDetails }) => {
 console.log(cartOrderDetails);
 
 
-    const data = await fetch("http://localhost:3000/api/razorpay/routes", {
+    // const data = await fetch("http://localhost:3000/api/razorpay/routes", {
+    const data = await fetch("https://nextjs-app-wheat-three.vercel.app/api/razorpay/routes", {
       method: "POST",
       body: JSON.stringify(
         orderProduct
