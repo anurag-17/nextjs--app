@@ -154,7 +154,7 @@ const ProductGrid = () => {
     } catch (error) {
       setLoading(false);
       console.error(error);
-      toast.error(response.data.message);
+      toast.error("User Invalid Please Login");
     }
   };
 
@@ -550,38 +550,6 @@ const ProductGrid = () => {
                       selling
                     </p>
                   </div>
-                  {/* <div className="flex gap-x-5 mt-3">
-                    <label
-                      for="color"
-                      className="text-[18px] capitalize my-2 whitespace-nowrap"
-                    >
-                      Colors :
-                    </label>
-                    <div className="w-[240px]">
-                      <select
-                        onChange={(e) =>
-                          handleColorChange(items._id, e.target.value)
-                        }
-                        className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm"
-                      >
-                        <option
-                          value=""
-                          className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
-                        >
-                          Select Color
-                        </option>
-                        {items?.color?.map((options, inx) => (
-                          <option
-                            key={inx}
-                            value={options}
-                            className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
-                          >
-                            {options}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div> */}
                   <Link href={`/product-details/${items?._id}`}>
                     <button className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end">
                       View Details

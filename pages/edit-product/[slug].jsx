@@ -25,7 +25,7 @@ export default function EditProduct() {
     category: "",
     brand: "",
     quantity: "",
-    color: [],
+    color: "",
   });
 
   console.log(productDetails?.offerPriceCurr);
@@ -129,7 +129,7 @@ export default function EditProduct() {
         "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
       },
-      // data: productDetails,
+      data: productDetails,
       data: {
         title: productDetails?.title ? productDetails?.title : editData?.title,
         description: productDetails?.description
@@ -366,26 +366,30 @@ export default function EditProduct() {
                 <div className="col-span-8 sm:col-span-4">
                   <select
                     name="category"
-                    placeholder="Category"
                     className="custom-input"
                     defaultValue={
                       editData?.category
-                        ? editData?.category
+                        ? editData.category
                         : productDetails.category
-                    } 
+                    }
                     onChange={inputHandler}
                     required
-                    minLength={4}
-                    max={32}
+                    minLength={3}
+                    maxLength={32}
                   >
-<option value="" disabled>
-                      Select Category
+                    <option value="" disabled>
+                      {editData?.category
+                        ? editData.category
+                        : productDetails.category}
                     </option>
                     {getallCategory.map((item) => (
                       <option
                         key={item.id}
                         value={item.title}
-                        selected={item.title === productDetails.category}
+                        selected={
+                          item.title ===
+                          (editData?.category || productDetails.category)
+                        }
                       >
                         {item.title}
                       </option>
@@ -430,21 +434,24 @@ export default function EditProduct() {
                       placeholder="Add Brand Name"
                       className="custom-input uppercase"
                       defaultValue={
-                        editData?.brand ? editData?.brand : productDetails.brand
+                        editData?.brand ? editData.brand : productDetails.brand
                       }
                       onChange={inputHandler}
                       required
                       minLength={3}
-                      max={32}
+                      maxLength={32}
                     >
-<option value="" disabled>
+                      <option value="" disabled>
                         Select Brands
                       </option>
                       {getallBrand.map((items) => (
                         <option
                           key={items.id}
                           value={items.brand}
-                          selected={items.brand === productDetails.brand}
+                          selected={
+                            items.brand ===
+                            (editData?.brand || productDetails.brand)
+                          }
                         >
                           {items.brand}
                         </option>
@@ -471,12 +478,11 @@ export default function EditProduct() {
                     // value={productDetails.color}
                     onChange={inputHandler}
                     required
-                    minLength={30}
+                    minLength={3}
                     max={60}
                   />
                 </div>
               </div>
-
               {/*------ submit button -----*/}
               <div className="mt-8">
                 {isLoading ? (
@@ -505,5 +511,3 @@ export default function EditProduct() {
     </>
   );
 }
-
-
