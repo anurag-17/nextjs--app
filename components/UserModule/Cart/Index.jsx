@@ -12,6 +12,7 @@ import BuyProduct from "../../razorpay/BuyProduct";
 import ShippingAddress from "../Address/shippingAddress";
 import { setShippingDetails } from "../../../redux/slices/orderSlice";
 import PaymentOption from "./paymentOption";
+import TextLoader from "../../../utlis/textLoader";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const dispatch = useDispatch();
@@ -191,6 +192,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
   return (
     <>
+    {/* <TextLoader text="ctrlF5..."/> */}
       <ToastContainer />
       <UserNavbar />
 

@@ -7,6 +7,7 @@ import { createWrapper } from "next-redux-wrapper";
 import "./";
 import Head from "next/head";
 import "../styles/globals.css";
+import "../styles/loader.css";
 import { store } from "../redux/store/store";
 import Layout from "../components/Layout";
 import Script from "next/script";

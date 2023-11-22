@@ -1,0 +1,45 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .opacity-0 {
+    opacity: 0;
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+  
+  .opacity-100 {
+    opacity: 1;
+    animation: fadeIn 0.5s ease-in-out forwards;
+  } 
+  .text-1{
+    color: blue;
+  }
+  .text-2{
+    color: rgb(251, 3, 3);
+  }
+  .text-3{
+    color: rgb(255, 255, 0);
+  }
+  .text-4{
+    color: rgb(6, 182, 35);
+  }
+  .text-5{
+    color: rgb(0, 3, 3);
+  }
+  .text-6{
+    color: rgb(69, 0, 0);
+  }
