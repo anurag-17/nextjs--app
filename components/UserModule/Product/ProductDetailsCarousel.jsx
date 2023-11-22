@@ -7,7 +7,7 @@ import { useState } from "react";
 const ProductDetailsCarousel = ({ images, productColor }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]?.url[0] || "");
   const [selectedColor, setselectedColor] = useState("");
-
+  console.log(productColor);
   const handleClick = (url) => {
     setSelectedImage(url);
   };
@@ -21,36 +21,62 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
 
   return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
-      <div className="flex justify-center h-auto">
-        <div className="w-[25%]">
-          {images?.length > 0 &&
-            images?.map((image, inx) => (
-              <>
-                <div className="flex flex-col gap-5">
-                  {image?.url?.map((urls, idx) => (
-                    <>
-                      {image?.color === productColor && (
-                        <div
-                          className={`cursor-pointer border  border-gray-300 rounded p-2 w-[100px] 
-                          ${selectedImage == urls ? " border-black" : ""}`}
-                          key={idx}
-                          onClick={() => handleClick(urls)}
-                        >
-                          <Image
+      <div className="flex justify-between h-auto">
+        <div className="h-[500px]  overflow-y-scroll">
+ 
+{productColor === "" ? (
+            <>
+              {images?.length > 0 &&
+                images?.map((image, inx) => (
+                  <div className="flex flex-col gap-5   " key={inx}>
+                    {image?.url?.length > 0 && (
+                      <div
+                        className={`cursor-pointer border border-gray-300 rounded p-2  
+                ${selectedImage === image.url[0] ? " border-black" : ""}`}
+                        onClick={() => handleClick(image.url[0])}
+                      >
+                        <Image
+                          src={image.url[0]}
+                          alt="product image"
+                          className="rounded-xl h-auto"
+                          width={80}
+                          height={80}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+            </>
+          ) : (
+            <>
+              {images?.length > 0 &&
+                images?.map((image, inx) => (
+                  <div className="flex flex-col gap-5" key={inx}>
+                    {image?.url?.map((urls, idx) => (
+                      <>
+                        {image?.color === productColor && (
+                          <div
+                            className={`cursor-pointer border  border-gray-300 rounded p-2 w-[100px] 
+                    ${selectedImage == urls ? " border-black" : ""}`}
                             key={idx}
-                            src={urls}
-                            alt=""
-                            className="rounded-xl h-auto "
-                            width={80}
-                            height={80}
-                          />
-                        </div>
-                      )}
-                    </>
-                  ))}
-                </div>
-              </>
-            ))}
+                            onClick={() => handleClick(urls)}
+                          >
+                            <Image
+                              key={idx}
+                              src={urls}
+                              alt=""
+                              className="rounded-xl h-auto "
+                              width={80}
+                              height={80}
+                            />
+                          </div>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                ))}
+            </>
+          )}
         </div>
         <div className="w-[75%]">
           <div className="">
@@ -58,7 +84,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
               <Image
                 src={images[0]?.url[0]}
                 alt="selectedImage"
-                className="rounded-xl h-auto "
+                className="rounded-xl h-auto cursor-pointer "
                 width={400}
                 height={400}
               />
@@ -66,7 +92,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
               <Image
                 src={selectedImage}
                 alt="selectedImage"
-                className="rounded-xl h-auto "
+                className="rounded-xl h-auto cursor-pointer"
                 width={400}
                 height={400}
               />
