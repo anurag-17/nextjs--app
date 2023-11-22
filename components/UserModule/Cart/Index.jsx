@@ -27,7 +27,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [orderShippingDetails, setOrderShippingDetails] = useState({});
 
   const [isCartUpdated, setCartUpdated] = useState(false);
-  const [isOpenLogin, setOpenLogin] = useState(false);
 
   useEffect(() => {
     setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
@@ -268,31 +267,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                   </>
                 ))}
             </div>
-            <div className="grid grid-cols-2 py-4">
-              <div className=""></div>
-              <div className="grid grid-cols-2">
-                <div className=""></div>
-                <div className="text-[18px] font-normal mt-5">
-                  <div className="flex">
-                    <p className="w-[200px]">Subtotal : </p>
-                    <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                      ₹ {getCartProduct?.cartTotal}
-                    </p>
-                  </div>
-                </div>
-                <div className=""></div>
-                <div className="mt-5">
-                  <button
-                    className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
-                      isCartUpdated ? "bg-lightBlue-200" : ""
-                    }`}
-                    onClick={() => setOpenLogin(true)}
-                  >
-                    Place Order
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       ) : (
@@ -343,7 +317,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                     >
                                       <Image
                                         key={inx}
-                                        src={product?.images?.url[0]}
+                                        src={img?.url[0]}
                                         alt=""
                                         className="rounded-[20px] "
                                         width={250}
@@ -362,6 +336,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                   {item?.product?.title}
                                 </p>
                               </p>
+                              <p className=" text-[18px]">
+                            Brand : {item?.product?.brand}
+                          </p>
 
                               <div className="flex mt-2">
                                 <h1 className=" mr-1 text-[18px]">Status : </h1>
@@ -370,7 +347,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 </p>
                               </div>
                               <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
-                                Colors :<p className="font-medium"> </p>
+                                Colors :  {item?.color}<p className="font-medium"> </p>
                               </p>
                             </div>
 
@@ -378,7 +355,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                               <p className="text-[18px]  flex capitalize  mt-2">
                                 Qty:
                                 <p className="font-semibold px-2">
-                                  {/* {item?.count} */}
+                                  {item?.count}
                                 </p>
                               </p>
                             </div>
@@ -499,65 +476,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
           )}
         </>
       )}
-
-
-{/* --------------   Login modal    --------------------- */}
-<Transition appear show={isOpenLogin} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setOpenLogin(false)}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h4"
-                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4"
-                  >
-                    Please login first to place your order
-                  </Dialog.Title>
-
-                  <div className="flex justify-between gap-x-5 pt-4">
-                    <button
-                      className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
-                      onClick={() => setOpenLogin(false)}
-                    >
-                      No
-                    </button>
-                    <Link href="/login" className="w-full">
-                      <button className="w-full border border-1 rounded-md  text-sm  border-red-400 text-red-700 hover:bg-red-200  px-2 py-3 hover:border-none">
-                        Ok
-                      </button>
-                    </Link>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
 
       {/* --------------   Address modal    --------------------- */}
       <Transition appear show={isDrawerOpen} as={Fragment}>
