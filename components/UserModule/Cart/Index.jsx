@@ -31,8 +31,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [isOpenLogin, setOpenLogin] = useState(false);
   const [paymentOption, setPaymentOption] = useState("");
 
-  
-
   useEffect(() => {
     setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
     setUserAddress(JSON.parse(localStorage.getItem("userAdd")));
@@ -178,9 +176,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
-
         if (response.status === 200) {
+          console.error(response);
+          toast.success("Order created successfully!");
+          refreshData();
         } else {
           return;
         }
@@ -198,25 +197,27 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       {!token || token == undefined ? (
         <div className=" px-20">
           <div className="border rounded-lg bg-white p-5">
-            <div className="flex justify-between">
-              <div>
-                <h1 className="text-[35px] font-semibold"> Your Cart </h1>
-              </div>
-
-              <button
-                onClick={removeWishlist}
-                className="  mr-4 cursor-pointer"
-              >
-                <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
-                  Clear Cart
-                </p>
-              </button>
-            </div>
-            <hr className="my-5" />
             <div>
-              {sessionCartProduct?.length > 0 &&
+              {sessionCartProduct?.length > 0 ? (
                 sessionCartProduct?.map((item, inx) => (
                   <>
+                    <div className="flex justify-between">
+                      <div>
+                        <h1 className="text-[35px] font-semibold">
+                          {" "}
+                          Your Cart{" "}
+                        </h1>
+                      </div>
+
+                      <button
+                        onClick={removeWishlist}
+                        className="  mr-4 cursor-pointer"
+                      >
+                        <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
+                          Clear Cart
+                        </p>
+                      </button>
+                    </div>
                     <div
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
@@ -296,36 +297,59 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         />
                       </div>
                     </div>
+
+                    <div className="grid grid-cols-2 py-4">
+                      <div className=""></div>
+
+                      <div className="grid grid-cols-2">
+                        <div className=""></div>
+                        <div className="my-6">
+                          <div className="flex">
+                            <p className="w-[200px]">Subtotal : </p>
+                            <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
+                              ₹ {getCartProduct?.cartTotal}
+                            </p>
+                          </div>
+                        </div>
+                        <div className=""></div>
+                        <div className="">
+                          <button
+                            className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
+                              isCartUpdated ? "bg-lightBlue-200" : ""
+                            }`}
+                            onClick={() => setOpenLogin(true)}
+                          >
+                            Place Order
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </>
-                ))}
-            </div>
-
-            <div className="grid grid-cols-2 py-4">
-           
-              <div className=""></div>
-
-              <div className="grid grid-cols-2">
-              <div className=""></div>
-              <div className="my-6">
-                <div className="flex">
-                  <p className="w-[200px]">Subtotal : </p>
-                  <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                    ₹ {getCartProduct?.cartTotal}
-                  </p>
+                ))
+              ) : (
+                <div className="py-5">
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="text-[30px] font-semibold mt-5">
+                      Your cart is empty
+                    </p>
+                    <div className="mt-2">
+                      <Image
+                        src="/images/empty.svg"
+                        alt="Empty cart"
+                        width={500}
+                        height={400}
+                      />
+                    </div>
+                  </div>
+                  <Link href="/user-product">
+                    <div className="mb-6 mt-14">
+                      <button className="px-6 py-3 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
+                        Continue Shopping
+                      </button>
+                    </div>
+                  </Link>
                 </div>
-              </div>
-                <div className=""></div>
-                <div className="">
-                  <button
-                    className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
-                      isCartUpdated ? "bg-lightBlue-200" : ""
-                    }`}
-                    onClick={()=>setOpenLogin(true)}
-                  >
-                    Place Order
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -365,13 +389,13 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       return (
                         <div
                           key={inx}
-                          className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
+                          className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 "
                         >
                           {item?.product?.images?.length > 0 &&
                             item?.product?.images?.map((img, inx) => (
                               <>
                                 {item?.color == img?.color && (
-                                  <div className="w-[30%] py-2 px-4">
+                                  <div className="w-[30%] py-2 px-4 cursor-pointer ">
                                     <Link
                                       href={`/product-details/${item?.product?._id}`}
                                     >
@@ -391,11 +415,14 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
                           <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
                             <div className="">
-                              <p className="text-[18px]  flex capitalize ">
-                                <p className="font-semibold text-[24px]">
+                              <Link
+                                href={`/product-details/${item?.product?._id}`}
+                              >
+                                <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
                                   {item?.product?.title}
                                 </p>
-                              </p>
+                              </Link>
+
                               <p className=" text-[18px]">
                                 Brand : {item?.product?.brand}
                               </p>
@@ -406,6 +433,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                   Available
                                 </p>
                               </div>
+
                               <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
                                 Colors : {item?.color}
                                 <p className="font-medium"> </p>
@@ -572,15 +600,26 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                     height={400}
                   />
                 </div>
+                <Link href="/user-product">
+                  <div className="mb-6 mt-14">
+                    <button className="px-6 py-3 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
+                      Continue Shopping
+                    </button>
+                  </div>
+                </Link>
               </div>
             </div>
           )}
         </>
       )}
 
-       {/* --------------   Login modal    --------------------- */}
-       <Transition appear show={isOpenLogin} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={()=>setOpenLogin(false)}>
+      {/* --------------   Login modal    --------------------- */}
+      <Transition appear show={isOpenLogin} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setOpenLogin(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -615,7 +654,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                   <div className="flex justify-between gap-x-5 pt-4">
                     <button
                       className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
-                      onClick={()=>setOpenLogin(false)}
+                      onClick={() => setOpenLogin(false)}
                     >
                       No
                     </button>

@@ -22,8 +22,6 @@ const initialState = {
   totalCartItems: 0,
 };
 
-console.log(initialState);
-
 
 const authSlice = createSlice({
   name: "auth",

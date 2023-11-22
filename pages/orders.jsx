@@ -13,7 +13,7 @@ const orders = () => {
   }, []);
 
   const defaultOrder = () => {
-    const options = {
+    const options = { 
       method: "GET",
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/getallorders",
     };

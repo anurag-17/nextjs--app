@@ -1,5 +1,5 @@
 import React from 'react'
-import UserOrder from '../components/UserModule/UserOrder'
+import UserOrder from '../components/UserModule/OrderHistory/UserOrder'
 
 const userorder = () => {
   return (
