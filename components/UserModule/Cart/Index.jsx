@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import BuyProduct from "../../razorpay/BuyProduct";
 import ShippingAddress from "../Address/shippingAddress";
 import { setShippingDetails } from "../../../redux/slices/orderSlice";
+import PaymentOption from "./paymentOption";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
-  console.log("aaa", getCartProduct);
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || {});
   const [isOpenAdd, setOpenAdd] = useState(false);
@@ -27,6 +27,11 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [orderShippingDetails, setOrderShippingDetails] = useState({});
 
   const [isCartUpdated, setCartUpdated] = useState(false);
+  const [isShowPaymentOtn, setShowPaymentOtn] = useState(false);
+  const [isOpenLogin, setOpenLogin] = useState(false);
+  const [paymentOption, setPaymentOption] = useState("");
+
+  
 
   useEffect(() => {
     setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
@@ -108,8 +113,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
     }
   };
 
-  const handlePlaceOrder = () => {};
-
   const openDrawer = () => {
     setDrawerOpen(true);
   };
@@ -151,6 +154,42 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       });
   };
 
+  const handlePaymentOption = async () => {
+    setShowPaymentOtn(true);
+  };
+
+  const handleOptionChange = ({ value }) => {
+    setPaymentOption(value);
+  };
+
+  const handlePlaceOrder = () => {
+    const options = {
+      method: "POST",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart/cash-order",
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/2023.5.8",
+        authorization: token,
+      },
+      data: {
+        COD: true,
+      },
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response);
+
+        if (response.status === 200) {
+        } else {
+          return;
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <ToastContainer />
@@ -162,12 +201,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
             <div className="flex justify-between">
               <div>
                 <h1 className="text-[35px] font-semibold"> Your Cart </h1>
-                <button type="button" onClick={openAddModal}>
-                  <p className="underline text-[18px] font-medium">
-                    {" "}
-                    Add your address
-                  </p>
-                </button>
               </div>
 
               <button
@@ -176,7 +209,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
               >
                 <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
                   Clear Cart
-                  {/* <img src="cross.svg" className="w-7   mx-1" /> */}
                 </p>
               </button>
             </div>
@@ -267,6 +299,34 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                   </>
                 ))}
             </div>
+
+            <div className="grid grid-cols-2 py-4">
+           
+              <div className=""></div>
+
+              <div className="grid grid-cols-2">
+              <div className=""></div>
+              <div className="my-6">
+                <div className="flex">
+                  <p className="w-[200px]">Subtotal : </p>
+                  <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
+                    ₹ {getCartProduct?.cartTotal}
+                  </p>
+                </div>
+              </div>
+                <div className=""></div>
+                <div className="">
+                  <button
+                    className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
+                      isCartUpdated ? "bg-lightBlue-200" : ""
+                    }`}
+                    onClick={()=>setOpenLogin(true)}
+                  >
+                    Place Order
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
@@ -337,8 +397,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 </p>
                               </p>
                               <p className=" text-[18px]">
-                            Brand : {item?.product?.brand}
-                          </p>
+                                Brand : {item?.product?.brand}
+                              </p>
 
                               <div className="flex mt-2">
                                 <h1 className=" mr-1 text-[18px]">Status : </h1>
@@ -347,7 +407,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 </p>
                               </div>
                               <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
-                                Colors :  {item?.color}<p className="font-medium"> </p>
+                                Colors : {item?.color}
+                                <p className="font-medium"> </p>
                               </p>
                             </div>
 
@@ -394,10 +455,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           ₹ {getCartProduct?.cartTotal}
                         </p>
                       </div>
-                      <div className="flex mt-2">
+                      {/* <div className="flex mt-2">
                         <p className="w-[200px]"> Sales Tax : </p>
                         <p className="text-right w-[150px]"> </p>
-                      </div>
+                      </div> */}
                       <div className="flex mt-2">
                         <p className="w-[200px]"> Shipping Charge : </p>
                         <p className="text-right w-[150px] px-2 py-1">
@@ -411,6 +472,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           ₹ {getCartProduct?.cartTotal + shippingCharge}{" "}
                         </p>
                       </div>
+
+                      {/*----------- Choose Address ---------*/}
                       <div className="mt-5">
                         <div className="mt-5">
                           <button
@@ -419,11 +482,12 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                             }`}
                             onClick={isCartUpdated ? null : openDrawer}
                           >
-                            Place Order
+                            Choose Address
                           </button>
                         </div>
                       </div>
 
+                      {/*----------- Shipping Address ---------*/}
                       <div className="my-4">
                         {isCartUpdated && (
                           <>
@@ -432,7 +496,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 Shipping Addres :{" "}
                               </h6>
                               <p className="mt-4 text-[18px] font-normal">
-                                {" "}
                                 {orderShippingDetails?.address}{" "}
                               </p>
                               <p className="text-[18px] font-normal">
@@ -442,13 +505,51 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 {orderShippingDetails?.email}
                               </p>
                             </div>
-                            <BuyProduct
-                              buyItem={getCartProduct || []}
-                              grandTotal={
-                                getCartProduct?.cartTotal + shippingCharge || ""
-                              }
-                              orderShipDetails={orderShippingDetails || {}}
-                            />
+
+                            {/*---------- Payment Option ---------*/}
+
+                            <button
+                              className={`px-5 py-2 mt-5 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
+                                isCartUpdated ? "bg-lightBlue-200" : ""
+                              }`}
+                              onClick={handlePaymentOption}
+                            >
+                              Payment Option
+                            </button>
+                            {isShowPaymentOtn && (
+                              <PaymentOption
+                                handleOptionChange={handleOptionChange}
+                                paymentOption={paymentOption}
+                              />
+                            )}
+
+                            {/*---------- if choose COD ---------*/}
+                            {paymentOption === "COD" && (
+                              <div className="my-8">
+                                <button
+                                  className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
+                                    isCartUpdated ? "bg-lightBlue-200" : ""
+                                  }`}
+                                  onClick={handlePlaceOrder}
+                                >
+                                  Place Order
+                                </button>
+                              </div>
+                            )}
+
+                            {/*---------- if choose another ---------*/}
+                            {paymentOption === "Payment using razorpay" && (
+                              <div className="my-8">
+                                <BuyProduct
+                                  buyItem={getCartProduct || []}
+                                  grandTotal={
+                                    getCartProduct?.cartTotal +
+                                      shippingCharge || ""
+                                  }
+                                  orderShipDetails={orderShippingDetails || {}}
+                                />
+                              </div>
+                            )}
                           </>
                         )}
                       </div>
@@ -476,6 +577,60 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
           )}
         </>
       )}
+
+       {/* --------------   Login modal    --------------------- */}
+       <Transition appear show={isOpenLogin} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={()=>setOpenLogin(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h4"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 my-6"
+                  >
+                    Please login first to place your order
+                  </Dialog.Title>
+
+                  <div className="flex justify-between gap-x-5 pt-4">
+                    <button
+                      className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
+                      onClick={()=>setOpenLogin(false)}
+                    >
+                      No
+                    </button>
+                    <Link href="/login" className="w-full">
+                      <button className="w-full border border-1 rounded-md  text-sm  border-red-400 text-red-700 hover:bg-red-200  px-2 py-3 hover:border-none">
+                        Ok
+                      </button>
+                    </Link>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
 
       {/* --------------   Address modal    --------------------- */}
       <Transition appear show={isDrawerOpen} as={Fragment}>
