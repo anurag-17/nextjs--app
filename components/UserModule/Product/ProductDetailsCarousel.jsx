@@ -23,16 +23,15 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
       <div className="flex justify-between h-auto">
         <div className="h-[500px]  overflow-y-scroll">
- 
-{productColor === "" ? (
+          {productColor === "" ? (
             <>
               {images?.length > 0 &&
                 images?.map((image, inx) => (
-                  <div className="flex flex-col gap-5   " key={inx}>
+                  <div className="flex flex-col gap-5  " key={inx}>
                     {image?.url?.length > 0 && (
                       <div
-                        className={`cursor-pointer border border-gray-300 rounded p-2  
-                ${selectedImage === image.url[0] ? " border-black" : ""}`}
+                        className={`cursor-pointer border border-gray-300 rounded active:border-sky-800  p-2  
+                ${selectedImage === image.url[0] ? " border-black " : ""}`}
                         onClick={() => handleClick(image.url[0])}
                       >
                         <Image
