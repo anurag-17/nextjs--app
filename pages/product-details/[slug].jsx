@@ -133,7 +133,6 @@ const Userdetail = () => {
                 color: productColor,
               },
             ],
-            // _id: use_ID || null,
           },
         };
         axios
@@ -170,22 +169,12 @@ const Userdetail = () => {
     router.push("/user-cart");
   };
 
-  //---- cart products api ----
-  useEffect(() => {
-    // getCartProducts();
-  }, []);
-
   const getCartProducts = async () => {
     try {
       const response = await fetchApi("/auth/getUserCart");
-      // console.log(response);
+
       if (response?.status === 200) {
         dispatch(cartProducts(response?.data?.products));
-        // const isProdInCart = storedProduct?.filter(
-        //   (prod) => prod?._id === response?.data?.products?._id
-        // );
-        // console.log(isProdInCart);
-        // setAddIntoCart(isProdInCart)
       }
     } catch (error) {
       console.error(error);
@@ -214,7 +203,7 @@ const Userdetail = () => {
               <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
                 <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px] mt-4">
                   {/* left column start */}
-                  <div className="w-full md:w-auto flex-[1] max-w-[500px] lg:max-w-full mx-auto lg:mx-0">
+                  <div className="w-full md:w-auto  max-w-[600px] lg:max-w-full mx-auto lg:mx-0">
                     <ProductDetailsCarousel
                       images={productDetail?.images || []}
                       productColor={productColor}
@@ -358,17 +347,6 @@ const Userdetail = () => {
                         Add To Cart
                       </button>
                     )}
-
-                    <div className="mt-8">
-                      {/* <button
-                      className="cursor-pointer leading-5 transition-colors duration-150 font-medium lg:text-[18px] text-sm focus:outline-none px-5 py-2 rounded-md text-white bg-lightBlue-600 border border-transparent active:bg-lightBlue-600 hover:bg-lightBlue-600 focus:ring focus:ring-purple-300"
-                      onClick={() => {
-                        router.replace(`/edit-product/${productDetail?.id}`);
-                      }}
-                    >
-                      Edit Product
-                    </button> */}
-                    </div>
                   </div>
                 </div>
               </div>
