@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const getTokenFromLocalStorage = () => {
   if (typeof window !== "undefined") {
     // Check if the code is running in a browser environment
-    return localStorage.getItem("userToken") || null;
+    return JSON.parse(localStorage.getItem("userToken")) || null;
   }
   return null;
 };
@@ -21,6 +21,9 @@ const initialState = {
   cart: [],
   totalCartItems: 0,
 };
+
+console.log(initialState);
+
 
 const authSlice = createSlice({
   name: "auth",

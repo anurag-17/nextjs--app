@@ -7,7 +7,6 @@ import { fetchApi } from "../utlis/api";
 
 const Cart = () => {
   const [getCartProduct, setGetCartProduct] = useState([]);
-  console.log("ee", getCartProduct)
   const [isRefresh, setRefresh] = useState(false);
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
 
@@ -18,7 +17,6 @@ const Cart = () => {
   const defaultCustomer = async () => {
     try {
       const response = await fetchApi("/auth/getUserCart", token);
-      console.log(response);
       if (response?.status === 200) {
         const data = await response.json();
         setGetCartProduct(data?.cart);
@@ -46,7 +44,6 @@ const Cart = () => {
       defaultCustomer();
     }
   }, [isRefresh]);
-  // console.log(sessionCartProduct);
 
   useEffect(() => {
     getAllProducts();
@@ -57,8 +54,6 @@ const Cart = () => {
       method: "GET",
       url: "https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct",
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
         "User-Agent": "insomnia/2023.5.8",
       },
     };
@@ -67,9 +62,7 @@ const Cart = () => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
-          console.log("object", response?.data)
           setGetCartProduct(response?.data);
-          // response?.data?.map((row)=>())
         }
       })
       .catch(function (error) {
