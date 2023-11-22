@@ -7,12 +7,15 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/AdminModule/Header";
+import ProductDetailsCarousel from "../../components/UserModule/Product/ProductDetailsCarousel";
 
 const EditProduct = () => {
   const router = useRouter();
   const { slug } = router.query;
   const [isLoading, setLoading] = useState(false);
+ 
   const [productDetail, setProductDetail] = useState({});
+  const [productColor, setProductColor] = useState("");
   console.log("productDetail", productDetail);
 
   useEffect(() => {
@@ -37,8 +40,14 @@ const EditProduct = () => {
       .then((response) => {
         console.log(response);
         setProductDetail(response);
+        if (Array.isArray(response.color) && response.color.length > 0) {
+          setProductColor(response?.color[0]);
+        }
       })
       .catch((err) => console.error(err));
+  };
+  const handleColorChange = (productId, selectedColor) => {
+    setProductColor(selectedColor);
   };
 
   return (
@@ -51,22 +60,13 @@ const EditProduct = () => {
         />
         <main className="h-full overflow-y-auto pt-[40px]">
           <div className="container grid px-6 mx-auto">
-            {/* <h1 className="my-6 text-[40px] font-bold text-gray-700 dark:text-gray-300">
-              Product Details
-            </h1> */}
+           
             <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
               <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden gap-20">
                 <div className="flex-shrink-0 flex items-center justify-center h-auto">
-                  {productDetail &&
-                    productDetail.images &&
-                    productDetail.images[0] &&
-                    productDetail.images[0].url && (
-                      <img
-                        src={productDetail?.images[0]?.url[0]}
-                        alt="product"
-                        className="rounded-xl w-[350px] h-auto"
-                      />
-                    )}
+                 <ProductDetailsCarousel
+                 images={productDetail?.images || []}
+                 productColor={productColor}/>
                 </div>
                 <div className="w-full flex flex-col p-5 md:p-8 text-left">
                   <div className="mb-5 block ">
@@ -77,71 +77,101 @@ const EditProduct = () => {
                         </span>
                       </p>
                     </div>
-                    <h2 className="text-heading text-[18px] uppercase font-semibold font-serif dark:text-gray-400 mt-4">
-                      Brand : {productDetail?.brand}
-                    </h2>
+
+                    <div className="flex text-left mt-4">
+                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                        Brand :
+                      </div>
+                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
+                        {productDetail?.brand}
+                      </div>
+                    </div>
+                    <div className="flex text-left mt-4">
+                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                        Category :
+                      </div>
+                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
+                        {productDetail?.category}
+                      </div>
+                    </div>
+                    <div className="flex text-left mt-4">
+                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      QUANTITY:
+                      </div>
+                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
+                      {productDetail?.quantity}
+                      </div>
+                    </div>
+                  <div className="flex text-left mt-4">
+                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      Offer price :
+                      </div>
+                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
+                      {productDetail.discountedPrice}
+                      </div>
+                    </div> 
+                    <div className="flex text-left mt-4">
+                      <del className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      Regular Price :
+                      </del>
+                      <del className="inline-block text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
+                      ₹{productDetail.price}
+                      </del>
+                    </div> 
+                    <div className="flex text-left mt-4">
+                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      Color :
+                      </div>
+                      <div className="text-[18px] flex gap-5 items-center xl:text-[20px]  font-semibold leadinng-[28px] capitalize">
+                      <div className="">
+                        <div className="w-[250px]">
+                          <select
+                            onChange={(e) =>
+                              handleColorChange(
+                                productDetail._id,
+                                e.target.value
+                              )
+                            }
+                            value={productColor}
+                            className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm"
+                          >
+                            <option
+                              value=""
+                              className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
+                            >
+                              Select Color
+                            </option>
+                            {productDetail?.color?.length > 0 &&
+                              productDetail?.color?.map((options, inx) => (
+                                <option
+                                  key={inx}
+                                  value={options}
+                                  className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
+                                >
+                                  {options}
+                                </option>
+                              ))}
+                          </select>
+                        </div>
+                       
+                      </div>
+                      </div>
+                    </div>
+                    <div className="text-[18px] xl:text-[20px] font-medium leadinng-[28px] capitalize mt-9 ">
+                        {productDetail?.description}
+                      </div>
+                   
                   </div>
                   <div className="font-serif product-price font-bold dark:text-gray-400">
-                    {/* <span className="inline-block text-2xl">
-                    ₹{productDetail?.price}
-                    </span> */}
 
-                    <p className="inline-block text-2xl">
-                      Offer price : {productDetail.discountedPrice} <br />
-                    </p>
-                    <br />
-                    <del className="inline-block text-2xl mt-2">
-                      Regular Price : ₹{productDetail.price}
-                    </del>
+                    
+                 
+                    
                   </div>
-                  <div className="mt-6">
-                    {/* <span className="inline-flex px-2 text-md font-medium leading-5 rounded-full text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-800">
-                      <span className="font-bold">Stock Out</span>
-                    </span> */}
-                    <span className=" text-[18px] text-gray-500 dark:text-gray-400 pl-4 ">
-                      QUANTITY: {productDetail?.quantity}
-                    </span>
-                  </div>
-                  <p className="font-serif font-semibold py-1 text-gray-500 lg:text-[18px]  flex gap-5 items-center mt-2">
-                    <span className="text-gray-700 dark:text-gray-400 leading-[30px]">
-                      Categpry :
-                    </span>
-                    <p className=" capitalize text-[18px] font-normal leading-[30px]">
-                      {productDetail?.category}
-                    </p>
-                  </p>
-                  <div className="flex flex-col ">
-                    <p className="font-serif font-semibold  text-gray-500 lg:text-[18px] flex gap-5 items-center">
-                      <span className="text-gray-700 dark:text-gray-400 leading-[30px] ">
-                        Color :
-                      </span>
-                      {productDetail?.color
-                        ? productDetail?.color?.map((optn, inx) => (
-                            <p
-                              className=" capitalize text-[18px] font-normal leading-[30px]"
-                              key={inx}
-                            >
-                              {optn}
-                            </p>
-                          ))
-                        : "-"}
-                    </p>
-                    <p className=" leading-8 tracking-wide  font-serif font-normal text-gray-500 dark:text-gray-400 lg:text-[18px] text-sm mt-3">
-                      {productDetail?.description}
-                      <span className="font-bold text-gray-500 dark:text-gray-500"></span>
-                    </p>
-                    <div className="flex flex-row"></div>
-                  </div>
-                  <div className="mt-8">
-                    {/* <button
-                      className="cursor-pointer leading-5 transition-colors duration-150 font-medium lg:text-[18px] text-sm focus:outline-none px-5 py-2 rounded-md text-white bg-lightBlue-600 border border-transparent active:bg-lightBlue-600 hover:bg-lightBlue-600 focus:ring focus:ring-purple-300"
-                      onClick={() => {
-                        router.replace(`/edit-product/${productDetail?.id}`);
-                      }}
-                    >
-                      Edit Product
-                    </button> */}
-                  </div>
+                  
+                  
+                 
+                 
                 </div>
               </div>
             </div>
