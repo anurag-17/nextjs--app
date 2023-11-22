@@ -148,7 +148,6 @@ const ProductGrid = () => {
         setLoading(false);
         refreshData();
       } else {
-
         setLoading(false);
       }
     } catch (error) {
@@ -385,7 +384,6 @@ const ProductGrid = () => {
             </div>
           </div>
 
-         
           {/*----- filter by Brand start ------- */}
           <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4">
             <p className="font-semibold text-2xl mb-4">Product Brands</p>
@@ -454,6 +452,7 @@ const ProductGrid = () => {
               >
                 {items?.images?.length > 0 && (
                   <div className="h-[400px] p-2 overflow-hidden">
+                    <Link href={`/product-details/${items?._id}`}>
                       <Image
                         src={items?.images[0]?.url[0]}
                         alt=""
@@ -461,6 +460,7 @@ const ProductGrid = () => {
                         width={300}
                         height={300}
                       />
+                    </Link>
                   </div>
                 )}
                 <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
@@ -530,7 +530,6 @@ const ProductGrid = () => {
                     <p className="text-sky-800 px-2 font-bold">
                       {items?.offerPriceCurr} {items.discountedPrice}
                     </p>
-                    <br />
                   </p>
                   <del className="text-md font-semibold capitalize my-2 text-sky-600">
                     Regular Price : {items?.regPriceCurr} {items.price}

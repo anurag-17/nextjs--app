@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaShoppingBag } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { data } from "../data/data.js";
+import axios from "axios";
+import { useEffect } from "react";
 
 const orders = () => {
+  const [allOrders, setAllOrders] = useState([]);
+
+  useEffect(() => {
+    defaultOrder();
+  }, []);
+
+  const defaultOrder = () => {
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/auth/getallorders",
+    };
+    axios
+      .request(options)
+      .then((response) => {
+        setAllOrders(response.data);
+        console.log("dddd", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen  ">
       <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
@@ -17,7 +41,6 @@ const orders = () => {
             aria-describedby="button-addon1"
           />
         </div>
-
         <h2>Welcome Back, Admin</h2>
       </div>
       <div className="p-4">
