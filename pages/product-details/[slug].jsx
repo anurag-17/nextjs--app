@@ -72,10 +72,6 @@ const Userdetail = () => {
           .then((response) => response.json())
           .then((response) => {
             setProductDetail(response);
-            // console.log(response);
-            if (Array.isArray(response.color) && response.color.length > 0) {
-              // setProductColor(response?.color[0]);
-            }
           })
           .catch((err) => console.error(err));
       }
