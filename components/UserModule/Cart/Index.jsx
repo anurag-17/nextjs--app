@@ -13,6 +13,7 @@ import ShippingAddress from "../Address/shippingAddress";
 import { setShippingDetails } from "../../../redux/slices/orderSlice";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
+  console.log("aaa", getCartProduct);
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || {});
   const [isOpenAdd, setOpenAdd] = useState(false);
@@ -188,8 +189,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
                     >
-                      {item?.product?.images?.url?.length > 0 &&
-                        item?.product?.images?.url?.map((img, inx) => (
+                      {item?.product?.images?.length > 0 &&
+                        item?.product?.images?.map((img, inx) => (
                           <>
                             {item?.color == img?.color && (
                               <div className="w-[30%] py-2 px-4">
@@ -217,6 +218,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                               {item?.product?.title}
                             </p>
                           </p>
+                          <p className=" text-[18px]">
+                            Brand : {item?.product?.brand}
+                          </p>
 
                           <div className="flex mt-2">
                             <h1 className=" mr-1 text-[18px]">Status : </h1>
@@ -238,12 +242,15 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         </div>
 
                         <div className="">
-                          <p className="text-md font-semibold capitalize mt-2">
-                            Price : ₹ {item?.price}
-                          </p>
+                          <del className="text-md font-semibold capitalize mt-2">
+                            Price : ₹ {item?.product?.price}
+                          </del>
 
                           <p className="text-md font-semibold capitalize mt-2 text-sky-600">
-                            Total Price : ₹ {Number(item?.price * item?.count)}
+                            Offer Price : ₹{" "}
+                            {Number(
+                              item?.product?.discountedPrice * item?.count
+                            )}
                           </p>
                         </div>
                       </div>
@@ -310,7 +317,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                     >
                                       <Image
                                         key={inx}
-                                        src={img?.url[0]}
+                                        src={product?.images?.url[0]}
                                         alt=""
                                         className="rounded-[20px] "
                                         width={250}
@@ -337,8 +344,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 </p>
                               </div>
                               <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
-                                Colors :
-                                <p className="font-medium"> {item?.color} </p>
+                                Colors :<p className="font-medium"> </p>
                               </p>
                             </div>
 
@@ -346,14 +352,14 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                               <p className="text-[18px]  flex capitalize  mt-2">
                                 Qty:
                                 <p className="font-semibold px-2">
-                                  {item?.count}
+                                  {/* {item?.count} */}
                                 </p>
                               </p>
                             </div>
 
                             <div className="">
                               <p className="text-md font-semibold capitalize mt-2">
-                                Price : ₹ {item?.price}
+                                Price : ₹ {item?.product?.price}
                               </p>
 
                               <p className="text-md font-semibold capitalize mt-2 text-sky-600">
@@ -405,8 +411,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       <div className="mt-5">
                         <div className="mt-5">
                           <button
-                            className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${isCartUpdated ? "bg-lightBlue-200" :""}`}
-                            onClick={isCartUpdated ? null : openDrawer} 
+                            className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
+                              isCartUpdated ? "bg-lightBlue-200" : ""
+                            }`}
+                            onClick={isCartUpdated ? null : openDrawer}
                           >
                             Place Order
                           </button>
@@ -417,10 +425,19 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         {isCartUpdated && (
                           <>
                             <div className="">
-                              <h6 className="text-[24px] font-medium">Shipping Addres : </h6>
-                              <p className="mt-4 text-[18px] font-normal">  {orderShippingDetails?.address} </p>
-                              <p className="text-[18px] font-normal">{orderShippingDetails?.number}</p>
-                              <p className="text-[18px] font-normal">{orderShippingDetails?.email}</p>
+                              <h6 className="text-[24px] font-medium">
+                                Shipping Addres :{" "}
+                              </h6>
+                              <p className="mt-4 text-[18px] font-normal">
+                                {" "}
+                                {orderShippingDetails?.address}{" "}
+                              </p>
+                              <p className="text-[18px] font-normal">
+                                {orderShippingDetails?.number}
+                              </p>
+                              <p className="text-[18px] font-normal">
+                                {orderShippingDetails?.email}
+                              </p>
                             </div>
                             <BuyProduct
                               buyItem={getCartProduct || []}

@@ -110,7 +110,7 @@ const menuList = [
   {
     id: 5,
     label: "customers",
-    component:<Customers/>,
+    component: <Customers />,
     icon: `fa fa-phone-square`,
     path: "/customers",
   },
@@ -167,12 +167,6 @@ const SideBar = forwardRef(({ showNav }, ref) => {
 
   const handleSignout = () => {
     console.log("Logging out...");
-
-    // // Remove user token from local storage
-    // localStorage.removeItem("accessToken");
-    // localStorage.removeItem("userDetails");
-    // localStorage.removeItem("userToken");
-
     setUserToken(null);
     setUserDetails(null);
 
@@ -180,7 +174,10 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   };
 
   return (
-    <div ref={ref} className="fixed h-screen overflow-y-auto w-[270px] bg-white shadow-sm  ">
+    <div
+      ref={ref}
+      className="fixed h-screen overflow-y-auto w-[270px] bg-white shadow-sm  "
+    >
       <img
         src="/log.png"
         width={400}
@@ -207,9 +204,6 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                  }`}
                 onClick={() => handleClick(items.label, items.id)}
               >
-                {/* <div className="mr-2">
-                <HomeIcon className="h-5 w-5" />
-              </div> */}
                 <div className="w-full">
                   {items.submenu ? (
                     <p
@@ -217,9 +211,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                       onClick={() => handleSubMenuToggle(items.id)}
                     >
                       {items.label}
-                      <span className="submenu-toggle ">
-                        {/* <RightArrow /> */}
-                      </span>
+                      <span className="submenu-toggle "></span>
                     </p>
                   ) : (
                     <p className=" capitalize whitespace-nowrap ">
@@ -258,11 +250,11 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         ))}
 
         <div
-          className={`pl-6 py-3 ml-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold 
+          className={`pl-6 py-3 ml-5 rounded text-center rounded-l-full  cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold 
             ${
               router.pathname == "/admin-login"
                 ? "bg-sky-600 text-white"
-                : "text-black-400 hover:bg-sky-600 hover:text-white"
+                : "text-black-400 hover:bg-sky-600 hover:text-white  "
             }`}
           onClick={handleSignout}
         >

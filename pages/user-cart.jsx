@@ -7,6 +7,7 @@ import { fetchApi } from "../utlis/api";
 
 const Cart = () => {
   const [getCartProduct, setGetCartProduct] = useState([]);
+  console.log("ee", getCartProduct)
   const [isRefresh, setRefresh] = useState(false);
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
 
@@ -66,7 +67,8 @@ const Cart = () => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
-          // setAllProduct(response?.data);
+          console.log("object", response?.data)
+          setGetCartProduct(response?.data);
           // response?.data?.map((row)=>())
         }
       })
