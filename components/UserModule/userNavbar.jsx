@@ -102,6 +102,8 @@ const UserNavbar = () => {
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [isOpenLogin, setOpenLogin] = useState(false);
   const [isShow, setShow] = useState(false);
+  const productsLength = localStorage.getItem('productsLength') || 0;
+  console.log("Number of products in the cart:", productsLength);
 
   const openLoginModal = () => {
     setOpenLogin(true);
@@ -160,9 +162,16 @@ const UserNavbar = () => {
                   Login
                 </div>
               )}
+             
+              
               <Link href="/user-cart">
-                <Image src={shoping} className="w-12 mr-10" />
-              </Link>
+    <div className="flex items-center gap-[20px]">
+      <div className="mr-4">
+        {productsLength}
+      </div>
+      <Image src={shoping} className="w-12" />
+    </div>
+  </Link>
             </div>
           </div>
 
