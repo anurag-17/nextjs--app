@@ -19,7 +19,7 @@ const ProductGrid = () => {
   const dispatch = useDispatch();
   const cartStore = useSelector((state) => state || []);
   const { token } = useSelector((state) => state.auth.userDetails || null);
-
+  const [getCartProduct, setGetCartProduct] = useState([]);
   const [productCategory, setProductCategory] = useState("");
   const [productBrands, setProductBrands] = useState("");
   const [allProduct, setAllProduct] = useState([]);
@@ -335,6 +335,30 @@ const ProductGrid = () => {
         console.error(error);
       });
   };
+
+  useEffect(() => {
+    defaultCustomer();
+  }, []);
+
+  const defaultCustomer = async () => {
+    try {
+      const response = await fetchApi("/auth/getUserCart", token);
+      if (response?.status === 200) {
+        const data = await response.json();
+        setGetCartProduct(data?.cart);
+        console.log("data", data?.cart);
+      } else if (response.status === 202) {
+        setGetCartProduct([]);
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const productsLength = getCartProduct?.products?.length || 0;
+  localStorage.setItem('productsLength', productsLength);
+
+console.log("Number of products in the cart:", productsLength);
 
   return (
     <>
