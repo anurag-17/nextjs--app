@@ -7,8 +7,9 @@ import {
 } from "@heroicons/react/24/outline";
 import DetailsDrawer from "./detailsDrawer";
 import DeliveryStatus from "./deliveryStatus";
+import OrderByDetails from "./orderByDetails";
 
-export const headItems = ["s. no.", "Order ID", "No of product", "payment method", "order status",];
+export const headItems = ["s. no.", "Order ID", "order by", "No of product", "payment method", "order status",];
 export const statusItems = [
   "Not Processed",
   "Cash on Delivery",
@@ -21,16 +22,21 @@ export const statusItems = [
 const ManageOrders = ({ allOrders }) => {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isCustormDrawer, setCustormDrawer] = useState(false);
   const [orders_products, setOrders_products] = useState([]);
+  const [order_by_details, setOrder_by_details] = useState({});
   const [isOpenModal, setOpenModal] = useState(false);
 
   const openDrawer = (order) => {
     setIsDrawerOpen(!isDrawerOpen);
     setOrders_products(order)
+    setCustormDrawer(false)
   };
 
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
+  const openCustormDrawer = (details) => {
+    setCustormDrawer(!isCustormDrawer);
+    setOrder_by_details(details)
+    setIsDrawerOpen(false)
   };
 
   const closeModal = () => {
@@ -46,6 +52,8 @@ const ManageOrders = ({ allOrders }) => {
         <h2>Welcome Back, Admin</h2>
       </div>
 
+
+{/*------------ order details ------------ */}
       {isDrawerOpen && (
         <div
           id="drawer-form"
@@ -55,7 +63,7 @@ const ManageOrders = ({ allOrders }) => {
         >
           <button
             type="button"
-            onClick={closeDrawer}
+            onClick={()=> setIsDrawerOpen(false)}
             className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
@@ -71,6 +79,37 @@ const ManageOrders = ({ allOrders }) => {
           </button>
           <div className="">
             <DetailsDrawer orderDetails={orders_products} />
+          </div>
+        </div>
+      )}
+
+
+{/*------------ order By details ------------ */}
+      {isCustormDrawer && (
+        <div
+          id="drawer-form"
+          className="fixed content-center mb-5 right-5 z-40 max-h-[500px] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-[#f3f3f3]  dark:bg-gray-800 border rounded-lg"
+          tabIndex={-1}
+          aria-labelledby="drawer-form-label"
+        >
+          <button
+            type="button"
+            onClick={()=> setCustormDrawer(false)}
+            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+          >
+            <svg
+              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+            </svg>
+            <span className="sr-only bg-black">Close menu</span>
+          </button>
+          <div className="">
+            <OrderByDetails orderDetails={order_by_details} />
           </div>
         </div>
       )}
@@ -96,6 +135,12 @@ const ManageOrders = ({ allOrders }) => {
                   <td className="p-4 border-b">
                     <p className="text-gray-800 font-medium hover:text-lightBlue-700 cursor-pointer"
                       onClick={() => openDrawer(tableData?.products)}> Order : {tableData?._id}</p>
+                  </td>
+                  <td className="p-4 border-b"> 
+                    <p className="text-gray-800 font-medium hover:text-lightBlue-700 cursor-pointer"
+                      onClick={() => openCustormDrawer(tableData?.orderby)}>
+                      {tableData?.orderby?.firstname} {tableData?.orderby?.lastname}
+                    </p>
                   </td>
                   <td className="p-4 border-b">
                     <p className="text-gray-800 font-medium"> {tableData?.products?.length} products</p>
