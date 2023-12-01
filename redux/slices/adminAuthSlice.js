@@ -2,23 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const getTokenFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("adminToken") || null;
+    return JSON.parse(localStorage.getItem("adminToken") || null);
   }
   return null;
 };
 
 const initialState = {
-  token: getTokenFromLocalStorage(),
-  cart: [],
-  totalCartItems: 0,
+  auth_token: getTokenFromLocalStorage(),
+  userDetails:[]
 };
 
-const authSlice = createSlice({
+const adminAuthSlice = createSlice({
   name: "adminAuth",
   initialState,
   reducers: {
     setAdminToken: (state, action) => {
-      state.userDetails.token = action.payload;
+      state.auth_token = action.payload;
       if (typeof window !== "undefined") {
         localStorage.setItem("adminToken", JSON.stringify(action?.payload));
       }
@@ -33,5 +32,5 @@ const authSlice = createSlice({
 });
 
 export const {setAdminToken,setAdminDetails} =
-  authSlice.actions;
-export default authSlice.reducer;
+  adminAuthSlice.actions;
+export default adminAuthSlice.reducer;

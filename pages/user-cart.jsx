@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Usercart from "../components/UserModule/Cart/Index";
 import { fetchApi } from "../utlis/api";
 
+
 const Cart = () => {
   const [getCartProduct, setGetCartProduct] = useState([]);
   const [isRefresh, setRefresh] = useState(false);
@@ -13,6 +14,7 @@ const Cart = () => {
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
+  
 
   const defaultCustomer = async () => {
     try {
@@ -45,30 +47,31 @@ const Cart = () => {
     }
   }, [isRefresh]);
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
+  // useEffect(() => {
+  //   getAllProducts();
+  // }, []);
 
-  const getAllProducts = async () => {
-    const options = {
-      method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct",
-      headers: {
-        "User-Agent": "insomnia/2023.5.8",
-      },
-    };
+  // const getAllProducts = async () => {
+  //   const options = {
+  //     method: "GET",
+  //     url: "https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct",
+  //     headers: {
+  //       "User-Agent": "insomnia/2023.5.8",
+  //     },
+  //   };
 
-    axios
-      .request(options)
-      .then(function (response) {
-        if (response.status === 200) {
-          setGetCartProduct(response?.data);
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       if (response.status === 200) {
+  //         setGetCartProduct(response?.data);
+          
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // };
 
   return (
     <>

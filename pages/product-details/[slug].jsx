@@ -82,6 +82,7 @@ const Userdetail = () => {
 
   const handleColorChange = (productId, selectedColor) => {
     setProductColor(selectedColor);
+    setAddIntoCart(false);
   };
 
   const handleAddToCart = async (e, produc) => {

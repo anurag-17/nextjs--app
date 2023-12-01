@@ -4,6 +4,7 @@ import { HomeIcon, CreditCardIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import New from "../components/New";
 import Customers from "../pages/customers";
+import { setAdminToken } from "../redux/slices/adminAuthSlice";
 
 const menuList = [
   {
@@ -74,7 +75,7 @@ const menuList = [
     label: "orders",
     component: "",
     icon: `fa fa-users`,
-    path: "/orders",
+    path: "/admin-orders",
   },
   {
     id: "",
@@ -169,7 +170,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
     console.log("Logging out...");
     setUserToken(null);
     setUserDetails(null);
-
+    // dispatch(setAdminToken(null));
+    localStorage.removeItem("adminToken");
     router.push("/login");
   };
 
@@ -262,7 +264,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             <CreditCardIcon className="h-5 w-5" />
           </div>
           <div>
-            <p>Log Out</p>
+            <p>Log Out </p>
           </div>
         </div>
       </div>

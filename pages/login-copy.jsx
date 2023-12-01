@@ -106,7 +106,7 @@ const Login = () => {
                 <p class="mt-1">
                   <a
                     class="text-sm font-medium text-green-500 dark:text-green-400 hover:underline"
-                    href="/signup"
+                    href="/user-signup"
                   >
                     Create account
                   </a>

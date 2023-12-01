@@ -1,0 +1,1 @@
+export const BASE_URL = "https://e-commerce-backend-brown.vercel.app/api"

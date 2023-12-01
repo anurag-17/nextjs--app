@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, Fragment } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { setUserDetails } from "../../redux/slices/authSlice";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import shoping from "../../public/shopingcart.svg";
 import { Dialog, Transition } from "@headlessui/react";
+import { fetchApi } from "../../utlis/api";
 
 const menuList = [
   {
@@ -38,10 +39,10 @@ const menuList = [
   },
   {
     id: 3,
-    label: "Order",
+    label: "Order History",
     component: "",
     icon: "fa fa-phone-square",
-    path: "/user-order",
+    path: "/user-order-history",
     show: true,
   },
 
@@ -76,14 +77,14 @@ const menuList = [
     icon: "fa fa-phone-square",
     path: "/user-invoice",
   },
-  {
-    id: 9,
-    label: "Order Details",
-    component: "",
-    icon: "fa fa-phone-square",
-    path: "/userorder-detail",
-    show: true,
-  },
+  // {
+  //   id: 9,
+  //   label: "Order Details",
+  //   component: "",
+  //   icon: "fa fa-phone-square",
+  //   path: "/userorder-detail",
+  //   show: true,
+  // },
   {
     id: 7,
     label: "Sign Out",
@@ -102,13 +103,15 @@ const UserNavbar = () => {
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [isOpenLogin, setOpenLogin] = useState(false);
   const [isShow, setShow] = useState(false);
-  const productsLength = localStorage.getItem('productsLength') || 0;
-  console.log("Number of products in the cart:", productsLength);
+  const [cartLength, setCartLength] = useState(0);
+
+  useEffect(() => {
+    setCartLength(localStorage.getItem("productsLength") || 0);
+  }, []);
 
   const openLoginModal = () => {
     setOpenLogin(true);
   };
-
   const closeLoginModal = () => {
     setOpenLogin(false);
   };
@@ -131,15 +134,18 @@ const UserNavbar = () => {
     localStorage.removeItem("userMail");
     window.location.reload();
   };
+
   const handleLogin = () => {
     router.push("/login");
   };
+
+ 
 
   return (
     <>
       <nav className="p-6 bg-white border mb-5 flex justify-between">
         <ul className="flex justify-start w-full">
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full items-center">
             <div className="text-center">
               <button
                 className="w-36"
@@ -162,16 +168,13 @@ const UserNavbar = () => {
                   Login
                 </div>
               )}
-             
-              
+
               <Link href="/user-cart">
-    <div className="flex items-center gap-[20px]">
-      <div className="mr-4">
-        {productsLength}
-      </div>
-      <Image src={shoping} className="w-12" />
-    </div>
-  </Link>
+                <div className="">
+                  <Image src={shoping} className="relative" width={45} height={45} alt="cart"  />
+                </div>
+                  <div className=" absolute top-[15px] right-[40px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cartLength}</div>
+              </Link>
             </div>
           </div>
 

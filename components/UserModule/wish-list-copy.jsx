@@ -97,7 +97,7 @@ const WishList = () => {
                   Brand : {items.brand}
                 </p>
                 <p className="text-sm font-semibold capitalize my-2 text-sky-600">
-                  Offer price : {items.discountedPrice} <br />
+                  Offer price :₹ {items.discountedPrice} <br />
                 </p>
                 <del className="text-sm font-semibold capitalize my-2 text-sky-600">
                   {" "}

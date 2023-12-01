@@ -54,19 +54,19 @@ const Signup = () => {
 
     try {
       const response = await axios.request(options);
-      router.push("/");
+      router.push("/login");
 
       if (response?.status === 200) {
         console.log(response.data);
         setLoading(false);
-        toast.success("Success. Login Successfully!");
+        toast.success("Successfully! register. Please login");
       } else {
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.error(error);
-      toast.error("Failed. Invalid Credentials!");
+      toast.error("Failed !");
     }
   };
 

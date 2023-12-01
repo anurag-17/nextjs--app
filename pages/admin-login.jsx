@@ -7,7 +7,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { setAdminDetails } from "../redux/slices/adminAuthSlice";
+import { setAdminDetails, setAdminToken } from "../redux/slices/adminAuthSlice";
 
 const AdminLogin = ({ API_URL }) => {
   const dispatch = useDispatch();
@@ -47,7 +47,9 @@ const AdminLogin = ({ API_URL }) => {
             "userDetails",
             JSON.stringify(response?.data?.user?._id)
           );
-          // dispatch(setAdminToken(response?.data?.token))
+          // console.log(response?.data?.token);
+          
+          dispatch(setAdminToken(response?.data?.token))
           // dispatch(setAdminDetails(response?.data?.user))
           setLoading(false);
           toast.success("Success. Login Successfully!");

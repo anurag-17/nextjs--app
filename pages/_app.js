@@ -14,8 +14,10 @@ import Script from "next/script";
 
 
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
+
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 
   
   useEffect(() => {

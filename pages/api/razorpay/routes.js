@@ -14,7 +14,7 @@ async function handler(req, res) {
   console.log("Cart Total:", orderDetail);
     
   const payment_capture = 1;
-  const amount = orderDetail?.grandTotal ;
+  const amount = orderDetail?.grandTotal  ;
   // const amount = 1  ;
   const currency = "INR";
   

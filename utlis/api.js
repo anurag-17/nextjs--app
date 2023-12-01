@@ -17,11 +17,13 @@ export const fetchApi = async (url, options = {}) => {
       headers["authorization"] = accessToken;
     }
 
+    
     const response = await fetch(`${BASE_URL}${url}`, {
       method: "GET", // Change the method as needed (e.g., 'POST', 'PUT', etc.)
       headers,
       ...options,
     });
+    console.log(options);
 
     // if (!response.ok) {
     //   throw new Error(`API request failed with status ${response.status}`);

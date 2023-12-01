@@ -30,7 +30,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [isCartUpdated, setCartUpdated] = useState(false);
   const [isShowPaymentOtn, setShowPaymentOtn] = useState(false);
   const [isOpenLogin, setOpenLogin] = useState(false);
-  const [paymentOption, setPaymentOption] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [paymentOption, setPaymentOption] = useState("COD");
+  const [activeIndex, setActiveIndex] = useState(1);
+
 
   useEffect(() => {
     setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
@@ -112,14 +115,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
     }
   };
 
-  const openDrawer = () => {
-    setDrawerOpen(true);
-  };
-
-  const closeDrawer = () => {
-    setDrawerOpen(false);
-  };
-
   const updateCart = async ({ shippingDetails }) => {
     const options = {
       method: "PUT",
@@ -135,14 +130,14 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
     };
 
     dispatch(setShippingDetails(shippingDetails));
-    closeDrawer();
+    // closeDrawer();
     setCartUpdated(true);
     axios
       .request()
       .then(function (response) {
         if (response.status === 200) {
           toast.success("Address updated successfully!");
-          closeDrawer();
+          // closeDrawer();
           setCartUpdated(true);
         } else {
           return;
@@ -162,6 +157,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   };
 
   const handlePlaceOrder = () => {
+    setLoading(true)
     const options = {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart/cash-order",
@@ -178,21 +174,40 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
-          console.error(response);
           toast.success("Order created successfully!");
+          setLoading(false)
           refreshData();
         } else {
+          setLoading(false)
           return;
         }
       })
       .catch(function (error) {
+        setLoading(false)
         console.error(error);
       });
   };
 
+
+  const handleClick = (index) => {
+    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+
+    // Disable previous accordions based on the clicked index
+    if (index === 2) {
+      setActiveIndex(2); // Disable accordion 1 when opening accordion 2
+    } else if (index === 3) {
+      setActiveIndex(3); // Disable accordions 1 and 2 when opening accordion 3
+    } else if (index === 4) {
+      setActiveIndex(4); // Disable accordions 1, 2, and 3 when opening accordion 4
+    }
+  };
+  const handleCartOrder = () => {
+    setActiveIndex(2);
+  };
+
   return (
     <>
-    {/* <TextLoader text="ctrlF5..."/> */}
+      {/* <TextLoader text="ctrlF5..."/>; */}
       <ToastContainer />
       <UserNavbar />
 
@@ -358,236 +373,408 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       ) : (
         <>
           {getCartProduct?.products?.length > 0 ? (
-            <div className=" px-20">
-              <div className="border rounded-lg bg-white p-5">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h1 className="text-[35px] font-semibold">
-                      Your Cart ( {getCartProduct?.products?.length} items )
-                    </h1>
-                    <button type="button" onClick={openAddModal}>
-                      <p className="underline text-[18px] font-medium">
-                        Update your address
-                      </p>
-                    </button>
-                  </div>
+            <>
+              <div className="container mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-4 justify-center gap-x-10 mt-[20px]">
+                  <div className="md:col-span-3 ">
+                    {/*----------- Accordian 1---------*/}
 
-                  <button
-                    onClick={removeWishlist}
-                    className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer h-[53px] px-6"
-                  >
-                    <p className="text-[16px] mx-1 flex font-semibold">
-                      Clear Cart
-                      {/* <img src="cross.svg" className="w-7   mx-1" /> */}
-                    </p>
-                  </button>
-                </div>
-                <hr className="my-5" />
-                <div>
-                  {getCartProduct?.products?.length > 0 &&
-                    getCartProduct?.products?.map((item, inx) => {
-                      // const itemTotalPrice = item?.price * item?.count;
-                      // subtotal += itemTotalPrice;
-                      return (
+                    {activeIndex === 1 && (
+                      <div className="mb-4">
                         <div
-                          key={inx}
-                          className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 "
+                          className="flex justify-between items-center bg-white cursor-pointer rounded p-5"
+                          onClick={() => handleClick(1)}
                         >
-                          {item?.product?.images?.length > 0 &&
-                            item?.product?.images?.map((img, inx) => (
-                              <>
-                                {item?.color == img?.color && (
-                                  <div className="w-[30%] py-2 px-4 cursor-pointer ">
-                                    <Link
-                                      href={`/product-details/${item?.product?._id}`}
-                                    >
-                                      <Image
-                                        key={inx}
-                                        src={img?.url[0]}
-                                        alt=""
-                                        className="rounded-[20px] "
-                                        width={250}
-                                        height={300}
-                                      />
-                                    </Link>
-                                  </div>
-                                )}
-                              </>
-                            ))}
-
-                          <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
-                            <div className="">
-                              <Link
-                                href={`/product-details/${item?.product?._id}`}
-                              >
-                                <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
-                                  {item?.product?.title}
-                                </p>
-                              </Link>
-
-                              <p className=" text-[18px]">
-                                Brand : {item?.product?.brand}
-                              </p>
-
-                              <div className="flex mt-2">
-                                <h1 className=" mr-1 text-[18px]">Status : </h1>
-                                <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
-                                  Available
-                                </p>
-                              </div>
-
-                              <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
-                                Colors : {item?.color}
-                                <p className="font-medium"> </p>
-                              </p>
-                            </div>
-
-                            <div className="">
-                              <p className="text-[18px]  flex capitalize  mt-2">
-                                Qty:
-                                <p className="font-semibold px-2">
-                                  {item?.count}
-                                </p>
-                              </p>
-                            </div>
-
-                            <div className="">
-                              <p className="text-md font-semibold capitalize mt-2">
-                                Price : ₹ {item?.product?.price}
-                              </p>
-
-                              <p className="text-md font-semibold capitalize mt-2 text-sky-600">
-                                Total Price : ₹ {item?.price * item?.count}
-                              </p>
-                            </div>
+                          <div>
+                            <h1 className="text-[28px] font-semibold">
+                              Your Cart ( {getCartProduct?.products?.length}{" "}
+                              items )
+                            </h1>
                           </div>
-                          <div
-                            onClick={() => removeFromCart(item?.product?._id)}
-                            className=""
-                          >
-                            <img
-                              src="cross.svg"
-                              className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-                <div className="grid grid-cols-2 py-4">
-                  <div className=""></div>
-                  <div className="grid grid-cols-2">
-                    <div className=""></div>
-                    <div className="text-[18px] font-normal">
-                      <div className="flex">
-                        <p className="w-[200px]">Subtotal : </p>
-                        <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                          ₹ {getCartProduct?.cartTotal}
-                        </p>
-                      </div>
-                      {/* <div className="flex mt-2">
-                        <p className="w-[200px]"> Sales Tax : </p>
-                        <p className="text-right w-[150px]"> </p>
-                      </div> */}
-                      <div className="flex mt-2">
-                        <p className="w-[200px]"> Shipping Charge : </p>
-                        <p className="text-right w-[150px] px-2 py-1">
-                          {" "}
-                          ₹ {shippingCharge}{" "}
-                        </p>
-                      </div>
-                      <div className="flex mt-2">
-                        <p className="w-[200px]"> Grand Total : </p>
-                        <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
-                          ₹ {getCartProduct?.cartTotal + shippingCharge}{" "}
-                        </p>
-                      </div>
-
-                      {/*----------- Choose Address ---------*/}
-                      <div className="mt-5">
-                        <div className="mt-5">
-                          <button
-                            className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
-                              isCartUpdated ? "bg-lightBlue-200" : ""
-                            }`}
-                            onClick={isCartUpdated ? null : openDrawer}
-                          >
-                            Choose Address
-                          </button>
-                        </div>
-                      </div>
-
-                      {/*----------- Shipping Address ---------*/}
-                      <div className="my-4">
-                        {isCartUpdated && (
-                          <>
-                            <div className="">
-                              <h6 className="text-[24px] font-medium">
-                                Shipping Addres :{" "}
-                              </h6>
-                              <p className="mt-4 text-[18px] font-normal">
-                                {orderShippingDetails?.address}{" "}
-                              </p>
-                              <p className="text-[18px] font-normal">
-                                {orderShippingDetails?.number}
-                              </p>
-                              <p className="text-[18px] font-normal">
-                                {orderShippingDetails?.email}
-                              </p>
-                            </div>
-
-                            {/*---------- Payment Option ---------*/}
-
+                          <div className="flex justify-between items-center py-2">
                             <button
-                              className={`px-5 py-2 mt-5 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
-                                isCartUpdated ? "bg-lightBlue-200" : ""
-                              }`}
-                              onClick={handlePaymentOption}
+                              onClick={removeWishlist}
+                              className=" border p-1 rounded-lg hover:bg-[#F3F4F9] mr-4 cursor-pointer h-[48px] px-6"
                             >
-                              Payment Option
+                              <p className="text-[16px] mx-1 flex font-semibold">
+                                Clear Cart
+                              </p>
                             </button>
-                            {isShowPaymentOtn && (
-                              <PaymentOption
-                                handleOptionChange={handleOptionChange}
-                                paymentOption={paymentOption}
-                              />
-                            )}
+                          </div>
+                          {/* <div>{activeIndex === 1 ? "▲" : "▼"}</div>   */}
+                        </div>
 
-                            {/*---------- if choose COD ---------*/}
-                            {paymentOption === "COD" && (
-                              <div className="my-8">
-                                <button
-                                  className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
-                                    isCartUpdated ? "bg-lightBlue-200" : ""
-                                  }`}
-                                  onClick={handlePlaceOrder}
-                                >
-                                  Place Order
-                                </button>
-                              </div>
-                            )}
+                        {/*----------- user cart ---------*/}
+                        {activeIndex === 1 && (
+                          <>
+                            <div className="flex flex-col gap-3 mt-[20px]">
+                              {getCartProduct?.products?.length > 0 &&
+                                getCartProduct?.products?.map((item, inx) => {
+                                  return (
+                                    <div
+                                      key={inx}
+                                      className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-20  hover:border-lightBlue-600 "
+                                    >
+                                      {item?.product?.images?.length > 0 &&
+                                        item?.product?.images?.map(
+                                          (img, inx) => (
+                                            <>
+                                              {item?.color == img?.color && (
+                                                <div className=" p-4 cursor-pointer ">
+                                                  <Link
+                                                    href={`/product-details/${item?.product?._id}`}
+                                                  >
+                                                    <Image
+                                                      key={inx}
+                                                      src={img?.url[0]}
+                                                      alt=""
+                                                      className="rounded-[20px] "
+                                                      width={120}
+                                                      height={200}
+                                                    />
+                                                  </Link>
+                                                </div>
+                                              )}
+                                            </>
+                                          )
+                                        )}
 
-                            {/*---------- if choose another ---------*/}
-                            {paymentOption === "Payment using razorpay" && (
-                              <div className="my-8">
-                                <BuyProduct
-                                  buyItem={getCartProduct || []}
-                                  grandTotal={
-                                    getCartProduct?.cartTotal +
-                                      shippingCharge || ""
-                                  }
-                                  orderShipDetails={orderShippingDetails || {}}
-                                />
-                              </div>
-                            )}
+                                      <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
+                                        <div className="">
+                                          <Link
+                                            href={`/product-details/${item?.product?._id}`}
+                                          >
+                                            <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
+                                              {item?.product?.title}
+                                            </p>
+                                          </Link>
+
+                                          <p className=" text-[18px]">
+                                            Brand : {item?.product?.brand}
+                                          </p>
+
+                                          <div className="flex mt-2">
+                                            <h1 className=" mr-1 text-[18px]">
+                                              Status :{" "}
+                                            </h1>
+                                            <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
+                                              Available
+                                            </p>
+                                          </div>
+
+                                          <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                            Colors : {item?.color}
+                                            <p className="font-medium"> </p>
+                                          </p>
+                                        </div>
+
+                                        <div className="">
+                                          <p className="text-[18px]  flex capitalize  mt-2">
+                                            Qty:
+                                            <p className="font-semibold px-2">
+                                              {item?.count}
+                                            </p>
+                                          </p>
+                                        </div>
+
+                                        <div className="">
+                                          <p className="text-md font-semibold capitalize mt-2">
+                                            Price : ₹ {item?.price}
+                                          </p>
+
+                                          <p className="text-md font-semibold capitalize mt-2 text-sky-600">
+                                            Total Price : ₹{" "}
+                                            {item?.price * item?.count}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div
+                                        onClick={() =>
+                                          removeFromCart(item?.product?._id)
+                                        }
+                                        className=""
+                                      >
+                                        <img
+                                          src="cross.svg"
+                                          className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                            </div>
+                            <div className="text-right">
+                              <button
+                                className={`px-[40px] py-2 mt-5 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600`}
+                                onClick={handleCartOrder}
+                              >
+                                Place order
+                              </button>
+                            </div>
                           </>
                         )}
+                      </div>
+                    )}
+
+                      {/*----------- Accordian 2---------*/}
+                      {activeIndex === 2 && (
+                        <div className="mb-4">
+                          <div
+                            className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
+                            onClick={() => handleClick(2)}
+                          >
+                            <div className="text-[22px] font-medium">
+                              Shipping Address
+                            </div>
+                            <div>{activeIndex === 2 ? "▲" : "▼"}</div>
+                          </div>
+
+                          {/*----------- Shipping Address ---------*/}
+                          {activeIndex === 2 && (
+                            <>
+                              <div className="flex justify-between pr-[50px] py-[20px]">
+                                <div className="flex flex-col px-[20px]">
+                                  <p className=" text-[18px] font-normal">
+                                    {orderShippingDetails?.address}
+                                  </p>
+                                  <p className="text-[18px] font-normal">
+                                    {orderShippingDetails?.number}
+                                  </p>
+                                  <p className="text-[18px] font-normal">
+                                    {orderShippingDetails?.email}
+                                  </p>
+
+                                  <button
+                                    type="button"
+                                    className={`px-[40px] py-2 mt-5 rounded bg-lightBlue-700 text-white font-semibold  hover:bg-lightBlue-600 flex flex-col w-full md:w-[300px] justify-center items-center text-center`}
+                                    onClick={() => handleClick(3)}
+                                  >
+                                    Deliver Here
+                                  </button>
+                                </div>
+                                <div className="">
+                                  <p
+                                    className="underline text-[18px] font-medium cursor-pointer"
+                                    onClick={openAddModal}
+                                  >
+                                    Edit
+                                  </p>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+
+                      {/*----------- Accordian 3---------*/}
+                      {activeIndex === 3 && (
+                        <div className="mb-4">
+                          <div
+                            className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
+                            onClick={() => handleClick(3)}
+                          >
+                            <div className="text-[22px] font-medium">
+                              Order Summary
+                            </div>
+                            <div>{activeIndex === 3 ? "▲" : "▼"}</div>
+                          </div>
+
+                          {/*----------- Shipping Address ---------*/}
+                          {activeIndex === 3 && (
+                            <>
+                              <div className="flex flex-col gap-5 mt-[20px]">
+                                {getCartProduct?.products?.length > 0 &&
+                                  getCartProduct?.products?.map((item, inx) => {
+                                    return (
+                                      <div
+                                        key={inx}
+                                        className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-3  hover:border-lightBlue-600 "
+                                      >
+                                        {item?.product?.images?.length > 0 &&
+                                          item?.product?.images?.map(
+                                            (img, inx) => (
+                                              <>
+                                                {item?.color == img?.color && (
+                                                  <div className="w-[30%] p-4 cursor-pointer ">
+                                                    <Image
+                                                      key={inx}
+                                                      src={img?.url[0]}
+                                                      alt=""
+                                                      className="rounded-[20px] "
+                                                      width={180}
+                                                      height={250}
+                                                    />
+                                                  </div>
+                                                )}
+                                              </>
+                                            )
+                                          )}
+
+                                        <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
+                                          <div className="">
+                                            <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
+                                              {item?.product?.title}
+                                            </p>
+
+                                            <p className=" text-[18px]">
+                                              Brand : {item?.product?.brand}
+                                            </p>
+
+                                            <div className="flex mt-2">
+                                              <h1 className=" mr-1 text-[18px]">
+                                                Status :{" "}
+                                              </h1>
+                                              <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
+                                                Available
+                                              </p>
+                                            </div>
+
+                                            <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                              Colors : {item?.color}
+                                              <p className="font-medium"> </p>
+                                            </p>
+                                          </div>
+
+                                          <div className="">
+                                            <p className="text-[18px]  flex capitalize  mt-2">
+                                              Qty:
+                                              <p className="font-semibold px-2">
+                                                {item?.count}
+                                              </p>
+                                            </p>
+                                            <p className="text-md font-semibold capitalize mt-2">
+                                              Price : ₹ {item?.product?.price}
+                                            </p>
+
+                                            <p className="text-md font-semibold capitalize mt-2 text-sky-600">
+                                              Total Price : ₹{" "}
+                                              {item?.price * item?.count}
+                                            </p>
+                                          </div>
+
+                                          <div className="">
+                                            Delivered by Fri Dec 1 |
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+
+                              <div className="flex flex-col md:flex-row justify-between bg-white p-3 rounded mt-4">
+                                <div className=""></div>
+                                <button
+                                  type="button"
+                                  className={`px-[40px] py-2 rounded bg-lightBlue-700 text-white font-semibold  hover:bg-lightBlue-600 flex flex-col w-full md:w-[300px] justify-center items-center text-center`}
+                                  onClick={() => handleClick(4)}
+                                >
+                                  Continue
+                                </button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+
+                      {/*----------- Accordian 4---------*/}
+                      {activeIndex === 4 && (
+                        <div className="mb-4">
+                          <div
+                            className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
+                            onClick={() => handleClick(4)}
+                          >
+                            <div className="text-[22px] font-medium">
+                              Payment Options
+                            </div>
+                            <div>{activeIndex === 4 ? "▲" : "▼"}</div>
+                          </div>
+
+                          {/*----------- Accordian 4 content ---------*/}
+                          {activeIndex === 4 && (
+                            <>
+                              <div className="px-4">
+                                <>
+                                  {/*---------- Payment Option ---------*/}
+
+                                  <PaymentOption
+                                    handleOptionChange={handleOptionChange}
+                                    paymentOption={paymentOption}
+                                  />
+
+                                  {/*---------- if choose COD ---------*/}
+                                  {paymentOption === "COD" && (
+                                    <div className="my-8 text-right">
+                                      <button
+                                        className={`px-5 py-2  rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-full md:w-[300px] ${
+                                          isCartUpdated
+                                            ? "bg-lightBlue-200"
+                                            : ""
+                                        }`}
+                                        disabled={isLoading}
+                                        onClick={handlePlaceOrder}
+                                      >
+                                       {isLoading ? "Loading .." : "Place Order"} 
+                                      </button>
+                                    </div>
+                                  )}
+
+                                  {/*---------- if choose another ---------*/}
+                                  {paymentOption ===
+                                    "Payment using razorpay" && (
+                                    <div className="my-8 text-right">
+                                      <BuyProduct
+                                        buyItem={getCartProduct || []}
+                                        grandTotal={
+                                          getCartProduct?.cartTotal +
+                                            shippingCharge || ""
+                                        }
+                                        orderShipDetails={
+                                          orderShippingDetails || {}
+                                        }
+                                      />
+                                    </div>
+                                  )}
+                                </>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+                  </div>
+
+                  {/*--------------------- right section ---------------------*/}
+
+                  <div className="md:col-span-1  ">
+                    <div className="pt-2 rounded-lg bg-white px-5 pb-[40px] ">
+                      <h6 className="py-4 text-[20px] font-semibold border-b mb-8 ">
+                        PRICE DETAILS
+                      </h6>
+                      <div className="text-[16px] font-normal flex flex-col gap-5 ">
+                        <div className="flex justify-between">
+                          <p className="">Subtotal : </p>
+                          <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
+                            ₹ {getCartProduct?.cartTotal}
+                          </p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className=""> Shipping Charge : </p>
+                          <p className="text-right w-[150px] px-2 py-1">
+                            ₹ {shippingCharge}
+                          </p>
+                        </div>
+                        <div className="h-[1px] bg-[#f3f3f3] my-4"></div>
+                        <div className="flex justify-between text-[18px]  font-semibold">
+                          <p className=""> Grand Total : </p>
+                          <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
+                            ₹ {getCartProduct?.cartTotal + shippingCharge}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           ) : (
             <div className="py-5">
               <div className="flex flex-col justify-center items-center">
@@ -666,53 +853,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       </button>
                     </Link>
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      {/* --------------   Address modal    --------------------- */}
-      <Transition appear show={isDrawerOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeDrawer}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 "
-                  >
-                    Choose your address
-                  </Dialog.Title>
-                  <ShippingAddress
-                    closeModal={closeDrawer}
-                    userAdd={userAddress}
-                    updateCart={updateCart}
-                    userNumber={userNumber}
-                    userEmail={userMail}
-                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

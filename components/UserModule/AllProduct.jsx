@@ -15,28 +15,18 @@ import right from "/public/right-arrows.svg";
 import { useRouter } from "next/router";
 
 const ProductGrid = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const cartStore = useSelector((state) => state || []);
+
   const { token } = useSelector((state) => state.auth.userDetails || null);
-  const [getCartProduct, setGetCartProduct] = useState([]);
   const [productCategory, setProductCategory] = useState("");
   const [productBrands, setProductBrands] = useState("");
   const [allProduct, setAllProduct] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
-  let [productID, setProductID] = useState("");
-  let [isOpenDelete, setOpenDelete] = useState(false);
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [customerID, setCustomerID] = useState();
   // JSON.parse(localStorage.getItem("userID"))
-  const _id = productID;
 
-  const [wishListItems, setWishListItems] = useState();
   const [isWished, setIsWished] = useState({});
-
-  console.log(isWished);
 
   const [productColorsArray, setProductColorsArray] = useState([]);
   const [isOpenLogin, setOpenLogin] = useState(false);
@@ -91,18 +81,7 @@ const ProductGrid = () => {
   };
 
   const pageLimit = "15";
-  function closeModal() {
-    setOpenDelete(false);
-  }
 
-  function openModal(id) {
-    setProductID(id);
-    setOpenDelete(true);
-  }
-
-  const refreshData = () => {
-    setRefresh(!isRefresh);
-  };
 
   useEffect(() => {
     getAllProducts();
@@ -114,9 +93,7 @@ const ProductGrid = () => {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/product/addToWishlist",
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "Content-Type": "application/json",
+          "Content-Type": "application/json",
         "User-Agent": "insomnia/2023.5.8",
         authorization: token,
       },
@@ -173,6 +150,7 @@ const ProductGrid = () => {
       setProductColorsArray(updatedArray);
     }
   };
+
   const getAllProducts = async (page) => {
     const options = {
       method: "GET",
@@ -207,6 +185,7 @@ const ProductGrid = () => {
         console.error(error);
       });
   };
+
   // ------ search products ------ //
   const handleSearch = (e) => {
     const title = e.target.value;
@@ -288,13 +267,11 @@ const ProductGrid = () => {
     if (sessionCart?.length > 0 && token) {
       console.log("");
       addToCart(sessionCart);
-      // router.push("/cart");
     } else {
     }
   };
 
   const addToCart = (data) => {
-    console.log(data);
 
     const options = {
       method: "POST",
@@ -320,10 +297,8 @@ const ProductGrid = () => {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          // toast.success("Product added into cart !!");
           sessionStorage.removeItem("addToCart");
           setTimeout(() => {
-            // router.push("/cart");
           }, 500);
 
           refreshData();
@@ -336,8 +311,11 @@ const ProductGrid = () => {
       });
   };
 
+
   useEffect(() => {
-    defaultCustomer();
+    if (token) {
+      defaultCustomer();
+    }
   }, []);
 
   const defaultCustomer = async () => {
@@ -345,20 +323,23 @@ const ProductGrid = () => {
       const response = await fetchApi("/auth/getUserCart", token);
       if (response?.status === 200) {
         const data = await response.json();
-        setGetCartProduct(data?.cart);
-        console.log("data", data?.cart);
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem("productsLength", data?.cart?.products?.length);
+          refreshData()
+        }
       } else if (response.status === 202) {
-        setGetCartProduct([]);
+        refreshData()
         return;
       }
     } catch (error) {
       console.error(error);
     }
   };
-  const productsLength = getCartProduct?.products?.length || 0;
-  localStorage.setItem('productsLength', productsLength);
 
-console.log("Number of products in the cart:", productsLength);
+  const refreshData  = () => {
+    setRefresh(!isRefresh)
+  }
 
   return (
     <>
@@ -639,49 +620,7 @@ console.log("Number of products in the cart:", productsLength);
         </Dialog>
       </Transition>
 
-      <Transition appear show={isOpenDelete} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900"
-                  >
-                    Are You Sure! Want to Delete?
-                  </Dialog.Title>
-                  <DeleteModal
-                    productID={productID}
-                    closeModal={closeModal}
-                    refreshData={refreshData}
-                  />
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+   
     </>
   );
 };

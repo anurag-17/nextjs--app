@@ -198,7 +198,7 @@ const UserLogin = ({ API_URL }) => {
                       Login
                     </button>
                   )}
-                  <Link href="/signup">
+                  <Link href="/user-signup">
                     <p
                       className="text-center text-cyan-600  underline 2xl:mt-4 2xl:text-[20px] font-medium
                     xl:mt-2 xl:text-[18px] first-letter: lg:mt-2 lg:text-[16px] 

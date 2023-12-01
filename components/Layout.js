@@ -4,34 +4,13 @@ import TopBar from "./TopBar";
 import { Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 
+
 export default function Layout({ children }) {
+  
   const router = useRouter();
   const [showNav, setShowNav] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  // const [adminAccessToken, setAdminAccessToken] = useState(
-  //   JSON.parse(sessionStorage.getItem("accessToken"))
-  // );
-
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // console.log("isAuthenticated",isAuthenticated)
-
-  // useEffect(() => {
-  //   const authToken = sessionStorage.getItem('accessToken');
-  //   if (authToken) {
-  //     setIsAuthenticated(true);
-  //   } else {
-  //     setIsAuthenticated(false);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!isAuthenticated && router.pathname === "/admin-dashboard") {
-  //     router.replace("/admin-login");
-  //   }
-  //   else{
-  //     router.replace("/admin-dashboard");
-  //   }
-  // }, [isAuthenticated, router.pathname]);
+  
 
   function handleResize() {
     if (innerWidth <= 640) {
@@ -57,11 +36,11 @@ export default function Layout({ children }) {
     <>
       {router.pathname === "/admin-login" ||
       router.pathname === "/" ||
-      router.pathname === "/signup" ||
+      router.pathname === "/user-signup" ||
       router.pathname === "/login" ||
       router.pathname === "/user-product" ||
       router.pathname === "/user-wishlist" ||
-      router.pathname === "/user-order" ||
+      router.pathname === "/user-order-history" ||
       router.pathname === "/userFAQ" ||
       router.pathname === "/user-profile" ||
       router.pathname === "/user-setting" ||
@@ -95,12 +74,12 @@ export default function Layout({ children }) {
           !(
             router.pathname === "/admin-login" ||
             router.pathname === "/" ||
-            router.pathname === "/signup" ||
+            router.pathname === "/user-signup" ||
             router.pathname === "/login" ||
             router.pathname === "/user-product" ||
             router.pathname === "/userFAQ" ||
             router.pathname === "/user-profile" ||
-            router.pathname === "/user-order" ||
+            router.pathname === "/user-order-history" ||
             router.pathname === "/user-wishlist" ||
             router.pathname === "/user-setting" ||
             router.pathname === "/user-invoice" || 
@@ -119,12 +98,12 @@ export default function Layout({ children }) {
             !(
               router.pathname === "/admin-login" ||
               router.pathname === "/" ||
-              router.pathname === "/signup" ||
+              router.pathname === "/user-signup" ||
               router.pathname === "/login" ||
               router.pathname === "/userFAQ" ||
               router.pathname === "/user-profile" ||
               router.pathname === "/user-wishlist" ||
-              router.pathname === "/user-order" ||
+              router.pathname === "/user-order-history" ||
               router.pathname === "/user-product" ||
               router.pathname === "/user-setting" ||
               router.pathname === "/user-invoice" ||
