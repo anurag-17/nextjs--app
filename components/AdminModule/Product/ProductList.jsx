@@ -17,6 +17,7 @@ import Header from "../Header";
 import Grid from "./svg/Grid";
 import List from "./svg/List";
 import Image from "next/image";
+import WebsiteLoader from "../../websiteLoader";
 
 const headItems = [
   "PRODUCT NAME",
@@ -47,6 +48,7 @@ const ProductList = () => {
   const [productId, setProductId] = useState("your_product_id");
   const [quantity, setQuantity] = useState(1);
   const [isAllChecked, setAllChecked] = useState("");
+  const [isLoadingBtn, setLoadingBtn] = useState(false);
 
   // const [numSelected, setNumSelected] = useState(selected?.length || null);
   const [rowCount, setRowCount] = useState(allProduct?.length || null);
@@ -73,14 +75,10 @@ const ProductList = () => {
 
   // ------  get all products ------ //
   const getAllProducts = async (page) => {
+    setLoadingBtn(true)
     const options = {
       method: "GET",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "User-Agent": "insomnia/2023.5.8",
-      },
     };
 
     axios
@@ -88,7 +86,7 @@ const ProductList = () => {
       .then(function (response) {
         if (response.status === 200) {
           setAllProduct(response?.data);
-
+          setLoadingBtn(false)
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
           setProductCategory(["All", ...uniqueCategories]);
@@ -101,8 +99,13 @@ const ProductList = () => {
           const uniqueFields = [...new Set(fields)];
           setProductSearch(["All", ...uniqueFields]);
         }
+        else {
+          setLoadingBtn(false)
+          return
+        }
       })
       .catch(function (error) {
+        setLoadingBtn(false)
         console.error(error);
       });
   };
@@ -279,6 +282,10 @@ const ProductList = () => {
   };
   return (
     <>
+      {
+        isLoadingBtn &&
+        <WebsiteLoader />
+      }
       <ToastContainer />
 
       <section>
@@ -291,22 +298,20 @@ const ProductList = () => {
             <div className="flex justify-center items-end gap-x-3 mr-3">
               <div
                 className={`cursor-pointer border h-[30px] w-[30px] flex justify-center items-center 
-                ${
-                  isShowComponent === "grid"
+                ${isShowComponent === "grid"
                     ? "border-lightBlue-300"
                     : "border-transparent"
-                }`}
+                  }`}
                 onClick={() => handleShowComponent("grid")}
               >
                 <Grid />
               </div>
               <div
                 className={`cursor-pointer border-2 h-[30px] w-[30px] flex justify-center items-center 
-                ${
-                  isShowComponent === "list"
+                ${isShowComponent === "list"
                     ? "border-lightBlue-300 "
                     : "border-transparent"
-                }`}
+                  }`}
                 onClick={() => handleShowComponent("list")}
               >
                 <List />
@@ -552,13 +557,13 @@ const ProductList = () => {
                       <td className="py-5 text-[14px] font-normal ">
                         {item?.color?.length > 0
                           ? item?.color?.map((optn, inx) => (
-                              <p
-                                className=" capitalize text-[16px] font-normal leading-[30px]"
-                                key={inx}
-                              >
-                                {optn}
-                              </p>
-                            ))
+                            <p
+                              className=" capitalize text-[16px] font-normal leading-[30px]"
+                              key={inx}
+                            >
+                              {optn}
+                            </p>
+                          ))
                           : "-"}
                       </td>
                       <td className="py-5 text-[14px] font-normal ">

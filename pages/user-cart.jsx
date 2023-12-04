@@ -47,32 +47,6 @@ const Cart = () => {
     }
   }, [isRefresh]);
 
-  // useEffect(() => {
-  //   getAllProducts();
-  // }, []);
-
-  // const getAllProducts = async () => {
-  //   const options = {
-  //     method: "GET",
-  //     url: "https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct",
-  //     headers: {
-  //       "User-Agent": "insomnia/2023.5.8",
-  //     },
-  //   };
-
-  //   axios
-  //     .request(options)
-  //     .then(function (response) {
-  //       if (response.status === 200) {
-  //         setGetCartProduct(response?.data);
-          
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //     });
-  // };
-
   return (
     <>
     <ToastContainer />
@@ -81,6 +55,7 @@ const Cart = () => {
         getCartProduct={getCartProduct}
         sessionCartProduct={sessionCartProduct || []}
         refreshData={refreshData}
+        setGetCartProduct={setGetCartProduct}
       />
     </>
   );

@@ -1,15 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
 import UserNavbar from "./userNavbar";
+import { BASE_URL } from "../../utlis/config";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 
-const UserProfile = ({getAllCustomer}) => {
+
+const UserProfile = ({ getAllCustomer }) => {
+  const { token } = useSelector((state) => state.auth.userDetails || null);
+  const [UserDetail, setUserDetail] = useState({});
+  const [isEdit, setEdit] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const inputHandler = (e) => {
+    setUserDetail({ ...UserDetail, [e.target.name]: e.target.value })
+  }
+
+  const handleEdit = () => {
+    setEdit(true)
+  }
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/auth/edit-user`,
+        UserDetail,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Details Updated successfully !");
+        setLoading(false);
+        setEdit(false)
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+
+  }
 
   return (
     <>
+    <ToastContainer/>
       <UserNavbar />
       <div className=" px-20 ">
         <h1 className="text-[30px] pl-10 mb-5">Your Account</h1>
@@ -44,76 +91,211 @@ const UserProfile = ({getAllCustomer}) => {
               </div>
             </div>
           </div>
-          <div className="mt-10">
-            <h1 className="text-[25px] my-10">Personal Information</h1>
-            <table className="table-fixed ">
-              <tbody>
-                <tr>
-                  <td className="p-3 text-[20px]">Full Name</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]">
-                    {getAllCustomer?.firstname} {getAllCustomer?.lastname}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3 text-[20px]">About</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">
-                    {getAllCustomer?.about}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3  text-[20px] ">Email</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">
-                    {getAllCustomer?.email}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3 text-[20px]">Phone</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]">
-                    {" "}
-                    {getAllCustomer?.mobile}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3 text-[20px]">Date of Birth </td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">
-                    {" "}
-                    {getAllCustomer?.dob}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3 text-[20px]">Address</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">
-                    {getAllCustomer?.address}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3 text-[20px]">Country</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px]  ">
-                    {" "}
-                    {getAllCustomer?.country}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-3 text-[20px]">Language</td>
-                  <td className="px-10">:</td>
-                  <td className="p-3 text-gray-500 text-[18px] ">
-                    {getAllCustomer?.language}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            {/* <Link href="/passwordchange">
-                <button className=" border border-red-500 text-red-600 p-2">
-                  Password Change
-                </button>
-              </Link> */}
+          <div className="mt-10 relative">
+
+
+            {
+              isEdit ?
+                <>
+                  <h1 className="text-[25px] my-10"> Change personal information</h1>
+                  <form onSubmit={handleUpdate}>
+                    <table className="table-fixed ">
+                      <tbody>
+                        <tr>
+                          <td className="p-3 text-[20px]">First Name</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px]">
+
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="firstname"
+                              defaultValue={getAllCustomer?.firstname ? getAllCustomer?.firstname : UserDetail?.firstname}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">Last Name</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px]">
+
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="lastname"
+                              defaultValue={getAllCustomer?.lastname ? getAllCustomer?.lastname : UserDetail?.lastname}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">About</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px] ">
+
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="about"
+                              defaultValue={getAllCustomer?.about ? getAllCustomer?.about : UserDetail?.about}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3  text-[20px] ">Email</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px] ">
+                            <input type="email" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="email"
+                              defaultValue={getAllCustomer?.email ? getAllCustomer?.email : UserDetail?.email}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">Phone</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px]">
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="mobile"
+                              defaultValue={getAllCustomer?.mobile ? getAllCustomer?.mobile : UserDetail?.mobile}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">Date of Birth </td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px] ">
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="dob"
+                              defaultValue={getAllCustomer?.dob ? getAllCustomer?.dob : UserDetail?.dob}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">Address</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px] ">
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="address"
+                              defaultValue={getAllCustomer?.address ? getAllCustomer?.address : UserDetail?.address}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">Country</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px]  ">
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="country"
+                              defaultValue={getAllCustomer?.country ? getAllCustomer?.country : UserDetail?.country}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-[20px]">Language</td>
+                          <td className="px-10">:</td>
+                          <td className="p-3 text-gray-500 text-[18px] ">
+                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                              name="language"
+                              defaultValue={getAllCustomer?.language ? getAllCustomer?.language : UserDetail?.language}
+                              onChange={inputHandler}
+                              required
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <button
+                      type="submit"
+                      className="px-6 py-3 flex justify-center items-center rounded-md bg-lightBlue-600 text-white w-[200px] font-medium  mt-[40x]"
+                    > Update </button>
+                  </form>
+                </>
+                :
+                <>
+
+                  <h1 className="text-[25px] my-10">Personal Information</h1>
+                  <table className="table-fixed ">
+                    <tbody>
+                      <tr>
+                        <td className="p-3 text-[20px]">Full Name</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px]">
+                          {getAllCustomer?.firstname} {getAllCustomer?.lastname}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 text-[20px]">About</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px] ">
+                          {getAllCustomer?.about}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3  text-[20px] ">Email</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px] ">
+                          {getAllCustomer?.email}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 text-[20px]">Phone</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px]">
+                          {" "}
+                          {getAllCustomer?.mobile}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 text-[20px]">Date of Birth </td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px] ">
+                          {" "}
+                          {getAllCustomer?.dob}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 text-[20px]">Address</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px] ">
+                          {getAllCustomer?.address}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 text-[20px]">Country</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px]  ">
+                          {" "}
+                          {getAllCustomer?.country}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3 text-[20px]">Language</td>
+                        <td className="px-10">:</td>
+                        <td className="p-3 text-gray-500 text-[18px] ">
+                          {getAllCustomer?.language}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="absolute top-2 right-[70px] text-[30px] underline text-lightBlue-700 font-medium cursor-pointer"
+                    disabled={isLoading}
+                    onClick={handleEdit}
+                  >  {
+                      isLoading ? "Loading.. " : "Edit"} </div>
+                </>
+            }
+
+
           </div>
         </div>
       </div>
@@ -121,4 +303,4 @@ const UserProfile = ({getAllCustomer}) => {
   );
 };
 
-  export default dynamic(() => Promise.resolve(UserProfile), { ssr: false });
+export default dynamic(() => Promise.resolve(UserProfile), { ssr: false });

@@ -10,36 +10,29 @@ import AddressModal from "../Address/addressPopup";
 import { useDispatch, useSelector } from "react-redux";
 import BuyProduct from "../../razorpay/BuyProduct";
 import ShippingAddress from "../Address/shippingAddress";
-import { setShippingDetails } from "../../../redux/slices/orderSlice";
 import PaymentOption from "./paymentOption";
-import TextLoader from "../../../utlis/textLoader";
+import { BASE_URL } from "../../../utlis/config";
 
-const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
+const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartProduct }) => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || {});
   const [isOpenAdd, setOpenAdd] = useState(false);
   const [shippingCharge, setShippingCharge] = useState(0);
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const [userAddress, setUserAddress] = useState("");
-  const [userNumber, setUserNumber] = useState("");
-  const [userMail, setUserMail] = useState("");
-
   const [orderShippingDetails, setOrderShippingDetails] = useState({});
 
   const [isCartUpdated, setCartUpdated] = useState(false);
-  const [isShowPaymentOtn, setShowPaymentOtn] = useState(false);
   const [isOpenLogin, setOpenLogin] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [paymentOption, setPaymentOption] = useState("COD");
   const [activeIndex, setActiveIndex] = useState(1);
+  let [productQuantity, setProductQuantity] = useState(1);
 
 
   useEffect(() => {
     setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
     setUserAddress(JSON.parse(localStorage.getItem("userAdd")));
-    setUserNumber(JSON.parse(localStorage.getItem("userNum")));
-    setUserMail(JSON.parse(localStorage.getItem("userMail")));
 
     if (getCartProduct?.cartTotal < 500) setShippingCharge(75);
   }, []);
@@ -148,10 +141,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       });
   };
 
-  const handlePaymentOption = async () => {
-    setShowPaymentOtn(true);
-  };
-
   const handleOptionChange = ({ value }) => {
     setPaymentOption(value);
   };
@@ -205,6 +194,55 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
     setActiveIndex(2);
   };
 
+  const handleCounter = (index) => {
+    const updatedProducts = [...getCartProduct.products];
+    updatedProducts[index].count += 1;
+    setGetCartProduct({
+      ...getCartProduct,
+      products: updatedProducts,
+    });
+   const data = handleUpdateCart(updatedProducts)
+  };
+
+  const handleMinusCounter = (index) => {
+    const updatedProducts = [...getCartProduct.products];
+    if (updatedProducts[index].count > 1) {
+      updatedProducts[index].count -= 1;
+      setGetCartProduct({
+        ...getCartProduct,
+        products: updatedProducts,
+      });
+    const data  =  handleUpdateCart(updatedProducts)
+    }
+  };
+
+  const handleUpdateCart = async (products) => {
+  
+    setLoading(true);
+
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/auth/order/update-cart`,
+        products,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: auth_token,
+          },
+        }
+      );
+
+      console.log(response);
+
+      if (response.status === 200) {
+      return response
+      } 
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
   return (
     <>
       {/* <TextLoader text="ctrlF5..."/>; */}
@@ -214,51 +252,51 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       {!token || token == undefined ? (
         <div className=" px-20">
           <div className="border rounded-lg bg-white p-5">
+            <div className="flex justify-between">
+              <div>
+                <h1 className="text-[35px] font-semibold">
+                  {" "}
+                  Your Cart{" "}
+                </h1>
+              </div>
+
+              <button
+                onClick={removeWishlist}
+                className="  mr-4 cursor-pointer"
+              >
+                <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
+                  Clear Cart
+                </p>
+              </button>
+            </div>
             <div>
-              {sessionCartProduct?.length > 0 ? (
+              {sessionCartProduct?.length > 0 && (
                 sessionCartProduct?.map((item, inx) => (
                   <>
-                    <div className="flex justify-between">
-                      <div>
-                        <h1 className="text-[35px] font-semibold">
-                          {" "}
-                          Your Cart{" "}
-                        </h1>
-                      </div>
-
-                      <button
-                        onClick={removeWishlist}
-                        className="  mr-4 cursor-pointer"
-                      >
-                        <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
-                          Clear Cart
-                        </p>
-                      </button>
-                    </div>
                     <div
                       key={inx}
                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
                     >
                       {item?.product?.images?.length > 0 &&
-                        item?.product?.images?.map((img, inx) => (
-                          <>
+                        item?.product?.images?.map((img, index) => (
+                          <Fragment key={index}>
                             {item?.color == img?.color && (
-                              <div className="w-[30%] py-2 px-4">
+                              <div className="w-[25%] py-2 px-4">
                                 <Link
                                   href={`/product-details/${item?.product?._id}`}
                                 >
                                   <Image
-                                    key={inx}
+
                                     src={img?.url[0]}
-                                    alt=""
+                                    alt="PRODUCT IMAGE"
                                     className="rounded-[20px] "
-                                    width={250}
+                                    width={200}
                                     height={300}
                                   />
                                 </Link>
                               </div>
                             )}
-                          </>
+                          </Fragment>
                         ))}
 
                       <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
@@ -315,58 +353,59 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 py-4">
-                      <div className=""></div>
 
-                      <div className="grid grid-cols-2">
-                        <div className=""></div>
-                        <div className="my-6">
-                          <div className="flex">
-                            <p className="w-[200px]">Subtotal : </p>
-                            <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                              ₹ {getCartProduct?.cartTotal}
-                            </p>
-                          </div>
-                        </div>
-                        <div className=""></div>
-                        <div className="">
-                          <button
-                            className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${
-                              isCartUpdated ? "bg-lightBlue-200" : ""
-                            }`}
-                            onClick={() => setOpenLogin(true)}
-                          >
-                            Place Order
-                          </button>
-                        </div>
+                  </>
+                )))}
+              {
+                sessionCartProduct?.length <= 0 && (
+                  <div className="py-5">
+                    <div className="flex flex-col justify-center items-center">
+                      <p className="text-[30px] font-semibold mt-5">
+                        Your cart is empty
+                      </p>
+                      <div className="mt-2">
+                        <Image
+                          src="/images/empty.svg"
+                          alt="Empty cart"
+                          width={500}
+                          height={400}
+                        />
                       </div>
                     </div>
-                  </>
-                ))
-              ) : (
-                <div className="py-5">
-                  <div className="flex flex-col justify-center items-center">
-                    <p className="text-[30px] font-semibold mt-5">
-                      Your cart is empty
-                    </p>
-                    <div className="mt-2">
-                      <Image
-                        src="/images/empty.svg"
-                        alt="Empty cart"
-                        width={500}
-                        height={400}
-                      />
-                    </div>
+                    <Link href="/user-product">
+                      <div className="mb-6 mt-14">
+                        <button className="px-6 py-3 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
+                          Continue Shopping
+                        </button>
+                      </div>
+                    </Link>
                   </div>
-                  <Link href="/user-product">
-                    <div className="mb-6 mt-14">
-                      <button className="px-6 py-3 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
-                        Continue Shopping
-                      </button>
-                    </div>
-                  </Link>
+                )}
+            </div>
+            <div className="grid grid-cols-2 py-4">
+              <div className=""></div>
+
+              <div className="grid grid-cols-2">
+                <div className=""></div>
+                <div className="my-6">
+                  <div className="flex">
+                    <p className="w-[200px]">Subtotal : </p>
+                    <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
+                      ₹ {getCartProduct?.cartTotal}
+                    </p>
+                  </div>
                 </div>
-              )}
+                <div className=""></div>
+                <div className="">
+                  <button
+                    className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${isCartUpdated ? "bg-lightBlue-200" : ""
+                      }`}
+                    onClick={() => setOpenLogin(true)}
+                  >
+                    Place Order
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -409,10 +448,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           <>
                             <div className="flex flex-col gap-3 mt-[20px]">
                               {getCartProduct?.products?.length > 0 &&
-                                getCartProduct?.products?.map((item, inx) => {
+                                getCartProduct?.products?.map((item, index) => {
                                   return (
                                     <div
-                                      key={inx}
+                                      key={index}
                                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-20  hover:border-lightBlue-600 "
                                     >
                                       {item?.product?.images?.length > 0 &&
@@ -439,7 +478,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                           )
                                         )}
 
-                                      <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
+                                      <div className="grid grid-cols-3 items-center justify-center w-[80%] gap-x-[20px] ">
                                         <div className="">
                                           <Link
                                             href={`/product-details/${item?.product?._id}`}
@@ -455,7 +494,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
                                           <div className="flex mt-2">
                                             <h1 className=" mr-1 text-[18px]">
-                                              Status :{" "}
+                                              Status :
                                             </h1>
                                             <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
                                               Available
@@ -468,13 +507,25 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                           </p>
                                         </div>
 
-                                        <div className="">
-                                          <p className="text-[18px]  flex capitalize  mt-2">
-                                            Qty:
-                                            <p className="font-semibold px-2">
-                                              {item?.count}
-                                            </p>
-                                          </p>
+                                        <div className="flex text-left mt-4 gap-2">
+                                          <div className="flex text-[20px] font-normal leadinng-[28px]">
+                                            Qty :
+                                          </div>
+                                          <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
+                                            <p className="font-semibold px-2 ml-3">{item?.count} </p>
+                                            <button
+                                              onClick={() => handleQtyCounter(index)}
+                                              className="border border-black px-3 ml-3"
+                                            >
+                                              -
+                                            </button>
+                                            <button
+                                              onClick={() => handleQtyCounter(index)}
+                                              className="border border-black px-3 ml-3"
+                                            >
+                                              +
+                                            </button>
+                                          </div>
                                         </div>
 
                                         <div className="">
@@ -483,7 +534,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                           </p>
 
                                           <p className="text-md font-semibold capitalize mt-2 text-sky-600">
-                                            Total Price : ₹{" "}
+                                            Total Price : ₹
                                             {item?.price * item?.count}
                                           </p>
                                         </div>
@@ -516,217 +567,216 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       </div>
                     )}
 
-                      {/*----------- Accordian 2---------*/}
-                      {activeIndex === 2 && (
-                        <div className="mb-4">
-                          <div
-                            className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
-                            onClick={() => handleClick(2)}
-                          >
-                            <div className="text-[22px] font-medium">
-                              Shipping Address
-                            </div>
-                            <div>{activeIndex === 2 ? "▲" : "▼"}</div>
+                    {/*----------- Accordian 2---------*/}
+                    {activeIndex === 2 && (
+                      <div className="mb-4">
+                        <div
+                          className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
+                          onClick={() => handleClick(2)}
+                        >
+                          <div className="text-[22px] font-medium">
+                            Shipping Address
                           </div>
-
-                          {/*----------- Shipping Address ---------*/}
-                          {activeIndex === 2 && (
-                            <>
-                              <div className="flex justify-between pr-[50px] py-[20px]">
-                                <div className="flex flex-col px-[20px]">
-                                  <p className=" text-[18px] font-normal">
-                                    {orderShippingDetails?.address}
-                                  </p>
-                                  <p className="text-[18px] font-normal">
-                                    {orderShippingDetails?.number}
-                                  </p>
-                                  <p className="text-[18px] font-normal">
-                                    {orderShippingDetails?.email}
-                                  </p>
-
-                                  <button
-                                    type="button"
-                                    className={`px-[40px] py-2 mt-5 rounded bg-lightBlue-700 text-white font-semibold  hover:bg-lightBlue-600 flex flex-col w-full md:w-[300px] justify-center items-center text-center`}
-                                    onClick={() => handleClick(3)}
-                                  >
-                                    Deliver Here
-                                  </button>
-                                </div>
-                                <div className="">
-                                  <p
-                                    className="underline text-[18px] font-medium cursor-pointer"
-                                    onClick={openAddModal}
-                                  >
-                                    Edit
-                                  </p>
-                                </div>
-                              </div>
-                            </>
-                          )}
+                          <div>{activeIndex === 2 ? "▲" : "▼"}</div>
                         </div>
-                      )}
 
-                      {/*----------- Accordian 3---------*/}
-                      {activeIndex === 3 && (
-                        <div className="mb-4">
-                          <div
-                            className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
-                            onClick={() => handleClick(3)}
-                          >
-                            <div className="text-[22px] font-medium">
-                              Order Summary
-                            </div>
-                            <div>{activeIndex === 3 ? "▲" : "▼"}</div>
-                          </div>
+                        {/*----------- Shipping Address ---------*/}
+                        {activeIndex === 2 && (
+                          <>
+                            <div className="flex justify-between pr-[50px] py-[20px]">
+                              <div className="flex flex-col px-[20px]">
+                                <p className=" text-[18px] font-normal">
+                                  {orderShippingDetails?.address}
+                                </p>
+                                <p className="text-[18px] font-normal">
+                                  {orderShippingDetails?.number}
+                                </p>
+                                <p className="text-[18px] font-normal">
+                                  {orderShippingDetails?.email}
+                                </p>
 
-                          {/*----------- Shipping Address ---------*/}
-                          {activeIndex === 3 && (
-                            <>
-                              <div className="flex flex-col gap-5 mt-[20px]">
-                                {getCartProduct?.products?.length > 0 &&
-                                  getCartProduct?.products?.map((item, inx) => {
-                                    return (
-                                      <div
-                                        key={inx}
-                                        className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-3  hover:border-lightBlue-600 "
-                                      >
-                                        {item?.product?.images?.length > 0 &&
-                                          item?.product?.images?.map(
-                                            (img, inx) => (
-                                              <>
-                                                {item?.color == img?.color && (
-                                                  <div className="w-[30%] p-4 cursor-pointer ">
-                                                    <Image
-                                                      key={inx}
-                                                      src={img?.url[0]}
-                                                      alt=""
-                                                      className="rounded-[20px] "
-                                                      width={180}
-                                                      height={250}
-                                                    />
-                                                  </div>
-                                                )}
-                                              </>
-                                            )
-                                          )}
-
-                                        <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
-                                          <div className="">
-                                            <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
-                                              {item?.product?.title}
-                                            </p>
-
-                                            <p className=" text-[18px]">
-                                              Brand : {item?.product?.brand}
-                                            </p>
-
-                                            <div className="flex mt-2">
-                                              <h1 className=" mr-1 text-[18px]">
-                                                Status :{" "}
-                                              </h1>
-                                              <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
-                                                Available
-                                              </p>
-                                            </div>
-
-                                            <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
-                                              Colors : {item?.color}
-                                              <p className="font-medium"> </p>
-                                            </p>
-                                          </div>
-
-                                          <div className="">
-                                            <p className="text-[18px]  flex capitalize  mt-2">
-                                              Qty:
-                                              <p className="font-semibold px-2">
-                                                {item?.count}
-                                              </p>
-                                            </p>
-                                            <p className="text-md font-semibold capitalize mt-2">
-                                              Price : ₹ {item?.product?.price}
-                                            </p>
-
-                                            <p className="text-md font-semibold capitalize mt-2 text-sky-600">
-                                              Total Price : ₹{" "}
-                                              {item?.price * item?.count}
-                                            </p>
-                                          </div>
-
-                                          <div className="">
-                                            Delivered by Fri Dec 1 |
-                                          </div>
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                              </div>
-
-                              <div className="flex flex-col md:flex-row justify-between bg-white p-3 rounded mt-4">
-                                <div className=""></div>
                                 <button
                                   type="button"
-                                  className={`px-[40px] py-2 rounded bg-lightBlue-700 text-white font-semibold  hover:bg-lightBlue-600 flex flex-col w-full md:w-[300px] justify-center items-center text-center`}
-                                  onClick={() => handleClick(4)}
+                                  className={`px-[40px] py-2 mt-5 rounded bg-lightBlue-700 text-white font-semibold  hover:bg-lightBlue-600 flex flex-col w-full md:w-[300px] justify-center items-center text-center`}
+                                  onClick={() => handleClick(3)}
                                 >
-                                  Continue
+                                  Deliver Here
                                 </button>
                               </div>
-                            </>
-                          )}
-                        </div>
-                      )}
-
-                      {/*----------- Accordian 4---------*/}
-                      {activeIndex === 4 && (
-                        <div className="mb-4">
-                          <div
-                            className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
-                            onClick={() => handleClick(4)}
-                          >
-                            <div className="text-[22px] font-medium">
-                              Payment Options
+                              <div className="">
+                                <p
+                                  className="underline text-[18px] font-medium cursor-pointer"
+                                  onClick={openAddModal}
+                                >
+                                  Edit
+                                </p>
+                              </div>
                             </div>
-                            <div>{activeIndex === 4 ? "▲" : "▼"}</div>
+                          </>
+                        )}
+                      </div>
+                    )}
+
+                    {/*----------- Accordian 3---------*/}
+                    {activeIndex === 3 && (
+                      <div className="mb-4">
+                        <div
+                          className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
+                          onClick={() => handleClick(3)}
+                        >
+                          <div className="text-[22px] font-medium">
+                            Order Summary
                           </div>
+                          <div>{activeIndex === 3 ? "▲" : "▼"}</div>
+                        </div>
 
-                          {/*----------- Accordian 4 content ---------*/}
-                          {activeIndex === 4 && (
-                            <>
-                              <div className="px-4">
-                                <>
-                                  {/*---------- Payment Option ---------*/}
+                        {/*----------- Shipping Address ---------*/}
+                        {activeIndex === 3 && (
+                          <>
+                            <div className="flex flex-col gap-5 mt-[20px]">
+                              {getCartProduct?.products?.length > 0 &&
+                                getCartProduct?.products?.map((item, inx) => {
+                                  return (
+                                    <div
+                                      key={inx}
+                                      className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-3  hover:border-lightBlue-600 "
+                                    >
+                                      {item?.product?.images?.length > 0 &&
+                                        item?.product?.images?.map(
+                                          (img, inx) => (
+                                            <>
+                                              {item?.color == img?.color && (
+                                                <div className="w-[30%] p-4 cursor-pointer ">
+                                                  <Image
+                                                    key={inx}
+                                                    src={img?.url[0]}
+                                                    alt=""
+                                                    className="rounded-[20px] "
+                                                    width={180}
+                                                    height={250}
+                                                  />
+                                                </div>
+                                              )}
+                                            </>
+                                          )
+                                        )}
 
-                                  <PaymentOption
-                                    handleOptionChange={handleOptionChange}
-                                    paymentOption={paymentOption}
-                                  />
+                                      <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
+                                        <div className="">
+                                          <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
+                                            {item?.product?.title}
+                                          </p>
 
-                                  {/*---------- if choose COD ---------*/}
-                                  {paymentOption === "COD" && (
-                                    <div className="my-8 text-right">
-                                      <button
-                                        className={`px-5 py-2  rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-full md:w-[300px] ${
-                                          isCartUpdated
-                                            ? "bg-lightBlue-200"
-                                            : ""
-                                        }`}
-                                        disabled={isLoading}
-                                        onClick={handlePlaceOrder}
-                                      >
-                                       {isLoading ? "Loading .." : "Place Order"} 
-                                      </button>
+                                          <p className=" text-[18px]">
+                                            Brand : {item?.product?.brand}
+                                          </p>
+
+                                          <div className="flex mt-2">
+                                            <h1 className=" mr-1 text-[18px]">
+                                              Status :{" "}
+                                            </h1>
+                                            <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
+                                              Available
+                                            </p>
+                                          </div>
+
+                                          <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                            Colors : {item?.color}
+                                            <p className="font-medium"> </p>
+                                          </p>
+                                        </div>
+
+                                        <div className="">
+                                          <p className="text-[18px]  flex capitalize  mt-2">
+                                            Qty:
+                                            <p className="font-semibold px-2">
+                                              {item?.count}
+                                            </p>
+                                          </p>
+                                          <p className="text-md font-semibold capitalize mt-2">
+                                            Price : ₹ {item?.price}
+                                          </p>
+
+                                          <p className="text-md font-semibold capitalize mt-2 text-sky-600">
+                                            Total Price : ₹{" "}
+                                            {item?.price * item?.count}
+                                          </p>
+                                        </div>
+
+                                        <div className="">
+                                          Delivered by Fri Dec 1 |
+                                        </div>
+                                      </div>
                                     </div>
-                                  )}
+                                  );
+                                })}
+                            </div>
 
-                                  {/*---------- if choose another ---------*/}
-                                  {paymentOption ===
-                                    "Payment using razorpay" && (
+                            <div className="flex flex-col md:flex-row justify-between bg-white p-3 rounded mt-4">
+                              <div className=""></div>
+                              <button
+                                type="button"
+                                className={`px-[40px] py-2 rounded bg-lightBlue-700 text-white font-semibold  hover:bg-lightBlue-600 flex flex-col w-full md:w-[300px] justify-center items-center text-center`}
+                                onClick={() => handleClick(4)}
+                              >
+                                Continue
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    )}
+
+                    {/*----------- Accordian 4---------*/}
+                    {activeIndex === 4 && (
+                      <div className="mb-4">
+                        <div
+                          className="flex justify-between items-center bg-white rounded p-5 cursor-pointer"
+                          onClick={() => handleClick(4)}
+                        >
+                          <div className="text-[22px] font-medium">
+                            Payment Options
+                          </div>
+                          <div>{activeIndex === 4 ? "▲" : "▼"}</div>
+                        </div>
+
+                        {/*----------- Accordian 4 content ---------*/}
+                        {activeIndex === 4 && (
+                          <>
+                            <div className="px-4">
+                              <>
+                                {/*---------- Payment Option ---------*/}
+
+                                <PaymentOption
+                                  handleOptionChange={handleOptionChange}
+                                  paymentOption={paymentOption}
+                                />
+
+                                {/*---------- if choose COD ---------*/}
+                                {paymentOption === "COD" && (
+                                  <div className="my-8 text-right">
+                                    <button
+                                      className={`px-5 py-2  rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-full md:w-[300px] ${isCartUpdated
+                                        ? "bg-lightBlue-200"
+                                        : ""
+                                        }`}
+                                      disabled={isLoading}
+                                      onClick={handlePlaceOrder}
+                                    >
+                                      {isLoading ? "Loading .." : "Place Order"}
+                                    </button>
+                                  </div>
+                                )}
+
+                                {/*---------- if choose another ---------*/}
+                                {paymentOption ===
+                                  "Payment using razorpay" && (
                                     <div className="my-8 text-right">
                                       <BuyProduct
                                         buyItem={getCartProduct || []}
                                         grandTotal={
                                           getCartProduct?.cartTotal +
-                                            shippingCharge || ""
+                                          shippingCharge || ""
                                         }
                                         orderShipDetails={
                                           orderShippingDetails || {}
@@ -734,12 +784,12 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                       />
                                     </div>
                                   )}
-                                </>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      )}
+                              </>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/*--------------------- right section ---------------------*/}

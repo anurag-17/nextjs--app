@@ -4,15 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { toast, ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
-import DeleteModal from "../AdminModule/Product/Modal/deleteModal";
 import UserNavbar from "./userNavbar";
-import Slider from "./sliderrange";
-import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
 import right from "/public/right-arrows.svg";
-import { useRouter } from "next/router";
+
+import WebsiteLoader from "../websiteLoader";
 
 const ProductGrid = () => {
 
@@ -24,6 +22,7 @@ const ProductGrid = () => {
   const [getallBrand, setGetallBrand] = useState([]);
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isLoadingBtn, setLoadingBtn] = useState(false);
   // JSON.parse(localStorage.getItem("userID"))
 
   const [isWished, setIsWished] = useState({});
@@ -152,22 +151,18 @@ const ProductGrid = () => {
   };
 
   const getAllProducts = async (page) => {
+    setLoadingBtn(true)
     const options = {
       method: "GET",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "User-Agent": "insomnia/2023.5.8",
-      },
-    };
+    }
 
     axios
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
           setAllProduct(response?.data);
-
+setLoadingBtn(false)
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
           setProductCategory([...uniqueCategories]);
@@ -180,8 +175,13 @@ const ProductGrid = () => {
           const uniqueFields = [...new Set(fields)];
           ["All", ...uniqueFields];
         }
+        else{
+          setLoadingBtn(false)
+          return
+        }
       })
       .catch(function (error) {
+        setLoadingBtn(false)
         console.error(error);
       });
   };
@@ -343,6 +343,10 @@ const ProductGrid = () => {
 
   return (
     <>
+       {
+        isLoadingBtn &&
+        <WebsiteLoader />
+      }
       <ToastContainer />
       <UserNavbar />
 
@@ -356,7 +360,7 @@ const ProductGrid = () => {
               <div className=" gap-1 ">
                 {/* <Link href={`/product-filter/${cate}`}></Link> */}
                 <div className="flex">
-                  <Image className="w-3  " src={right} />
+                  <Image className="w-3" alt="loading" src={right} height={20} width={20} />
                   <button
                     name="category"
                     id="category"
@@ -368,10 +372,10 @@ const ProductGrid = () => {
                   </button>
                 </div>
                 {productCategory?.length > 0 &&
-                  productCategory.map((cate) => (
-                    <div className="flex flex-col-reverse">
+                  productCategory.map((cate,index) => (
+                    <div className="flex flex-col-reverse" key={index}>
                       <div className="flex my-2">
-                        <Image className="w-3  " src={right} />
+                        <Image className="w-3" alt="loading" src={right} height={20} width={20} />
                         <button
                           name="category"
                           id="category"
@@ -397,7 +401,7 @@ const ProductGrid = () => {
               <div className=" justify-between text-[#645D64] space-y-4 ">
                 <div className="w-auto flex flex-col  gap-1">
                   <div className="flex">
-                    <Image className="w-3  " src={right} />
+                    <Image className="w-3" alt="loading" src={right} height={20} width={20}/>
                     <button
                       name="category"
                       id="category"
@@ -409,10 +413,10 @@ const ProductGrid = () => {
                     </button>
                   </div>
                   {productBrands?.length > 0 &&
-                    productBrands.map((bnd) => (
-                      <div className="flex flex-col-reverse">
+                    productBrands.map((bnd,index) => (
+                      <div className="flex flex-col-reverse" key={index}>
                         <div className="flex my-2">
-                          <Image className="w-3  " src={right} />
+                          <Image className="w-3" alt="loading" src={right} height={20} width={20} />
                           <button
                             name="brand"
                             id="brand"
@@ -450,7 +454,7 @@ const ProductGrid = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll ">
-            {allProduct?.map((items, ix) => (
+            {allProduct?.length>0 && allProduct?.map((items, ix) => (
               <div
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
@@ -460,7 +464,7 @@ const ProductGrid = () => {
                     <Link href={`/product-details/${items?._id}`}>
                       <Image
                         src={items?.images[0]?.url[0]}
-                        alt=""
+                        alt="product"
                         className=" mx-auto rounded-[20px] overflow-hidden  "
                         width={300}
                         height={300}
@@ -527,27 +531,27 @@ const ProductGrid = () => {
                     )}
                   </div>
 
-                  <p className="text-[18px]  flex capitalize  ">
+                  <div className="text-[18px]  flex capitalize  ">
                     Brand :<p className="font-semibold px-2"> {items.brand} </p>
-                  </p>
-                  <p className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
+                  </div>
+                  <div className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
                     Offer price :
                     <p className="text-sky-800 px-2 font-bold">
                       {items?.offerPriceCurr} {items.discountedPrice}
                     </p>
-                  </p>
+                  </div>
                   <del className="text-md font-semibold capitalize my-2 text-sky-600">
                     Regular Price : {items?.regPriceCurr} {items.price}
                   </del>
 
-                  <p className="text-[18px] flex capitalize my-2 ">
+                  <div className="text-[18px] flex capitalize my-2 ">
                     Stock :
                     <p className="px-2 font-semibold">{items.quantity}</p>
-                  </p>
-                  <p className="text-[18px] flex capitalize my-2 ">
+                  </div>
+                  <div className="text-[18px] flex capitalize my-2 ">
                     Category :
                     <p className="font-semibold px-2">{items.category}</p>
-                  </p>
+                  </div>
                   <div className="flex mt-3">
                     <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
                     <p className=" bg-sky-200 p-1 text-center font-semibold rounded-xl text-sky-600 w-20">

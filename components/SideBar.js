@@ -115,13 +115,7 @@ const menuList = [
     icon: `fa fa-phone-square`,
     path: "/customers",
   },
-  {
-    id: 6,
-    label: "transactions",
-    component: "",
-    icon: `fa fa-phone-square`,
-    path: "/drawer",
-  },
+
   {
     id: 7,
     label: "Language",

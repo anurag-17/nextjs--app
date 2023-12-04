@@ -6,8 +6,11 @@ import Select from "react-select";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../utlis/config";
 
 const AddProduct = () => {
+
+  const { auth_token } = useSelector((state) => state.adminAuth || null);
   const [getallBrand, setGetallBrand] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
   const [getCurrency, setGetCurrency] = useState([]);
@@ -68,7 +71,7 @@ const AddProduct = () => {
   const defaultCurrency = () => {
     const curr = {
       method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/currency/getAllCurrencies",
+      url: `${BASE_URL}/currency/getAllCurrencies`,
     };
     axios
       .request(curr)
@@ -89,7 +92,7 @@ const AddProduct = () => {
   const defaultCategory = () => {
     const option = {
       method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+      url: `${BASE_URL}/category/getallCategory`,
     };
     axios
       .request(option)
@@ -108,7 +111,7 @@ const AddProduct = () => {
   const defaultBrand = () => {
     const options = {
       method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+      url:`${BASE_URL}/brand/getallBrand`,
     };
     axios
       .request(options)
@@ -170,10 +173,10 @@ const AddProduct = () => {
       setCurrError(false);
       const options = {
         method: "POST",
-        url: "https://e-commerce-backend-brown.vercel.app/api/product/createProduct",
+        url: `${BASE_URL}/product/createProduct`,
         headers: {
           "Content-Type": "application/json",
-          "User-Agent": "insomnia/2023.5.8",
+          authorization: auth_token,
         },
         data: productDetails,
       };
@@ -234,7 +237,7 @@ const AddProduct = () => {
   const uploadImage = async (formData) => {
     try {
       const response = await axios.post(
-        "https://e-commerce-backend-brown.vercel.app/api/auth/upload",
+        `${BASE_URL}/auth/upload`,
         formData,
         {
           headers: {
@@ -254,7 +257,7 @@ const AddProduct = () => {
   const getAllColors = () => {
     const option = {
       method: "GET",
-      url: "https://e-commerce-backend-brown.vercel.app/api/color/getColors",
+      url: `${BASE_URL}/color/getColors`,
     };
     axios
       .request(option)
@@ -287,7 +290,10 @@ const AddProduct = () => {
   };
 
   return (
+    <>
+   
     <section className="bg-gray-100 min-h-screen">
+    
       <ToastContainer />
 
       <div className="h-[100px] ">
@@ -640,6 +646,7 @@ const AddProduct = () => {
         </div>
       </form>
     </section>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Image from "next/image";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,6 +11,7 @@ import { cartProducts } from "../../redux/slices/authSlice";
 import { fetchApi } from "../../utlis/api";
 import ProductDetailsCarousel from "../../components/UserModule/Product/ProductDetailsCarousel";
 import { getDiscountedPricePercentage } from "../../components/UserModule/Discount";
+import WebsiteLoader from "../../components/websiteLoader";
 
 const Userdetail = () => {
   const router = useRouter();
@@ -24,6 +24,7 @@ const Userdetail = () => {
   const [productColor, setProductColor] = useState("");
   let [productQuantity, setProductQuantity] = useState(1);
   const [isSessionAdded, setSessionAdded] = useState(false);
+  const [isLoadingBtn, setLoadingBtn] = useState(false);
   const [sessionCartProduct, setsessionCartProduct] = useState([]);
   const { token } = useSelector((state) => state.auth.userDetails || null);
 
@@ -55,13 +56,9 @@ const Userdetail = () => {
   }, [router?.query?.slug]);
 
   const getAllProducts = async () => {
+    setLoadingBtn(true)
     const options = {
       method: "GET",
-      headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "User-Agent": "insomnia/2023.5.8",
-      },
     };
     try {
       if (router?.query?.slug) {
@@ -71,11 +68,16 @@ const Userdetail = () => {
         )
           .then((response) => response.json())
           .then((response) => {
-            setProductDetail(response);
+              setProductDetail(response);
+              setLoadingBtn(false)
           })
-          .catch((err) => console.error(err));
+          .catch((err) => {
+            console.error(err)
+            setLoadingBtn(false)
+          });
       }
     } catch (error) {
+      setLoadingBtn(false)
       console.log(error);
     }
   };
@@ -105,13 +107,15 @@ const Userdetail = () => {
         sessionStorage.setItem("addToCart", JSON.stringify(updatedCart));
         setSessionAdded(true);
         updateCart();
+        toast.success("Product added into cart !!");
+        setLoading(false);
       }
     } else {
       const use_ID = JSON.parse(localStorage.getItem("userID"));
 
+      setLoading(false);
       if (!productColor) {
         setShowErr(true);
-        setLoading(false);
       } else {
         setShowErr(false);
         const options = {
@@ -180,6 +184,11 @@ const Userdetail = () => {
 
   return (
     <>
+      {
+        isLoadingBtn &&
+        <WebsiteLoader />
+      }
+
       <ToastContainer />
       <UserNavbar />
       <section className="bg-gray-100 min-h-screen">
@@ -211,7 +220,6 @@ const Userdetail = () => {
                   <div className="flex-[1] py-3 text-left">
                     <div className="flex text-left mb-4">
                       <div className="lg:text-[40px] flex gap-5 leading-8 text-lightBlue-600 font-bold  py-2  w-full  rounded">
-                        {" "}
                         {productDetail?.title}
                       </div>
                     </div>
@@ -329,7 +337,7 @@ const Userdetail = () => {
                       </div>
                     </div>
 
-                    {isAddIntoCart || isSessionAdded ? (
+                    {isAddIntoCart && isSessionAdded ? (
                       <button
                         className="w-full border p-3 rounded-lg hover:text-white border-sky-600 text-sky-900   hover:bg-sky-600 my-2 mt-4 items-end"
                         onClick={handleGoToCart}
@@ -339,9 +347,10 @@ const Userdetail = () => {
                     ) : (
                       <button
                         className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end"
+                       disabled={isLoading}
                         onClick={(e) => handleAddToCart(e, productDetail)}
                       >
-                        Add To Cart
+                       { isLoading ? "Loading" : "Add To Cart" } 
                       </button>
                     )}
                   </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,7 @@ export default function EditProduct() {
   const [getallCategory, setGetallCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
 
+  const { auth_token } = useSelector((state) => state.adminAuth || null);
   const [productDetails, setProductDetails] = useState({
     title: "",
     description: "",
@@ -28,7 +30,6 @@ export default function EditProduct() {
     color: "",
   });
 
-  console.log(productDetails?.offerPriceCurr);
 
   const refreshData = () => {
     setRefresh(!isRefresh);
@@ -127,7 +128,7 @@ export default function EditProduct() {
       url: `https://e-commerce-backend-brown.vercel.app/api/product/updateProduct/${slug}`,
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
+        authorization: auth_token,
       },
       data: productDetails,
       data: {

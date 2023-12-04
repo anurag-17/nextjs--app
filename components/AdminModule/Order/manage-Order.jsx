@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { ToastContainer } from "react-toastify";
 import {
   ArrowRightIcon,
   TrashIcon,
@@ -12,19 +13,20 @@ import OrderByDetails from "./orderByDetails";
 export const headItems = ["s. no.", "Order ID", "order by", "No of product", "payment method", "order status",];
 export const statusItems = [
   "Not Processed",
-  "Cash on Delivery",
   "Processing",
   "Dispatched",
   "Cancelled",
   "Delivered",
 ]
 
-const ManageOrders = ({ allOrders }) => {
+const ManageOrders = ({ allOrders, refreshDatas }) => {
+  const allData = allOrders.reverse() ;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCustormDrawer, setCustormDrawer] = useState(false);
   const [orders_products, setOrders_products] = useState([]);
   const [order_by_details, setOrder_by_details] = useState({});
+  const [statusId, setStatusId] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
 
   const openDrawer = (order) => {
@@ -39,10 +41,18 @@ const ManageOrders = ({ allOrders }) => {
     setIsDrawerOpen(false)
   };
 
+  const handleStatusModal = (data) => {
+    setOpenModal(true);
+    setStatusId(data?._id)
+  };
+
   const closeModal = () => {
     setOpenModal(false);
   };
 
+  const refreshData = () => {
+    refreshDatas()
+  };
 
 
   return (
@@ -53,7 +63,7 @@ const ManageOrders = ({ allOrders }) => {
       </div>
 
 
-{/*------------ order details ------------ */}
+      {/*------------ order details ------------ */}
       {isDrawerOpen && (
         <div
           id="drawer-form"
@@ -63,7 +73,7 @@ const ManageOrders = ({ allOrders }) => {
         >
           <button
             type="button"
-            onClick={()=> setIsDrawerOpen(false)}
+            onClick={() => setIsDrawerOpen(false)}
             className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
@@ -84,7 +94,7 @@ const ManageOrders = ({ allOrders }) => {
       )}
 
 
-{/*------------ order By details ------------ */}
+      {/*------------ order By details ------------ */}
       {isCustormDrawer && (
         <div
           id="drawer-form"
@@ -94,7 +104,7 @@ const ManageOrders = ({ allOrders }) => {
         >
           <button
             type="button"
-            onClick={()=> setCustormDrawer(false)}
+            onClick={() => setCustormDrawer(false)}
             className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
@@ -126,17 +136,17 @@ const ManageOrders = ({ allOrders }) => {
             </tr>
           </thead>
           <tbody>
-            {allOrders?.length > 0 &&
-              allOrders?.map((tableData, index) => (
+            {allData?.length > 0 &&
+              allData?.map((tableData, index) => (
                 <tr key={index} className="" >
                   <td className="p-4 border-b">
                     <p className="text-gray-800 font-medium"> {index + 1}</p>
                   </td>
                   <td className="p-4 border-b">
-                    <p className="text-gray-800 font-medium hover:text-lightBlue-700 cursor-pointer"
-                      onClick={() => openDrawer(tableData?.products)}> Order : {tableData?._id}</p>
+                    <p className="text-gray-800 font-semibold hover:text-lightBlue-700 cursor-pointer"
+                      onClick={() => openDrawer(tableData?.products)}>  {tableData?._id}</p>
                   </td>
-                  <td className="p-4 border-b"> 
+                  <td className="p-4 border-b">
                     <p className="text-gray-800 font-medium hover:text-lightBlue-700 cursor-pointer"
                       onClick={() => openCustormDrawer(tableData?.orderby)}>
                       {tableData?.orderby?.firstname} {tableData?.orderby?.lastname}
@@ -146,24 +156,28 @@ const ManageOrders = ({ allOrders }) => {
                     <p className="text-gray-800 font-medium"> {tableData?.products?.length} products</p>
                   </td>
                   <td className="p-4 border-b">
-                    <p className="text-gray-800 font-medium"> {tableData?.orderStatus}</p>
+                    <p className="text-gray-800 font-medium"> Cash on Delivery </p>
                   </td>
                   <td className="p-4 border-b flex gap-x-3 items-end">
-                    <p className="">
+                    <p className="font-medium">
                       <span
                         className={
-                          tableData?.status == "Processing"
+                          tableData?.orderStatus == "Processing"
                             ? "bg-green-200 p-2 rounded-lg"
-                            : tableData.status == "Completed"
+                            : tableData?.orderStatus == "Completed"
                               ? "bg-blue-200 p-2 rounded-lg"
+                            : tableData?.orderStatus == "Cancelled"
+                              ?  "bg-red-200  p-2 rounded-lg"
+                            : tableData?.orderStatus == "Delivered"
+                              ?  "bg-green-600 p-2 rounded-lg"
                               : "bg-gray-200 p-2 rounded-lg"
                         }
                       >
-                        Not Processed
+                       {tableData?.orderStatus}
                       </span>
                     </p>
-                    <p className="text-[13px] underline cursor-pointer font-medium"
-                      onClick={() => setOpenModal(true)}> Change status</p>
+                    <p className="text-[13px] underline cursor-pointer font-medium text-lightBlue-700"
+                      onClick={() => handleStatusModal(tableData)}> Change status</p>
                   </td>
                 </tr>
               ))}
@@ -171,6 +185,7 @@ const ManageOrders = ({ allOrders }) => {
         </table>
       </div>
 
+<ToastContainer />
       <Transition appear show={isOpenModal} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -206,6 +221,8 @@ const ManageOrders = ({ allOrders }) => {
                   <DeliveryStatus
                     statusItems={statusItems}
                     closeModal={closeModal}
+                    refreshData={refreshData}
+                    statusId={statusId}
                   />
                 </Dialog.Panel>
               </Transition.Child>

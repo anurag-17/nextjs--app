@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import { useState } from "react";
 
 const ProductDetailsCarousel = ({ images, productColor }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]?.url[0] || "");
   const [selectedColor, setselectedColor] = useState("");
-  console.log(productColor);
+
   const handleClick = (url) => {
     setSelectedImage(url);
   };
@@ -52,12 +50,11 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                 images?.map((image, inx) => (
                   <div className="flex flex-col gap-5" key={inx}>
                     {image?.url?.map((urls, idx) => (
-                      <>
+                      <div  key={idx}>
                         {image?.color === productColor && (
                           <div
                             className={`cursor-pointer border  border-gray-300 rounded p-2 w-[100px] 
                     ${selectedImage == urls ? " border-black" : ""}`}
-                            key={idx}
                             onClick={() => handleClick(urls)}
                           >
                             <Image
@@ -70,7 +67,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                             />
                           </div>
                         )}
-                      </>
+                      </div>
                     ))}
                   </div>
                 ))}
@@ -81,16 +78,16 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
           <div className="">
             {selectedImage === "" ? (
               <Image
-                src={images[0]?.url[0]}
-                alt="selectedImage"
+                src={images[0]?.url[0] ? images[0]?.url[0] : ""}
+                alt="product image"
                 className="rounded-xl h-auto cursor-pointer "
                 width={400}
                 height={400}
               />
             ) : (
               <Image
-                src={selectedImage}
-                alt="selectedImage"
+                src={selectedImage ? selectedImage : "" }
+                alt="selected image"
                 className="rounded-xl h-auto cursor-pointer"
                 width={400}
                 height={400}

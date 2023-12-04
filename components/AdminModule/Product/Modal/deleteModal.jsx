@@ -4,10 +4,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const DeleteModal = ({ productID, closeModal, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
-
+  const { auth_token } = useSelector((state) => state.adminAuth || null);
   const handleClose = () => {
     closeModal();
     refreshData();
@@ -21,11 +22,8 @@ const DeleteModal = ({ productID, closeModal, refreshData }) => {
       method: "DELETE",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/deleteProduct/${productID}`,
       headers: {
-        cookie:
-          "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWQ5MzJjZDk3NGZlZjA3YWQzMmNkZSIsImlhdCI6MTY5NjQ4OTg5MiwiZXhwIjoxNjk2NzQ5MDkyfQ.r9M7MHA5dLHqKU0effObV0mwYE60SCEUt2sfiWUZzEw",
-        "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
-      
+         "Content-Type": "application/json",
+         authorization: auth_token,
       },
     };
 

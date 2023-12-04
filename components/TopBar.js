@@ -13,31 +13,14 @@ import { LockClosedIcon, UserCircleIcon, ShoppingBagIcon } from "@heroicons/reac
 import ProfileSideBar from "../pages/profilesidebar";
 
 
-
-
-
-
-
-
-
 export default function TopBar({ showNav, setShowNav }) {
   const [accessToken, setAccessToken] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
 
   const handleSignout = () => {
-    console.log('Logging out...');
-    // Remove access token from local storage
-    // localStorage.removeItem('userToken');
-    // localStorage.removeItem('userDetails');
-
-    // sessionStorage.removeItem('accessToken');
-    // sessionStorage.removeItem('userDetails');
-  
-    // Clear state variables (optional, depending on your use case)
     setAccessToken(null);
     setUserDetails(null);
   
-    // Redirect to the login page
     router.push('/login');
   };
 
