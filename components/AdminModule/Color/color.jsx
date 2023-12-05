@@ -174,7 +174,7 @@ const Color = () => {
           </div>
         </div>
       )}
-      <table class="table-auto bg-white rounded-md mt-5  relative w-6/12">
+      <table className="table-auto bg-white rounded-md mt-5  relative w-6/12">
         <thead className="">
           <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between gap-28 ">
             <input

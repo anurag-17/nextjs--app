@@ -167,7 +167,7 @@ export default function TopBarCustomer({ showNav, setShowNav }) {
                     href="# "
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
-                    <UserCircleIcon class="h-5 w-5 mr-1 text-black   " />
+                    <UserCircleIcon className="h-5 w-5 mr-1 text-black   " />
                     My Profile
                   </Link>
                 </Menu.Item>
@@ -187,7 +187,7 @@ export default function TopBarCustomer({ showNav, setShowNav }) {
                     className="flex hover:bg-lightBlue-600 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                     onClick={handleSignout}
                   >
-                    <LockClosedIcon class="h-5 w-5 mr-1 " />
+                    <LockClosedIcon className="h-5 w-5 mr-1 " />
                     Log Out
                   </Link>
                 </Menu.Item>

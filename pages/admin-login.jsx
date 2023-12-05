@@ -116,7 +116,7 @@ const AdminLogin = ({ API_URL }) => {
                     {showPassword ? (
                       <EyeIcon className="h-6 w-6 text-gray-500" />
                     ) : (
-                      <EyeSlashIcon class="h-6 w-6 text-gray-500" />
+                      <EyeSlashIcon className="h-6 w-6 text-gray-500" />
                     )}
                   </button>
                 </div>

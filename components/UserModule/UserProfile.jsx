@@ -77,17 +77,17 @@ const UserProfile = ({ getAllCustomer }) => {
               <div className="flex mt-5 ml-5 justify-evenly w-6/12">
                 <Link href="https://www.facebook.com" target="_blank">
                   {" "}
-                  <img class="h-9 w-13  " src="/fb.svg" />
+                  <img className="h-9 w-13  " src="/fb.svg" />
                 </Link>
                 <Link href="https://www.linkedin.com" target="_blank">
                   {" "}
-                  <img class="h-9 w-13" src="/in.svg" />
+                  <img className="h-9 w-13" src="/in.svg" />
                 </Link>
                 <Link href="https://twitter.com">
                   {" "}
-                  <img class="h-9 w-13   " src="/twitterr.svg" />
+                  <img className="h-9 w-13   " src="/twitterr.svg" />
                 </Link>
-                <img class="h-9 w-13   " src="/add.svg" />
+                <img className="h-9 w-13   " src="/add.svg" />
               </div>
             </div>
           </div>

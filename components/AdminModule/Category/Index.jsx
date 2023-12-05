@@ -286,7 +286,7 @@ const CategoryList = () => {
           </div>
         )}
 
-        <table class="table-auto bg-white rounded-md mt-5  relative  ">
+        <table className="table-auto bg-white rounded-md mt-5  relative  ">
           <thead className="">
             <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
               <input

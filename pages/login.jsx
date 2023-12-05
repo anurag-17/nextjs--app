@@ -39,7 +39,6 @@ const UserLogin = ({ API_URL }) => {
       url: `${API_URL}/login`,
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
       },
       data: { email: email, password: password }, // Use _id here
     };
@@ -165,7 +164,7 @@ const UserLogin = ({ API_URL }) => {
                     {showPassword ? (
                       <EyeIcon className="h-6 w-6 text-gray-500" />
                     ) : (
-                      <EyeSlashIcon class="h-6 w-6 text-gray-500" />
+                      <EyeSlashIcon className="h-6 w-6 text-gray-500" />
                     )}
                   </button>
                 </div>

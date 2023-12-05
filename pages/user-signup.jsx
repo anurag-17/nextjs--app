@@ -136,7 +136,7 @@ const Signup = () => {
                     className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
                     onClick={handleToggle}
                   >
-                   {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon class="h-6 w-6 text-gray-500" />}
+                   {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
                   </button>
                   </div>
                   <div className="mt-5">

@@ -400,7 +400,7 @@ const ProductList = () => {
                           {items?.title}
                         </h6>
                         {/* <button onClick={handleAddToCart}>
-                        <HeartIcon class="h-8 w-8 text-gray-500" />
+                        <HeartIcon className="h-8 w-8 text-gray-500" />
                       </button> */}
                       </div>
 
@@ -487,7 +487,7 @@ const ProductList = () => {
         ) : (
           <>
             {/*------- product list table start -------*/}
-            <table class="table-auto bg-white w-full rounded-md mt-4">
+            <table className="table-auto bg-white w-full rounded-md mt-4">
               {/* -----------   head  ----------------- */}
               <thead className="">
                 <tr className="bg-gray-200 text-gray-400 text-sm text-start ">

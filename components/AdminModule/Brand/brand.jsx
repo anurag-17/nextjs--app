@@ -37,9 +37,7 @@ const brandlist = () => {
       const options = {
         method: "POST",
         url: "https://e-commerce-backend-brown.vercel.app/api/brand/getBrand",
-        headers: {
-          "User-Agent": "PostmanRuntime/7.35.0",
-        },
+     
         data: {
           id: _id,
         },
@@ -303,7 +301,7 @@ const brandlist = () => {
           </div>
         </div>
       )}
-      <table class="table-auto bg-white rounded-md mt-5  relative  ">
+      <table className="table-auto bg-white rounded-md mt-5  relative  ">
         <thead className="">
           <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
             <input

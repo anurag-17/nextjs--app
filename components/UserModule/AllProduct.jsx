@@ -93,7 +93,7 @@ const ProductGrid = () => {
       url: "https://e-commerce-backend-brown.vercel.app/api/product/addToWishlist",
       headers: {
           "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
+       
         authorization: token,
       },
       data: {
@@ -190,7 +190,6 @@ setLoadingBtn(false)
   const handleSearch = (e) => {
     const title = e.target.value;
     if (title.trim() === "") {
-      refreshData();
     } else {
       const options = {
         method: "GET",
@@ -200,7 +199,9 @@ setLoadingBtn(false)
         .request(options)
         .then(function (response) {
           if (response.status === 200) {
-            setAllProduct(response.data);
+            setAllProduct(response?.data);
+      refreshData();
+
           }
         })
         .catch(function (error) {
@@ -278,7 +279,7 @@ setLoadingBtn(false)
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
+       
         authorization: token,
       },
       data: {
@@ -434,20 +435,19 @@ setLoadingBtn(false)
         </div>
 
         <div className=" w-full md:w-[85%] mx-auto">
-          <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-            <h2 className="text-2xl font-semibold pb-4">All Product </h2>
+          <div className="flex justify-between items-center py-4 px-10 rounded-lg bg-lightBlue-50 border border-gray-300 h-[100px]">
+            <h2 className="text-[30px] font-semibold">All Product </h2>
 
-            <div className="mb-3 w-[40%]">
+            <div className="w-[40%]">
               <input
                 type="search"
-                className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+                className=" border border-gray-300  font-medium text-[19px] py-3 rounded-md  focus-visible:border-none w-full text-black  placeholder:text-[#3a3636] px-4 "
                 placeholder="Search"
-                aria-label="Search"
+                aria-label="Search" 
                 aria-describedby="button-addon1"
                 onChange={handleSearch}
               />
             </div>
-            <div className=" flex  gap-x-3"></div>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll ">
