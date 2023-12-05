@@ -65,10 +65,10 @@ const ProductGrid = () => {
                 <p className="text-[18px]  capitalize my-2 ">
                   Available : {items.quantity}
                 </p>
-                <p className="text-sm font-semibold capitalize my-2 text-sky-600">
+                <p className="text-sm font-semibold capitalize my-2 text-LightBlue-700">
                  Offer Price : ₹{items.price}
                 </p>
-                <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                <del className="text-sm font-semibold capitalize my-2 text-LightBlue-700">
                   Regular Price : ₹{items.discountedPrice}
                 </del>
             

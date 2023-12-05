@@ -76,7 +76,7 @@ const UserUpdatePassword = () => {
                     />
                   </div>
 
-                  <button className="mx-10 border py-2 px-5 bg-sky-600 text-white rounded-lg text-[22px]">
+                  <button className="mx-10 border py-2 px-5 bg-lightBlue-600 text-white rounded-lg text-[22px]">
                     Change Password
                   </button>
                 </div>

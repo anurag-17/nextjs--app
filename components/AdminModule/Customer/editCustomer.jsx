@@ -269,7 +269,7 @@ console.log("wqwq",token);
         <button
           type="submit"
           onClick={handleUpdateCustomer}
-          className="border p-2 m-5 mt-0 rounded-lg bg-sky-600 text-white text-[20px]  "
+          className="border p-2 m-5 mt-0 rounded-lg bg-lightBlue-600 text-white text-[20px]  "
         >
           Update Customer
         </button>

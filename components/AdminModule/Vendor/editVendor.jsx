@@ -209,7 +209,7 @@ const UpdateVendor = ({ editData, closeDrawer, vendorEdit, refreshData }) => {
           <button
             type="submit"
             onClick={handleUpdateVendor}
-            className="border p-3 m-2 rounded-lg bg-sky-600 text-white text-[20px]"
+            className="border p-3 m-2 rounded-lg bg-lightBlue-600 text-white text-[20px]"
           >
             Update Vendor
           </button>

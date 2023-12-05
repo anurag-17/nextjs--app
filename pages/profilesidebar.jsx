@@ -100,7 +100,7 @@ const profilesideBar = ({ showNav }) => {
             >
               <img className="w-6 absolute mt-5 ml-2" src={item.imagePath} />
 
-              <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500  text-gray-500">
+              <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500  text-gray-500">
                 {" "}
                 {item.label}
               </li>

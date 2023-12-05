@@ -265,7 +265,7 @@ const Customers = () => {
               <td className="py-5 text-[18px] mx-auto flex  px-10">
                 {/* <Link href={`/editCustomer`}></Link> */}
                 <button onClick={()=> openDrawer(items?._id)}>
-                  <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                  <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
                 </button>
                 <button
                   type="button"

@@ -363,7 +363,6 @@ setLoadingBtn(false)
                   <Image className="w-3" alt="loading" src={right} height={20} width={20} />
                   <button
                     name="category"
-                    id="category"
                     placeholder="Category"
                     className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
                     onClick={getAllProducts}
@@ -378,7 +377,6 @@ setLoadingBtn(false)
                         <Image className="w-3" alt="loading" src={right} height={20} width={20} />
                         <button
                           name="category"
-                          id="category"
                           placeholder="Category"
                           className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
                           onClick={handleSearchCategories}
@@ -404,7 +402,6 @@ setLoadingBtn(false)
                     <Image className="w-3" alt="loading" src={right} height={20} width={20}/>
                     <button
                       name="category"
-                      id="category"
                       placeholder="Category"
                       className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
                       onClick={getAllProducts}
@@ -474,9 +471,9 @@ setLoadingBtn(false)
                 )}
                 <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
                   <div className="flex justify-between items-center my-4">
-                    <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                    <p className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                       {items.title}
-                    </h6>
+                    </p>
                     {!token || token === undefined ? (
                       <div className="cursor-pointer" onClick={openLoginModal}>
                         <svg
@@ -534,13 +531,13 @@ setLoadingBtn(false)
                   <div className="text-[18px]  flex capitalize  ">
                     Brand :<p className="font-semibold px-2"> {items.brand} </p>
                   </div>
-                  <div className="text-[18px] flex font-semibold capitalize my-2 text-sky-600">
+                  <div className="text-[18px] flex font-semibold capitalize my-2 text-lightBlue-700">
                     Offer price :
-                    <p className="text-sky-800 px-2 font-bold">
+                    <p className="text-lightBlue-800 px-2 font-bold">
                       {items?.offerPriceCurr} {items.discountedPrice}
                     </p>
                   </div>
-                  <del className="text-md font-semibold capitalize my-2 text-sky-600">
+                  <del className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                     Regular Price : {items?.regPriceCurr} {items.price}
                   </del>
 
@@ -554,12 +551,12 @@ setLoadingBtn(false)
                   </div>
                   <div className="flex mt-3">
                     <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
-                    <p className=" bg-sky-200 p-1 text-center font-semibold rounded-xl text-sky-600 w-20">
+                    <p className=" bg-lightBlue-100 p-1 text-center font-semibold rounded-xl text-lightBlue-700 w-20">
                       selling
                     </p>
                   </div>
                   <Link href={`/product-details/${items?._id}`}>
-                    <button className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end">
+                    <button className="w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
                       View Details
                     </button>
                   </Link>

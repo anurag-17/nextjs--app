@@ -201,7 +201,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
       ...getCartProduct,
       products: updatedProducts,
     });
-   const data = handleUpdateCart(updatedProducts)
+    const data = handleUpdateCart(updatedProducts)
   };
 
   const handleMinusCounter = (index) => {
@@ -212,22 +212,26 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
         ...getCartProduct,
         products: updatedProducts,
       });
-    const data  =  handleUpdateCart(updatedProducts)
+      const data = handleUpdateCart(updatedProducts)
     }
   };
 
-  const handleUpdateCart = async (products) => {
-  
+  const handleQtyCounter = async (action, products) => {
+
     setLoading(true);
 
     try {
-      const response = await axios.put(
-        `${BASE_URL}/auth/order/update-cart`,
-        products,
+      const response = await axios.post(
+        `${BASE_URL}/auth/increaseProductCount`,
+        {
+          "productId": products?._id,
+          "color": products?.color,
+          "action": action
+        },
         {
           headers: {
             "Content-Type": "application/json",
-            authorization: auth_token,
+            authorization: token,
           },
         }
       );
@@ -235,8 +239,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
       console.log(response);
 
       if (response.status === 200) {
-      return response
-      } 
+        return response
+      }
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -334,7 +338,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                             Price : ₹ {item?.product?.price}
                           </del>
 
-                          <p className="text-md font-semibold capitalize mt-2 text-sky-600">
+                          <p className="text-md font-semibold capitalize mt-2 text-LightBlue-700">
                             Offer Price : ₹{" "}
                             {Number(
                               item?.product?.discountedPrice * item?.count
@@ -457,14 +461,13 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                       {item?.product?.images?.length > 0 &&
                                         item?.product?.images?.map(
                                           (img, inx) => (
-                                            <>
+                                            <Fragment key={inx}>
                                               {item?.color == img?.color && (
                                                 <div className=" p-4 cursor-pointer ">
                                                   <Link
                                                     href={`/product-details/${item?.product?._id}`}
                                                   >
                                                     <Image
-                                                      key={inx}
                                                       src={img?.url[0]}
                                                       alt=""
                                                       className="rounded-[20px] "
@@ -474,7 +477,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                                   </Link>
                                                 </div>
                                               )}
-                                            </>
+                                            </Fragment>
                                           )
                                         )}
 
@@ -501,10 +504,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                             </p>
                                           </div>
 
-                                          <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                          <div className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
                                             Colors : {item?.color}
                                             <p className="font-medium"> </p>
-                                          </p>
+                                          </div>
                                         </div>
 
                                         <div className="flex text-left mt-4 gap-2">
@@ -514,13 +517,13 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                           <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
                                             <p className="font-semibold px-2 ml-3">{item?.count} </p>
                                             <button
-                                              onClick={() => handleQtyCounter(index)}
+                                              onClick={() => handleQtyCounter("decrease", item)}
                                               className="border border-black px-3 ml-3"
                                             >
                                               -
                                             </button>
                                             <button
-                                              onClick={() => handleQtyCounter(index)}
+                                              onClick={() => handleQtyCounter("increase", item)}
                                               className="border border-black px-3 ml-3"
                                             >
                                               +
@@ -533,7 +536,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                             Price : ₹ {item?.price}
                                           </p>
 
-                                          <p className="text-md font-semibold capitalize mt-2 text-sky-600">
+                                          <p className="text-md font-semibold capitalize mt-2 text-lightBlue-600">
                                             Total Price : ₹
                                             {item?.price * item?.count}
                                           </p>
@@ -644,11 +647,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                       {item?.product?.images?.length > 0 &&
                                         item?.product?.images?.map(
                                           (img, inx) => (
-                                            <>
+                                            <Fragment  key={inx}>
                                               {item?.color == img?.color && (
                                                 <div className="w-[30%] p-4 cursor-pointer ">
                                                   <Image
-                                                    key={inx}
                                                     src={img?.url[0]}
                                                     alt=""
                                                     className="rounded-[20px] "
@@ -657,7 +659,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                                   />
                                                 </div>
                                               )}
-                                            </>
+                                            </Fragment>
                                           )
                                         )}
 
@@ -680,24 +682,24 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                             </p>
                                           </div>
 
-                                          <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                          <div className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
                                             Colors : {item?.color}
                                             <p className="font-medium"> </p>
-                                          </p>
+                                          </div>
                                         </div>
 
                                         <div className="">
-                                          <p className="text-[18px]  flex capitalize  mt-2">
+                                          <div className="text-[18px]  flex capitalize  mt-2">
                                             Qty:
                                             <p className="font-semibold px-2">
                                               {item?.count}
                                             </p>
-                                          </p>
+                                          </div>
                                           <p className="text-md font-semibold capitalize mt-2">
                                             Price : ₹ {item?.price}
                                           </p>
 
-                                          <p className="text-md font-semibold capitalize mt-2 text-sky-600">
+                                          <p className="text-md font-semibold capitalize mt-2 text-lightBlue-600">
                                             Total Price : ₹{" "}
                                             {item?.price * item?.count}
                                           </p>
@@ -796,9 +798,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
 
                   <div className="md:col-span-1  ">
                     <div className="pt-2 rounded-lg bg-white px-5 pb-[40px] ">
-                      <h6 className="py-4 text-[20px] font-semibold border-b mb-8 ">
+                      <p className="py-4 text-[20px] font-semibold border-b mb-8 ">
                         PRICE DETAILS
-                      </h6>
+                      </p>
                       <div className="text-[16px] font-normal flex flex-col gap-5 ">
                         <div className="flex justify-between">
                           <p className="">Subtotal : </p>

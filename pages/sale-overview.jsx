@@ -18,7 +18,7 @@ const SaleOverview = () => {
         <div className="flex justify-between mt-5">
           <div>
             <div className="flex">
-              <ShoppingCartIcon className="h-8 w-7  mr-1 text-sky-600" />
+              <ShoppingCartIcon className="h-8 w-7  mr-1 text-lightBlue-600" />
               <h1 className="text-gray-400 text-[22px]">Order</h1>
             </div>
             <h1 className="text-gray-600 text-[22px]">70.7%</h1>
@@ -42,7 +42,7 @@ const SaleOverview = () => {
         </div>
         <div className="w-full bg-purple-600 my-4 rounded-lg h-4     dark:bg-gray-700">
           <div
-            className="bg-sky-600 h-4 rounded-s-lg"
+            className="bg-lightBlue-600 h-4 rounded-s-lg"
             style={{ width: "70.7%" }}
           />
         </div>

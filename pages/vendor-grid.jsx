@@ -96,7 +96,7 @@ const vendorgrid = () => {
             </div>
             <div>
               <Link href={`/vendor-profile/${item?._id}`}>
-                <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-sky-600 text-white text-[20px] ">
+                <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-lightBlue-600 text-white text-[20px] ">
                   View
                 </button>
               </Link>

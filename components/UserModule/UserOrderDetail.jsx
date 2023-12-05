@@ -24,10 +24,10 @@ const UserOrderDetail = () => {
                 October 7, 2020 at 9:08 pm / 3 items / Total $10254.00
               </div>
               <div>
-                <button className="p-4 px-6 font-medium rounded text-xl bg-sky-400 text-white">
+                <button className="p-4 px-6 font-medium rounded text-xl bg-lightBlue-400 text-white">
                   Paid
                 </button>
-                <button className="p-4 px-6 font-medium rounded text-xl bg-sky-400 mx-2 text-white">
+                <button className="p-4 px-6 font-medium rounded text-xl bg-lightBlue-400 mx-2 text-white">
                   Partially Fullfilled
                 </button>
               </div>

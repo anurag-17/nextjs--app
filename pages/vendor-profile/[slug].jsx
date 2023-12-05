@@ -123,7 +123,7 @@ const VendorProfile = ({ showNav }) => {
             >
               {/* <img className="w-6 absolute mt-5 ml-2" src={item.imagePath} /> */}
 
-              <li className="list-none cursor-pointer border px-10 py-3 m-4 ml-0 rounded-md hover:border-sky-600 hover:bg-sky-100 hover:text-sky-500  text-gray-500">
+              <li className="list-none cursor-pointer border px-10 py-3 m-4 ml-0 rounded-md hover:border-lightBlue-600 hover:bg-lightBlue-100 hover:text-lightBlue-500  text-gray-500">
                 {" "}
                 {item.label}
               </li>

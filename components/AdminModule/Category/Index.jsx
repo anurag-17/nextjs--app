@@ -212,7 +212,7 @@ const CategoryList = () => {
               <Link href="/create-cate"></Link>
               <button
                 onClick={openDrawer}
-                className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4"
+                className=" rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer mr-4"
               >
                 + Add Category
               </button>
@@ -345,7 +345,7 @@ const CategoryList = () => {
                         <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
 
                         <button onClick={() => openDrawerO(items?._id)}>
-                          <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                          <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
                         </button>
                         <button
                           type="button"

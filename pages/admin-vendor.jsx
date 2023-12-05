@@ -179,7 +179,7 @@ const vendor = () => {
           <div className="flex justify-around">
             <button
               onClick={openDrawer}
-              className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4"
+              className=" rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer mr-4"
             >
               + Add Vendor
             </button>
@@ -306,7 +306,7 @@ const vendor = () => {
                   </div>
                   <div>
                     <Link href={`/vendor-profile/${item?._id}`}>
-                      <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-sky-600 text-white text-[20px] ">
+                      <button className="border py-2 px-5 w-full mt-5 rounded-lg bg-lightBlue-600 text-white text-[20px] ">
                         View
                       </button>
                     </Link>
@@ -346,7 +346,7 @@ const vendor = () => {
                     </td>
                     <td className="py-5 text-[18px] mx-auto flex px-10">
                       <button onClick={() => openDrawerO(items?._id)}>
-                        <PencilSquareIcon className="cursor-pointer h-6 w-6 text-sky-600 m-2 " />
+                        <PencilSquareIcon className="cursor-pointer h-6 w-6 text-lightBlue-600 m-2 " />
                       </button>
                       <button
                         type="button"

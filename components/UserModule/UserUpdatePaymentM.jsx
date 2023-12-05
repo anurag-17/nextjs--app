@@ -7,7 +7,7 @@ const UserUpdatePaymentM = () => {
         <div className="bg-white p-5 border">
           <div className="flex flex-row justify-end">
             <div>
-              <button className="bg-sky-600 m-4 text-white px-6 py-4 rounded font-medium text-lg">
+              <button className="bg-lightBlue-600 m-4 text-white px-6 py-4 rounded font-medium text-lg">
                 Add New Bank
               </button>
               <button className="bg-green-600 text-white px-6 py-4 rounded font-medium text-lg">

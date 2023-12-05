@@ -107,7 +107,7 @@ const Currency = () => {
             <Link href="/currency"></Link>
             <button
               onClick={openDrawer}
-              className=" rounded-md p-2 bg-sky-600 text-white cursor-pointer mr-4"
+              className=" rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer mr-4"
             >
               + Add Currency
             </button>
@@ -210,7 +210,7 @@ const Currency = () => {
 
                         {/* <Link href={`/edit-brand/${items?._id}`}> */}
                         <button onClick={() => openDrawerO(item?._id)}>
-                          <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                          <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
                         </button>
                         {/* </Link> */}
 
@@ -240,7 +240,7 @@ const Currency = () => {
                                 </p>
                                 <div className="flex justify-around">
                                   <button
-                                    className="border border-1 rounded-md border-sky-400 text-sky-700 hover:bg-sky-200 text-sm  p-1
+                                    className="border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  p-1
                               hover:border-none"
                                   >
                                     No, Keep It

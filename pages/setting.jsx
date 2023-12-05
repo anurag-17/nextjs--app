@@ -10,9 +10,9 @@ const setting = () => {
        <div className="flex  bg-white  w-full">
         <div className="p-6 mt-16 w-3/12">
         
-         <h1 className="text-2xl hover:text-sky-600 my-5 border border-white p-2 hover:border hover:p-2 hover:bg-gray-200 hover:w-full text-gray-500 rounded-lg cursor-pointer">Profile</h1>
+         <h1 className="text-2xl hover:text-lightBlue-600 my-5 border border-white p-2 hover:border hover:p-2 hover:bg-gray-200 hover:w-full text-gray-500 rounded-lg cursor-pointer">Profile</h1>
         
-          <h1 className="text-2xl my-5 border hover:text-sky-600 border-white p-2 hover:border hover:p-2 hover:bg-gray-200 hover:w-full text-gray-500 rounded-lg cursor-pointer">Profile Setting</h1>
+          <h1 className="text-2xl my-5 border hover:text-lightBlue-600 border-white p-2 hover:border hover:p-2 hover:bg-gray-200 hover:w-full text-gray-500 rounded-lg cursor-pointer">Profile Setting</h1>
         </div>
         <div className="  rounded-lg w-8/12 p-6 mt-10">
           <div className="flex">

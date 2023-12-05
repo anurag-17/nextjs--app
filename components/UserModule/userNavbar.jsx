@@ -144,7 +144,7 @@ const UserNavbar = () => {
   return (
     <>
       <nav className="p-6 bg-white border mb-5 flex justify-between">
-        <ul className="flex justify-start w-full">
+        <div className="flex justify-start w-full">
           <div className="flex justify-between w-full items-center">
             <div className="text-center">
               <button
@@ -162,7 +162,7 @@ const UserNavbar = () => {
             <div className="flex items-cente gap-[20px]">
               {(!token || token == undefined) && (
                 <div
-                  className="bg-lightBlue-500 text-white rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer"
+                  className="bg-lightBlue-200 text-black rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer"
                   onClick={handleLogin}
                 >
                   Login
@@ -206,7 +206,7 @@ const UserNavbar = () => {
                       {item.id === 7 ? (
                         !token || token === undefined ? null : (
                           <li
-                            className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500 text-gray-500"
+                            className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500 text-gray-500"
                             onClick={() => handleSignOut(item.path)}
                           >
                             {item.label}
@@ -217,14 +217,14 @@ const UserNavbar = () => {
                           {item.show &&
                             (!token || token === undefined ? null : (
                               <Link href={item.path ? item.path : "#"}>
-                                <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500 text-gray-500">
+                                <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500 text-gray-500">
                                   {item.label}
                                 </li>
                               </Link>
                             ))}
                           {!item.show && (
                             <Link href={item.path ? item.path : "#"}>
-                              <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-sky-600 hover:text-sky-500 text-gray-500">
+                              <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500 text-gray-500">
                                 {item.label}
                               </li>
                             </Link>
@@ -237,7 +237,7 @@ const UserNavbar = () => {
               </div>
             </div>
           )}
-        </ul>
+        </div>
       </nav>
 
       <Transition appear show={isOpenLogin} as={Fragment}>

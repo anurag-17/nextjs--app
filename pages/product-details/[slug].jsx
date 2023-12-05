@@ -339,14 +339,14 @@ const Userdetail = () => {
 
                     {isAddIntoCart && isSessionAdded ? (
                       <button
-                        className="w-full border p-3 rounded-lg hover:text-white border-sky-600 text-sky-900   hover:bg-sky-600 my-2 mt-4 items-end"
+                        className="w-full border p-3 rounded-lg hover:text-white border-lightBlue-600 text-lightBlue-900   hover:bg-lightBlue-600 my-2 mt-4 items-end font-semibold"
                         onClick={handleGoToCart}
                       >
                         Go To Cart
                       </button>
                     ) : (
                       <button
-                        className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end"
+                        className="w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-900 my-2 mt-4 items-end font-semibold"
                        disabled={isLoading}
                         onClick={(e) => handleAddToCart(e, productDetail)}
                       >

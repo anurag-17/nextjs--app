@@ -136,13 +136,13 @@ const UserInvoice = () => {
             </p>
             <div className="flex justify-end">
               <div className="flex">
-                <button className="p-3 flex m-3 items-center px-12 font-semibold rounded bg-sky-400 text-white text-2xl">
+                <button className="p-3 flex m-3 items-center px-12 font-semibold rounded bg-lightBlue-400 text-white text-2xl">
                 <Image className="w-10 m-2" src={printer}/>
                  Print
                 </button>
               </div>
               <div>
-                <button className="p-6 px-12 font-semibold rounded bg-sky-400 text-white text-2xl m-3">
+                <button className="p-6 px-12 font-semibold rounded bg-lightBlue-400 text-white text-2xl m-3">
                   Submit Now
                 </button>
               </div>

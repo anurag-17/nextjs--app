@@ -161,7 +161,7 @@ const AddVendor = ({ refreshData, closeDrawer }) => {
           :
           <button
             type="submit"
-            className="border py-2 px-6 m-16 mt-0 rounded-lg bg-sky-600 text-white text-[16px] font-semibold "
+            className="border py-2 px-6 m-16 mt-0 rounded-lg bg-lightBlue-600 text-white text-[16px] font-semibold "
           >
             Add Vendor
           </button>

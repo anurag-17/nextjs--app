@@ -83,7 +83,7 @@ const Editcolor = ({ editData, colorEdit, closeDrawer, refreshData }) => {
 
           <button
             type="submit"
-            className="border p-2 m-10 mt-0 rounded-lg bg-sky-600 text-white text-[20px]"
+            className="border p-2 m-10 mt-0 rounded-lg bg-lightBlue-600 text-white text-[20px]"
           >
             Update Color
           </button>

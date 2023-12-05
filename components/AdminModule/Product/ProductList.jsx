@@ -354,14 +354,13 @@ const ProductList = () => {
                 </label>
                 <select
                   name="category"
-                  id="category"
                   placeholder="Category"
                   className="border border-gray-400 px-2 py-1 rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
                   onChange={handleSearchCategories}
                 >
                   {productCategory?.length > 0 &&
-                    productCategory.map((cate) => (
-                      <option value={cate}>{cate}</option>
+                    productCategory.map((cate,index) => (
+                      <option value={cate} key={index}>{cate}</option>
                     ))}
                 </select>
               </div>
@@ -410,11 +409,11 @@ const ProductList = () => {
                           Brand : {items?.brand}
                         </p>
                       </div>
-                      <p className="text-sm font-semibold capitalize my-2 text-sky-600 ">
+                      <p className="text-sm font-semibold capitalize my-2 text-LightBlue-700 ">
                         Offer Price : {items?.offerPriceCurr}{" "}
                         {items?.discountedPrice}
                       </p>
-                      <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                      <del className="text-sm font-semibold capitalize my-2 text-LightBlue-700">
                         Regular Price : {items?.regPriceCurr} {items?.price}
                       </del>
                       <p className="text-[18px]  capitalize my-2 ">

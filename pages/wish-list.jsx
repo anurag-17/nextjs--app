@@ -139,10 +139,10 @@ const WishList = () => {
                   <p className="text-[16px]  capitalize  ">
                     Brand : {items.brand}
                   </p>
-                  <p className="text-sm font-semibold capitalize my-2 text-sky-600">
+                  <p className="text-sm font-semibold capitalize my-2 text-lightBlue-600">
                     Offer price : {items.discountedPrice} <br />
                   </p>
-                  <del className="text-sm font-semibold capitalize my-2 text-sky-600">
+                  <del className="text-sm font-semibold capitalize my-2 text-lightBlue-600">
                     {" "}
                     Regular Price : ₹{items.price}
                   </del>
@@ -209,7 +209,7 @@ const WishList = () => {
                     <TrashIcon className="cursor-pointer h-10 w-10 text-red-800   " />
                   </button> */}
                   </div>
-                  <button className="w-full border p-3 rounded-lg text-white bg-sky-600 my-2">
+                  <button className="w-full border p-3 rounded-lg text-white bg-lightBlue-600 my-2">
                     Add To Cart
                   </button>
                 </div>

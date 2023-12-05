@@ -64,7 +64,7 @@ const HiddenProduct = () => {
                   Brand : <p className="font-semibold px-2"> {items?.brand} </p>
                 </p>
 
-                <p className="text-md font-semibold capitalize my-2 text-sky-600">
+                <p className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                   {" "}
                   Price : ₹{items?.price}
                 </p>

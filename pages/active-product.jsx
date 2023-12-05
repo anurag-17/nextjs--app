@@ -59,14 +59,14 @@ const ActiveProduct = () => {
                 <p className="text-[18px]  flex capitalize  ">
                   Brand : <p className="font-semibold px-2"> {items?.brand} </p>
                 </p>
-                <p className="text-[20px] flex font-semibold capitalize my-2 text-sky-600">
+                <p className="text-[20px] flex font-semibold capitalize my-2 text-lightBlue-600">
                   Offer price :{" "}
-                  <p className="text-sky-800 px-2 font-bold">
+                  <p className="text-lightBlue-800 px-2 font-bold">
                     ₹{items?.discountedPrice}{" "}
                   </p>
                   <br />
                 </p>
-                <del className="text-md font-semibold capitalize my-2 text-sky-600">
+                <del className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                   {" "}
                   Regular Price : ₹{items?.price}
                 </del>
@@ -82,7 +82,7 @@ const ActiveProduct = () => {
                 <div className="flex">
                   {" "}
                   <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
-                  <p className=" bg-sky-200 p-1 text-center font-semibold rounded-md text-sky-600 w-20">
+                  <p className=" bg-lightBlue-200 p-1 text-center font-semibold rounded-md text-lightBlue-600 w-20">
                     selling
                   </p>
                 </div>

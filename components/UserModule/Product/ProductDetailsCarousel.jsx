@@ -28,7 +28,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                   <div className="flex flex-col gap-5  " key={inx}>
                     {image?.url?.length > 0 && (
                       <div
-                        className={`cursor-pointer border border-gray-300 rounded active:border-sky-800  p-2  
+                        className={`cursor-pointer border border-gray-300 rounded active:border-lightBlue-800  p-2  
                 ${selectedImage === image.url[0] ? " border-black " : ""}`}
                         onClick={() => handleClick(image.url[0])}
                       >

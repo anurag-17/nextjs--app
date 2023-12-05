@@ -182,7 +182,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         className="mx-auto py-2"
       />
       <div className="flex justify-center items-center whitespace-pre-wrap h-[100px]">
-        <h1 className="text-2xl font-bold mx-5 text-sky-600">
+        <h1 className="text-2xl font-bold mx-5 text-lightBlue-600">
           Admin Dashboard
         </h1>
       </div>
@@ -195,8 +195,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                 className={`pl-6 py-3 ml-5 rounded-l-full justify-center cursor-pointer mb-3 flex items-center transition-colors font-semibold
                  ${
                    items?.id === labelId
-                     ? "bg-sky-600 text-white"
-                     : "text-black-400  hover:bg-sky-600 hover:rounded-l-full  hover:text-white"
+                     ? "bg-lightBlue-600 text-white"
+                     : "text-black-400  hover:bg-lightBlue-600 hover:rounded-l-full  hover:text-white"
                  }`}
                 onClick={() => handleClick(items.label, items.id)}
               >
@@ -230,8 +230,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                         className={`pl-6 py-3 ml-5 rounded-l-full max-w-[230px] justify-center text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
                          ${
                            subOpt?.id === labelId
-                             ? "bg-sky-600 text-white"
-                             : "text-black-400 hover:bg-sky-600 hover:text-white hover:rounded-l-full "
+                             ? "bg-lightBlue-600 text-white"
+                             : "text-black-400 hover:bg-lightBlue-600 hover:text-white hover:rounded-l-full "
                          }`}
                         onClick={() => handleClick(subOpt.label, subOpt.id)}
                       >
@@ -249,8 +249,8 @@ const SideBar = forwardRef(({ showNav }, ref) => {
           className={`pl-6 py-3 ml-5 rounded text-center rounded-l-full  cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold 
             ${
               router.pathname == "/admin-login"
-                ? "bg-sky-600 text-white"
-                : "text-black-400 hover:bg-sky-600 hover:text-white  "
+                ? "bg-lightBlue-600 text-white"
+                : "text-black-400 hover:bg-lightBlue-600 hover:text-white  "
             }`}
           onClick={handleSignout}
         >

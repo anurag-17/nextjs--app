@@ -107,7 +107,6 @@ const ProductFilter = () => {
                         <Image className="w-3  " src="/right-arrows.svg" width={400} height={400} />
                         <button
                           name="category"
-                          id="category"
                           placeholder="Category"
                           className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
                           onClick={handleSearchCategories}
@@ -247,14 +246,14 @@ const ProductFilter = () => {
                       Brand :{" "}
                       <p className="font-semibold px-2"> {items.brand} </p>
                     </p>
-                    <p className="text-[20px] flex font-semibold capitalize my-2 text-sky-600">
+                    <p className="text-[20px] flex font-semibold capitalize my-2 text-lightBlue-600">
                       Offer price :{" "}
-                      <p className="text-sky-800 px-2 font-bold">
+                      <p className="text-lightBlue-800 px-2 font-bold">
                         ₹{items.discountedPrice}{" "}
                       </p>
                       <br />
                     </p>
-                    <del className="text-md font-semibold capitalize my-2 text-sky-600">
+                    <del className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                       {" "}
                       Regular Price : ₹{items.price}
                     </del>
@@ -270,7 +269,7 @@ const ProductFilter = () => {
                     <div className="flex mt-3">
                       {" "}
                       <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
-                      <p className=" bg-sky-200 p-1 text-center font-semibold rounded-xl text-sky-600 w-20">
+                      <p className=" bg-ligthtBlue-100 p-1 text-center font-semibold rounded-xl text-ligthtBlue-700 w-20">
                         selling
                       </p>
                     </div>
@@ -308,7 +307,7 @@ const ProductFilter = () => {
                     </div>
                     {/* <Link href={`/product-details/${items?._id}`}>
                   </Link> */}
-                    <button className="w-full border p-3 rounded-lg text-white bg-sky-600 hover:bg-sky-900 my-2 mt-4 items-end">
+                    <button className="w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-900 my-2 mt-4 items-end">
                       View Details
                     </button>
                   </div>

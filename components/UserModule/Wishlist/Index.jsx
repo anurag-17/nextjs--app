@@ -200,7 +200,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                         </p>
                       </p>
 
-                      <p className="text-md font-semibold capitalize my-2 text-sky-600">
+                      <p className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                         Price : ₹ {item?.price}
                       </p>
                       <p className="text-[18px]  flex capitalize  ">

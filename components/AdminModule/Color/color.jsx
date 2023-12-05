@@ -105,7 +105,7 @@ const Color = () => {
         <div className="flex justify-end mt-7 ">
           <button
             onClick={openDrawer}
-            className="rounded-md p-2 bg-sky-600 text-white cursor-pointer"
+            className="rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer"
           >
             + Add Color
           </button>
@@ -218,7 +218,7 @@ const Color = () => {
                   <div className="flex my-3">
                     <div>
                       <button onClick={() => openDrawerO(item?._id)}>
-                        <PencilSquareIcon className="cursor-pointer h-6 w-6  text-sky-600 m-2 " />
+                        <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
                       </button>
                     </div>
                     <div>

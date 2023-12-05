@@ -64,14 +64,14 @@ const UserProfile = ({ getAllCustomer }) => {
           <div className="flex my-auto  bg-[#e2eaf5] px-10 py-5">
             <div className=" w-1/12">
               <img src="/user.png" className="rounded-[60%]   mb-0" />
-              <p className="text-sky-600 text-xl mx-10  cursor-pointer">Change</p>
+              <p className="text-lightBlue-600 text-xl mx-10  cursor-pointer">Change</p>
             </div>
             <div className="my-auto ml-10 ">
               <h1 className="my-auto mx-5 text-[35px]">
                 {" "}
                 {getAllCustomer?.firstname} {getAllCustomer?.lastname}
               </h1>
-              <p className="text-sky-600 text-xl my-auto  mx-5">
+              <p className="text-lightBlue-600 text-xl my-auto  mx-5">
                 I am Professional Frontend Web Developer
               </p>
               <div className="flex mt-5 ml-5 justify-evenly w-6/12">
