@@ -134,8 +134,7 @@ const Customers = () => {
         .request(option)
         .then(function (response) {
           if (response.status === 200) {
-            setGetallCustomer(response.data);
-            console.log("customer", response.data);
+            setGetallCustomer(response?.data);
           }
         })
         .catch(function (error) {
@@ -241,7 +240,7 @@ const Customers = () => {
             ))}
           </tr>
         </thead>
-        {getallCustomer.map((items) => (
+        {getallCustomer?.length < 1 && getallCustomer?.map((items) => (
           <tbody>
             {/* <label> */}
             <tr className="">

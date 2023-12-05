@@ -123,13 +123,13 @@ const menuList = [
     icon: `fa fa-phone-square`,
     path: "/language",
   },
-  {
-    id: 9,
-    label: "Currency",
-    component: <language />,
-    icon: `fa fa-phone-square`,
-    path: "/currency",
-  },
+  // {
+  //   id: 9,
+  //   label: "Currency",
+  //   component: <language />,
+  //   icon: `fa fa-phone-square`,
+  //   path: "/currency",
+  // },
   {
     id: 8,
     label: "settings",

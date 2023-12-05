@@ -92,8 +92,8 @@ const ProductGrid = () => {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/product/addToWishlist",
       headers: {
-          "Content-Type": "application/json",
-       
+        "Content-Type": "application/json",
+
         authorization: token,
       },
       data: {
@@ -162,7 +162,7 @@ const ProductGrid = () => {
       .then(function (response) {
         if (response.status === 200) {
           setAllProduct(response?.data);
-setLoadingBtn(false)
+          setLoadingBtn(false)
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
           setProductCategory([...uniqueCategories]);
@@ -175,7 +175,7 @@ setLoadingBtn(false)
           const uniqueFields = [...new Set(fields)];
           ["All", ...uniqueFields];
         }
-        else{
+        else {
           setLoadingBtn(false)
           return
         }
@@ -189,7 +189,12 @@ setLoadingBtn(false)
   // ------ search products ------ //
   const handleSearch = (e) => {
     const title = e.target.value;
+    const isBackspace = e.keyCode === 8;
     if (title.trim() === "") {
+      refreshData();
+    }
+    else if (isBackspace) {
+      refreshData();
     } else {
       const options = {
         method: "GET",
@@ -200,14 +205,14 @@ setLoadingBtn(false)
         .then(function (response) {
           if (response.status === 200) {
             setAllProduct(response?.data);
-      refreshData();
-
+            refreshData();
           }
         })
         .catch(function (error) {
           console.error(error);
         });
     }
+
   };
 
   // ------ filter products by brand ------ //
@@ -279,7 +284,7 @@ setLoadingBtn(false)
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
       headers: {
         "Content-Type": "application/json",
-       
+
         authorization: token,
       },
       data: {
@@ -338,13 +343,13 @@ setLoadingBtn(false)
     }
   };
 
-  const refreshData  = () => {
+  const refreshData = () => {
     setRefresh(!isRefresh)
   }
 
   return (
     <>
-       {
+      {
         isLoadingBtn &&
         <WebsiteLoader />
       }
@@ -372,7 +377,7 @@ setLoadingBtn(false)
                   </button>
                 </div>
                 {productCategory?.length > 0 &&
-                  productCategory.map((cate,index) => (
+                  productCategory.map((cate, index) => (
                     <div className="flex flex-col-reverse" key={index}>
                       <div className="flex my-2">
                         <Image className="w-3" alt="loading" src={right} height={20} width={20} />
@@ -400,7 +405,7 @@ setLoadingBtn(false)
               <div className=" justify-between text-[#645D64] space-y-4 ">
                 <div className="w-auto flex flex-col  gap-1">
                   <div className="flex">
-                    <Image className="w-3" alt="loading" src={right} height={20} width={20}/>
+                    <Image className="w-3" alt="loading" src={right} height={20} width={20} />
                     <button
                       name="category"
                       placeholder="Category"
@@ -411,7 +416,7 @@ setLoadingBtn(false)
                     </button>
                   </div>
                   {productBrands?.length > 0 &&
-                    productBrands.map((bnd,index) => (
+                    productBrands.map((bnd, index) => (
                       <div className="flex flex-col-reverse" key={index}>
                         <div className="flex my-2">
                           <Image className="w-3" alt="loading" src={right} height={20} width={20} />
@@ -443,7 +448,7 @@ setLoadingBtn(false)
                 type="search"
                 className=" border border-gray-300  font-medium text-[19px] py-3 rounded-md  focus-visible:border-none w-full text-black  placeholder:text-[#3a3636] px-4 "
                 placeholder="Search"
-                aria-label="Search" 
+                aria-label="Search"
                 aria-describedby="button-addon1"
                 onChange={handleSearch}
               />
@@ -451,7 +456,7 @@ setLoadingBtn(false)
           </div>
 
           <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll ">
-            {allProduct?.length>0 && allProduct?.map((items, ix) => (
+            {allProduct?.length > 0 && allProduct?.map((items, ix) => (
               <div
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
                 key={ix}
@@ -621,7 +626,7 @@ setLoadingBtn(false)
         </Dialog>
       </Transition>
 
-   
+
     </>
   );
 };
