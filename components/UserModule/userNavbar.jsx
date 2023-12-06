@@ -224,9 +224,8 @@ const UserNavbar = () => {
                     New customer  - <div className="underline text-[18px] font-medium text-lightBlue-600">Signup</div>
                   </div> */}
                   <Link href="/user-cart">
-                    <div className="flex text-white font-medium text-[19px]">
+                    <div className="flex text-black font-medium text-[19px]">
                       <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
-                      Cart
                     </div>
                   </Link>
                 </>

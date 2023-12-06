@@ -36,7 +36,6 @@ const Signup = () => {
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/register",
       headers: {
         "Content-Type": "application/json",
-        // "User-Agent": "insomnia/2023.5.8",
       },
       data: {
         firstname: firstname,
@@ -54,12 +53,11 @@ const Signup = () => {
 
     try {
       const response = await axios.request(options);
-      router.push("/login");
-
+      
       if (response?.status === 200) {
-        console.log(response.data);
         setLoading(false);
         toast.success("Successfully! register. Please login");
+        router.push("/login");
       } else {
         setLoading(false);
       }
@@ -101,6 +99,7 @@ const Signup = () => {
                       className="custom-input"
                       onChange={(e) => setFirstname(e.target.value)}
                       value={firstname}
+                      maxLength={64}
                       required
                     />
                     <input
@@ -109,6 +108,7 @@ const Signup = () => {
                       className="custom-input"
                       onChange={(e) => setLastname(e.target.value)}
                       value={lastname}
+                      maxLength={64}
                       required
                     />
                   </div>
@@ -125,11 +125,12 @@ const Signup = () => {
                   <div className="mt-5 relative">
                     <input
                       type={showPassword ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="password"
                       className="custom-input w-full"
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}
                       required
+                      minLength={8}
                     />
                     <button
                     type="button"
@@ -142,10 +143,11 @@ const Signup = () => {
                   <div className="mt-5">
                     <input
                       type="number"
-                      placeholder="Number"
+                      placeholder="Mobile no"
                       className="custom-input w-full"
                       onChange={(e) => setMobile(e.target.value)}
                       value={mobile}
+                      pattern="[6789][0-9]{9}" 
                       required
                     />
                   </div>
@@ -156,16 +158,17 @@ const Signup = () => {
                       className="custom-input w-full"
                       onChange={(e) => setAddress(e.target.value)}
                       value={address}
+                      maxLength={100}
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-5">
                     <div className="mt-5">
                       <textarea
-                        type="number"
-                        placeholder="Date of Birth"
+                        type="text"
+                        placeholder="Date of Birth DD/MM/YYYY"
                         className="custom-input"
                         onChange={(e) => setDob(e.target.value)}
+                        pattern="^[0-9]+$"  
                         value={dob}
                         required
                       />
@@ -177,10 +180,11 @@ const Signup = () => {
                         className="custom-input"
                         onChange={(e) => setCountry(e.target.value)}
                         value={country}
+                        pattern="^[a-zA-Z][a-zA-Z\s]*$"  
+                        maxLength={64}
                         required
                       />
                     </div>
-                  </div>
                   <div className="mt-5">
                     <textarea
                       type="text"
@@ -188,6 +192,7 @@ const Signup = () => {
                       className="custom-input w-full"
                       onChange={(e) => setLanguage(e.target.value)}
                       value={language}
+                      pattern="^[a-zA-Z][a-zA-Z\s]*$"  
                       required
                     />
                   </div>
@@ -198,6 +203,7 @@ const Signup = () => {
                       className="custom-input w-full"
                       onChange={(e) => setAbout(e.target.value)}
                       value={about}
+                      maxLength={300}
                       required
                     />
                   </div>
@@ -238,7 +244,7 @@ const Signup = () => {
                       )}
                     </button>
 
-                    <Link href="/">
+                    <Link href="/login">
                       <h1 className="text-center text-cyan-600 text-[25px] font-medium underline">
                         Login
                       </h1>
