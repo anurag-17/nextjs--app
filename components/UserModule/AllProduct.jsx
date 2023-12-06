@@ -317,32 +317,6 @@ const ProductGrid = () => {
       });
   };
 
-
-  useEffect(() => {
-    if (token) {
-      defaultCustomer();
-    }
-  }, []);
-
-  const defaultCustomer = async () => {
-    try {
-      const response = await fetchApi("/auth/getUserCart", token);
-      if (response?.status === 200) {
-        const data = await response.json();
-
-        if (typeof window !== "undefined") {
-          localStorage.setItem("productsLength", data?.cart?.products?.length);
-          refreshData()
-        }
-      } else if (response.status === 202) {
-        refreshData()
-        return;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const refreshData = () => {
     setRefresh(!isRefresh)
   }

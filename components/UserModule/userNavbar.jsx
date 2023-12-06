@@ -18,6 +18,7 @@ const menuList = [
     icon: "fa fa-users",
     imagePath: "",
     path: "/user-product",
+    show: true,
   },
   {
     id: 1,
@@ -53,6 +54,7 @@ const menuList = [
     icon: "fa fa-phone-square",
     imagePath: "/loginn.svg",
     path: "user-notifictionSet",
+    show: true,
   },
   {
     id: 5,
@@ -61,6 +63,7 @@ const menuList = [
     icon: "fa fa-phone-square",
     imagePath: "",
     path: "/user-setting",
+    show: true,
   },
   {
     id: 6,
@@ -69,6 +72,7 @@ const menuList = [
     icon: "fa fa-phone-square",
     imagePath: "",
     path: "/userFAQ",
+    show: true,
   },
   {
     id: 8,
@@ -76,6 +80,7 @@ const menuList = [
     component: "",
     icon: "fa fa-phone-square",
     path: "/user-invoice",
+    show: true,
   },
   // {
   //   id: 9,
@@ -100,15 +105,26 @@ const UserNavbar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { token } = useSelector((state) => state.auth.userDetails || null);
   const [isOpenLogin, setOpenLogin] = useState(false);
   const [isShow, setShow] = useState(false);
   const [cartLength, setCartLength] = useState(0);
+  const [isRefresh, setrefresh] = useState(false);
+  const { token } = useSelector((state) => state.auth.userDetails || null);
 
   useEffect(() => {
     setCartLength(localStorage.getItem("productsLength") || 0);
+  }, [isRefresh]);
+
+  useEffect(() => {
+    if(!token || token === undefined ){
+      router.push("/");
+    }
   }, []);
 
+  
+  const refreshData = () => {
+    setrefresh(!isRefresh);
+  };
   const openLoginModal = () => {
     setOpenLogin(true);
   };
@@ -132,49 +148,90 @@ const UserNavbar = () => {
     localStorage.removeItem("userNum");
     localStorage.removeItem("userAdd");
     localStorage.removeItem("userMail");
+    localStorage.removeItem("productsLength");
     window.location.reload();
+
   };
 
   const handleLogin = () => {
     router.push("/login");
   };
 
- 
+  useEffect(() => {
+    if (token) {
+      defaultCustomer();
+    }
+  }, []);
+
+  const defaultCustomer = async () => {
+    try {
+      const response = await fetchApi("/auth/getUserCart", token);
+      if (response?.status === 200) {
+        const data = await response.json();
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem("productsLength", data?.cart?.products?.length);
+          setCartLength(data?.cart?.products?.length)
+          refreshData()
+        }
+      } else if (response.status === 202) {
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
-      <nav className="p-6 bg-white border mb-5 flex justify-between">
+      <nav className="px-6  border mb-5 flex justify-between ">
         <div className="flex justify-start w-full">
           <div className="flex justify-between w-full items-center">
-            <div className="text-center">
-              <button
-                className="w-36"
-                type="button"
-                onClick={openDrawer} // Open the drawer when this button is clicked
-              >
-                <div className="w-[30%]">
-                  <div className="bg-black p-[3px] my-2"></div>
-                  <div className="bg-black p-[3px] my-2"></div>
-                  <div className="bg-black p-[3px] my-2"></div>
+            {
+              !token || token == undefined ?
+                <Link href="/">
+                  <Image src="/log.png" alt="logo" height={200} width={200} />
+                </Link>
+                :
+                <div className="text-center">
+                  <button
+                    className="w-36"
+                    type="button"
+                    onClick={openDrawer} // Open the drawer when this button is clicked
+                  >
+                    <div className="w-[30%]">
+                      <div className="bg-black p-[3px] my-2"></div>
+                      <div className="bg-black p-[3px] my-2"></div>
+                      <div className="bg-black p-[3px] my-2"></div>
+                    </div>
+                  </button>
                 </div>
-              </button>
-            </div>
+            }
             <div className="flex items-cente gap-[20px]">
-              {(!token || token == undefined) && (
-                <div
-                  className="bg-lightBlue-200 text-black rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer"
-                  onClick={handleLogin}
-                >
-                  Login
-                </div>
-              )}
+              {(!token || token == undefined) ?
+                <>
+                  <div
+                    className="bg-lightBlue-200 text-black rounded px-6 py-2 flex justify-center items-center h-[44px] text-[18px] font-semibold cursor-pointer"
+                    onClick={handleLogin}
+                  >
+                    Login
+                  </div>
+                  <Link href="/user-cart">
+                  <div className="flex text-white font-medium text-[19px]">
+                    <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
+                    Cart
+                  </div>
+                </Link>
+                </>
+                :
+                <Link href="/user-cart">
+                  <div className="py-6">
+                    <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
+                  </div>
+                  <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cartLength}  </div>
+                </Link>
+              }
 
-              <Link href="/user-cart">
-                <div className="">
-                  <Image src={shoping} className="relative" width={45} height={45} alt="cart"  />
-                </div>
-                  <div className=" absolute top-[15px] right-[40px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cartLength}</div>
-              </Link>
             </div>
           </div>
 
@@ -182,7 +239,7 @@ const UserNavbar = () => {
           {isDrawerOpen && (
             <div
               id="drawer-form"
-              className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto  border transition-transform -translate-x-0 bg-white w-2/12 dark:bg-gray-800"
+              className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto  border transition-transform -translate-x-0  w-2/12 bg-lightBlue-50"
               tabIndex={-1}
               aria-labelledby="drawer-form-label"
             >
@@ -192,12 +249,12 @@ const UserNavbar = () => {
                 onClick={closeDrawer}
                 className="text-gray-400  shadow-2xl text-sm  h-12  top-3 float-right inline-flex items-center justify-center   "
               >
-                <ArrowLeftIcon className="w-12 h-12 bg-white border rounded-xl p-1 hover:bg-orange-100 hover:text-black" />
+                <ArrowLeftIcon className="w-12 h-12 bg-white border rounded-xl p-1 hover:bg-orange-100 " />
 
                 <span className="sr-only bg-black">Close menu</span>
               </button>
               <Link href="/">
-                <img src="/log.png" className=" p-0" />
+                <Image src="/log.png" alt="logo" height={200} width={300} />
               </Link>
               <div className="">
                 <ul>
@@ -206,7 +263,8 @@ const UserNavbar = () => {
                       {item.id === 7 ? (
                         !token || token === undefined ? null : (
                           <li
-                            className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500 text-gray-500"
+                            className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold   hover:text-white hover:bg-lightBlue-600
+                            ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                             onClick={() => handleSignOut(item.path)}
                           >
                             {item.label}
@@ -217,14 +275,20 @@ const UserNavbar = () => {
                           {item.show &&
                             (!token || token === undefined ? null : (
                               <Link href={item.path ? item.path : "#"}>
-                                <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500 text-gray-500">
+                                <li 
+                                 className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-600
+                                 ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
+                                >
                                   {item.label}
                                 </li>
                               </Link>
                             ))}
                           {!item.show && (
                             <Link href={item.path ? item.path : "#"}>
-                              <li className="list-none cursor-pointer border px-10 py-5 my-4 rounded-md hover:border-lightBlue-600 hover:text-lightBlue-500 text-gray-500">
+                              <li 
+                               className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-500
+                               ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
+                              >
                                 {item.label}
                               </li>
                             </Link>

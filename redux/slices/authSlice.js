@@ -9,14 +9,46 @@ const getTokenFromLocalStorage = () => {
   return null;
 };
 
+const getWishListFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    // Check if the code is running in a browser environment
+    return JSON.parse(localStorage.getItem("wishList")) || [];
+  }
+  return null;
+};
+
+const getAddFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    // Check if the code is running in a browser environment
+    return JSON.parse(localStorage.getItem("userAdd")) || [];
+  }
+  return null;
+};
+
+const getNoFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    // Check if the code is running in a browser environment
+    return JSON.parse(localStorage.getItem("userNum")) || [];
+  }
+  return null;
+};
+
+const getMailFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    // Check if the code is running in a browser environment
+    return JSON.parse(localStorage.getItem("userMail")) || [];
+  }
+  return null;
+};
+
 const initialState = {
   userDetails : {
     token: getTokenFromLocalStorage(),
     userID: null,
-    userWishList: [],
-    userAddress: "",
-    userNumber: "",
-    userEmail: "",
+    userWishList: getWishListFromLocalStorage(),
+    userAddress:getAddFromLocalStorage(),
+    userNumber: getNoFromLocalStorage(),
+    userEmail: getMailFromLocalStorage(),
   },
   cart: [],
   totalCartItems: 0,
@@ -34,6 +66,7 @@ const authSlice = createSlice({
       }
     },
     setUserDetails: (state, action) => {
+      console.log(action.payload?.wishlist)
       state.userDetails.userID = action.payload?._id ;
       state.userDetails.userWishList = action.payload?.wishlist ;
       state.userDetails.userAddress = action.payload?.address ;
@@ -44,7 +77,7 @@ const authSlice = createSlice({
         localStorage.setItem("userAdd", JSON.stringify(action?.payload?.address));
         localStorage.setItem("userNum", JSON.stringify(action?.payload?.mobile));
         localStorage.setItem("userMail", JSON.stringify(action?.payload?.email));
-        localStorage.setItem( "wishList",JSON.stringify(action?.payload?.user?.wishlist) );
+        localStorage.setItem( "wishList",JSON.stringify(action?.payload?.wishlist) );
       }
     },
     addToCart: (state, action) => {

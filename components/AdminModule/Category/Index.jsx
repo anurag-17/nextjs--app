@@ -196,7 +196,7 @@ const CategoryList = () => {
           <div className="mb-3 w-[40%]">
             <input
               type="search"
-              className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+              className=" border border-gray-500 p-3 rounded-xl focus:border-none w-11/12 "
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon1"

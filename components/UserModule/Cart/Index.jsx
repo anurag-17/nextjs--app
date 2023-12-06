@@ -224,7 +224,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
       const response = await axios.post(
         `${BASE_URL}/auth/increaseProductCount`,
         {
-          "productId": products?._id,
+          "productId": products?.product?._id,
           "color": products?.color,
           "action": action
         },
@@ -235,11 +235,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
           },
         }
       );
-
-      console.log(response);
-
       if (response.status === 200) {
-        return response
+        refreshData()
       }
     } catch (error) {
       setLoading(false);
