@@ -9,6 +9,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import shoping from "../../public/shopingcart.svg";
 import { Dialog, Transition } from "@headlessui/react";
 import { fetchApi } from "../../utlis/api";
+import { setCartItems } from "../../redux/slices/orderSlice";
 
 const menuList = [
   {
@@ -74,14 +75,14 @@ const menuList = [
     path: "/userFAQ",
     show: true,
   },
-  {
-    id: 8,
-    label: "Invoice",
-    component: "",
-    icon: "fa fa-phone-square",
-    path: "/user-invoice",
-    show: true,
-  },
+  // {
+  //   id: 8,
+  //   label: "Invoice",
+  //   component: "",
+  //   icon: "fa fa-phone-square",
+  //   path: "/user-invoice",
+  //   show: true,
+  // },
   // {
   //   id: 9,
   //   label: "Order Details",
@@ -110,18 +111,19 @@ const UserNavbar = () => {
   const [cartLength, setCartLength] = useState(0);
   const [isRefresh, setrefresh] = useState(false);
   const { token } = useSelector((state) => state.auth.userDetails || null);
+  const { cartItem } = useSelector((state) => state.order || 0);
 
   useEffect(() => {
     setCartLength(localStorage.getItem("productsLength") || 0);
   }, [isRefresh]);
 
   useEffect(() => {
-    if(!token || token === undefined ){
+    if (!token || token === undefined) {
       router.push("/");
     }
   }, []);
 
-  
+
   const refreshData = () => {
     setrefresh(!isRefresh);
   };
@@ -148,7 +150,7 @@ const UserNavbar = () => {
     localStorage.removeItem("userNum");
     localStorage.removeItem("userAdd");
     localStorage.removeItem("userMail");
-    localStorage.removeItem("productsLength");
+    localStorage.removeItem(" ");
     window.location.reload();
 
   };
@@ -168,12 +170,14 @@ const UserNavbar = () => {
       const response = await fetchApi("/auth/getUserCart", token);
       if (response?.status === 200) {
         const data = await response.json();
+        setCartItems(dispatch(data?.cart?.products))
 
         if (typeof window !== "undefined") {
-          localStorage.setItem("productsLength", data?.cart?.products?.length);
-          setCartLength(data?.cart?.products?.length)
+          // localStorage.setItem("productsLength", data?.cart?.products?.length);
+          // setCartLength(data?.cart?.products?.length)
+          alert("S")
           refreshData()
-        }
+        } 
       } else if (response.status === 202) {
         return;
       }
@@ -216,19 +220,22 @@ const UserNavbar = () => {
                   >
                     Login
                   </div>
+                  {/* <div className="">
+                    New customer  - <div className="underline text-[18px] font-medium text-lightBlue-600">Signup</div>
+                  </div> */}
                   <Link href="/user-cart">
-                  <div className="flex text-white font-medium text-[19px]">
-                    <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
-                    Cart
-                  </div>
-                </Link>
+                    <div className="flex text-white font-medium text-[19px]">
+                      <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
+                      Cart
+                    </div>
+                  </Link>
                 </>
                 :
                 <Link href="/user-cart">
                   <div className="py-6">
                     <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
                   </div>
-                  <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cartLength}  </div>
+                  <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cartItem}  </div>
                 </Link>
               }
 
@@ -275,8 +282,8 @@ const UserNavbar = () => {
                           {item.show &&
                             (!token || token === undefined ? null : (
                               <Link href={item.path ? item.path : "#"}>
-                                <li 
-                                 className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-600
+                                <li
+                                  className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-600
                                  ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                                 >
                                   {item.label}
@@ -285,8 +292,8 @@ const UserNavbar = () => {
                             ))}
                           {!item.show && (
                             <Link href={item.path ? item.path : "#"}>
-                              <li 
-                               className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-500
+                              <li
+                                className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-500
                                ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                               >
                                 {item.label}

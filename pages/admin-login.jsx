@@ -86,7 +86,7 @@ const AdminLogin = ({ API_URL }) => {
               </h2>
               <p className="py-4 text-[20px] text-center">
                 {" "}
-                Create your account. It’s free and only take a minute
+                {/* Create your account. It’s free and only take a minute */}
               </p>
               <form onSubmit={addFormHandler}>
                 <div className="mt-5">

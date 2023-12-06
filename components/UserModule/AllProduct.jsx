@@ -4,16 +4,18 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { toast, ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import UserNavbar from "./userNavbar";
 import { fetchApi } from "../../utlis/api";
 import right from "/public/right-arrows.svg";
 
 import WebsiteLoader from "../websiteLoader";
+import { setCartItems } from "../../redux/slices/orderSlice";
 
 const ProductGrid = () => {
 
+  const dispatch = useDispatch()
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [productCategory, setProductCategory] = useState("");
   const [productBrands, setProductBrands] = useState("");
@@ -228,7 +230,6 @@ const ProductGrid = () => {
       axios
         .request(options)
         .then(function (response) {
-          console.log(response.data);
           if (response.status === 200) {
             setAllProduct(response.data);
           }
@@ -284,7 +285,6 @@ const ProductGrid = () => {
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
       headers: {
         "Content-Type": "application/json",
-
         authorization: token,
       },
       data: {
@@ -301,12 +301,10 @@ const ProductGrid = () => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
         if (response.status === 200) {
           sessionStorage.removeItem("addToCart");
-          setTimeout(() => {
-          }, 500);
-
+          alert("ok")
+          // setCartItems(dispatch(data?.cart?.products))
           refreshData();
         } else {
           return;

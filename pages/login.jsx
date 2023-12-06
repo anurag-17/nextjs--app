@@ -118,7 +118,7 @@ const UserLogin = ({ API_URL }) => {
               sm:py-2 sm:text-[14px]"
               >
                 {" "}
-                Create your account. It’s free and only take a minute
+                {/* Create your account. It’s free and only take a minute */}
               </p>
 
               <form onSubmit={addFormHandler}>

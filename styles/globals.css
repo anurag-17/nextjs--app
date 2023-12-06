@@ -29,10 +29,10 @@ body{
 @layer components {
 
   .custom-input-label{
-    @apply block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium 
+    @apply block text-sm  col-span-4 sm:col-span-2 font-medium text-[15px]
   }
   .custom-input{
-    @apply px-3 py-2 rounded  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600 w-full focus:outline-none  h-[50px]
+    @apply px-3 py-2 rounded  border border-gray-300 text-sm focus:bg-white  dark:border dark:border-gray-600 w-full focus:outline-none  h-[50px] text-[17px] font-medium
   }
 
 }

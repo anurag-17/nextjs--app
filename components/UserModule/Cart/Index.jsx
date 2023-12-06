@@ -12,10 +12,12 @@ import BuyProduct from "../../razorpay/BuyProduct";
 import ShippingAddress from "../Address/shippingAddress";
 import PaymentOption from "./paymentOption";
 import { BASE_URL } from "../../../utlis/config";
+import { setCartItems } from "../../../redux/slices/orderSlice";
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartProduct }) => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || {});
+ 
   const [isOpenAdd, setOpenAdd] = useState(false);
   const [shippingCharge, setShippingCharge] = useState(0);
 
@@ -97,6 +99,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
         await axios(options).then((response) => {
           if (response.status === 200) {
             toast.success("Remove product from cart !");
+            setCartItems(dispatch(data?.cart?.products))
             refreshData();
           } else {
             throw new Error("Failed to delete");
@@ -192,28 +195,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
   };
   const handleCartOrder = () => {
     setActiveIndex(2);
-  };
-
-  const handleCounter = (index) => {
-    const updatedProducts = [...getCartProduct.products];
-    updatedProducts[index].count += 1;
-    setGetCartProduct({
-      ...getCartProduct,
-      products: updatedProducts,
-    });
-    const data = handleUpdateCart(updatedProducts)
-  };
-
-  const handleMinusCounter = (index) => {
-    const updatedProducts = [...getCartProduct.products];
-    if (updatedProducts[index].count > 1) {
-      updatedProducts[index].count -= 1;
-      setGetCartProduct({
-        ...getCartProduct,
-        products: updatedProducts,
-      });
-      const data = handleUpdateCart(updatedProducts)
-    }
   };
 
   const handleQtyCounter = async (action, products) => {

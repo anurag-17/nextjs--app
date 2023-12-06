@@ -7,12 +7,18 @@ const getTokenFromLocalStorage = () => {
   }
   return null;
 };
-
+const getLengthFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    return JSON.parse(localStorage.getItem("productsLength") || 0);
+  }
+  return null;
+};
 
 const initialState = {
-  shippingDetails : {
-    address: getTokenFromLocalStorage() 
-  }
+  shippingDetails: {
+    address: getTokenFromLocalStorage(),
+  },
+  cartItem: getLengthFromLocalStorage(),
 };
 
 const orderSlice = createSlice({
@@ -20,14 +26,20 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     setShippingDetails: (state, action) => {
-        console.log(action);
-      state.shippingDetails.address = action.payload ;
-    if (typeof window !== "undefined") {
+      state.shippingDetails.address = action.payload;
+      if (typeof window !== "undefined") {
         localStorage.setItem("shippingDet", JSON.stringify(action?.payload));
-    }
+      }
+    },
+    setCartItems: (state, action) => {
+      console.log(action?.payload?.length)
+      state.cartItem = action.payload.length;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("productsLength", JSON.stringify(action?.payload?.length));
+      }
     },
   },
 });
 
-export const {setShippingDetails} = orderSlice.actions;
+export const { setShippingDetails,setCartItems } = orderSlice.actions;
 export default orderSlice.reducer;

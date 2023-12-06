@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
     "@reduxjs/toolkit": "^1.9.7",
+    "@stripe/stripe-js": "^2.2.0",
     "axios": "^1.5.1",
     "chart.js": "^4.4.0",
     "crypto": "^1.0.1",

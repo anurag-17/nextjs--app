@@ -8,7 +8,14 @@ import Passwordchange from "../../pages/passwordchange";
 
 
 const UserSetting = () => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(  {
+    id: 3,
+    label: "Change Password",
+    component: <Passwordchange />,
+    icon: "fa fa-phone-square",
+    imagePath: "/keylock.svg",
+    path: "/user-password",
+  },);
   const [labelId, setLabelId] = useState(1);
   const [show, setShow] = useState("Dashboard");
 

@@ -66,7 +66,6 @@ const authSlice = createSlice({
       }
     },
     setUserDetails: (state, action) => {
-      console.log(action.payload?.wishlist)
       state.userDetails.userID = action.payload?._id ;
       state.userDetails.userWishList = action.payload?.wishlist ;
       state.userDetails.userAddress = action.payload?.address ;
