@@ -191,31 +191,40 @@ const ProductGrid = () => {
   // ------ search products ------ //
   const handleSearch = (e) => {
     const title = e.target.value;
-    const isBackspace = e.keyCode === 8;
     if (title.trim() === "") {
-      refreshData();
-    }
-    else if (isBackspace) {
-      refreshData();
+      getAllProducts()
     } else {
-      const options = {
-        method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?search=${title}`,
-      };
-      axios
-        .request(options)
-        .then(function (response) {
-          if (response.status === 200) {
-            setAllProduct(response?.data);
-            refreshData();
-          }
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+      callFunction( title)
     }
 
   };
+
+  const handleKeyDown = (e) => {
+    console.log('Pressed key:', e.key);
+    if(e.key === "backspace"){
+      callFunction(e.target.value)
+    }
+  };
+
+  const callFunction = async(title) => {
+    const options = {
+      method: "GET",
+      url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?search=${title}`,
+    };
+   await axios
+      .request(options)
+      .then(function (response) {
+        if (response.status === 200) {
+          setAllProduct(response?.data);
+          refreshData();
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
+
+
 
   // ------ filter products by brand ------ //
   const handleSearchBrand = (e) => {
@@ -423,11 +432,13 @@ const ProductGrid = () => {
                 aria-label="Search"
                 aria-describedby="button-addon1"
                 onChange={handleSearch}
+                onKeyDown={handleKeyDown}
+
               />
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-7 my-5 h-[80vh] overflow-y-scroll ">
+          <div className="grid lg:grid-cols-3 gap-7 my-5  ">
             {allProduct?.length > 0 && allProduct?.map((items, ix) => (
               <div
                 className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
