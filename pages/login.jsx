@@ -73,6 +73,13 @@ const UserLogin = ({ API_URL }) => {
         sm:min-h-screen sm:py-10
         "
       >
+        <Link href="/">
+          <div className="flex justify-center items-center gap-x-3 hover:bg-[#f3f3f3e0] px-6 py-1 rounded-md text-[18px] font-medium fixed right-[50px] top-[20px]">
+            <Image src={`/svg/back.svg`} alt="go back" height={40} width={40} />
+            Go back
+          </div>
+        </Link>
+
         <div className="container mx-auto">
           <div
             className="flex flex-col lg:flex-row justify-center 2xl:w-10/12 lg:w-[70%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden 2xl:min-h-[700px] border-[2px] border-[#0891B2]
