@@ -83,7 +83,7 @@ const UserProfile = ({ getAllCustomer }) => {
                   {" "}
                   <img className="h-9 w-13" src="/in.svg" />
                 </Link>
-                <Link href="https://twitter.com">
+                <Link href="https://twitter.com" _blank>
                   {" "}
                   <img className="h-9 w-13   " src="/twitterr.svg" />
                 </Link>
@@ -110,6 +110,9 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="firstname"
                               defaultValue={getAllCustomer?.firstname ? getAllCustomer?.firstname : UserDetail?.firstname}
                               onChange={inputHandler}
+                              pattern="[A-Za-z]+"
+                              title="Enter only alphabetic characters"
+                              maxLength={64}
                               required
                             />
                           </td>
@@ -123,6 +126,9 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="lastname"
                               defaultValue={getAllCustomer?.lastname ? getAllCustomer?.lastname : UserDetail?.lastname}
                               onChange={inputHandler}
+                              pattern="[A-Za-z]+"
+                              title="Enter only alphabetic characters"
+                              maxLength={64}
                               required
                             />
                           </td>
@@ -136,6 +142,9 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="about"
                               defaultValue={getAllCustomer?.about ? getAllCustomer?.about : UserDetail?.about}
                               onChange={inputHandler}
+                              pattern="[A-Za-z]+"
+                              title="Enter only alphabetic characters"
+                              maxLength={300}
                               required
                             />
                           </td>
@@ -153,14 +162,17 @@ const UserProfile = ({ getAllCustomer }) => {
                           </td>
                         </tr>
                         <tr>
-                          <td className="p-3 text-[20px]">Phone</td>
+                          <td className="p-3 text-[20px]">Mobile no</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px]">
                             <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
                               name="mobile"
                               defaultValue={getAllCustomer?.mobile ? getAllCustomer?.mobile : UserDetail?.mobile}
                               onChange={inputHandler}
-                              required
+                              pattern="[6789][0-9]{9}"
+                      title="Enter 10 digit mobile no."
+                      required
+                      maxLength={10}
                             />
                           </td>
                         </tr>
@@ -172,6 +184,8 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="dob"
                               defaultValue={getAllCustomer?.dob ? getAllCustomer?.dob : UserDetail?.dob}
                               onChange={inputHandler}
+                              pattern="^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/\d{4}$"
+                              title="DD/MM/YYYY"
                               required
                             />
                           </td>
@@ -184,8 +198,8 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="address"
                               defaultValue={getAllCustomer?.address ? getAllCustomer?.address : UserDetail?.address}
                               onChange={inputHandler}
-                              required
-                            />
+                              maxLength={100}
+                              required                            />
                           </td>
                         </tr>
                         <tr>
@@ -196,7 +210,10 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="country"
                               defaultValue={getAllCustomer?.country ? getAllCustomer?.country : UserDetail?.country}
                               onChange={inputHandler}
-                              required
+                              pattern="[A-Za-z]+"
+                      title="Enter only alphabetic characters"
+                      maxLength={64}
+                      required
                             />
                           </td>
                         </tr>
@@ -208,7 +225,9 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="language"
                               defaultValue={getAllCustomer?.language ? getAllCustomer?.language : UserDetail?.language}
                               onChange={inputHandler}
-                              required
+                              pattern="^[A-Za-z,]+$"
+                      title="Enter language seperated by come ','"
+                      required
                             />
                           </td>
                         </tr>

@@ -3,10 +3,9 @@ import { useState } from "react";
 import Profile from "./profile";
 import Notification from "./notification";
 import Payment from "./payment";
-import PasswordChange from "./passwordchange";
+import PasswordChange from "../components/UserModule/user-setting/change-password";
 import ConnectSocial from "./connectsocial";
 import Image from "next/image";
-import bank from "../public/bank.svg";
 import Logactivity from "./logactivity";
 
 const profilesideBar = ({ showNav }) => {

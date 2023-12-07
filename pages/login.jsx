@@ -155,6 +155,7 @@ const UserLogin = ({ API_URL }) => {
                     className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px] md:h-[60px] sm:h-[50px]"
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    minLength={8}
                   />
                   <button
                     type="button"
@@ -199,8 +200,8 @@ const UserLogin = ({ API_URL }) => {
                   )}
                   <Link href="/user-signup">
                     <p
-                      className="text-center text-cyan-600  underline 2xl:mt-4 2xl:text-[20px] font-medium
-                    xl:mt-2 xl:text-[18px] first-letter: lg:mt-2 lg:text-[16px] 
+                      className="text-center underline 2xl:mt-6 2xl:text-[20px] font-medium
+                    xl:mt-4 xl:text-[18px] first-letter: lg:mt-4 lg:text-[16px] 
                     md:mt-2 md:text-[18px]  md:mb-10
                     sm:mt-2 sm:text-[16px]  sm:mb-10"
                     >
@@ -208,23 +209,6 @@ const UserLogin = ({ API_URL }) => {
                     </p>
                   </Link>
 
-                  <div className=" flex justify-center">
-                    <Link href="https://www.facebook.com/" target="_blank">
-                      <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
-                        <img src="/fbb.svg" className="w-8" />
-                      </div>
-                    </Link>
-                    <Link href="https://twitter.com/" target="_blank">
-                      <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
-                        <img src="/tw.svg" className="w-8" />
-                      </div>
-                    </Link>
-                    <Link href="https://www.google.com/account" target="_blank">
-                      <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
-                        <img src="/g.svg" className="w-8" />
-                      </div>
-                    </Link>
-                  </div>
                 </div>
               </form>
             </div>

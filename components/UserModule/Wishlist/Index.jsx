@@ -68,6 +68,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
       ...prevItemStates,
       [itemId]: { ...prevItemStates[itemId], color, isShowErr: false },
     }));
+    setProductColor(color)
   };
 
   const addToCart = (data) => {
@@ -320,7 +321,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                   height={400}
                 />
               </div>
-              <Link href="all-product">
+              <Link href="/ ">
                 <div className="mt-5 text-[18px] font-medium  cursor-pointer px-6 py-2 bg-black rounded-md text-white">
                   Continue watching products
                 </div>

@@ -1,27 +1,19 @@
 import React from 'react';
 import Image from "next/image";
-import telegram from '/public/telegram.svg';
-import puzzle from '/public/puzzle.svg';
-import folders from '/public/empty folder.svg';
-import etherum from '/public/etherum.svg';
-import discount from '/public/discount.svg';
-import heart from '/public/hearts.svg';
 import star from '/public/stars.svg'
-import UserNavbar from './userNavbar';
-import discount2 from '../../public/discount2.svg';
-import empty from '../../public/emptyfolder1.svg';
-import dollar from '../../public/dollar.svg';
+import UserNavbar from '../userNavbar';
+
+
 
 const UserNotificationSetting = () => {
   return (
    <>
-   <UserNavbar/>
     <div className="ml-5">
         <div className="p-4 border bg-white space-y-2 w-[50%] ">
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={discount2}/>
+                <Image className="w-14" src={`/discount.svg`} height={200} width={200}/>
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">You have an offer! successfully done</p>
                   <p className="opacity-60">
@@ -35,7 +27,7 @@ const UserNotificationSetting = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={puzzle} />
+                <Image className="w-14" src={`/puzzle.svg`} height={200} width={200} />
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">You upload your fast product successfully done</p>
                   <p className="opacity-60">
@@ -50,7 +42,7 @@ const UserNotificationSetting = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={empty} />
+                <Image className="w-14" height={200} width={200} src={`/emptyfolder1.svg`} />
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">Your Account has been created successfully done</p>
                   <p className="opacity-60">
@@ -65,7 +57,7 @@ const UserNotificationSetting = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={dollar} />
+                <Image className="w-14" height={200} width={200} src={`/dollar.svg`} />
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">Thank you !you made your fast sell $120</p>
                   <p className="opacity-60">6 hours ago
@@ -79,7 +71,7 @@ const UserNotificationSetting = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={discount} />
+                <Image className="w-14" height={200} width={200} src={`/discount.svg`} />
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">You have an offer! successfully done</p>
                   <p className="opacity-60">
@@ -94,7 +86,7 @@ const UserNotificationSetting = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={heart} />
+                <Image className="w-14" height={200} width={200} src={`/hearts.svg`} />
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">You swapped exactly</p>
                   <p className="opacity-60">
@@ -109,7 +101,7 @@ const UserNotificationSetting = () => {
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Image className="w-14" src={star} />
+                <Image className="w-14" height={200} width={200} src={star} />
                 <div className="ml-3">
                   <p className="font-semibold text-2xl">A new rating has been received</p>
                   <p className="opacity-60">

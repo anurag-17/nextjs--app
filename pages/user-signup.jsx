@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import { EyeIcon,EyeSlashIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -53,7 +53,7 @@ const Signup = () => {
 
     try {
       const response = await axios.request(options);
-      
+
       if (response?.status === 200) {
         setLoading(false);
         toast.success("Successfully! register. Please login");
@@ -100,6 +100,8 @@ const Signup = () => {
                       onChange={(e) => setFirstname(e.target.value)}
                       value={firstname}
                       maxLength={64}
+                      pattern="[A-Za-z]+"
+                      title="Enter only alphabetic characters"
                       required
                     />
                     <input
@@ -109,6 +111,8 @@ const Signup = () => {
                       onChange={(e) => setLastname(e.target.value)}
                       value={lastname}
                       maxLength={64}
+                      pattern="[A-Za-z]+"
+                      title="Enter only alphabetic characters"
                       required
                     />
                   </div>
@@ -133,22 +137,24 @@ const Signup = () => {
                       minLength={8}
                     />
                     <button
-                    type="button"
-                    className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
-                    onClick={handleToggle}
-                  >
-                   {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
-                  </button>
+                      type="button"
+                      className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                      onClick={handleToggle}
+                    >
+                      {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
+                    </button>
                   </div>
                   <div className="mt-5">
                     <input
-                      type="number"
+                      type="text"
                       placeholder="Mobile no"
                       className="custom-input w-full"
                       onChange={(e) => setMobile(e.target.value)}
                       value={mobile}
-                      pattern="[6789][0-9]{9}" 
+                      pattern="[6789][0-9]{9}"
+                      title="Enter 10 digit mobile no."
                       required
+                      maxLength={10}
                     />
                   </div>
                   <div className="mt-5">
@@ -162,37 +168,40 @@ const Signup = () => {
                       required
                     />
                   </div>
-                    <div className="mt-5">
-                      <textarea
-                        type="text"
-                        placeholder="Date of Birth DD/MM/YYYY"
-                        className="custom-input"
-                        onChange={(e) => setDob(e.target.value)}
-                        pattern="^[0-9]+$"  
-                        value={dob}
-                        required
-                      />
-                    </div>
-                    <div className="mt-5">
-                      <textarea
-                        type="text"
-                        placeholder="Country"
-                        className="custom-input"
-                        onChange={(e) => setCountry(e.target.value)}
-                        value={country}
-                        pattern="^[a-zA-Z][a-zA-Z\s]*$"  
-                        maxLength={64}
-                        required
-                      />
-                    </div>
                   <div className="mt-5">
-                    <textarea
+                    <input
+                      type="text"
+                      placeholder="Date of Birth DD/MM/YYYY"
+                      className="custom-input"
+                      onChange={(e) => setDob(e.target.value)}
+                      pattern="^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/\d{4}$"
+                      title="DD/MM/YYYY"
+                      value={dob}
+                      required
+                    />
+                  </div>
+                  <div className="mt-5">
+                    <input
+                      type="text"
+                      placeholder="Country"
+                      className="custom-input"
+                      onChange={(e) => setCountry(e.target.value)}
+                      value={country}
+                      pattern="[A-Za-z]+"
+                      title="Enter only alphabetic characters"
+                      maxLength={64}
+                      required
+                    />
+                  </div>
+                  <div className="mt-5">
+                    <input
                       type="text"
                       placeholder="Language"
                       className="custom-input w-full"
                       onChange={(e) => setLanguage(e.target.value)}
                       value={language}
-                      pattern="^[a-zA-Z][a-zA-Z\s]*$"  
+                      pattern="^[A-Za-z,]+$"
+                      title="Enter language seperated by come ','"
                       required
                     />
                   </div>
@@ -227,29 +236,22 @@ const Signup = () => {
                   </div>
                   <div className="mt-5">
                     <button className="w-full bg-cyan-600  text-center text-white mb-2 font-semibold xl:text-[18px] lg:text-[16px] rounded">
-                      {isLoading ? (
+                      
                         <button
                           type="submit"
-                          className="w-full  bg-cyan-600 py-3 text-center text-white mb-2 border border-cyan-600 font-semibold text-[18px]"
-                        >
-                          Loading...
-                        </button>
-                      ) : (
-                        <button
-                          type="submit"
+                          disabled={isLoading}
                           className="w-full bg-cyan-600 py-3 text-center text-white  font-semibold text-[18px]"
                         >
-                          Register
+                        {isLoading ? "Loading.." : "Register"}  
                         </button>
-                      )}
                     </button>
 
                     <Link href="/login">
-                      <h1 className="text-center text-cyan-600 text-[25px] font-medium underline">
+                      <h1 className="text-center text-[25px] font-medium underline">
                         Login
                       </h1>
                     </Link>
-                    <div className=" flex justify-center mt-5">
+                    {/* <div className=" flex justify-center mt-5">
                       <Link href="https://www.facebook.com/" target="_blank">
                         <div className="border p-2 w-12 rounded-lg mx-1 hover:bg">
                           <img src="/fbb.svg" className="w-8" />
@@ -268,7 +270,7 @@ const Signup = () => {
                           <img src="/g.svg" className="w-8" />
                         </div>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </form>
               </div>

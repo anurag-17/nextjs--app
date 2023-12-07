@@ -1,5 +1,5 @@
 import React from "react";
-import UserSetting from "../components/UserModule/UserSetting";
+import UserSetting from "../components/UserModule/user-setting/UserSetting";
 const usersetting = () => {
   return (
     <div>

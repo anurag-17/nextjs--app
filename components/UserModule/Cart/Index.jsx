@@ -17,7 +17,7 @@ import { setCartItems } from "../../../redux/slices/orderSlice";
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartProduct }) => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || {});
- 
+
   const [isOpenAdd, setOpenAdd] = useState(false);
   const [shippingCharge, setShippingCharge] = useState(0);
 
@@ -625,7 +625,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                       {item?.product?.images?.length > 0 &&
                                         item?.product?.images?.map(
                                           (img, inx) => (
-                                            <Fragment  key={inx}>
+                                            <Fragment key={inx}>
                                               {item?.color == img?.color && (
                                                 <div className="w-[30%] p-4 cursor-pointer ">
                                                   <Image
