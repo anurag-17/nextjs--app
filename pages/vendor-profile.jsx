@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import Profile from "./profile";
 import Notification from "./notification";
 import Payment from "./payment";
-import PasswordChange from "./passwordchange";
 import ConnectSocial from "./connectsocial";
 import Image from "next/image";
 import bank from "../public/bank.svg";

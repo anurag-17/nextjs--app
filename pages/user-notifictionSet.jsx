@@ -1,5 +1,5 @@
 import React from "react";
-import UserNotificationSetting from "../components/UserModule/UserNotificationSetting";
+import UserNotificationSetting from "../components/UserModule/user-setting/UserNotificationSetting";
 
 const usernotifictionSet = () => {
   return (

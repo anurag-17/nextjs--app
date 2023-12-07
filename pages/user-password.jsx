@@ -1,5 +1,5 @@
 import React from "react";
-import UserUpdatePassword from "../components/UserModule/UserUpdatePassword";
+import UserUpdatePassword from "../components/UserModule/user-setting/UserUpdatePassword";
 
 const userpassword = () => {
   return (
