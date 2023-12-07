@@ -14,7 +14,6 @@ const Payment = ({ buyItem, grandTotal, orderShipDetails }) => {
     const [isLoading, setIsLoading] = useState(false);
     const totalNum = grandTotal * 100
     const orderProduct = { ...buyItem, grandTotal: totalNum };
-    console.log(orderProduct)
     const { token } = useSelector((state) => state.auth.userDetails || {});
 
     const makePayment = async () => {
@@ -35,14 +34,14 @@ const Payment = ({ buyItem, grandTotal, orderShipDetails }) => {
             body: JSON.stringify(data)
         });
 
-        console.log(response)
         if (response.status === 200) {
             const session = await response.json();
-
+            
+            console.log(session?.session?.id)
             const result = stripe.redirectToCheckout({
-                sessionId: session.id
+                sessionId: session?.session?.id
             });
-
+            
             if (result.error) {
                 console.log(result.error);
             }
