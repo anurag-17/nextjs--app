@@ -312,7 +312,6 @@ const ProductGrid = () => {
       .then(function (response) {
         if (response.status === 200) {
           sessionStorage.removeItem("addToCart");
-          alert("ok")
           // setCartItems(dispatch(data?.cart?.products))
           refreshData();
         } else {

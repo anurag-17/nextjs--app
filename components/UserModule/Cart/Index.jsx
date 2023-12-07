@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BuyProduct from "../../razorpay/BuyProduct";
 import ShippingAddress from "../Address/shippingAddress";
 import PaymentOption from "./paymentOption";
+import Payment from "../../payment-integration/index";
 import { BASE_URL } from "../../../utlis/config";
 import { setCartItems } from "../../../redux/slices/orderSlice";
 
@@ -90,7 +91,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
           url: "https://e-commerce-backend-brown.vercel.app/api/auth/remove-cart",
           headers: {
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
             authorization: token,
           },
 
@@ -152,10 +152,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
     setLoading(true)
     const options = {
       method: "POST",
-      url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart/cash-order",
+      url: `${BASE_URL}/auth/cart/cash-order`,
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "insomnia/2023.5.8",
         authorization: token,
       },
       data: {
@@ -234,110 +233,139 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
       {!token || token == undefined ? (
         <div className=" px-20">
           <div className="border rounded-lg bg-white p-5">
-            <div className="flex justify-between">
-              <div>
-                <h1 className="text-[35px] font-semibold">
-                  {" "}
-                  Your Cart{" "}
-                </h1>
-              </div>
-
-              <button
-                onClick={removeWishlist}
-                className="  mr-4 cursor-pointer"
-              >
-                <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
-                  Clear Cart
-                </p>
-              </button>
-            </div>
             <div>
-              {sessionCartProduct?.length > 0 && (
-                sessionCartProduct?.map((item, inx) => (
-                  <>
-                    <div
-                      key={inx}
-                      className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
-                    >
-                      {item?.product?.images?.length > 0 &&
-                        item?.product?.images?.map((img, index) => (
-                          <Fragment key={index}>
-                            {item?.color == img?.color && (
-                              <div className="w-[25%] py-2 px-4">
-                                <Link
-                                  href={`/product-details/${item?.product?._id}`}
-                                >
-                                  <Image
-
-                                    src={img?.url[0]}
-                                    alt="PRODUCT IMAGE"
-                                    className="rounded-[20px] "
-                                    width={200}
-                                    height={300}
-                                  />
-                                </Link>
-                              </div>
-                            )}
-                          </Fragment>
-                        ))}
-
-                      <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
-                        <div className="">
-                          <p className="text-[18px]  flex capitalize ">
-                            <p className="font-semibold text-[24px]">
-                              {item?.product?.title}
-                            </p>
-                          </p>
-                          <p className=" text-[18px]">
-                            Brand : {item?.product?.brand}
-                          </p>
-
-                          <div className="flex mt-2">
-                            <h1 className=" mr-1 text-[18px]">Status : </h1>
-                            <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
-                              Available
-                            </p>
-                          </div>
-                          <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
-                            Colors :
-                            <p className="font-medium"> {item?.color} </p>
-                          </p>
-                        </div>
-
-                        <div className="">
-                          <p className="text-[18px]  flex capitalize  mt-2">
-                            Qty:
-                            <p className="font-semibold px-2">{item?.count} </p>
-                          </p>
-                        </div>
-
-                        <div className="">
-                          <del className="text-md font-semibold capitalize mt-2">
-                            Price : ₹ {item?.product?.price}
-                          </del>
-
-                          <p className="text-md font-semibold capitalize mt-2 text-LightBlue-700">
-                            Offer Price : ₹{" "}
-                            {Number(
-                              item?.product?.discountedPrice * item?.count
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                      <div
-                        onClick={() => removeFromCart(item?._id)}
-                        className=""
-                      >
-                        <img
-                          src="cross.svg"
-                          className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
-                        />
-                      </div>
+              {sessionCartProduct?.length > 0 &&
+                <>
+                  <div className="flex justify-between">
+                    <div>
+                      <h1 className="text-[35px] font-semibold">
+                        Your Cart
+                      </h1>
                     </div>
 
+                    <button
+                      onClick={removeWishlist}
+                      className="  mr-4 cursor-pointer"
+                    >
+                      <p className="text-[20px] mx-1 flex font-medium px-5 border py-2  rounded-lg hover:bg-lightBlue-100">
+                        Clear Cart
+                      </p>
+                    </button>
+                  </div>
 
-                  </>
-                )))}
+                  {(
+                    sessionCartProduct?.map((item, inx) => (
+                      <>
+                        <div
+                          key={inx}
+                          className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 py-3 px-4 hover:border-lightBlue-600 cursor-pointer "
+                        >
+                          {item?.product?.images?.length > 0 &&
+                            item?.product?.images?.map((img, index) => (
+                              <Fragment key={index}>
+                                {item?.color == img?.color && (
+                                  <div className="w-[25%] py-2 px-4">
+                                    <Link
+                                      href={`/product-details/${item?.product?._id}`}
+                                    >
+                                      <Image
+
+                                        src={img?.url[0]}
+                                        alt="PRODUCT IMAGE"
+                                        className="rounded-[20px] "
+                                        width={200}
+                                        height={300}
+                                      />
+                                    </Link>
+                                  </div>
+                                )}
+                              </Fragment>
+                            ))}
+
+                          <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
+                            <div className="">
+                              <p className="text-[18px]  flex capitalize ">
+                                <p className="font-semibold text-[24px]">
+                                  {item?.product?.title}
+                                </p>
+                              </p>
+                              <p className=" text-[18px]">
+                                Brand : {item?.product?.brand}
+                              </p>
+
+                              <div className="flex mt-2">
+                                <h1 className=" mr-1 text-[18px]">Status : </h1>
+                                <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
+                                  Available
+                                </p>
+                              </div>
+                              <p className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                Colors :
+                                <p className="font-medium"> {item?.color} </p>
+                              </p>
+                            </div>
+
+                            <div className="">
+                              <p className="text-[18px]  flex capitalize  mt-2">
+                                Qty:
+                                <p className="font-semibold px-2">{item?.count} </p>
+                              </p>
+                            </div>
+
+                            <div className="">
+                              <del className="text-md font-semibold capitalize mt-2">
+                                Price : ₹ {item?.product?.price}
+                              </del>
+
+                              <p className="text-md font-semibold capitalize mt-2 text-LightBlue-700">
+                                Offer Price : ₹{" "}
+                                {Number(
+                                  item?.product?.discountedPrice * item?.count
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                          <div
+                            onClick={() => removeFromCart(item?._id)}
+                            className=""
+                          >
+                            <img
+                              src="cross.svg"
+                              className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 py-4">
+                          <div className=""></div>
+
+                          <div className="grid grid-cols-2">
+                            <div className=""></div>
+                            <div className="my-6">
+                              <div className="flex">
+                                <p className="w-[200px]">Subtotal : </p>
+                                <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
+                                  ₹ {getCartProduct?.cartTotal}
+                                </p>
+                              </div>
+                            </div>
+                            <div className=""></div>
+                            <div className="">
+                              <button
+                                className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${isCartUpdated ? "bg-lightBlue-200" : ""
+                                  }`}
+                                onClick={() => setOpenLogin(true)}
+                              >
+                                Place Order
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )))}
+                </>
+
+              }
               {
                 sessionCartProduct?.length <= 0 && (
                   <div className="py-5">
@@ -364,31 +392,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                   </div>
                 )}
             </div>
-            <div className="grid grid-cols-2 py-4">
-              <div className=""></div>
 
-              <div className="grid grid-cols-2">
-                <div className=""></div>
-                <div className="my-6">
-                  <div className="flex">
-                    <p className="w-[200px]">Subtotal : </p>
-                    <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
-                      ₹ {getCartProduct?.cartTotal}
-                    </p>
-                  </div>
-                </div>
-                <div className=""></div>
-                <div className="">
-                  <button
-                    className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${isCartUpdated ? "bg-lightBlue-200" : ""
-                      }`}
-                    onClick={() => setOpenLogin(true)}
-                  >
-                    Place Order
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       ) : (
@@ -752,7 +756,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                                 {paymentOption ===
                                   "Payment using razorpay" && (
                                     <div className="my-8 text-right">
-                                      <BuyProduct
+                                      <Payment
                                         buyItem={getCartProduct || []}
                                         grandTotal={
                                           getCartProduct?.cartTotal +

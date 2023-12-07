@@ -38,7 +38,6 @@ console.log(currencyEdit);
   }, []);
 
   const handleSubmit = async (e) => {
-    alert("ok")
     e.preventDefault();
     try {
       const currencyData = {

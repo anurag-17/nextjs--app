@@ -117,12 +117,6 @@ const UserNavbar = () => {
     setCartLength(localStorage.getItem("productsLength") || 0);
   }, [isRefresh]);
 
-  useEffect(() => {
-    if (!token || token === undefined) {
-      router.push("/");
-    }
-  }, []);
-
 
   const refreshData = () => {
     setrefresh(!isRefresh);
@@ -179,7 +173,6 @@ const UserNavbar = () => {
         if (typeof window !== "undefined") {
           // localStorage.setItem("productsLength", data?.cart?.products?.length);
           // setCartLength(data?.cart?.products?.length)
-          alert("S")
           refreshData()
         }
       } else if (response.status === 202) {
