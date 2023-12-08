@@ -135,12 +135,11 @@ const UserNavbar = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem("wishList");
-    localStorage.removeItem("userID");
+    localStorage.removeItem("cart_item");
     localStorage.removeItem("userToken");
-    localStorage.removeItem("userNum");
-    localStorage.removeItem("userAdd");
-    localStorage.removeItem("userMail");
-    localStorage.removeItem(" ");
+    localStorage.removeItem("user_number");
+    localStorage.removeItem("user_address");
+    localStorage.removeItem("user_mail");
     window.location.reload();
     // router.push("/login");
   };

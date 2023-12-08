@@ -243,7 +243,7 @@ const brandlist = () => {
       {isDrawerOpen && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800 border rounded-lg"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white w-4/12   border rounded-lg"
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >
@@ -271,7 +271,7 @@ const brandlist = () => {
       {isDrawerOpenO && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >

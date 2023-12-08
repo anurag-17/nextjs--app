@@ -149,7 +149,7 @@ const UserLogin = ({ API_URL }) => {
                     type="text"
                     placeholder="Email"
                     value={email}
-                    className="custom-input 2xl:h-[60px] xl:h-[50px] 
+                    className="custom-input border border-gray-600 2xl:h-[60px] xl:h-[50px] 
                     lg:h-[40px]
                     md:h-[60px]
                     sm:h-[50px]"
@@ -168,7 +168,7 @@ const UserLogin = ({ API_URL }) => {
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     value={password}
-                    className="custom-input 2xl:h-[60px] xl:h-[50px] lg:h-[40px] md:h-[60px] sm:h-[50px]"
+                    className="custom-input border border-gray-600 2xl:h-[60px] xl:h-[50px] lg:h-[40px] md:h-[60px] sm:h-[50px]"
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={8}

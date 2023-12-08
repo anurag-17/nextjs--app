@@ -17,6 +17,7 @@ export const statusItems = [
   "Dispatched",
   "Cancelled",
   "Delivered",
+  "Payment Confirmed"
 ]
 
 const ManageOrders = ({ allOrders, refreshDatas }) => {
@@ -67,7 +68,7 @@ const ManageOrders = ({ allOrders, refreshDatas }) => {
       {isDrawerOpen && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 max-h-[500px] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-[#f3f3f3]  dark:bg-gray-800 border rounded-lg"
+          className="fixed content-center mb-5 right-5 z-40 max-h-[500px] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-[#f3f3f3]    border rounded-lg"
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >
@@ -98,7 +99,7 @@ const ManageOrders = ({ allOrders, refreshDatas }) => {
       {isCustormDrawer && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 max-h-[500px] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-[#f3f3f3]  dark:bg-gray-800 border rounded-lg"
+          className="fixed content-center mb-5 right-5 z-40 max-h-[500px] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-[#f3f3f3]    border rounded-lg"
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >

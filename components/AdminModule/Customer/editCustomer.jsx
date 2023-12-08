@@ -117,7 +117,7 @@ console.log("wqwq",token);
                 }
                 type="text"
                 name="firstname"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 // className="custom-input"
                 required
                 minLength={3}
@@ -139,7 +139,7 @@ console.log("wqwq",token);
                 }
                 type="text"
                 name="lastname"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -157,7 +157,7 @@ console.log("wqwq",token);
                 // }
                 type="text"
                 name="email"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -173,7 +173,7 @@ console.log("wqwq",token);
                 // }
                 type="number"
                 name="mobile"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -191,7 +191,7 @@ console.log("wqwq",token);
                 // }
                 type="text"
                 name="address"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -207,7 +207,7 @@ console.log("wqwq",token);
                 // }
                 type="text"
                 name="dob"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -225,7 +225,7 @@ console.log("wqwq",token);
                 // }
                 type="text"
                 name="country"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -243,7 +243,7 @@ console.log("wqwq",token);
                 // }
                 type="text"
                 name="language"
-                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+                className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
                 required
               />{" "}
             </div>
@@ -260,7 +260,7 @@ console.log("wqwq",token);
               // }
               type="text"
               name="about"
-              className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
+              className="px-3 py-2 rounded  m-5  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-10/12"
               required
             />{" "}
           </div>

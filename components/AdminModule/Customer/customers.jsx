@@ -193,7 +193,7 @@ const Customers = () => {
         {isDrawerOpen && (
           <div
             id="drawer-form"
-            className="fixed border content-center mb-5 right-5 z-40 h-[75%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
+            className="fixed border content-center mb-5 right-5 z-40 h-[75%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12  "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >

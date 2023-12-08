@@ -442,7 +442,7 @@ const AddProduct = () => {
             <label className="custom-input-label">Regular Price</label>
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
-                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  ">
+                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-sm focus:bg-white  dark:border dark:border-gray-600  ">
                   <select
                     className="bg-white list-none outline-none"
                     name="regPriceCurr"
@@ -476,7 +476,7 @@ const AddProduct = () => {
             <label className="custom-input-label">Offer Price</label>
             <div className="col-span-8 sm:col-span-4">
               <div className="flex flex-row">
-                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
+                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600">
                   <select
                     className="bg-white list-none outline-none "
                     name="offerPriceCurr"

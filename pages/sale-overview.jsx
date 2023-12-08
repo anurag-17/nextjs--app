@@ -40,7 +40,7 @@ const SaleOverview = () => {
             <p className="text-gray-400 text-[18px]">12452</p>
           </div>
         </div>
-        <div className="w-full bg-purple-600 my-4 rounded-lg h-4     dark:bg-gray-700">
+        <div className="w-full bg-purple-600 my-4 rounded-lg h-4       ">
           <div
             className="bg-lightBlue-600 h-4 rounded-s-lg"
             style={{ width: "70.7%" }}

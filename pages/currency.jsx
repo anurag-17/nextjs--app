@@ -121,7 +121,7 @@ const Currency = () => {
         {isDrawerOpen && (
           <div
             id="drawer-form"
-            className="fixed content-center mb-5 right-5 z-40 h-[65%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12 dark:bg-gray-800"
+            className="fixed content-center mb-5 right-5 z-40 h-[65%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-6/12  "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >
@@ -150,7 +150,7 @@ const Currency = () => {
         {isDrawerOpenO && (
           <div
             id="drawer-form"
-            className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12 dark:bg-gray-800"
+            className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >
@@ -179,7 +179,7 @@ const Currency = () => {
         <div>
           <div className="relative overflow-x-auto w-3/5">
             <table className="w-full text-sm text-left  dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-[#E5E7EB] dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-[#E5E7EB]    dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     <input type="checkbox" classNameName="" />
@@ -197,7 +197,7 @@ const Currency = () => {
               </thead>
               {getCurrency.map((item) => (
                 <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <tr className="bg-white border-b   dark:border-gray-700">
                     <td className="px-6 py-3">
                       <input type="checkbox" classNameName="" />
                     </td>

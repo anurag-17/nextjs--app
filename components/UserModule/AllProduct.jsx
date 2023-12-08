@@ -596,14 +596,14 @@ const ProductGrid = () => {
                 <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h4"
-                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4"
+                    className="lg:text-[25px] text-[16px] font-semibold leading-6 text-gray-900 mb-4 "
                   >
                     Please login to add into wishlist
                   </Dialog.Title>
 
                   <div className="flex justify-between gap-x-5 pt-4">
                     <button
-                      className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none"
+                      className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3 hover:border-none focus-visible:outline-none"
                       onClick={closeLoginModal}
                     >
                       No

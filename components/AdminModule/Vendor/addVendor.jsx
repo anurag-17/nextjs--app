@@ -83,7 +83,7 @@ const AddVendor = ({ refreshData, closeDrawer }) => {
                   value={vendorDetails.vendorName}
                   type="text"
                   name="vendorName"
-                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
                   // className="custom-input"
                   // placeholder="Vendor name"
                   required
@@ -100,7 +100,7 @@ const AddVendor = ({ refreshData, closeDrawer }) => {
                   value={vendorDetails.companyName}
                   type="text"
                   name="companyName"
-                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
                   required
                 />{" "}
               </div>
@@ -115,7 +115,7 @@ const AddVendor = ({ refreshData, closeDrawer }) => {
                   value={vendorDetails.email}
                   type="text"
                   name="email"
-                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
                   required
                 />{" "}
               </div>
@@ -128,7 +128,7 @@ const AddVendor = ({ refreshData, closeDrawer }) => {
                   value={vendorDetails.phone}
                   type="number"
                   name="phone"
-                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  className="px-3 py-2 rounded  m-16  border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
                   required
                 />
               </div>
@@ -143,7 +143,7 @@ const AddVendor = ({ refreshData, closeDrawer }) => {
                   value={vendorDetails.address}
                   type="text"
                   name="address"
-                  className="px-3 py-2 rounded m-16   border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
+                  className="px-3 py-2 rounded m-16   border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600  focus:outline-none  h-[50px] relative  w-8/12"
                   required
                 />
               </div>
