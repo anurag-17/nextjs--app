@@ -49,7 +49,14 @@ const Cart = () => {
 
   return (
     <>
-    <ToastContainer />
+ <ToastContainer  
+      position="bottom-right"
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"/>
       <Usercart
         token={token}
         getCartProduct={getCartProduct}

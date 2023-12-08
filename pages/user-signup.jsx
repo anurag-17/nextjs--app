@@ -21,6 +21,15 @@ const Signup = () => {
   const [isLoading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [isChecked, setIsChecked] = useState(false);
+  const [isCheckError, setCheckError] = useState('');
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    setCheckError('');
+  };
+
+
   const handleToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -29,51 +38,69 @@ const Signup = () => {
 
   const addFormHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    const options = {
-      method: "POST",
-      url: "https://e-commerce-backend-brown.vercel.app/api/auth/register",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        password: password,
-        mobile: mobile,
-        address: address,
-        dob: dob,
-        country: country,
-        language: language,
-        about: about,
-      },
-    };
+    if (!isChecked) {
+      setCheckError('Please accept the Terms of Use and Privacy Policy.');
+    }
+    else {
+      setLoading(true);
+      setCheckError("")
+      const options = {
+        method: "POST",
+        url: "https://e-commerce-backend-brown.vercel.app/api/auth/register",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          password: password,
+          mobile: mobile,
+          address: address,
+          dob: dob,
+          country: country,
+          language: language,
+          about: about,
+        },
+      };
 
-    try {
-      const response = await axios.request(options);
-
-      if (response?.status === 200) {
+      try {
+        const response = await axios.request(options);
+console.log(response)
+        if (response?.status === 201) {
+          setLoading(false);
+          toast.success("Successfully! register. Please login");
+          router.push("/login");
+        } else
+          if (response?.status === 203) {
+            toast.warning(response?.data?.error);
+            setLoading(false);
+          }
+          else {
+            setLoading(false);
+            return
+          }
+      } catch (error) {
         setLoading(false);
-        toast.success("Successfully! register. Please login");
-        router.push("/login");
-      } else {
-        setLoading(false);
+        console.error(error);
+        toast.error("Failed ! Try after some time");
       }
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-      toast.error("Failed !");
     }
   };
 
   return (
     <div>
-      <ToastContainer />
+      <ToastContainer  
+      position="bottom-right"
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"/>
       <div>
-        <ToastContainer />
-        <div className="min-h-screen py-40 bg-[#DFF9FF]">
+        <div className="min-h-screen py-20 bg-[#DFF9FF]">
           <div className="container mx-auto">
             <div className="flex flex-col lg:flex-row justify-center w-10/12 lg:w-[80%] bg-white rounded-xl mx-auto shadow-lg overflow-hidden min-h-[700px] border-[2px] border-[#0891B2]">
               <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center">
@@ -101,7 +128,7 @@ const Signup = () => {
                       value={firstname}
                       maxLength={64}
                       pattern="[A-Za-z]+"
-                      title="Enter only alphabetic characters"
+                      title="Enter only alphabetic characters without space"
                       required
                     />
                     <input
@@ -112,17 +139,19 @@ const Signup = () => {
                       value={lastname}
                       maxLength={64}
                       pattern="[A-Za-z]+"
-                      title="Enter only alphabetic characters"
+                      title="Enter only alphabetic characters without space"
                       required
                     />
                   </div>
                   <div className="mt-5">
                     <input
-                      type="text"
+                      type="email"
                       placeholder="Email"
                       className="custom-input w-full"
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
+                      pattern="[-a-zA-Z0-9~!$%^ *_=+}{'?]+(\.[-a-zA-Z0-9~!$%^ *_=+}{'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.([cC][oO][mM]))(:[0-9]{1,5})?"
+                      title="enter valid email ex. abc@gmail.com"
                       required
                     />
                   </div>
@@ -180,31 +209,35 @@ const Signup = () => {
                       required
                     />
                   </div>
-                  <div className="mt-5">
-                    <input
-                      type="text"
-                      placeholder="Country"
-                      className="custom-input"
-                      onChange={(e) => setCountry(e.target.value)}
-                      value={country}
-                      pattern="[A-Za-z]+"
-                      title="Enter only alphabetic characters"
-                      maxLength={64}
-                      required
-                    />
+
+                  <div className="flex gap-x-3">
+                    <div className="mt-5">
+                      <input
+                        type="text"
+                        placeholder="Country"
+                        className="custom-input"
+                        onChange={(e) => setCountry(e.target.value)}
+                        value={country}
+                        pattern="[A-Za-z]+"
+                        title="Enter only alphabetic characters without space"
+                        maxLength={64}
+                        required
+                      />
+                    </div>
+                    <div className="mt-5">
+                      <input
+                        type="text"
+                        placeholder="Language"
+                        className="custom-input w-full"
+                        onChange={(e) => setLanguage(e.target.value)}
+                        value={language}
+                        pattern="^[A-Za-z,]+$"
+                        title="Enter language seperated by coma ',' without space"
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className="mt-5">
-                    <input
-                      type="text"
-                      placeholder="Language"
-                      className="custom-input w-full"
-                      onChange={(e) => setLanguage(e.target.value)}
-                      value={language}
-                      pattern="^[A-Za-z,]+$"
-                      title="Enter language seperated by come ','"
-                      required
-                    />
-                  </div>
+
                   <div className="mt-5">
                     <textarea
                       type="text"
@@ -221,6 +254,8 @@ const Signup = () => {
                       <input
                         type="checkbox"
                         className="border border-gray-400 2xl:mr-2 xl:mr-1 lg:mr-1 md:mr-1 sm:mr-1"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
                       />
                       <span>
                         I accept the
@@ -233,17 +268,19 @@ const Signup = () => {
                         </a>
                       </span>
                     </label>
+
+                    {isCheckError && <div className="text-red-500 font-medium py-2">{isCheckError}</div>}
                   </div>
                   <div className="mt-5">
                     <button className="w-full bg-cyan-600  text-center text-white mb-2 font-semibold xl:text-[18px] lg:text-[16px] rounded">
-                      
-                        <button
-                          type="submit"
-                          disabled={isLoading}
-                          className="w-full bg-cyan-600 py-3 text-center text-white  font-semibold text-[18px]"
-                        >
-                        {isLoading ? "Loading.." : "Register"}  
-                        </button>
+
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-cyan-600 py-3 text-center text-white  font-semibold text-[18px]"
+                      >
+                        {isLoading ? "Loading.." : "Register"}
+                      </button>
                     </button>
 
                     <Link href="/login">

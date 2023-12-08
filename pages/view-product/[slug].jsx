@@ -56,7 +56,6 @@ const EditProduct = () => {
         <ToastContainer />
         <Header
           headTitle="Product Details"
-          subTitle="Add your product and necessary information from here"
         />
         <main className="h-full overflow-y-auto pt-[40px]">
           <div className="container grid px-6 mx-auto">

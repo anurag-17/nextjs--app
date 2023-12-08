@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
-import { setUserDetails } from "../../redux/slices/authSlice";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import shoping from "../../public/shopingcart.svg";
 import { Dialog, Transition } from "@headlessui/react";
@@ -54,7 +53,7 @@ const menuList = [
     component: "",
     icon: "fa fa-phone-square",
     imagePath: "/loginn.svg",
-    path: "user-notifictionSet",
+    path: "user-notifiction",
     show: true,
   },
   {
@@ -107,15 +106,9 @@ const UserNavbar = () => {
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isOpenLogin, setOpenLogin] = useState(false);
-  const [isShow, setShow] = useState(false);
-  const [cartLength, setCartLength] = useState(0);
   const [isRefresh, setrefresh] = useState(false);
   const { token } = useSelector((state) => state.auth.userDetails || null);
-  const { cartItem } = useSelector((state) => state.order || 0);
-
-  useEffect(() => {
-    setCartLength(localStorage.getItem("productsLength") || 0);
-  }, [isRefresh]);
+  const { cart } = useSelector((state) => state.auth || []);
 
 
   const refreshData = () => {
@@ -141,7 +134,6 @@ const UserNavbar = () => {
   };
 
   const handleSignOut = () => {
-    dispatch(setUserDetails({}));
     localStorage.removeItem("wishList");
     localStorage.removeItem("userID");
     localStorage.removeItem("userToken");
@@ -150,7 +142,7 @@ const UserNavbar = () => {
     localStorage.removeItem("userMail");
     localStorage.removeItem(" ");
     window.location.reload();
-
+    // router.push("/login");
   };
 
   const handleLogin = () => {
@@ -171,8 +163,6 @@ const UserNavbar = () => {
         setCartItems(dispatch(data?.cart?.products))
 
         if (typeof window !== "undefined") {
-          // localStorage.setItem("productsLength", data?.cart?.products?.length);
-          // setCartLength(data?.cart?.products?.length)
           refreshData()
         }
       } else if (response.status === 202) {
@@ -250,7 +240,10 @@ const UserNavbar = () => {
                     <div className="py-6 ">
                       <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
                     </div>
-                    <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cartItem}  </div>
+                    {
+                      cart?.length > 0 &&
+                    <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cart?.length}  </div>
+                    }
                   </Link>
                 </>
               }

@@ -24,6 +24,10 @@ const PasswordChange = () => {
             setError('Passwords do not match');
             return;
         }
+        else if (currentPassword === newPassword) {
+            setError('New password must be different from the current password');
+            return;
+        }
         else {
             try {
                 const response = await axios.post(
@@ -44,6 +48,7 @@ const PasswordChange = () => {
                     setCurrentPassword("")
                     setNewPassword("")
                     setConfirmPassword("")
+                    setError("")
                 } else {
                 }
             } catch (error) {

@@ -43,7 +43,7 @@ const UserSetting = () => {
       component: <UserNotificationSetting />,
       icon: "fa fa-phone-square",
       imagePath: "/bell.svg",
-      path: "/user-notifictionSet",
+      path: "/user-notifiction",
     },
 
     {

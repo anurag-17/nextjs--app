@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-import { setToken, setUserDetails } from "../redux/slices/authSlice";
+import { getCartProducts, getUserAddress, getUserWishList, setToken } from "../redux/slices/authSlice";
 
 const UserLogin = ({ API_URL }) => {
   const router = useRouter();
@@ -48,7 +48,9 @@ const UserLogin = ({ API_URL }) => {
       .then(function (response) {
         if (response?.status === 201) {
           dispatch(setToken(response?.data?.token));
-          dispatch(setUserDetails(response?.data?.user));
+          dispatch(getUserWishList(response?.data?.user?.wishlist));
+          dispatch(getCartProducts(response?.data?.user?.cart));
+          dispatch(getUserAddress(response?.data?.user));
           setLoading(false);
           toast.success("Success, Login Successfully!");
           router.push("/user-product");
@@ -65,7 +67,14 @@ const UserLogin = ({ API_URL }) => {
   };
   return (
     <div>
-      <ToastContainer />
+      <ToastContainer  
+      position="bottom-right"
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"/>
       <div
         className="2xl:min-h-screen 2xl:py-40 bg-[#DFF9FF]   xl:min-h-screen xl:py-20
         lg:min-h-screen lg:py-16

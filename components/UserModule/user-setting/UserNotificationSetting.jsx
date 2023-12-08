@@ -8,8 +8,9 @@ import UserNavbar from '../userNavbar';
 const UserNotificationSetting = () => {
   return (
    <>
-    <div className="ml-5">
-        <div className="p-4 border bg-white space-y-2 w-[50%] ">
+   <div className="container mx-auto">
+   <div className="">
+        <div className="p-4 border bg-white space-y-2  ">
           <div className="border p-4 rounded-md ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
@@ -116,6 +117,7 @@ const UserNotificationSetting = () => {
         </div>
         </div> 
       </div>
+   </div>
    </>
   )
 }

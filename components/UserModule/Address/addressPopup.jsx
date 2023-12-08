@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../../redux/slices/authSlice";
+import { getUserAddress } from "../../../redux/slices/authSlice";
 
 
 const AddressModal = ({closeModal,userAdd}) => {
@@ -20,7 +20,6 @@ const AddressModal = ({closeModal,userAdd}) => {
           url: "https://e-commerce-backend-brown.vercel.app/api/auth/save-address",
           headers: {
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
             "authorization":  token,
           },
           data: {
@@ -33,7 +32,7 @@ const AddressModal = ({closeModal,userAdd}) => {
           .then(function (response) {
             if (response.status === 200) {
               toast.success("Address updated successfully!");
-              dispatch(setUserDetails(response?.data));
+              dispatch(getUserAddress(response?.data));
               closeModal()
             } else {
               return;

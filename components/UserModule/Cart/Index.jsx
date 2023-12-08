@@ -1,23 +1,25 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import axios from "axios";
-import dynamic from "next/dynamic";
 import { ToastContainer, toast } from "react-toastify";
+import { Dialog, Transition } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { Dialog, Transition } from "@headlessui/react";
-import UserNavbar from "../userNavbar";
+
+import { getCartProducts } from "../../../redux/slices/authSlice";
 import AddressModal from "../Address/addressPopup";
-import { useDispatch, useSelector } from "react-redux";
-import BuyProduct from "../../razorpay/BuyProduct";
-import ShippingAddress from "../Address/shippingAddress";
-import PaymentOption from "./paymentOption";
 import Payment from "../../payment-integration/index";
 import { BASE_URL } from "../../../utlis/config";
-import { setCartItems } from "../../../redux/slices/orderSlice";
+import PaymentOption from "./paymentOption";
+import UserNavbar from "../userNavbar";
 
-const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartProduct }) => {
+
+const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
+
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth.userDetails || {});
+  const { token,address,email,number } = useSelector((state) => state.auth.userDetails || {});
 
   const [isOpenAdd, setOpenAdd] = useState(false);
   const [shippingCharge, setShippingCharge] = useState(0);
@@ -30,12 +32,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
   const [isLoading, setLoading] = useState(false);
   const [paymentOption, setPaymentOption] = useState("COD");
   const [activeIndex, setActiveIndex] = useState(1);
-  let [productQuantity, setProductQuantity] = useState(1);
-
 
   useEffect(() => {
-    setOrderShippingDetails(JSON.parse(localStorage.getItem("shippingDet")));
-    setUserAddress(JSON.parse(localStorage.getItem("userAdd")));
 
     if (getCartProduct?.cartTotal < 500) setShippingCharge(75);
   }, []);
@@ -67,6 +65,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
           )
           .then((response) => {
             if (response.status === 200) {
+              dispatch(getCartProducts([]))
               refreshData();
             } else {
               toast.error("Failed to delete");
@@ -79,7 +78,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
   };
 
   const removeFromCart = async (id) => {
-    if (!token || token === 200) {
+    if (!token || token == undefined ) {
       const sessionCart = JSON.parse(sessionStorage.getItem("addToCart")) || [];
       const filterCart = sessionCart?.filter((item) => item?._id !== id);
       sessionStorage.setItem("addToCart", JSON.stringify(filterCart));
@@ -97,9 +96,10 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
           data: { productId: id },
         };
         await axios(options).then((response) => {
+          console.log(response)
           if (response.status === 200) {
             toast.success("Remove product from cart !");
-            setCartItems(dispatch(data?.cart?.products))
+            dispatch(getCartProducts(response?.data))
             refreshData();
           } else {
             throw new Error("Failed to delete");
@@ -124,9 +124,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
         shippingDetails: shippingDetails,
       },
     };
-
-    dispatch(setShippingDetails(shippingDetails));
-    // closeDrawer();
     setCartUpdated(true);
     axios
       .request()
@@ -227,7 +224,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
   return (
     <>
       {/* <TextLoader text="ctrlF5..."/>; */}
-      <ToastContainer />
+     
       <UserNavbar />
 
       {!token || token == undefined ? (
@@ -571,13 +568,13 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                             <div className="flex justify-between pr-[50px] py-[20px]">
                               <div className="flex flex-col px-[20px]">
                                 <p className=" text-[18px] font-normal">
-                                  {orderShippingDetails?.address}
+                                  {address}
                                 </p>
                                 <p className="text-[18px] font-normal">
-                                  {orderShippingDetails?.number}
+                                  {number}
                                 </p>
                                 <p className="text-[18px] font-normal">
-                                  {orderShippingDetails?.email}
+                                  {email}
                                 </p>
 
                                 <button
@@ -927,7 +924,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData, setGetCartP
                   >
                     Update your address
                   </Dialog.Title>
-                  <AddressModal closeModal={closeModal} userAdd={userAddress} />
+                  <AddressModal closeModal={closeModal} userAdd={address} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

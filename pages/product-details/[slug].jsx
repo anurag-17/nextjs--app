@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import UserNavbar from "../../components/UserModule/userNavbar";
-import { cartProducts } from "../../redux/slices/authSlice";
-import { fetchApi } from "../../utlis/api";
+
 import ProductDetailsCarousel from "../../components/UserModule/Product/ProductDetailsCarousel";
 import { getDiscountedPricePercentage } from "../../components/UserModule/Discount";
+import UserNavbar from "../../components/UserModule/userNavbar";
+import { getCartProducts } from "../../redux/slices/authSlice";
 import WebsiteLoader from "../../components/websiteLoader";
+
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Userdetail = () => {
   const router = useRouter();
   const { slug } = router.query;
-
+  const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(false);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
   const [isShowErr, setShowErr] = useState(false);
@@ -33,7 +35,6 @@ const Userdetail = () => {
       JSON.parse(sessionStorage.getItem("addToCart")) || []
     );
   };
-  // console.log(sessionCartProduct);
 
   useEffect(() => {
     updateCart();
@@ -68,8 +69,8 @@ const Userdetail = () => {
         )
           .then((response) => response.json())
           .then((response) => {
-              setProductDetail(response);
-              setLoadingBtn(false)
+            setProductDetail(response);
+            setLoadingBtn(false)
           })
           .catch((err) => {
             console.error(err)
@@ -139,9 +140,10 @@ const Userdetail = () => {
         axios
           .request(options)
           .then(function (response) {
-            console.log(response);
+            console.log(response)
             if (response.status === 200) {
               toast.success("Product added into cart !!");
+              dispatch(getCartProducts(response?.data?.cart));
               setAddIntoCart(true);
               refreshData();
             } else {
@@ -170,37 +172,29 @@ const Userdetail = () => {
     router.push("/user-cart");
   };
 
-  const getCartProducts = async () => {
-    try {
-      const response = await fetchApi("/auth/getUserCart");
-
-      if (response?.status === 200) {
-        dispatch(cartProducts(response?.data?.products));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
       {
         isLoadingBtn &&
         <WebsiteLoader />
       }
-
-      <ToastContainer />
+  <ToastContainer  
+      position="bottom-right"
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"/>
       <UserNavbar />
       <section className="bg-gray-100 min-h-screen">
         <div className="flex justify-between items-center px-20 border border-[#f3f3f3] rounded-lg bg-white h-[100px]">
           <div className="">
             <h2 className="text-2xl font-semibold"> Product Details </h2>
             <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
-              Add your product and necessary information from here
             </p>
           </div>
           <h2 className="xl:text-[18px] lg:text-[16px] font-normal">
-            Welcome Back
           </h2>
         </div>
         <div className="container mx-auto">
@@ -347,10 +341,10 @@ const Userdetail = () => {
                     ) : (
                       <button
                         className="w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-900 my-2 mt-4 items-end font-semibold"
-                       disabled={isLoading}
+                        disabled={isLoading}
                         onClick={(e) => handleAddToCart(e, productDetail)}
                       >
-                       { isLoading ? "Loading" : "Add To Cart" } 
+                        {isLoading ? "Loading" : "Add To Cart"}
                       </button>
                     )}
                   </div>

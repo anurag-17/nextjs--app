@@ -19,7 +19,6 @@ export default function TopBar({ showNav, setShowNav }) {
 
   const handleSignout = () => {
     setAccessToken(null);
-    setUserDetails(null);
   
     router.push('/login');
   };

@@ -33,7 +33,6 @@ export default function TopBarCustomer({ showNav, setShowNav }) {
 
     // Clear state variables (optional, depending on your use case)
     setAccessToken(null);
-    setUserDetails(null);
 
     // Redirect to the login page
     router.push("/login");

@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const getTokenFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    // Check if the code is running in a browser environment
     return JSON.parse(localStorage.getItem("userToken")) || null;
   }
   return null;
@@ -11,32 +10,35 @@ const getTokenFromLocalStorage = () => {
 
 const getWishListFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    // Check if the code is running in a browser environment
     return JSON.parse(localStorage.getItem("wishList")) || [];
+  }
+  return null;
+};
+
+const getCartFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    return JSON.parse(localStorage.getItem("cart_item")) || [];
   }
   return null;
 };
 
 const getAddFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    // Check if the code is running in a browser environment
-    return JSON.parse(localStorage.getItem("userAdd")) || [];
+    return JSON.parse(localStorage.getItem("user_address")) || "";
   }
   return null;
 };
 
 const getNoFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    // Check if the code is running in a browser environment
-    return JSON.parse(localStorage.getItem("userNum")) || [];
+    return JSON.parse(localStorage.getItem("user_number")) || "";
   }
   return null;
 };
 
 const getMailFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    // Check if the code is running in a browser environment
-    return JSON.parse(localStorage.getItem("userMail")) || [];
+    return JSON.parse(localStorage.getItem("user_mail")) || "";
   }
   return null;
 };
@@ -45,12 +47,12 @@ const initialState = {
   userDetails : {
     token: getTokenFromLocalStorage(),
     userID: null,
-    userWishList: getWishListFromLocalStorage(),
-    userAddress:getAddFromLocalStorage(),
-    userNumber: getNoFromLocalStorage(),
-    userEmail: getMailFromLocalStorage(),
+    number: getNoFromLocalStorage(),
+    email: getMailFromLocalStorage(),
+    address:getAddFromLocalStorage(),
   },
-  cart: [],
+  userWishList: getWishListFromLocalStorage(),
+  cart:getCartFromLocalStorage(),
   totalCartItems: 0,
 };
 
@@ -65,38 +67,38 @@ const authSlice = createSlice({
         localStorage.setItem("userToken", JSON.stringify(action?.payload));
       }
     },
-    setUserDetails: (state, action) => {
-      state.userDetails.userID = action.payload?._id ;
-      state.userDetails.userWishList = action.payload?.wishlist ;
-      state.userDetails.userAddress = action.payload?.address ;
-      state.userDetails.userNumber = action.payload?.mobile ;
-      state.userDetails.userEmail = action.payload?.email ;
+
+    getUserWishList : (state, action) => {
+      state.userWishList = action.payload ;
       if (typeof window !== "undefined") {
-        localStorage.setItem("userID", JSON.stringify(action?.payload?._id));
-        localStorage.setItem("userAdd", JSON.stringify(action?.payload?.address));
-        localStorage.setItem("userNum", JSON.stringify(action?.payload?.mobile));
-        localStorage.setItem("userMail", JSON.stringify(action?.payload?.email));
-        localStorage.setItem( "wishList",JSON.stringify(action?.payload?.wishlist) );
+        localStorage.setItem( "wishList",JSON.stringify(action?.payload) );
       }
     },
-    addToCart: (state, action) => {
-      state.cart.push(action.payload);
-      // [...state.cart, action.payload];
+    getCartProducts: (state, action) => {
+      state.cart = action.payload || [];
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart_item", JSON.stringify(action?.payload));
+      }
+    },
+    getUserAddress: (state, action) => {
+      state.userDetails.address = action.payload?.address ;
+      state.userDetails.number = action.payload?.mobile ;
+      state.userDetails.email = action.payload?.email ;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user_address", JSON.stringify(action?.payload?.address));
+        localStorage.setItem("user_number", JSON.stringify(action?.payload?.mobile));
+        localStorage.setItem("user_mail", JSON.stringify(action?.payload?.email));
+      }
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter(
         (item) => item?._id !== action.payload?._id
       );
     },
-    cartProducts: (state, action) => {
-      // console.log(action)
-      state.cart = action.payload || [];
-      state.totalCartItems = action.payload?.length || 0;
-    },
   },
 });
 console.log(authSlice.actions);
 
-export const {addToCart, removeFromCart, cartProducts,setUserDetails,setToken} =
+export const {removeFromCart, getCartProducts,setToken,getUserWishList,getUserAddress} =
   authSlice.actions;
 export default authSlice.reducer;

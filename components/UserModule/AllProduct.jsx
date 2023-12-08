@@ -6,17 +6,19 @@ import dynamic from "next/dynamic";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
+
 import UserNavbar from "./userNavbar";
-import { fetchApi } from "../../utlis/api";
+import WebsiteLoader from "../websiteLoader";
+import { getUserWishList } from "../../redux/slices/authSlice";
+
 import right from "/public/right-arrows.svg";
 
-import WebsiteLoader from "../websiteLoader";
-import { setCartItems } from "../../redux/slices/orderSlice";
 
 const ProductGrid = () => {
 
   const dispatch = useDispatch()
   const { token } = useSelector((state) => state.auth.userDetails || null);
+  const { userWishList } = useSelector((state) => state.auth || null);
   const [productCategory, setProductCategory] = useState("");
   const [productBrands, setProductBrands] = useState("");
   const [allProduct, setAllProduct] = useState([]);
@@ -25,7 +27,6 @@ const ProductGrid = () => {
   let [isRefresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isLoadingBtn, setLoadingBtn] = useState(false);
-  // JSON.parse(localStorage.getItem("userID"))
 
   const [isWished, setIsWished] = useState({});
 
@@ -121,10 +122,12 @@ const ProductGrid = () => {
     try {
       const response = await addToWishlist(productId);
 
+      console.log(response)
       if (response.status === 200) {
         toast.success(response.data.message);
         setLoading(false);
         refreshData();
+        dispatch(getUserWishList(response?.data?.wishlist));
       } else {
         setLoading(false);
       }
@@ -326,6 +329,16 @@ const ProductGrid = () => {
   const refreshData = () => {
     setRefresh(!isRefresh)
   }
+
+  useEffect(() => {
+    // Initialize isWished state based on userWishList
+    const initialWishlistState = userWishList.reduce((acc, productId) => {
+      acc[productId] = true;
+      return acc;
+    }, {});
+    setIsWished(initialWishlistState);
+  }, [userWishList]);
+
 
   return (
     <>

@@ -46,7 +46,7 @@ export default function Layout({ children }) {
       router.pathname === "/user-setting" ||
       router.pathname === "/userorder-detail" ||
       router.pathname === "/user-invoice" ||
-      router.pathname === "/user-notifictionSet" ||
+      router.pathname === "/user-notifiction" ||
       router.pathname === "/product-filter/[slug]" ||
       router.pathname === "/user-cart" ||
       router.pathname === "/success" ||
@@ -87,7 +87,7 @@ export default function Layout({ children }) {
             router.pathname === "/user-invoice" || 
             router.pathname === "/user-cart" ||
             router.pathname === "/userorder-detail" ||
-            router.pathname === "/user-notifictionSet"||
+            router.pathname === "/user-notifiction"||
             router.pathname === "/product-filter/[slug]" ||
             router.pathname === "/success" ||
       router.pathname === "/cancel" ||
@@ -113,7 +113,7 @@ export default function Layout({ children }) {
               router.pathname === "/user-invoice" ||
               router.pathname === "/user-cart" ||
               router.pathname === "/userorder-detail" ||
-              router.pathname === "/user-notifictionSet"||
+              router.pathname === "/user-notifiction"||
               router.pathname === "/product-filter/[slug]" ||
               router.pathname === "/success" ||
       router.pathname === "/cancel" ||

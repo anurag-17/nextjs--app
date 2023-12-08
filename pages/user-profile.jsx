@@ -4,12 +4,18 @@ import { fetchApi } from "../utlis/api";
 
 const userprofile = () => {
   const [getAllCustomer, setGetAllCustomer] = useState();
+  const [isRefresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    defaultCustomer();
-  }, []);
+    getUserDetails();
+  }, [isRefresh]);
 
-  const defaultCustomer = async () => {
+
+  const refreshData = () => {
+    setRefresh(!isRefresh)
+  }
+
+  const getUserDetails = async () => {
     try {
       const response = await fetchApi("/auth/getaUser", {});
       if (response.status === 200) {
@@ -24,7 +30,7 @@ const userprofile = () => {
 
   return (
     <div>
-      <UserProfile getAllCustomer={getAllCustomer} />
+      <UserProfile getAllCustomer={getAllCustomer} refreshData={refreshData} />
     </div>
   );
 };

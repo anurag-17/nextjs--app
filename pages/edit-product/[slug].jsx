@@ -208,7 +208,6 @@ export default function EditProduct() {
           <div className="">
             <h2 className="text-2xl font-semibold">Edit Product </h2>
             <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
-              Add your product and necessary information from here
             </p>
           </div>
           <h2 className="xl:text-[18px] lg:text-[16px] font-normal mt-8">

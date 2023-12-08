@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-
+import { useRouter } from 'next/router';
 import UserNavbar from "./userNavbar";
 import { BASE_URL } from "../../utlis/config";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import Image from "next/image";
 
 
 
-const UserProfile = ({ getAllCustomer }) => {
+const UserProfile = ({ getAllCustomer, refreshData }) => {
+
+  const router = useRouter();
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [UserDetail, setUserDetail] = useState({});
   const [isEdit, setEdit] = useState(false);
@@ -23,6 +26,11 @@ const UserProfile = ({ getAllCustomer }) => {
   const handleEdit = () => {
     setEdit(true)
   }
+
+  const goBack = () => {
+    setEdit(false)
+  };
+
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -42,6 +50,7 @@ const UserProfile = ({ getAllCustomer }) => {
 
       if (response.status === 200) {
         toast.success("Details Updated successfully !");
+        refreshData()
         setLoading(false);
         setEdit(false)
       } else {
@@ -56,7 +65,7 @@ const UserProfile = ({ getAllCustomer }) => {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <UserNavbar />
       <div className=" px-20 ">
         <h1 className="text-[30px] pl-10 mb-5">Your Account</h1>
@@ -76,18 +85,15 @@ const UserProfile = ({ getAllCustomer }) => {
               </p>
               <div className="flex mt-5 ml-5 justify-evenly w-6/12">
                 <Link href="https://www.facebook.com" target="_blank">
-                  {" "}
-                  <img className="h-9 w-13  " src="/fb.svg" />
+                  <img className="h-9 w-13" src="/fb.svg" />
                 </Link>
                 <Link href="https://www.linkedin.com" target="_blank">
-                  {" "}
                   <img className="h-9 w-13" src="/in.svg" />
                 </Link>
-                <Link href="https://twitter.com" _blank>
-                  {" "}
-                  <img className="h-9 w-13   " src="/twitterr.svg" />
+                <Link href="https://twitter.com" target="_blank">
+                  <img className="h-9 w-13" src="/twitterr.svg" />
                 </Link>
-                <img className="h-9 w-13   " src="/add.svg" />
+                {/* <img className="h-9 w-13" src="/add.svg" /> */}
               </div>
             </div>
           </div>
@@ -98,6 +104,11 @@ const UserProfile = ({ getAllCustomer }) => {
               isEdit ?
                 <>
                   <h1 className="text-[25px] my-10"> Change personal information</h1>
+                  <div className="flex justify-center items-center gap-x-3 hover:bg-[#f3f3f3e0] px-6 py-1 rounded-md text-[18px] font-medium absolute top-2 right-[70px] cursor-pointer"
+                    onClick={goBack}>
+                    <Image src={`/svg/back.svg`} alt="go back" height={40} width={40} />
+                    Go back
+                  </div>
                   <form onSubmit={handleUpdate}>
                     <table className="table-fixed ">
                       <tbody>
@@ -111,7 +122,7 @@ const UserProfile = ({ getAllCustomer }) => {
                               defaultValue={getAllCustomer?.firstname ? getAllCustomer?.firstname : UserDetail?.firstname}
                               onChange={inputHandler}
                               pattern="[A-Za-z]+"
-                              title="Enter only alphabetic characters"
+                              title="Enter only alphabetic characters without space"
                               maxLength={64}
                               required
                             />
@@ -127,7 +138,7 @@ const UserProfile = ({ getAllCustomer }) => {
                               defaultValue={getAllCustomer?.lastname ? getAllCustomer?.lastname : UserDetail?.lastname}
                               onChange={inputHandler}
                               pattern="[A-Za-z]+"
-                              title="Enter only alphabetic characters"
+                              title="Enter only alphabetic characters without space"
                               maxLength={64}
                               required
                             />
@@ -142,8 +153,6 @@ const UserProfile = ({ getAllCustomer }) => {
                               name="about"
                               defaultValue={getAllCustomer?.about ? getAllCustomer?.about : UserDetail?.about}
                               onChange={inputHandler}
-                              pattern="[A-Za-z]+"
-                              title="Enter only alphabetic characters"
                               maxLength={300}
                               required
                             />
@@ -170,9 +179,9 @@ const UserProfile = ({ getAllCustomer }) => {
                               defaultValue={getAllCustomer?.mobile ? getAllCustomer?.mobile : UserDetail?.mobile}
                               onChange={inputHandler}
                               pattern="[6789][0-9]{9}"
-                      title="Enter 10 digit mobile no."
-                      required
-                      maxLength={10}
+                              title="Enter 10 digit mobile no."
+                              required
+                              maxLength={10}
                             />
                           </td>
                         </tr>
@@ -199,7 +208,7 @@ const UserProfile = ({ getAllCustomer }) => {
                               defaultValue={getAllCustomer?.address ? getAllCustomer?.address : UserDetail?.address}
                               onChange={inputHandler}
                               maxLength={100}
-                              required                            />
+                              required />
                           </td>
                         </tr>
                         <tr>
@@ -211,9 +220,9 @@ const UserProfile = ({ getAllCustomer }) => {
                               defaultValue={getAllCustomer?.country ? getAllCustomer?.country : UserDetail?.country}
                               onChange={inputHandler}
                               pattern="[A-Za-z]+"
-                      title="Enter only alphabetic characters"
-                      maxLength={64}
-                      required
+                              title="Enter only alphabetic characters without space"
+                              maxLength={64}
+                              required
                             />
                           </td>
                         </tr>
@@ -226,8 +235,8 @@ const UserProfile = ({ getAllCustomer }) => {
                               defaultValue={getAllCustomer?.language ? getAllCustomer?.language : UserDetail?.language}
                               onChange={inputHandler}
                               pattern="^[A-Za-z,]+$"
-                      title="Enter language seperated by come ','"
-                      required
+                              title="Enter language seperated by coma ','"
+                              required
                             />
                           </td>
                         </tr>
@@ -235,8 +244,9 @@ const UserProfile = ({ getAllCustomer }) => {
                     </table>
                     <button
                       type="submit"
+                      disabled={isLoading}
                       className="px-6 py-3 flex justify-center items-center rounded-md bg-lightBlue-600 text-white w-[200px] font-medium  mt-[40x]"
-                    > Update </button>
+                    > {isLoading ? "Loading.." : "Update"}  </button>
                   </form>
                 </>
                 :

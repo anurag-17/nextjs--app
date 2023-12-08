@@ -163,7 +163,6 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   const handleSignout = () => {
     console.log("Logging out...");
     setUserToken(null);
-    setUserDetails(null);
     // dispatch(setAdminToken(null));
     localStorage.removeItem("adminToken");
     router.push("/login");
