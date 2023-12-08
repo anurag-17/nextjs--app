@@ -41,20 +41,20 @@ const ProductGrid = () => {
     setOpenLogin(false);
   };
 
-  const option = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
-  };
-
+  
   useEffect(() => {
     defaultBrand();
   }, []);
-
+  
   const defaultBrand = () => {
+    const option = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+    };
     axios
       .request(option)
       .then((response) => {
-        setGetallBrand(response.data);
+        setGetallBrand(response?.data);
         // console.log(response.data);
       })
       .catch((error) => {
@@ -417,7 +417,7 @@ const ProductGrid = () => {
                             name="brand"
                             id="brand"
                             placeholder="Brand"
-                            className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
+                            className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
                             onClick={handleSearchBrand}
                             value={bnd}
                           >

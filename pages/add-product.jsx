@@ -152,6 +152,11 @@ const AddProduct = () => {
         ...productDetails,
         [name]: value.split(","),
       });
+    } else if(name === "brand") {
+      setProductDetails({
+        ...productDetails,
+        ['brand']: value.toUpperCase(),
+      });
     } else {
       setProductDetails({
         ...productDetails,
