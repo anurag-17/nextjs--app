@@ -127,8 +127,8 @@ console.log(response)
                       onChange={(e) => setFirstname(e.target.value)}
                       value={firstname}
                       maxLength={64}
-                      pattern="[A-Za-z]+"
-                      title="Enter only alphabetic characters without space"
+                      pattern="[A-Za-z ]+"
+                      title="Enter only alphabetic characters"
                       required
                     />
                     <input
@@ -138,8 +138,8 @@ console.log(response)
                       onChange={(e) => setLastname(e.target.value)}
                       value={lastname}
                       maxLength={64}
-                      pattern="[A-Za-z]+"
-                      title="Enter only alphabetic characters without space"
+                      pattern="[A-Za-z ]+"
+                      title="Enter only alphabetic characters"
                       required
                     />
                   </div>
@@ -218,8 +218,8 @@ console.log(response)
                         className="custom-input"
                         onChange={(e) => setCountry(e.target.value)}
                         value={country}
-                        pattern="[A-Za-z]+"
-                        title="Enter only alphabetic characters without space"
+                        pattern="[A-Za-z ]+"
+                        title="Enter only alphabetic characters"
                         maxLength={64}
                         required
                       />

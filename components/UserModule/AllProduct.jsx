@@ -41,11 +41,11 @@ const ProductGrid = () => {
     setOpenLogin(false);
   };
 
-  
+
   useEffect(() => {
     defaultBrand();
   }, []);
-  
+
   const defaultBrand = () => {
     const option = {
       method: "GET",
@@ -124,7 +124,12 @@ const ProductGrid = () => {
 
       console.log(response)
       if (response.status === 200) {
-        toast.success(response.data.message);
+        if (response?.data?.message === "Product added to wishlist") {
+          toast.success(response?.data?.message);
+        }
+        else {
+          toast.warning(response?.data?.message);
+        }
         setLoading(false);
         refreshData();
         dispatch(getUserWishList(response?.data?.wishlist));
@@ -197,24 +202,24 @@ const ProductGrid = () => {
     if (title.trim() === "") {
       getAllProducts()
     } else {
-      callFunction( title)
+      callFunction(title)
     }
 
   };
 
   const handleKeyDown = (e) => {
     console.log('Pressed key:', e.key);
-    if(e.key === "backspace"){
+    if (e.key === "backspace") {
       callFunction(e.target.value)
     }
   };
 
-  const callFunction = async(title) => {
+  const callFunction = async (title) => {
     const options = {
       method: "GET",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?search=${title}`,
     };
-   await axios
+    await axios
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
@@ -346,7 +351,14 @@ const ProductGrid = () => {
         isLoadingBtn &&
         <WebsiteLoader />
       }
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-right"
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
       <UserNavbar />
 
       <section className="bg-gray-00 min-h-screen px-20 flex">

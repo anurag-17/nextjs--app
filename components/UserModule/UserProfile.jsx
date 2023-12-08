@@ -121,8 +121,8 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                               name="firstname"
                               defaultValue={getAllCustomer?.firstname ? getAllCustomer?.firstname : UserDetail?.firstname}
                               onChange={inputHandler}
-                              pattern="[A-Za-z]+"
-                              title="Enter only alphabetic characters without space"
+                              pattern="[A-Za-z ]+"
+                              title="Enter only alphabetic characters"
                               maxLength={64}
                               required
                             />
@@ -137,8 +137,8 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                               name="lastname"
                               defaultValue={getAllCustomer?.lastname ? getAllCustomer?.lastname : UserDetail?.lastname}
                               onChange={inputHandler}
-                              pattern="[A-Za-z]+"
-                              title="Enter only alphabetic characters without space"
+                              pattern="[A-Za-z ]+"
+                              title="Enter only alphabetic characters"
                               maxLength={64}
                               required
                             />
@@ -219,8 +219,8 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                               name="country"
                               defaultValue={getAllCustomer?.country ? getAllCustomer?.country : UserDetail?.country}
                               onChange={inputHandler}
-                              pattern="[A-Za-z]+"
-                              title="Enter only alphabetic characters without space"
+                              pattern="[A-Za-z ]+"
+                              title="Enter only alphabetic characters"
                               maxLength={64}
                               required
                             />
