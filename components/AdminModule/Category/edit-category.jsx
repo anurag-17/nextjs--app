@@ -1,32 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
-  const [categoryDetails, setCategoryDetails] = useState({
-    title: editData?.title || "",
-  });
+  const [categoryDetails, setCategoryDetails] = useState();
+
+  
+  const { auth_token } = useSelector((state) => state.adminAuth || null);
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
-    if (name === "color") {
-      setCategoryDetails({
-        ...categoryDetails,
-        [name]: value.split(","),
-      });
-    } else if (name === "brand") {
-      setCategoryDetails({
-        ...categoryDetails,
-        [name]: value.toUpperCase(),
-      });
-    } else {
       setCategoryDetails({
         ...categoryDetails,
         [name]: value,
       });
-    }
   };
 
   const handleUpdateCategory = async (e) => {
@@ -40,12 +30,10 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
+            "authorization": auth_token,
           },
         }
       );
-
-      console.log(response);
 
       if (response.status === 200) {
         toast.success("Category Update successfully !");
@@ -68,23 +56,40 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   return (
     <>
       <div className="flex justify-between items-center pt-4 px-5 border border-[#f3f3f3] rounded-lg bg-white h-[50px] my-5 ">
-        <h2 className="text-2xl font-semibold pb-4">Edit Brand </h2>
+        <h2 className="text-2xl font-semibold pb-4">Edit Category </h2>
         <div className="mb-3 w-[40%]"></div>
       </div>
       <div className="bg-white border rounded-lg p-2 mx-auto">
         <form onSubmit={handleUpdateCategory}>
+
+          <div className="mt-2">
+
+            <label className="absolute bg-white ml-14 z-20 text-[18px] text-gray-800 ">
+              Sub category
+            </label>
+            <input
+              onChange={inputHandler}
+              value={editData?.subCategory}
+              type="text"
+              name="name"
+              className="px-3 py-2 rounded m-10 border border-gray-300 bg-gray-50 text-md focus:bg-white dark:border dark:border-gray-600  focus:outline-none h-[50px] elative w-8/12"
+              required
+            />
+          </div>
+
           <div>
             <label className="absolute mt-6 bg-white ml-14 z-20 text-[18px] text-gray-800 bg-">
-              Brand Name:
+            Category:
             </label>
 
             <input
               type="text"
               name="title"
               className="px-3 py-2 rounded m-10 border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600 focus:outline-none h-[50px] relative w-8/12"
-              defaultValue={categoryDetails.title}
+              defaultValue={editData.title}
               onChange={inputHandler}
               required
+              disabled
               minLength={3}
               max={84}
             />
@@ -92,9 +97,10 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
 
           <button
             type="submit"
+            disabled={isLoading}
             className="border p-2 m-10 mt-0 rounded-lg bg-lightBlue-600 text-white text-[20px]"
           >
-            Update Category
+           {isLoading ? "Loading." : "Update" } 
           </button>
         </form>
       </div>

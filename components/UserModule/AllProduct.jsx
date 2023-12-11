@@ -198,8 +198,9 @@ const ProductGrid = () => {
 
   // ------ search products ------ //
   const handleSearch = (e) => {
-    const title = e.target.value;
-    if (title.trim() === "") {
+    const title = e.target.value.trim();
+    console.log(e.target.value.trim())
+    if (title === "") {
       getAllProducts()
     } else {
       callFunction(title)

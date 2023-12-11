@@ -110,15 +110,16 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                     Go back
                   </div>
                   <form onSubmit={handleUpdate}>
-                    <table className="table-fixed ">
+                    <table className="table-fixed max-w-[50%]">
                       <tbody>
                         <tr>
                           <td className="p-3 text-[20px]">First Name</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px]">
 
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="firstname"
+                              placeholder=""
                               defaultValue={getAllCustomer?.firstname ? getAllCustomer?.firstname : UserDetail?.firstname}
                               onChange={inputHandler}
                               pattern="[A-Za-z ]+"
@@ -133,7 +134,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px]">
 
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="lastname"
                               defaultValue={getAllCustomer?.lastname ? getAllCustomer?.lastname : UserDetail?.lastname}
                               onChange={inputHandler}
@@ -149,7 +150,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px] ">
 
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="about"
                               defaultValue={getAllCustomer?.about ? getAllCustomer?.about : UserDetail?.about}
                               onChange={inputHandler}
@@ -162,7 +163,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="p-3  text-[20px] ">Email</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px] ">
-                            <input type="email" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="email" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="email"
                               defaultValue={getAllCustomer?.email ? getAllCustomer?.email : UserDetail?.email}
                               onChange={inputHandler}
@@ -174,7 +175,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="p-3 text-[20px]">Mobile no</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px]">
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="mobile"
                               defaultValue={getAllCustomer?.mobile ? getAllCustomer?.mobile : UserDetail?.mobile}
                               onChange={inputHandler}
@@ -189,7 +190,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="p-3 text-[20px]">Date of Birth </td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px] ">
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="dob"
                               defaultValue={getAllCustomer?.dob ? getAllCustomer?.dob : UserDetail?.dob}
                               onChange={inputHandler}
@@ -203,7 +204,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="p-3 text-[20px]">Address</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px] ">
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="address"
                               defaultValue={getAllCustomer?.address ? getAllCustomer?.address : UserDetail?.address}
                               onChange={inputHandler}
@@ -215,7 +216,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="p-3 text-[20px]">Country</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px]  ">
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="country"
                               defaultValue={getAllCustomer?.country ? getAllCustomer?.country : UserDetail?.country}
                               onChange={inputHandler}
@@ -230,7 +231,7 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
                           <td className="p-3 text-[20px]">Language</td>
                           <td className="px-10">:</td>
                           <td className="p-3 text-gray-500 text-[18px] ">
-                            <input type="text" className="border-b border-b-gray-500 focus-visible:outline-none px-2"
+                            <input type="text" className="border-b border-b-gray-500 w-[350px] focus-visible:outline-none px-2"
                               name="language"
                               defaultValue={getAllCustomer?.language ? getAllCustomer?.language : UserDetail?.language}
                               onChange={inputHandler}

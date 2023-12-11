@@ -111,7 +111,7 @@ const AddProduct = () => {
   const defaultBrand = () => {
     const options = {
       method: "GET",
-      url:`${BASE_URL}/brand/getallBrand`,
+      url: `${BASE_URL}/brand/getallBrand`,
     };
     axios
       .request(options)
@@ -152,7 +152,7 @@ const AddProduct = () => {
         ...productDetails,
         [name]: value.split(","),
       });
-    } else if(name === "brand") {
+    } else if (name === "brand") {
       setProductDetails({
         ...productDetails,
         ['brand']: value.toUpperCase(),
@@ -296,361 +296,408 @@ const AddProduct = () => {
 
   return (
     <>
-   
-    <section className="bg-gray-100 min-h-screen">
-    
-      <ToastContainer />
 
-      <div className="h-[100px] ">
-        <h2 className="text-[25px] font-semibold text-green-600 leading-[25px] px-6">
-          Basic Info
-        </h2>
-        <div className="border-b border-[#f3f3f3] mt-6 w-full">
-          <div className="border-b border-green-600   w-[160px]"></div>
+      <section className="bg-gray-100 min-h-screen">
+
+        <ToastContainer />
+
+        <div className="h-[100px] ">
+          <h2 className="text-[25px] font-semibold text-green-600 leading-[25px] px-6">
+            Basic Info
+          </h2>
+          <div className="border-b border-[#f3f3f3] mt-6 w-full">
+            <div className="border-b border-green-600   w-[160px]"></div>
+          </div>
         </div>
-      </div>
 
-      {/*---- form start here ----*/}
-      <form action="" onSubmit={handleFormSubmit} className="">
-        <div className="px-6 pt-1 flex-grow w-full max-h-screen pb-40 md:pb-32 lg:pb-32 xl:pb-32 ">
-          {/*------ title -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
-              Product Title/Name
-            </label>
-            <div className="col-span-8 sm:col-span-4">
-              <input
-                type="text"
-                name="title"
-                placeholder="Product Title/Name"
-                className="custom-input"
-                value={productDetails.title}
-                onChange={inputHandler}
-                required
-                minLength={3}
-                max={84}
-              />
+        {/*---- form start here ----*/}
+        <form action="" onSubmit={handleFormSubmit} className="">
+          <div className="px-6 pt-1 flex-grow w-full max-h-screen pb-40 md:pb-32 lg:pb-32 xl:pb-32 ">
+            {/*------ title -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Title/Name
+              </label>
+              <div className="col-span-8 sm:col-span-4">
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Product Title/Name"
+                  className="custom-input"
+                  value={productDetails.title}
+                  onChange={inputHandler}
+                  required
+                  minLength={3}
+                  max={84}
+                />
+              </div>
             </div>
-          </div>
 
-          {/*------ Description -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
-              Product Description
-            </label>
-            <div className="col-span-8 sm:col-span-4">
-              <textarea
-                rows="6"
-                className="custom-input h-[100px]"
-                name="description"
-                placeholder="Product Description"
-                spellCheck="false"
-                value={productDetails.description}
-                onChange={inputHandler}
-                required
-                minLength={10}
-                max={500}
-              ></textarea>
+            {/*------ Description -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Description
+              </label>
+              <div className="col-span-8 sm:col-span-4">
+                <textarea
+                  rows="6"
+                  className="custom-input h-[100px]"
+                  name="description"
+                  placeholder="Product Description"
+                  spellCheck="false"
+                  value={productDetails.description}
+                  onChange={inputHandler}
+                  required
+                  minLength={10}
+                  max={500}
+                ></textarea>
+              </div>
             </div>
-          </div>
 
-          {/*------ Image -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 justify-center items-center">
-            <label className="custom-input-label">Product Images</label>
-            <div className="col-span-1 sm:col-span-2">
-              <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
-                {imageUrls === "" ? (
-                  <>
-                    {isUploadingImg ? (
-                      <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
-                        Uploading ...
-                      </button>
-                    ) : (
-                      <label
-                        className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
-                        htmlFor="fileUpload"
+            {/*------ Image -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 justify-center items-center">
+              <label className="custom-input-label">Product Images</label>
+              <div className="col-span-1 sm:col-span-2">
+                <div className="w-full text-center custom-input flex justify-center items-center px-0 h-[50px]">
+                  {imageUrls === "" ? (
+                    <>
+                      {isUploadingImg ? (
+                        <button className="text-white w-full text-[16px] font-semibold px-4 py-4 bg-gray-300 rounded">
+                          Uploading ...
+                        </button>
+                      ) : (
+                        <label
+                          className="text-[16px] font-semibold bg-slate-100 py-2 rounded cursor-pointer"
+                          htmlFor="fileUpload"
+                        >
+                          <input
+                            type="file"
+                            className="hidden"
+                            multiple
+                            id="fileUpload"
+                            onChange={handleImageUpload}
+                            accept="image/png,image/jpg, image/jpeg"
+                          />
+                          Upload product image
+                        </label>
+                      )}
+                    </>
+                  ) : (
+                    <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
+                      Image Uploaded
+                    </button>
+                  )}
+                </div>
+
+                {imgFiles.length > 0 && (
+                  <div className="text-center bg-gray-300 text-black font-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
+                    {imgFiles?.map((urls, inx) => (
+                      <div
+                        className="flex gap-x-2 justify-center items-center"
+                        key={inx}
                       >
-                        <input
-                          type="file"
-                          className="hidden"
-                          multiple
-                          id="fileUpload"
-                          onChange={handleImageUpload}
-                          accept="image/png,image/jpg, image/jpeg"
-                        />
-                        Upload product image
-                      </label>
-                    )}
-                  </>
-                ) : (
-                  <button className="text-black w-full text-[16px] font-semibold px-4 py-4 bg-gray-200 rounded">
-                    Image Uploaded
+                        <p className="whitespace-nowrap text-ellipsis overflow-hidden">
+                          {urls?.name}
+                        </p>
+                        <p
+                          className="font-bold cursor-pointer"
+                          onClick={() => handleImageDelete(inx)}
+                        >
+                          x
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="col-span-1 sm:col-span-1">
+                {/* <div className="custom-input"></div> */}
+                <Select
+                  id="selectWarna"
+                  instanceId="selectWarna"
+                  // isMulti
+                  isSearchable
+                  name="colors"
+                  className="basic-multi-select capitalize "
+                  classNamePrefix="select"
+                  options={allColors.map((item) => ({
+                    value: item.color,
+                    label: item.color,
+                  }))}
+                  onChange={handleWarnaChange}
+                  placeholder="Select color"
+                  value={selectedColor}
+                />
+              </div>
+              <div className="col-span-1 sm:col-span-1">
+                {imgFiles.length > 0 && selectedColor !== "" && (
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded-sm font-medium text-[15px] bg-black text-white flex justify-center items-center"
+                    onClick={imageUploader}
+                  >
+                    Upload
                   </button>
                 )}
               </div>
+            </div>
 
-              {imgFiles.length > 0 && (
-                <div className="text-center bg-gray-300 text-black font-medium mt-4 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
-                  {imgFiles?.map((urls, inx) => (
-                    <div
-                      className="flex gap-x-2 justify-center items-center"
-                      key={inx}
+            {/*------ regiular price -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label className="custom-input-label">Regular Price</label>
+              <div className="col-span-8 sm:col-span-4">
+                <div className="flex flex-row">
+                  <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-sm focus:bg-white  dark:border dark:border-gray-600  ">
+                    <select
+                      className="bg-white list-none outline-none"
+                      name="regPriceCurr"
+                      value={productDetails?.regPriceCurr}
+                      onChange={inputHandler}
                     >
-                      <p className="whitespace-nowrap text-ellipsis overflow-hidden">
-                        {urls?.name}
-                      </p>
-                      <p
-                        className="font-bold cursor-pointer"
-                        onClick={() => handleImageDelete(inx)}
-                      >
-                        x
-                      </p>
-                    </div>
-                  ))}
+                      <option value=""> curr </option>
+                      {getCurrency?.map((item) => (
+                        <option key={item?.id} value={item?.currencySign}>
+                          {item?.currencySign}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
+                  <input
+                    type="number"
+                    name="price"
+                    placeholder="OriginalPrice"
+                    className="custom-input"
+                    value={productDetails.price}
+                    onChange={inputHandler}
+                    required
+                    minLength={1}
+                  />
                 </div>
-              )}
-            </div>
-            <div className="col-span-1 sm:col-span-1">
-              {/* <div className="custom-input"></div> */}
-              <Select
-                id="selectWarna"
-                instanceId="selectWarna"
-                // isMulti
-                isSearchable
-                name="colors"
-                className="basic-multi-select capitalize "
-                classNamePrefix="select"
-                options={allColors.map((item) => ({
-                  value: item.color,
-                  label: item.color,
-                }))}
-                onChange={handleWarnaChange}
-                placeholder="Select color"
-                value={selectedColor}
-              />
-            </div>
-            <div className="col-span-1 sm:col-span-1">
-              {imgFiles.length > 0 && selectedColor !== "" && (
-                <button
-                  type="button"
-                  className="px-4 py-2 rounded-sm font-medium text-[15px] bg-black text-white flex justify-center items-center"
-                  onClick={imageUploader}
-                >
-                  Upload
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/*------ regiular price -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label className="custom-input-label">Regular Price</label>
-            <div className="col-span-8 sm:col-span-4">
-              <div className="flex flex-row">
-                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-sm focus:bg-white  dark:border dark:border-gray-600  ">
-                  <select
-                    className="bg-white list-none outline-none"
-                    name="regPriceCurr"
-                    value={productDetails?.regPriceCurr}
-                    onChange={inputHandler}
-                  >
-                    <option value=""> curr </option>
-                    {getCurrency?.map((item) => (
-                      <option key={item?.id} value={item?.currencySign}>
-                        {item?.currencySign}
-                      </option>
-                    ))}
-                  </select>
-                </span>
-                <input
-                  type="number"
-                  name="price"
-                  placeholder="OriginalPrice"
-                  className="custom-input"
-                  value={productDetails.price}
-                  onChange={inputHandler}
-                  required
-                  minLength={1}
-                />
               </div>
             </div>
-          </div>
 
-          {/*------offer price -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label className="custom-input-label">Offer Price</label>
-            <div className="col-span-8 sm:col-span-4">
-              <div className="flex flex-row">
-                <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600">
-                  <select
-                    className="bg-white list-none outline-none "
-                    name="offerPriceCurr"
-                    value={productDetails.offerPriceCurr}
+            {/*------offer price -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label className="custom-input-label">Offer Price</label>
+              <div className="col-span-8 sm:col-span-4">
+                <div className="flex flex-row">
+                  <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600">
+                    <select
+                      className="bg-white list-none outline-none "
+                      name="offerPriceCurr"
+                      value={productDetails.offerPriceCurr}
+                      onChange={inputHandler}
+                    >
+                      <option value=""> curr </option>
+                      {getCurrency?.map((item) => (
+                        <option key={item?.id} value={item?.currencySign}>
+                          {item?.currencySign}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
+                  <input
+                    type="number"
+                    name="discountedPrice"
+                    placeholder="OfferPrice"
+                    className="custom-input"
+                    value={productDetails.discountedPrice}
                     onChange={inputHandler}
-                  >
-                    <option value=""> curr </option>
-                    {getCurrency?.map((item) => (
-                      <option key={item?.id} value={item?.currencySign}>
-                        {item?.currencySign}
-                      </option>
-                    ))}
-                  </select>
-                </span>
-                <input
-                  type="number"
-                  name="discountedPrice"
-                  placeholder="OfferPrice"
-                  className="custom-input"
-                  value={productDetails.discountedPrice}
-                  onChange={inputHandler}
-                  required
-                  minLength={1}
-                  maxLength={productDetails?.price}
-                />
+                    required
+                    minLength={1}
+                    maxLength={productDetails?.price}
+                  />
+                </div>
+                {isPriceError && (
+                  <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
+                    Offer price should be less than regular price
+                  </span>
+                )}
+                <br />
+                {isCurrError && (
+                  <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
+                    Offer price currency should be same as regular price
+                  </span>
+                )}
               </div>
-              {isPriceError && (
-                <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
-                  Offer price should be less than regular price
-                </span>
-              )}
-              <br />
-              {isCurrError && (
-                <span className="pt-2 px-4  text-red-600 text-[13px] font-medium mt-2">
-                  Offer price currency should be same as regular price
-                </span>
-              )}
             </div>
-          </div>
 
-          {/*------ category -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
-              Product Category
-            </label>
-            <div className="col-span-8 sm:col-span-4">
-              <select
-                name="category"
-                placeholder="Add Category"
-                className="custom-input"
-                value={productDetails.category}
-                onChange={inputHandler}
-                required
-                minLength={3}
-                max={32}
-              >
-                <option value="" disabled>
-                  Select Category
-                </option>
-                {getallCategory.map((item) => (
-                  <option
-                    key={item.id}
-                    value={item.title}
-                    selected={item.title === productDetails.category}
-                  >
-                    {item.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/*------ quantity -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
-              Product Quantity
-            </label>
-            <div className="col-span-8 sm:col-span-4">
-              <input
-                type="number"
-                name="quantity"
-                placeholder="Add quantity"
-                className="custom-input"
-                value={productDetails.quantity}
-                onChange={inputHandler}
-                required
-              />
-            </div>
-          </div>
-
-          {/*------ brand -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
-              Product Brand
-            </label>
-            <div className="col-span-8 sm:col-span-4">
+            {/*------ category -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Category
+              </label>
               <div className="col-span-8 sm:col-span-4">
                 <select
-                  type="text"
-                  name="brand"
-                  placeholder="Add Brand Name"
-                  className="custom-input "
-                  value={productDetails.brand}
+                  name="category"
+                  placeholder="Add Category"
+                  className="custom-input"
+                  value={productDetails.category}
                   onChange={inputHandler}
                   required
                   minLength={3}
                   max={32}
                 >
                   <option value="" disabled>
-                    Select Brands
+                    Select Category
                   </option>
-                  {getallBrand.map((items) => (
+                  {getallCategory.map((item) => (
                     <option
-                      key={items.id}
-                      value={items.brand}
-                      selected={items.brand === productDetails.brand}
+                      key={item.id}
+                      value={item.title}
+                      selected={item.title === productDetails.category}
                     >
-                      {items.brand}
+                      {item.title}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-          </div>
+{/* <SizeChart /> */}
 
-          {/*------ color -----*/}
-          <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
-              Product Colour
-            </label>
-            <div className="col-span-8 sm:col-span-4">
-              <Select
-                id="selectWarna"
-                instanceId="selectWarna"
-                isMulti
-                isSearchable
-                name="colors"
-                className="basic-multi-select capitalize "
-                classNamePrefix="select"
-                options={allColors.map((item) => ({
-                  value: item.color,
-                  label: item.color,
-                }))}
-                onChange={handleMultiSelect}
-                placeholder="Select color"
-              />
+            {
+              productDetails?.category === "Clothing" &&
+              <>
+                <div className="flex py-4">
+                  Enter measurements
+                  <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <label htmlFor="" className="custom-input-label">
+                      Product Title/Name
+                    </label>
+                    <div className="col-span-8 sm:col-span-4">
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="Product Title/Name"
+                        className="custom-input"
+                        value={productDetails.title}
+                        onChange={inputHandler}
+                        required
+                        minLength={3}
+                        max={84}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <label htmlFor="" className="custom-input-label">
+                      Product Title/Name
+                    </label>
+                    <div className="col-span-8 sm:col-span-4">
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="Product Title/Name"
+                        className="custom-input"
+                        value={productDetails.title}
+                        onChange={inputHandler}
+                        required
+                        minLength={3}
+                        max={84}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            }
+
+
+            {/*------ quantity -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Quantity
+              </label>
+              <div className="col-span-8 sm:col-span-4">
+                <input
+                  type="number"
+                  name="quantity"
+                  placeholder="Add quantity"
+                  className="custom-input"
+                  value={productDetails.quantity}
+                  onChange={inputHandler}
+                  required
+                />
+              </div>
+            </div>
+
+            {/*------ brand -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Brand
+              </label>
+              <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4">
+                  <select
+                    type="text"
+                    name="brand"
+                    placeholder="Add Brand Name"
+                    className="custom-input "
+                    value={productDetails.brand}
+                    onChange={inputHandler}
+                    required
+                    minLength={3}
+                    max={32}
+                  >
+                    <option value="" disabled>
+                      Select Brands
+                    </option>
+                    {getallBrand.map((items) => (
+                      <option
+                        key={items.id}
+                        value={items.brand}
+                        selected={items.brand === productDetails.brand}
+                      >
+                        {items.brand}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/*------ color -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Colour
+              </label>
+              <div className="col-span-8 sm:col-span-4">
+                <Select
+                  id="selectWarna"
+                  instanceId="selectWarna"
+                  isMulti
+                  isSearchable
+                  name="colors"
+                  className="basic-multi-select capitalize "
+                  classNamePrefix="select"
+                  options={allColors.map((item) => ({
+                    value: item.color,
+                    label: item.color,
+                  }))}
+                  onChange={handleMultiSelect}
+                  placeholder="Select color"
+                />
+              </div>
+            </div>
+            {/*------ submit button -----*/}
+            <div className="mt-8">
+              {isLoading ? (
+                <button
+                  type="button"
+                  className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]"
+                >
+                  Loading...
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
+                >
+                  Add Product
+                </button>
+              )}
             </div>
           </div>
-          {/*------ submit button -----*/}
-          <div className="mt-8">
-            {isLoading ? (
-              <button
-                type="button"
-                className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold text-[18px]"
-              >
-                Loading...
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold text-[18px]"
-              >
-                Add Product
-              </button>
-            )}
-          </div>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
     </>
   );
 };

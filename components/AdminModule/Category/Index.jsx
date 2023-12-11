@@ -17,6 +17,8 @@ import CreateCategoryForm from "../Category/create-cate";
 import DeleteModuleC from "./deleteMudule";
 import EditCate from "./edit-category";
 import { ToastContainer } from "react-toastify";
+import WebsiteLoader from "../../websiteLoader";
+import SubCategory from "./addSubCategory";
 
 const headItems = ["NAME", "PUBLISHED", "ACTION"];
 
@@ -29,9 +31,11 @@ const CategoryList = () => {
   const [selected, setSelected] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [issubCateDrwaer, setSubCateDrwaer] = useState(false);
   const [cateEdit, setCateEdit] = useState("");
   const [editData, setEditData] = useState([]);
   const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+  const [isLoadingBtn, setLoadingBtn] = useState(false);
 
   const openDrawerO = async (_id) => {
     setCateEdit(_id);
@@ -70,6 +74,14 @@ const CategoryList = () => {
     setIsDrawerOpen(false);
   };
 
+  const openSubCategory = () => {
+    setSubCateDrwaer(true);
+  };
+
+  const closeSubCategory = () => {
+    setSubCateDrwaer(false);
+  };
+
   function closeModal() {
     setOpenDelete(false);
   }
@@ -83,7 +95,6 @@ const CategoryList = () => {
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-  console.log(selected);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -93,26 +104,32 @@ const CategoryList = () => {
     }
     setSelected([]);
   };
+
+
   useEffect(() => {
     defaultCategory();
   }, [isRefresh]);
-
-  const options = {
-    method: "GET",
-    url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
-  };
+  
 
   const defaultCategory = () => {
+    setLoadingBtn(true)
+      const options = {
+        method: "GET",
+        url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+      };
+
     axios
       .request(options)
       .then((response) => {
-        setGetallCategory(response.data);
-        console.log(response.data);
+        setGetallCategory(response?.data);
+        setLoadingBtn(false)
       })
       .catch((error) => {
         console.error("Error:", error);
+        setLoadingBtn(false)
       });
   };
+
 
   const allDeleteC = async () => {
     try {
@@ -174,6 +191,7 @@ const CategoryList = () => {
     }
     setSelected(newSelected);
   };
+
   const EnhancedTableToolbar = ({ numLength }) => {
     return (
       <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg h-[100px] bg-lightBlue-100 mt-5">
@@ -187,9 +205,16 @@ const CategoryList = () => {
       </div>
     );
   };
+  
   return (
     <>
+    {
+        isLoadingBtn &&
+        <WebsiteLoader />
+      }
     <ToastContainer/>
+
+
       <section>
         <div className="flex justify-between items-center pt-4 px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
           <h2 className="text-2xl font-semibold pb-4">Category List </h2>
@@ -209,12 +234,19 @@ const CategoryList = () => {
         ) : (
           <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
             <div className="flex justify-around">
-              <Link href="/create-cate"></Link>
               <button
                 onClick={openDrawer}
                 className=" rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer mr-4"
               >
-                + Add Category
+                + Add category
+              </button>
+            </div>
+            <div className="flex justify-around">
+              <button
+                onClick={openSubCategory}
+                className=" rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer mr-4"
+              >
+                + Add sub category
               </button>
             </div>
           </div>
@@ -223,7 +255,7 @@ const CategoryList = () => {
         {isDrawerOpen && (
           <div
             id="drawer-form"
-            className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >
@@ -255,7 +287,7 @@ const CategoryList = () => {
         {isDrawerOpenO && (
           <div
             id="drawer-form"
-            className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >
@@ -281,6 +313,38 @@ const CategoryList = () => {
                 closeDrawer={closeDrawerO}
                 refreshData={refreshData}
                 editData={editData}
+              />
+            </div>
+          </div>
+        )}
+
+        {issubCateDrwaer && (
+          <div
+            id="drawer-form"
+            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+            tabIndex={-1}
+            aria-labelledby="drawer-form-label"
+          >
+            <button
+              type="button"
+              onClick={closeDrawerO}
+              className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+            >
+              <svg
+                className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <ArrowRightIcon className="w-12 h-12 bg-white border rounded-xl p-1  text-orange-700 hover:bg-orange-100 hover:text-black" />
+              </svg>
+              <span className="sr-only bg-black">Close menu</span>
+            </button>
+            <div>
+            <SubCategory
+                closeDrawer={closeSubCategory}
+                refreshData={refreshData}
               />
             </div>
           </div>

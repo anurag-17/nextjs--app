@@ -42,26 +42,18 @@ const menuList = [
         path: "/brand",
       },
       {
-        id: 3,
+        id: "06",
+        label: "Size Chart",
+        path: "/size-chart",
+      },
+      {
+        id: "07",
         label: "categories",
         path: "/categories",
-        submenu: true,
-        subData: [
-          {
-            id: "001",
-            label: "categories list",
-            component: <New />,
-          },
-          {
-            id: "002",
-            label: "categories add",
-            component: <New />,
-          },
-        ],
         icon: `fa fa-usd`,
       },
       {
-        id: "04",
+        id: "08",
         label: "color",
         component: <New />,
         path: "/color",

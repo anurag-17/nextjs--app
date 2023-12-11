@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 
-const CreateBrand = ({closeDrawer, refreshData }) => {
+const CreateBrand = ({ closeDrawer, refreshData }) => {
   const [brand, setBrand] = useState("");
   const router = useRouter();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -34,7 +34,7 @@ const CreateBrand = ({closeDrawer, refreshData }) => {
         .catch((e) => {
           console.log(e);
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   const handleClose = () => {
     closeDrawer();
@@ -66,9 +66,9 @@ const CreateBrand = ({closeDrawer, refreshData }) => {
               type="submit"
               className="border p-2 m-10 mt-0 rounded-lg bg-lightBlue-600 text-white text-[20px] "
               onClick={() => {
-                  handleSubmit();
-                  setDrawerOpen(false);
-                }}
+                handleSubmit();
+                setDrawerOpen(false);
+              }}
             >
               Add Brand
             </button>
