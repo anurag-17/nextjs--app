@@ -2,23 +2,37 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { BASE_URL } from "../../../utlis/config";
+
+
 
 const CreateCategoryForm = ({closeDrawer, refreshData}) => {
+
   const [title, setTitle] = useState("");
   const router = useRouter();
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const { auth_token } = useSelector((state) => state.adminAuth || null);
+
 
   const handleSubmit = async (e) => {
-    e && e.preventDefault();
+     e.preventDefault();
+
+     const data = {
+      "title": title,
+      "subCategories": []
+    }
+
+
     try {
       await fetch(
-        "https://e-commerce-backend-brown.vercel.app/api/category/createCategory",
+        `${BASE_URL}/category/createCategory`,
         {
           method: "POST",
           headers: {
             "content-type": "application/json",
+            "authorization": auth_token,
           },
-          body: JSON.stringify({ title }),
+          body: JSON.stringify(data),
         }
       )
         .then((res) => {
@@ -26,21 +40,18 @@ const CreateCategoryForm = ({closeDrawer, refreshData}) => {
             router.push("/categories");
             toast.success("Category Create successfully !");
             refreshData();
-            setDrawerOpen(false);
-            handleClose();
+            closeDrawer();
           } else {
-            throw new Error("failed to create");
+            throw new Error("Server error");
           }
         })
         .catch((e) => {
           console.log(e);
+          toast.failed("Server error !");
         });
     } catch (error) {}
   };
 
-  const handleClose = () => {
-    closeDrawer();
-  };
   return (
     <>
        <div className="flex justify-between items-center pt-4  px-5 border border-[#f3f3f3] rounded-lg bg-white h-[50px] my-5 ">
@@ -70,10 +81,6 @@ const CreateCategoryForm = ({closeDrawer, refreshData}) => {
       <button
         type="submit"
         className="border p-2 m-10 mt-0 rounded-lg bg-lightBlue-600 text-white text-[20px] "
-        onClick={() => {
-              handleSubmit();
-              setDrawerOpen(false);
-            }}
       >
         Add Category
       </button>

@@ -7,7 +7,7 @@ import {  toast } from "react-toastify";
 import { BASE_URL } from "../../../utlis/config";
 
 
-const SubCategory = ({ closeDrawer, refreshData }) => {
+const AddSubCategory = ({ closeDrawer, refreshData }) => {
 
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -20,13 +20,13 @@ const SubCategory = ({ closeDrawer, refreshData }) => {
     setLoading(true)
     
     const data = {
-      title: category,
+      category: category,
       subCategory: subCategory
     }
 
     try {
       await fetch(
-        "https://e-commerce-backend-brown.vercel.app/api/subCategory/createSubCategory",
+        `${BASE_URL}/subCategory/createSubCategory`,
         {
           method: "POST",
           headers: {
@@ -41,7 +41,6 @@ const SubCategory = ({ closeDrawer, refreshData }) => {
             // router.push("/categories");
             toast.success("Category Create successfully !");
             refreshData();
-            setDrawerOpen(false);
             closeDrawer();
             setLoading(false)
           } else {
@@ -52,6 +51,7 @@ const SubCategory = ({ closeDrawer, refreshData }) => {
         .catch((e) => {
           console.log(e);
           setLoading(false)
+          toast.failed("Server error !");
         });
     } catch (error) { setLoading(false) }
   };
@@ -108,7 +108,7 @@ const SubCategory = ({ closeDrawer, refreshData }) => {
         <div className="gap-3 md:gap-5 xl:gap-6 lg:gap-6 ">
 
           <label className="absolute bg-white ml-14 z-20 text-[18px] text-gray-800 ">
-            Choose category
+            Choose main category
           </label>
           <div className="w-full">
             <select
@@ -122,10 +122,10 @@ const SubCategory = ({ closeDrawer, refreshData }) => {
               <option value="" disabled>
                 Category
               </option>
-              {getallCategory?.map((item) => (
+              {getallCategory?.map((item,index) => (
                 <option
-                  key={item?.id}
-                  value={item?.category}
+                  key={index}
+                  value={item?._id}
                   selected={item?.title === category}
                 >
                   {item?.title}
@@ -151,4 +151,4 @@ const SubCategory = ({ closeDrawer, refreshData }) => {
   );
 };
 
-export default SubCategory;
+export default AddSubCategory;

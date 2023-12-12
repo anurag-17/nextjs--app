@@ -156,22 +156,26 @@ const ManageOrders = ({ allOrders, refreshDatas }) => {
                   <td className="p-4 border-b">
                     <p className="text-gray-800 font-medium"> {tableData?.products?.length} products</p>
                   </td>
+                  {console.log(tableData?.paymentIntent.method)}
                   <td className="p-4 border-b">
-                    <p className="text-gray-800 font-medium"> Cash on Delivery </p>
+                    <p className="text-gray-800 font-medium"> {tableData?.paymentIntent?.method  === "Stripe" ? "Online" : "COD"} </p>
                   </td>
-                  <td className="p-4 border-b flex gap-x-3 items-end">
+                  <td className="p-4 border-b grid grid-cols-2 gap-x-1 items-end">
                     <p className="font-medium">
                       <span
                         className={
                           tableData?.orderStatus == "Processing"
-                            ? "bg-green-200 p-2 rounded-lg"
+                            ? "bg-yellow-200 px-4 py-3 rounded-[20px]"
                             : tableData?.orderStatus == "Completed"
-                              ? "bg-blue-200 p-2 rounded-lg"
+                              ? "bg-blue-200 px-4 py-3 rounded-[20px]"
                             : tableData?.orderStatus == "Cancelled"
-                              ?  "bg-red-200  p-2 rounded-lg"
-                            : tableData?.orderStatus == "Delivered"
-                              ?  "bg-green-600 p-2 rounded-lg"
-                              : "bg-gray-200 p-2 rounded-lg"
+                              ?  "bg-red-200  px-4 py-3 rounded-[20px]"
+                            : (tableData?.orderStatus == "Delivered")
+                              ?  "bg-green-200 px-4 py-3 rounded-[20px]"
+                              :
+                              tableData?.orderStatus =="Payment Confirmed" 
+                              ? "bg-orange-300 px-4 py-3 rounded-[20px]"
+                              : "bg-lightBlue-100 px-4 py-3 rounded-[20px]"
                         }
                       >
                        {tableData?.orderStatus}

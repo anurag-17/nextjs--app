@@ -53,7 +53,6 @@ const SizeChart = () => {
         axios
             .request(options)
             .then((response) => {
-                console.log(response)
                 setAllSizes(response?.data);
                 setLoadingBtn(false)
             })

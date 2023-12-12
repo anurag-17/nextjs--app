@@ -1,9 +1,9 @@
 "use client";
 import React, { Suspense, useState } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "../loading";
+import Loading from "../../loading";
 import { loadStripe } from '@stripe/stripe-js';
-import { BASE_URL } from "../../utlis/config";
+import { BASE_URL } from "../../../utlis/config";
 import { useSelector } from "react-redux";
 
 

@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { BASE_URL } from "../../../utlis/config";
 
-const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
+const EditSubCategory = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
   const [categoryDetails, setCategoryDetails] = useState();
 
-  
+
   const { auth_token } = useSelector((state) => state.adminAuth || null);
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
-      setCategoryDetails({
-        ...categoryDetails,
-        [name]: value,
-      });
+    setCategoryDetails({
+      ...categoryDetails,
+      [name]: value,
+    });
   };
 
   const handleUpdateCategory = async (e) => {
@@ -25,7 +26,7 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
 
     try {
       const response = await axios.put(
-        `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${cateEdit}`,
+        `${BASE_URL}/subCategory/updateSubCategory/${cateEdit}`,
         categoryDetails,
         {
           headers: {
@@ -36,18 +37,16 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
       );
 
       if (response.status === 200) {
-        toast.success("Category Update successfully !");
+        toast.success("Updated successfully !");
         setLoading(false);
         closeDrawer();
         refreshData();
       } else {
         setLoading(false);
-        toast.failed("Server error !");
       }
     } catch (error) {
       setLoading(false);
       console.error(error);
-      toast.failed("Server error !");
     }
   };
 
@@ -58,30 +57,49 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
         <h2 className="text-2xl font-semibold pb-4">Edit Category </h2>
         <div className="mb-3 w-[40%]"></div>
       </div>
+      
       <div className="bg-white border rounded-lg p-2 mx-auto">
         <form onSubmit={handleUpdateCategory}>
 
           <div className="mt-2">
 
             <label className="absolute bg-white ml-14 z-20 text-[18px] text-gray-800 ">
-               Main category
+              Sub category
             </label>
             <input
               onChange={inputHandler}
-              defaultValue={editData?.title}
+              defaultValue={editData?.subCategory}
               type="text"
-              name="name"
+              name="subCategory"
               className="px-3 py-2 rounded m-10 border border-gray-300 bg-gray-50 text-md focus:bg-white dark:border dark:border-gray-600  focus:outline-none h-[50px] elative w-8/12"
               required
+            />
+          </div>
+
+          <div>
+            <label className="absolute mt-6 bg-white ml-14 z-20 text-[18px] text-gray-800 bg-">
+              Category:
+            </label>
+
+            <input
+              type="text"
+              name="category"
+              className="px-3 py-2 rounded m-10 border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600 focus:outline-none h-[50px] relative w-8/12"
+              defaultValue={editData?.category}
+              onChange={inputHandler}
+              required
+              disabled
+              minLength={3}
+              max={84}
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="border p-2 m-10 mt-0 rounded-lg bg-lightBlue-600 text-white text-[20px]"
+            className="border p-2 m-10 mt-0 px-8 rounded-lg bg-lightBlue-600 text-white text-[20px]"
           >
-           {isLoading ? "Loading." : "Update" } 
+            {isLoading ? "Loading." : "Update"}
           </button>
         </form>
       </div>
@@ -89,4 +107,4 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   );
 };
 
-export default EditCate;
+export default EditSubCategory;

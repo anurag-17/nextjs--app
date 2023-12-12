@@ -7,6 +7,7 @@ import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../utlis/config";
+import ProductAddForm from "../components/AdminModule/AddProduct/product-add";
 
 const AddProduct = () => {
 
@@ -32,6 +33,7 @@ const AddProduct = () => {
     quantity: "",
     color: [],
     images: [],
+    sizeChart: []
   });
 
   const [selectColor, setSelectColor] = useState([]);
@@ -42,7 +44,7 @@ const AddProduct = () => {
     url: [],
     color: "",
   });
-
+  const [allSizes, setAllSizes] = useState([]);
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
 
   const refreshData = () => {
@@ -59,12 +61,14 @@ const AddProduct = () => {
       images: [],
       regPriceCurr: "",
       offerPriceCurr: "",
+      sizeChart: []
     });
   };
 
   //---currency---
 
   useEffect(() => {
+
     defaultCurrency();
   }, []);
 
@@ -164,6 +168,8 @@ const AddProduct = () => {
       });
     }
   };
+
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -292,6 +298,42 @@ const AddProduct = () => {
     let newColor = e.map((item) => item?.value);
     setProductDetails({ ...productDetails, ["color"]: newColor });
     // productDetails.color.push(newColor)
+  };
+
+
+  useEffect(() => {
+    getAllSizes();
+  }, []);
+
+
+  const getAllSizes = () => {
+
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/chart/getAllSizeCharts",
+    };
+
+    axios
+      .request(options)
+      .then((response) => {
+        setAllSizes(response?.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+
+  const sizeInputHandler = (size) => {
+
+    const updatedSizes = productDetails.sizeChart.includes(size)
+    ? productDetails.sizeChart.filter((s) => s !== size)
+    : [...productDetails.sizeChart, size];
+
+  setProductDetails({
+    ...productDetails,
+    sizeChart: updatedSizes,
+  });
   };
 
   return (
@@ -553,53 +595,6 @@ const AddProduct = () => {
                 </select>
               </div>
             </div>
-{/* <SizeChart /> */}
-
-            {
-              productDetails?.category === "Clothing" &&
-              <>
-                <div className="flex py-4">
-                  Enter measurements
-                  <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <label htmlFor="" className="custom-input-label">
-                      Product Title/Name
-                    </label>
-                    <div className="col-span-8 sm:col-span-4">
-                      <input
-                        type="text"
-                        name="title"
-                        placeholder="Product Title/Name"
-                        className="custom-input"
-                        value={productDetails.title}
-                        onChange={inputHandler}
-                        required
-                        minLength={3}
-                        max={84}
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <label htmlFor="" className="custom-input-label">
-                      Product Title/Name
-                    </label>
-                    <div className="col-span-8 sm:col-span-4">
-                      <input
-                        type="text"
-                        name="title"
-                        placeholder="Product Title/Name"
-                        className="custom-input"
-                        value={productDetails.title}
-                        onChange={inputHandler}
-                        required
-                        minLength={3}
-                        max={84}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </>
-            }
-
 
             {/*------ quantity -----*/}
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -677,6 +672,35 @@ const AddProduct = () => {
                 />
               </div>
             </div>
+
+            {/*------ size  -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <label htmlFor="" className="custom-input-label">
+                Product Sizes
+            </label>
+            <div className="col-span-8 sm:col-span-4 flex gap-x-8">
+                {allSizes?.map((size) => (
+                    <div className="">
+                        {
+                            size?.sizeChart?.map((items) => (
+
+                                <div key={size?._id} className="flex gap-x-5">
+                                    <input
+                                        type="checkbox"
+                                        id={items?._id}
+                                        checked={productDetails?.sizeChart.includes(items?.size)}
+                                        onChange={() => sizeInputHandler(items?.size)}
+                                        className="text-[20px]"
+                                    />
+                                    <label htmlFor={items._id} className="text-[20px]" >{items?.size}</label>
+                                </div>
+                            ))
+                        }
+                    </div>
+                ))}
+            </div>
+        </div>
+
             {/*------ submit button -----*/}
             <div className="mt-8">
               {isLoading ? (

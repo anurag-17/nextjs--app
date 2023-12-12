@@ -48,12 +48,18 @@ const menuList = [
       },
       {
         id: "07",
-        label: "categories",
+        label: "main Category",
         path: "/categories",
         icon: `fa fa-usd`,
       },
       {
         id: "08",
+        label: "sub Category",
+        path: "/sub-categories",
+        icon: `fa fa-usd`,
+      },
+      {
+        id: "09",
         label: "color",
         component: <New />,
         path: "/color",
@@ -218,7 +224,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                   {items.subData.map((subOpt, subInx) => (
                     <Link href={subOpt.path ? subOpt.path : "#"} key={subInx}>
                       <div
-                        className={`pl-6 py-3 ml-5 rounded-l-full max-w-[230px] justify-center text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
+                        className={`ml-12 py-3 pl-5 rounded-l-full max-w-[230px] justify-start text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
                          ${
                            subOpt?.id === labelId
                              ? "bg-lightBlue-600 text-white"
