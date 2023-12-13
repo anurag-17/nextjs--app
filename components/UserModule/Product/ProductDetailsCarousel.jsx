@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
-const ProductDetailsCarousel = ({ images, productColor }) => {
+const ProductDetailsCarousel = ({ images, productColor, detailId }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]?.url[0] || "");
-  const [selectedColor, setselectedColor] = useState("");
 
-  console.log(selectedImage)
+
   const handleClick = (url) => {
     setSelectedImage(url);
   };
@@ -77,6 +77,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
         </div>
         <div className="w-[75%] flex flex-col justify-center items-center">
           <div className="">
+          <Link href={`${detailId ? `/product-details/${detailId}` : "#" }`}>
             {selectedImage === "" ? (
               <Image
                 src={images[0]?.url[0] ? images[0]?.url[0] : ""}
@@ -94,6 +95,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                 height={250}
               />
             )}
+            </Link>
           </div>
         </div>
       </div>

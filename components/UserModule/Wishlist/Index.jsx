@@ -191,6 +191,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                   <ProductDetailsCarousel
                       images={item?.images || []}
                       productColor = {productColor}
+                      detailId = {item?._id}
                     />
                   </div>
                   <div className="flex justify-around items-center w-full">
@@ -199,11 +200,13 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                         <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden"></h6>
                       </div>
 
-                      <p className="text-[18px]  flex capitalize  ">
+                      <Link href={`/product-details/${item?._id}`}>       
+                                     <p className="text-[18px]  flex capitalize  ">
                         <p className="font-semibold text-[26px]">
                           {item?.title}{" "}
                         </p>
                       </p>
+                      </Link>
 
                       <p className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                         Price : ₹ {item?.price}
