@@ -9,7 +9,7 @@ const PasswordReset = () => {
   const router = useRouter();
   const { slug } = router.query;
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("Your password has been reset successfully. Now, please log in to access your account.");
+  const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState('');
 
