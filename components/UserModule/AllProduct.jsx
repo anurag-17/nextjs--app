@@ -363,7 +363,7 @@ const ProductGrid = () => {
       <UserNavbar />
 
       <section className="bg-gray-00 min-h-screen  ">
-        <div className="px-[15px] flex  md:flex-row flex-col justify-between">
+        <div className="px-[15px] flex gap-x-10  md:flex-row flex-col justify-between">
           <div className="space-y-9 w-[20%]">
             {/*----- filter by category start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm  mr-4 ">
@@ -429,7 +429,7 @@ const ProductGrid = () => {
               <div className="2xl:w-[40%] md:w-[30%]">
                 <input
                   type="search"
-                  className=" border border-gray-300  font-medium text-[19px] 2xl:py-3 py-1 rounded-md  focus-visible:border-none w-full text-black  placeholder:text-[#3a3636] px-4 placeholder:text-[12px]"
+                  className=" border border-gray-300  font-medium text-[19px] 2xl:py-3 py-1 rounded-md  focus-visible:border-none w-full text-black  placeholder:text-[#3a3636] px-4 placeholder:text-[14px]"
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="button-addon1"
@@ -440,7 +440,7 @@ const ProductGrid = () => {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 2xl:gap-7 md:gap-5 my-5  ">
+            <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5  pt-[20px] ">
               {allProduct?.length > 0 && allProduct?.map((items, ix) => (
                 <div
                   className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] hover:border-lightBlue-600"

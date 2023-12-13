@@ -161,18 +161,18 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
           <div className="border rounded-lg bg-white p-5">
             <div className="flex justify-between">
               <div>
-                <h1 className="text-[35px] font-semibold px-2">
+                <h1 className="2xl:text-[35px] lg:text-[28px ] font-semibold px-2">
                   Your Wishlist
                 </h1>
               </div>
 
               <button
                 onClick={handleDelete}
-                className=" border p-1  rounded-lg hover:bg-[#F3F4F9]  mr-4 cursor-pointer"
+                className=" border p-1  rounded-lg hover:bg-[#F3F4F9] px-6 cursor-pointer"
               >
-                <p className="text-[22px] mx-1 flex">
-                  Clear Wishlist
-                  <img src="cross.svg" className="w-7   mx-1" />
+                <p className=" text-[16px] mx-1 flex gap-x-2">
+                  Clear 
+                  <Image src="/cross.svg" alt="close" height={16} width={16}/>
                 </p>
               </button>
             </div>
@@ -204,43 +204,43 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                       <p className="text-md font-semibold capitalize my-2 text-lightBlue-600">
                         Price : ₹ {item?.price}
                       </p>
-                      <p className="text-[18px]  flex capitalize  ">
+                      <p className="text-md  flex capitalize  ">
                         Regular Price :
                         <p className="font-semibold px-2">
                           <del>₹{item?.discountedPrice}</del>
                         </p>
                       </p>
 
-                      <div className="flex text-left mt-4">
-                        <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="flex text-left my-4">
+                        <div className="w-[100px] text-md font-normal leadinng-[28px]">
                           Quantity :
                         </div>
-                        <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
+                        <div className="text-md xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
                           <p className="font-semibold px-2">
                             {itemQuantities[item?._id] || 0}
                           </p>
                           <button
                             onClick={() => handleMinusCounter(item?._id)}
-                            className="border border-black px-3 ml-3"
+                            className="border border-black px-3 ml-3 text-[12px]"
                           >
                             -
                           </button>
                           <button
                             onClick={() => handleCounter(item?._id)}
-                            className="border border-black px-3 ml-3"
+                            className="border border-black px-3 ml-3 text-[12px]"
                           >
                             +
                           </button>
                         </div>
                       </div>
                       <div className="flex">
-                        <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
+                        <h1 className="mt-1  mr-1 text-md">Status : </h1>
                         <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
                           Available
                         </p>
                       </div>
                       <div className="flex text-left mt-4">
-                        <div className="text-[18px] font-normal leadinng-[28px]">
+                        <div className="text-md font-normal leadinng-[28px]">
                           Colors :
                         </div>
                         <div className="ml-4">

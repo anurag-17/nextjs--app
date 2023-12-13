@@ -19,8 +19,8 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
 
   return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
-      <div className="flex justify-between h-auto">
-        <div className="h-[500px]  overflow-y-scroll">
+      <div className="flex justify-between h-auto py-[8px]">
+        <div className="h-[300px]  overflow-y-scroll">
           {productColor === "" ? (
             <>
               {images?.length > 0 &&
@@ -36,8 +36,8 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                           src={image.url[0]}
                           alt="product image"
                           className="rounded-xl h-auto"
-                          width={80}
-                          height={80}
+                          width={70}
+                          height={70}
                         />
                       </div>
                     )}
@@ -62,8 +62,8 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                               src={urls}
                               alt=""
                               className="rounded-xl h-auto "
-                              width={80}
-                              height={80}
+                              width={70}
+                              height={70}
                             />
                           </div>
                         )}
@@ -74,23 +74,23 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
             </>
           )}
         </div>
-        <div className="w-[75%]">
+        <div className="w-[75%] flex flex-col justify-center items-center">
           <div className="">
             {selectedImage === "" ? (
               <Image
                 src={images[0]?.url[0] ? images[0]?.url[0] : ""}
                 alt="product image"
                 className="rounded-xl h-auto cursor-pointer "
-                width={400}
-                height={400}
+                width={250}
+                height={250}
               />
             ) : (
               <Image
                 src={selectedImage ? selectedImage : "" }
                 alt="selected image"
                 className="rounded-xl h-auto cursor-pointer"
-                width={400}
-                height={400}
+                width={250}
+                height={250}
               />
             )}
           </div>
