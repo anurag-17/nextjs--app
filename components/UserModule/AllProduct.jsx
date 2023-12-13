@@ -362,220 +362,198 @@ const ProductGrid = () => {
         theme="light" />
       <UserNavbar />
 
-      <section className="bg-gray-00 min-h-screen px-20 flex">
-        <div className="space-y-9 w-[25%]">
-          {/*----- filter by category start ------- */}
-          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4 ">
-            <p className="font-semibold text-2xl mb-4">Product Categories</p>
-            <hr className="mb-2" />
-            <div className="space-y-4 ">
-              <div className=" gap-1 ">
-                {/* <Link href={`/product-filter/${cate}`}></Link> */}
-                <div className="flex">
-                  <Image className="w-3" alt="loading" src={right} height={20} width={20} />
-                  <button
-                    name="category"
-                    placeholder="Category"
-                    className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
-                    onClick={getAllProducts}
-                  >
-                    All
-                  </button>
-                </div>
-                {productCategory?.length > 0 &&
-                  productCategory.map((cate, index) => (
-                    <div className="flex flex-col-reverse" key={index}>
-                      <div className="flex my-2">
-                        <Image className="w-3" alt="loading" src={right} height={20} width={20} />
-                        <button
-                          name="category"
-                          placeholder="Category"
-                          className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
-                          onClick={handleSearchCategories}
-                          value={cate}
-                        >
-                          {cate}
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+      <section className="bg-gray-00 min-h-screen  ">
+        <div className="px-[15px] flex  md:flex-row flex-col justify-between">
+          <div className="space-y-9 w-[20%]">
+            {/*----- filter by category start ------- */}
+            <div className="bg-white p-5 py-9 rounded-sm  mr-4 ">
+              <p className="font-semibold 2xl:text-2xl lg:text-xl mb-4">Product Categories</p>
+              <hr className="mb-2" />
+              <div className="flex gap-x-2">
+                <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                <button
+                  className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
+                  onClick={getAllProducts}
+                >
+                  All
+                </button>
               </div>
-            </div>
-          </div>
-
-          {/*----- filter by Brand start ------- */}
-          <div className="bg-white p-5 py-9 rounded-sm w-96 mr-4">
-            <p className="font-semibold text-2xl mb-4">Product Brands</p>
-            <hr className="mb-2" />
-            <div className=" ">
-              <div className=" justify-between text-[#645D64] space-y-4 ">
-                <div className="w-auto flex flex-col  gap-1">
-                  <div className="flex">
-                    <Image className="w-3" alt="loading" src={right} height={20} width={20} />
+              {productCategory?.length > 0 &&
+                productCategory.map((cate, index) => (
+                  <div className="flex gap-x-2 my-2" key={index}>
+                    <Image className="w-3" alt="loading" src={right} height={16} width={16} />
                     <button
-                      name="category"
-                      placeholder="Category"
-                      className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
-                      onClick={getAllProducts}
+                      className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
+                      onClick={handleSearchCategories}
+                      value={cate}
                     >
-                      All
+                      {cate}
                     </button>
                   </div>
-                  {productBrands?.length > 0 &&
-                    productBrands.map((bnd, index) => (
-                      <div className="flex flex-col-reverse" key={index}>
-                        <div className="flex my-2">
-                          <Image className="w-3" alt="loading" src={right} height={20} width={20} />
-                          <button
-                            name="brand"
-                            id="brand"
-                            placeholder="Brand"
-                            className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline"
-                            onClick={handleSearchBrand}
-                            value={bnd}
-                          >
-                            {bnd}
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                </div>
+                ))}
+            </div>
+
+            {/*----- filter by Brand start ------- */}
+            <div className="bg-white p-5 py-9 rounded-sm  mr-4">
+              <p className="font-semibold text-2xl mb-4 2xl:text-2xl lg:text-xl">Product Brands</p>
+              <hr className="mb-2" />
+              <div className="flex gap-x-2">
+                <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                <p
+                  className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
+                  onClick={getAllProducts}
+                >
+                  All
+                </p>
+              </div>
+              {productBrands?.length > 0 &&
+                productBrands.map((bnd, index) => (
+                  <div className="flex  gap-x-2 my-2" key={index}>
+                    <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                    <p
+                      className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
+                      onClick={handleSearchBrand}
+                      value={bnd}
+                    >
+                      {bnd}
+                    </p>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          <div className=" w-full md:w-[80%] mx-auto">
+            <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
+              <h2 className="2xl:text-[30px] lg:text-[28px] font-semibold">All Product </h2>
+
+              <div className="2xl:w-[40%] md:w-[30%]">
+                <input
+                  type="search"
+                  className=" border border-gray-300  font-medium text-[19px] 2xl:py-3 py-1 rounded-md  focus-visible:border-none w-full text-black  placeholder:text-[#3a3636] px-4 placeholder:text-[12px]"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="button-addon1"
+                  onChange={handleSearch}
+                  onKeyDown={handleKeyDown}
+
+                />
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className=" w-full md:w-[85%] mx-auto">
-          <div className="flex justify-between items-center py-4 px-10 rounded-lg bg-lightBlue-50 border border-gray-300 h-[100px]">
-            <h2 className="text-[30px] font-semibold">All Product </h2>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 2xl:gap-7 md:gap-5 my-5  ">
+              {allProduct?.length > 0 && allProduct?.map((items, ix) => (
+                <div
+                  className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] hover:border-lightBlue-600"
+                  key={ix}
+                >
+                  {items?.images?.length > 0 && (
+                    <div className="h-[300px] p-2 overflow-hidden">
+                      <Link href={`/product-details/${items?._id}`}>
+                        <Image
+                          src={items?.images[0]?.url[0]}
+                          alt="product"
+                          className=" mx-auto rounded-[5px] overflow-hidden  "
+                          width={200}
+                          height={300}
+                        />
+                      </Link>
+                    </div>
+                  )}
+                  <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
+                    <div className="flex justify-between items-center my-4">
+                      <p className="2xl:text-[25px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                        {items.title}
+                      </p>
+                      {!token || token === undefined ? (
+                        <div className="cursor-pointer" onClick={openLoginModal}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1}
+                            stroke="currentColor"
+                            className="w-6 h-6 "
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                            />
+                          </svg>
+                        </div>
+                      ) : (
+                        <button onClick={() => toggleWishlist(items._id)}>
+                          {isWished[items._id] ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1}
+                              stroke="currentColor"
+                              className="w-6 h-6 fill-[#f16e6e] "
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1}
+                              stroke="currentColor"
+                              className="w-6 h-6 b"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                              />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </div>
 
-            <div className="w-[40%]">
-              <input
-                type="search"
-                className=" border border-gray-300  font-medium text-[19px] py-3 rounded-md  focus-visible:border-none w-full text-black  placeholder:text-[#3a3636] px-4 "
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="button-addon1"
-                onChange={handleSearch}
-                onKeyDown={handleKeyDown}
+                    <div className="2xl:text-[18px] text-[15px]  flex justify-between capitalize  ">
+                      Brand :<p className="font-semibold px-2"> {items.brand} </p>
+                    </div>
+                    <div className="2xl:text-[18px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
+                      Offer price :
+                      <p className="text-lightBlue-800 px-2 font-bold">
+                        {items?.offerPriceCurr} {items.discountedPrice}
+                      </p>
+                    </div>
+                    <del className="2xl:text-[18px] text-[15px]  capitalize my-2 text-lightBlue-600">
+                      Regular Price : {items?.regPriceCurr} {items.price}
+                    </del>
 
-              />
-            </div>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-7 my-5  ">
-            {allProduct?.length > 0 && allProduct?.map((items, ix) => (
-              <div
-                className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 hover:border-lightBlue-600"
-                key={ix}
-              >
-                {items?.images?.length > 0 && (
-                  <div className="h-[400px] p-2 overflow-hidden">
+                    <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
+                      Stock :
+                      <p className="px-2 font-semibold">{items.quantity}</p>
+                    </div>
+                    <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
+                      Category :
+                      <p className="font-semibold px-2">{items.category}</p>
+                    </div>
+                    <div className="flex justify-between mt-3">
+                      <h1 className="mt-1  mr-1 2xl:text-[18px] text-[15px]">Status : </h1>
+                      <p className=" bg-lightBlue-100 p-1 text-center font-semibold rounded-xl text-lightBlue-700 w-20">
+                        selling
+                      </p>
+                    </div>
                     <Link href={`/product-details/${items?._id}`}>
-                      <Image
-                        src={items?.images[0]?.url[0]}
-                        alt="product"
-                        className=" mx-auto rounded-[20px] overflow-hidden  "
-                        width={300}
-                        height={300}
-                      />
+                      <button className=" 2xl:text-[16px] md:text-[14px] w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
+                        View Details
+                      </button>
                     </Link>
                   </div>
-                )}
-                <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
-                  <div className="flex justify-between items-center my-4">
-                    <p className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
-                      {items.title}
-                    </p>
-                    {!token || token === undefined ? (
-                      <div className="cursor-pointer" onClick={openLoginModal}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1}
-                          stroke="currentColor"
-                          className="w-6 h-6 "
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                          />
-                        </svg>
-                      </div>
-                    ) : (
-                      <button onClick={() => toggleWishlist(items._id)}>
-                        {isWished[items._id] ? (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1}
-                            stroke="currentColor"
-                            className="w-6 h-6 fill-[#f16e6e] "
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                            />
-                          </svg>
-                        ) : (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1}
-                            stroke="currentColor"
-                            className="w-6 h-6 b"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                            />
-                          </svg>
-                        )}
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="text-[18px]  flex capitalize  ">
-                    Brand :<p className="font-semibold px-2"> {items.brand} </p>
-                  </div>
-                  <div className="text-[18px] flex font-semibold capitalize my-2 text-lightBlue-700">
-                    Offer price :
-                    <p className="text-lightBlue-800 px-2 font-bold">
-                      {items?.offerPriceCurr} {items.discountedPrice}
-                    </p>
-                  </div>
-                  <del className="text-md font-semibold capitalize my-2 text-lightBlue-600">
-                    Regular Price : {items?.regPriceCurr} {items.price}
-                  </del>
-
-                  <div className="text-[18px] flex capitalize my-2 ">
-                    Stock :
-                    <p className="px-2 font-semibold">{items.quantity}</p>
-                  </div>
-                  <div className="text-[18px] flex capitalize my-2 ">
-                    Category :
-                    <p className="font-semibold px-2">{items.category}</p>
-                  </div>
-                  <div className="flex mt-3">
-                    <h1 className="mt-1  mr-1 text-[18px]">Status : </h1>
-                    <p className=" bg-lightBlue-100 p-1 text-center font-semibold rounded-xl text-lightBlue-700 w-20">
-                      selling
-                    </p>
-                  </div>
-                  <Link href={`/product-details/${items?._id}`}>
-                    <button className="w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
-                      View Details
-                    </button>
-                  </Link>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -197,7 +197,7 @@ const UserNavbar = () => {
                   </button>
                 </div>
             }
-            <Link href="/" className="uppercase text-lightBlue-700 font-bold text-[40px] text-center ">
+            <Link href="/" className="uppercase text-lightBlue-700 font-bold 2xl:text-[40px] lg:text-[30px] text-center ">
               E-commerce WEBSITE
             </Link>
             <div className="flex items-center gap-[20px] justify-center">
