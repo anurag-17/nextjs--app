@@ -10,10 +10,10 @@ import Link from "next/link";
 
 import { getCartProducts } from "../../../redux/slices/authSlice";
 import AddressModal from "../Address/addressPopup";
-import Payment from "../../payment-integration/index";
 import { BASE_URL } from "../../../utlis/config";
 import PaymentOption from "./paymentOption";
 import UserNavbar from "../userNavbar";
+import Payment from "../payment-integration";
 
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
@@ -751,7 +751,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
                                 {/*---------- if choose another ---------*/}
                                 {paymentOption ===
-                                  "Payment using razorpay" && (
+                                  "Payment using stripe" && (
                                     <div className="my-8 text-right">
                                       <Payment
                                         buyItem={getCartProduct || []}
