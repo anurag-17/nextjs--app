@@ -189,18 +189,18 @@ const UserNavbar = () => {
                     type="button"
                     onClick={openDrawer} // Open the drawer when this button is clicked
                   >
-                    <div className="w-[30%]">
-                      <div className="bg-black p-[3px] my-2"></div>
-                      <div className="bg-black p-[3px] my-2"></div>
-                      <div className="bg-black p-[3px] my-2"></div>
+                    <div className="2xl:w-[30%] w-[25%]">
+                      <div className="bg-black 2xl:p-[3px] p-[2px] my-1  2xl:my-2"></div>
+                      <div className="bg-black 2xl:p-[3px] p-[2px] my-1  2xl:my-2"></div>
+                      <div className="bg-black 2xl:p-[3px] p-[2px] my-1  2xl:my-2"></div>
                     </div>
                   </button>
                 </div>
             }
-            <Link href="/" className="uppercase text-lightBlue-700 font-bold 2xl:text-[40px] lg:text-[30px] text-center ">
+            <Link href="/" className="uppercase text-lightBlue-700 font-bold 2xl:text-[40px] lg:text-[28px] text-center ">
               E-commerce WEBSITE
             </Link>
-            <div className="flex items-center gap-[20px] justify-center">
+            <div className="flex items-center gap-[10px] justify-center">
               {(!token || token == undefined) ?
                 <>
                   <div
@@ -211,7 +211,7 @@ const UserNavbar = () => {
                   </div>
                   <Link href="/user-cart">
                     <div className="flex text-black font-medium text-[19px]">
-                      <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
+                      <Image src={shoping} className="relative" width={35} height={35} alt="cart" />
                     </div>
                   </Link>
                 </>
@@ -225,7 +225,7 @@ const UserNavbar = () => {
                         viewBox="0 0 24 24"
                         strokeWidth={1}
                         stroke="currentColor"
-                        className="w-[45px] h-[45px] font-bold "
+                        className="w-[35px] h-[35px] font-bold "
                       >
                         <path
                           strokeLinecap="round"
@@ -237,7 +237,7 @@ const UserNavbar = () => {
                   {/* </Link> */}
                   <Link href="/user-cart">
                     <div className="py-6 ">
-                      <Image src={shoping} className="relative" width={45} height={45} alt="cart" />
+                      <Image src={shoping} className="relative" width={35} height={35} alt="cart" />
                     </div>
                     {
                       cart?.length > 0 &&
@@ -278,7 +278,7 @@ const UserNavbar = () => {
                       {item.id === 7 ? (
                         !token || token === undefined ? null : (
                           <li
-                            className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold   hover:text-white hover:bg-lightBlue-600
+                            className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] text-[15px] font-semibold   hover:text-white hover:bg-lightBlue-600
                             ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                             onClick={() => handleSignOut(item.path)}
                           >
@@ -291,7 +291,7 @@ const UserNavbar = () => {
                             (!token || token === undefined ? null : (
                               <Link href={item.path ? item.path : "#"}>
                                 <li
-                                  className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-600
+                                  className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] text-[15px] font-semibold  hover:text-white hover:bg-lightBlue-600
                                  ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                                 >
                                   {item.label}
@@ -301,7 +301,7 @@ const UserNavbar = () => {
                           {!item.show && (
                             <Link href={item.path ? item.path : "#"}>
                               <li
-                                className={`list-none cursor-pointer border px-10 py-4 my-4 rounded-md hover:border-lightBlue-600  text-[18px] font-semibold  hover:text-white hover:bg-lightBlue-500
+                                className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] text-[15px] font-semibold  hover:text-white hover:bg-lightBlue-500
                                ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                               >
                                 {item.label}

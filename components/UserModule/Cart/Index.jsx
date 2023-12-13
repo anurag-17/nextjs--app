@@ -807,22 +807,22 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
               </div>
             </>
           ) : (
-            <div className="py-5">
+            <div className="2xl:py-5">
               <div className="flex flex-col justify-center items-center">
-                <p className="text-[30px] font-semibold mt-5">
+                <p className="2xl:text-[30px] md:text-[25px] font-semibold 2xl:mt-5">
                   Your cart is empty
                 </p>
                 <div className="mt-2">
                   <Image
                     src="/images/empty.svg"
                     alt="Empty cart"
-                    width={500}
-                    height={400}
+                    width={380}
+                    height={300}
                   />
                 </div>
                 <Link href="/user-product">
-                  <div className="mb-6 mt-14">
-                    <button className="px-6 py-3 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
+                  <div className="mb-6 mt-4  2xl:mt-10">
+                    <button className="px-6 2xl:text-[16px] text-[15px] 2xl:py-3 py-1 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
                       Continue Shopping
                     </button>
                   </div>

@@ -236,8 +236,7 @@ const ProductGrid = () => {
 
 
   // ------ filter products by brand ------ //
-  const handleSearchBrand = (e) => {
-    const bnd = e.target.value;
+  const handleSearchBrand = (bnd) => {
     if (bnd === "All") {
       refreshData();
     } else {
@@ -249,7 +248,7 @@ const ProductGrid = () => {
         .request(options)
         .then(function (response) {
           if (response.status === 200) {
-            setAllProduct(response.data);
+            setAllProduct(response?.data);
           }
         })
         .catch(function (error) {
@@ -412,7 +411,7 @@ const ProductGrid = () => {
                     <Image className="w-3" alt="loading" src={right} height={16} width={16} />
                     <p
                       className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
-                      onClick={handleSearchBrand}
+                      onClick={()=>handleSearchBrand(bnd)}
                       value={bnd}
                     >
                       {bnd}
