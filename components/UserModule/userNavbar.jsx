@@ -184,8 +184,8 @@ const UserNavbar = () => {
                 </Link>
                 :
                 <div className="text-center flex">
-                  <button
-                    className="w-36"
+                  <button 
+                    className="w-36 focus-visible:outline-none"
                     type="button"
                     onClick={openDrawer} // Open the drawer when this button is clicked
                   >

@@ -36,6 +36,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
         if (response.status === 200) {
           toast.success("Wishlist items deleted successfully !");
           refreshData();
+          dispatch(getUserWishList([]))
         } else {
           return;
         }

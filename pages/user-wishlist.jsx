@@ -3,9 +3,6 @@ import React from "react";
 import UserNavbar from "../components/UserModule/userNavbar";
 import { useState, useEffect } from "react";
 import { fetchApi } from "../utlis/api";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import UserWishlist from "../components/UserModule/Wishlist/Index";
 

@@ -6,6 +6,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]?.url[0] || "");
   const [selectedColor, setselectedColor] = useState("");
 
+  console.log(selectedImage)
   const handleClick = (url) => {
     setSelectedImage(url);
   };
@@ -19,23 +20,23 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
 
   return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
-      <div className="flex justify-between h-auto py-[8px]">
+      <div className="flex justify-between h-auto py-[8px] gap-5">
         <div className="h-[300px]  overflow-y-scroll">
           {productColor === "" ? (
             <>
               {images?.length > 0 &&
                 images?.map((image, inx) => (
-                  <div className="flex flex-col gap-5  " key={inx}>
+                  <div className="flex flex-col gap-5 mx-1" key={inx}>
                     {image?.url?.length > 0 && (
                       <div
-                        className={`cursor-pointer border border-gray-300 rounded active:border-lightBlue-800  p-2  
-                ${selectedImage === image.url[0] ? " border-black " : ""}`}
+                        className={`cursor-pointer border rounded active:border-lightBlue-800 p-1 my-1 
+                ${selectedImage === image.url[0] ? " border-black " : "border-gray-300"}`}
                         onClick={() => handleClick(image.url[0])}
                       >
                         <Image
                           src={image.url[0]}
                           alt="product image"
-                          className="rounded-xl h-auto"
+                          className="rounded h-auto"
                           width={70}
                           height={70}
                         />
@@ -61,7 +62,7 @@ const ProductDetailsCarousel = ({ images, productColor }) => {
                               key={idx}
                               src={urls}
                               alt=""
-                              className="rounded-xl h-auto "
+                              className="rounded h-auto "
                               width={70}
                               height={70}
                             />

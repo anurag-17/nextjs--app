@@ -10,6 +10,31 @@ body {
 body{
   font-family: 'Montserrat', sans-serif;
 }
+
+
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(82, 110, 119);
+  border-radius: 6px;
+}
+
+/* For Firefox */
+/* Note: Firefox supports only scrollbar-color and scrollbar-width */
+/* scrollbar-color: thumb color track color */
+/* scrollbar-width: thin | auto | none */
+html {
+  scrollbar-color: #fff #f1f1f1;
+  scrollbar-width: thin;
+}
+
 .dropdown {
 
   min-height: 0px;
