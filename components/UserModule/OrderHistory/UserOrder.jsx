@@ -151,7 +151,7 @@ const userOrder = () => {
 
             {
 
-              allOrders?.products?.length < 1 &&
+              (allOrders?.products?.length < 1) &&
               <div className="py-[80px] flex flex-col justify-center items-center">
                 <p className="text-[28px] font-medium mb-8">No order created yet</p>
                 <Link href="/user-product">

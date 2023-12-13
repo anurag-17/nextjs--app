@@ -85,13 +85,13 @@ const UserProfile = ({ getAllCustomer, refreshData }) => {
               </p>
               <div className="flex mt-5 ml-5 justify-evenly w-6/12">
                 <Link href="https://www.facebook.com" target="_blank">
-                  <img className="h-9 w-13" src="/fb.svg" />
+                  <Image alt="social" src="/social/facebook.png" height={34} width={34} />
                 </Link>
                 <Link href="https://www.linkedin.com" target="_blank">
-                  <img className="h-9 w-13" src="/in.svg" />
+                  <Image alt="social" src="/social/linkedin.png" height={34} width={34} />
                 </Link>
                 <Link href="https://twitter.com" target="_blank">
-                  <img className="h-9 w-13" src="/twitterr.svg" />
+                  <Image alt="social" src="/social/twitter.png" height={34} width={34} />
                 </Link>
                 {/* <img className="h-9 w-13" src="/add.svg" /> */}
               </div>
