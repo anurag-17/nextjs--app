@@ -214,14 +214,25 @@ const UserLogin = ({ API_URL }) => {
                       Login
                     </button>
                   )}
-                  <Link href="/user-signup">
                     <p
-                      className="text-center underline 2xl:mt-6 2xl:text-[20px] font-medium
-                    xl:mt-4 xl:text-[18px] first-letter: lg:mt-4 lg:text-[16px] 
-                    md:mt-2 md:text-[18px]  md:mb-10
-                    sm:mt-2 sm:text-[16px]  sm:mb-10"
+                      className="text-center   2xl:mt-6 2xl:text-[20px] font-medium
+                      xl:mt-4 xl:text-[18px] first-letter: lg:mt-4 lg:text-[16px] 
+                      md:mt-2 md:text-[18px] 
+                      sm:mt-2 sm:text-[16px]"
                     >
-                      Register Now
+                  Not registered?
+                      <Link href="/user-signup">
+                    <span className="text-lightBlue-700"> Create an account</span>
+                  </Link>
+                    </p>
+                  <Link href="/user-forgot-password">
+                    <p
+                      className="text-center underline  2xl:text-[20px] font-medium
+                     xl:text-[18px] first-letter: mt-6 lg:text-[16px] 
+                    md:text-[18px]  md:mb-10
+                    sm:text-[16px]  sm:mb-10"
+                    >
+                Forgot password
                     </p>
                   </Link>
 

@@ -51,7 +51,8 @@ export default function Layout({ children }) {
       router.pathname === "/user-cart" ||
       router.pathname === "/success" ||
       router.pathname === "/cancel" ||
-      router.pathname.includes("product-details") 
+      router.pathname.includes("product-details") ||
+      router.pathname.includes("password") 
       ? null : (
         <>
           <TopBar showNav={showNav} setShowNav={setShowNav} />
@@ -92,6 +93,8 @@ export default function Layout({ children }) {
             router.pathname === "/success" ||
       router.pathname === "/cancel" ||
             router.pathname.includes("product-details") 
+            ||
+            router.pathname.includes("password") 
           )
             ? "pt-[4rem] pl-56"
             : ""
@@ -118,6 +121,8 @@ export default function Layout({ children }) {
               router.pathname === "/success" ||
       router.pathname === "/cancel" ||
               router.pathname.includes("product-details") 
+              ||
+              router.pathname.includes("password") 
             )
               ? "pl-4 md:pl-16 pr-4"
               : ""
