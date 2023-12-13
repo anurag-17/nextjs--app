@@ -148,13 +148,11 @@ const userOrder = () => {
                 </div>
               </>
             }
-
-
             {
 
               !(allOrders) &&
               <div className="py-[80px] flex flex-col justify-center items-center">
-                <p className="text-[28px] font-medium mb-8">No order created yet</p>
+                <p className="text-[28px] font-medium mb-8">No order has been created yet</p>
                 <Link href="/user-product">
                   <button
                     className={`px-5 py-3 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-full md:w-[300px] `}
@@ -164,6 +162,7 @@ const userOrder = () => {
                 </Link>
               </div>
             }
+
           </div>
         </div>
 
