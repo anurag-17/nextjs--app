@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import dynamic from "next/dynamic";
@@ -7,8 +7,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import ProductDetailsCarousel from "../Product/ProductDetailsCarousel";
+import { getCartProducts, getUserWishList } from "../../../redux/slices/authSlice";
 
 const UserWishlist = ({ getWishProduct, refreshData }) => {
+  const dispatch = useDispatch()
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [itemStates, setItemStates] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -104,11 +106,11 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
       axios
         .request(options)
         .then(function (response) {
-          console.log(response);
           if (response.status === 200) {
+            console.log(response);
             setAddIntoCart(true);
             removeFromWishlist(data?._id);
-            // refreshData();
+            dispatch(getCartProducts(response?.data?.cart));
             setProductColor("");
           } else {
             toast.error("Failed, Token is expired");
@@ -142,8 +144,9 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response);
+        
         if (response.status === 200) {
+          dispatch(getUserWishList(response?.data?.wishlist));
           refreshData();
         } else {
           return;
@@ -217,7 +220,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                         </div>
                         <div className="text-md xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
                           <p className="font-semibold px-2">
-                            {itemQuantities[item?._id] || 0}
+                            {itemQuantities[item?._id] || 1}
                           </p>
                           <button
                             onClick={() => handleMinusCounter(item?._id)}
