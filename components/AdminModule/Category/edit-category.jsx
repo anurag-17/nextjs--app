@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
-  const [categoryDetails, setCategoryDetails] = useState();
+  const [title, setTitle] = useState();
 
   
   const { auth_token } = useSelector((state) => state.adminAuth || null);
@@ -13,9 +13,9 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
-      setCategoryDetails({
-        ...categoryDetails,
-        [name]: value,
+      setTitle({
+        ...title,
+        ['title']: value,
       });
   };
 
@@ -26,7 +26,7 @@ const EditCate = ({ editData, cateEdit, closeDrawer, refreshData }) => {
     try {
       const response = await axios.put(
         `https://e-commerce-backend-brown.vercel.app/api/category/updateCategory/${cateEdit}`,
-        categoryDetails,
+        title,
         {
           headers: {
             "Content-Type": "application/json",
