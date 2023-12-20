@@ -1,7 +1,8 @@
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+
 import Usercart from "../components/UserModule/Cart/Index";
 import { fetchApi } from "../utlis/api";
 
@@ -14,11 +15,14 @@ const Cart = () => {
   const refreshData = () => {
     setRefresh(!isRefresh);
   };
-  
 
   const defaultCustomer = async () => {
     try {
-      const response = await fetchApi("/auth/getUserCart", token);
+      const response = await fetchApi("/auth/getUserCart", { 
+        headers : {
+        "Content-Type": "application/json",
+        authorization: token,
+      }},);
       if (response?.status === 200) {
         const data = await response.json();
         setGetCartProduct(data?.cart);
@@ -39,9 +43,9 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    updateCart();
     if (!token || token == undefined) {
-      sessionCartProduct;
+      updateCart();
+      // sessionCartProduct;
     } else {
       defaultCustomer();
     }

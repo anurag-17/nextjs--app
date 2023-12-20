@@ -34,7 +34,6 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [activeIndex, setActiveIndex] = useState(1);
 
   useEffect(() => {
-
     if (getCartProduct?.cartTotal < 500) setShippingCharge(75);
   }, []);
 
@@ -189,8 +188,12 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       setActiveIndex(4); // Disable accordions 1, 2, and 3 when opening accordion 4
     }
   };
+
   const handleCartOrder = () => {
     setActiveIndex(2);
+    const newArr = getCartProduct?.products?.map((items)=>(
+      items.product.quantity > 1
+    ))
   };
 
   const handleQtyCounter = async (action, products) => {
@@ -212,8 +215,12 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
           },
         }
       );
+      console.log(response)
       if (response.status === 200) {
         refreshData()
+      }
+      else{
+        
       }
     } catch (error) {
       setLoading(false);
@@ -409,7 +416,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         >
                           <div>
                             <h1 className="text-[28px] font-semibold">
-                              Your Cart ( {getCartProduct?.products?.length}{" "}
+                              Your cart ( {getCartProduct?.products?.length}{" "}
                               items )
                             </h1>
                           </div>

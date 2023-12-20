@@ -118,14 +118,13 @@ const Userdetail = () => {
       } else if (productQuantity > produc.quantity) {
         setMessage(" Sorry we have limited stock");
       } else {
-        return;
+        setMessage("")
         setShowErr(false);
         const options = {
           method: "POST",
           url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
           headers: {
             "Content-Type": "application/json",
-            "User-Agent": "insomnia/2023.5.8",
             authorization: token,
           },
           data: {
@@ -163,6 +162,7 @@ const Userdetail = () => {
       setProductQuantity((productQuantity += 1));
     }
   };
+  
   const handleMinusCounter = (productId) => {
     if (productQuantity > 1) {
       setProductQuantity((productQuantity -= 1));
