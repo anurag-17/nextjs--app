@@ -7,10 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import ProductDetailsCarousel from "../Product/ProductDetailsCarousel";
-import { getCartProducts, getUserWishList } from "../../../redux/slices/authSlice";
+import {
+  getCartProducts,
+  getUserWishList,
+} from "../../../redux/slices/authSlice";
 
 const UserWishlist = ({ getWishProduct, refreshData }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const [itemStates, setItemStates] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -20,7 +23,6 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
   const [isAddIntoCart, setAddIntoCart] = useState(false);
   const [itemQuantities, setItemQuantities] = useState({});
 
-  
   const handleDelete = () => {
     axios
       .delete(
@@ -36,7 +38,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
         if (response.status === 200) {
           toast.success("Wishlist items deleted successfully !");
           refreshData();
-          dispatch(getUserWishList([]))
+          dispatch(getUserWishList([]));
         } else {
           return;
         }
@@ -71,7 +73,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
       ...prevItemStates,
       [itemId]: { ...prevItemStates[itemId], color, isShowErr: false },
     }));
-    setProductColor(color)
+    setProductColor(color);
   };
 
   const addToCart = (data) => {
@@ -145,7 +147,6 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
     axios
       .request(options)
       .then(function (response) {
-        
         if (response.status === 200) {
           dispatch(getUserWishList(response?.data?.wishlist));
           refreshData();
@@ -175,140 +176,152 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                 className=" border p-1  rounded-lg hover:bg-[#F3F4F9] px-6 cursor-pointer"
               >
                 <p className=" text-[16px] mx-1 flex gap-x-2">
-                  Clear 
-                  <Image src="/cross.svg" alt="close" height={16} width={16}/>
+                  Clear
+                  <Image src="/cross.svg" alt="close" height={16} width={16} />
                 </p>
               </button>
             </div>
             <hr className="my-5" />
             <div className="flex flex-col-reverse">
               {getWishProduct?.map((item, inx) => (
-                <div
-                  className=" flex bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer "
-                  key={inx}
-                >
-                  <div>
-                  <ProductDetailsCarousel
-                      images={item?.images || []}
-                      productColor = {productColor}
-                      detailId = {item?._id}
-                    />
-                  </div>
-                  <div className="flex justify-around items-center w-full">
-                    <div className="bg-white px-10 pb-6 rounded-[20px] ">
-                      <div className="flex justify-between items-center my-4">
-                        <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden"></h6>
-                      </div>
-
-                      <Link href={`/product-details/${item?._id}`}>       
-                                     <p className="text-[18px]  flex capitalize  ">
-                        <p className="font-semibold text-[26px]">
-                          {item?.title}{" "}
-                        </p>
-                      </p>
-                      </Link>
-
-                      <p className="text-md font-semibold capitalize my-2 text-lightBlue-600">
-                        Price : ₹ {item?.price}
-                      </p>
-                      <p className="text-md  flex capitalize  ">
-                        Regular Price :
-                        <p className="font-semibold px-2">
-                          <del>₹{item?.discountedPrice}</del>
-                        </p>
-                      </p>
-
-                      <div className="flex text-left my-4">
-                        <div className="w-[100px] text-md font-normal leadinng-[28px]">
-                          Quantity :
+                <div className="border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer">
+                  <div className=" flex bg-white    " key={inx}>
+                    <div>
+                      <ProductDetailsCarousel
+                        images={item?.images || []}
+                        productColor={productColor}
+                        detailId={item?._id}
+                      />
+                    </div>
+                    <div className="flex lg:flex-row flex-col justify-around items-center w-[60%] lg:w-full lg:pb-0 ">
+                      <div className="bg-white px-10 pb-6 rounded-[20px] ">
+                        <div className="flex justify-between items-center my-4">
+                          <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden"></h6>
                         </div>
-                        <div className="text-md xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
-                          <p className="font-semibold px-2">
-                            {itemQuantities[item?._id] || 1}
-                          </p>
-                          <button
-                            onClick={() => handleMinusCounter(item?._id)}
-                            className="border border-black px-3 ml-3 text-[12px]"
-                          >
-                            -
-                          </button>
-                          <button
-                            onClick={() => handleCounter(item?._id)}
-                            className="border border-black px-3 ml-3 text-[12px]"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <h1 className="mt-1  mr-1 text-md">Status : </h1>
-                        <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
-                          Available
-                        </p>
-                      </div>
-                      <div className="flex text-left mt-4">
-                        <div className="text-md font-normal leadinng-[28px]">
-                          Colors :
-                        </div>
-                        <div className="ml-4">
-                          <div className="w-[250px]">
-                            <select
-                              onChange={(e) => handleColorChange(item?._id, e)}
-                              value={itemStates[item?._id]?.color || ""}
-                              // value={selectedColor}
-                              className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm capitalize"
-                            >
-                              <option
-                                value=""
-                                className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
-                              >
-                                Select Color
-                              </option>
-                              {item?.color?.length > 0 &&
-                                item?.color?.map((options, inx) => (
-                                  <option
-                                    key={inx}
-                                    value={options}
-                                    className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
-                                  >
-                                    {options}
-                                  </option>
-                                ))}
-                            </select>
-                          </div>
-                          {itemStates[item?._id]?.isShowErr && (
-                            <p className="text-sm font-medium py-1 bg-red-100 text-red-600 px-4 rounded mt-2 w-[250px]">
-                              Please choose color
+
+                        <Link href={`/product-details/${item?._id}`}>
+                          <p className="text-[18px]  flex capitalize  ">
+                            <p className="font-semibold text-[26px]">
+                              {item?.title}{" "}
                             </p>
-                          )}
+                          </p>
+                        </Link>
+
+                        <div className="flex text-md font-semibold capitalize my-2 text-lightBlue-600">
+                          Price : <p className="pl-[73px]">₹{item?.price}</p>
                         </div>
+                        <p className="text-md  flex capitalize  ">
+                          Regular Price :
+                          <p className="font-semibold px-2">
+                            <del>₹{item?.discountedPrice}</del>
+                          </p>
+                        </p>
+
+                        <div className="flex text-left my-4">
+                          <div className="w-[100px] text-md font-normal leading-[28px]">
+                            Quantity :
+                          </div>
+                          <div className="pl-5 text-md xl:text-[20px] font-semibold leading-[28px] capitalize flex">
+                            <p className="font-semibold px-2">
+                              {itemQuantities[item?._id] || 1}
+                            </p>
+                            <button
+                              onClick={() => handleMinusCounter(item?._id)}
+                              className="border border-black px-3 ml-3 text-[12px]"
+                            >
+                              -
+                            </button>
+                            <button
+                              onClick={() => handleCounter(item?._id)}
+                              className="border border-black px-3 ml-3 text-[12px]"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <h1 className="mt-1  mr-1 text-md">Status : </h1>
+                          <p className="ml-16 bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
+                            Available
+                          </p>
+                        </div>
+                        <div className="flex text-left mt-4">
+                          <div className="text-md font-normal leading-[28px]">
+                            Colors :
+                          </div>
+                          <div className="ml-4">
+                            <div className=" lg:w-[180px] xl:w-[250px]">
+                              <select
+                                onChange={(e) =>
+                                  handleColorChange(item?._id, e)
+                                }
+                                value={itemStates[item?._id]?.color || ""}
+                                // value={selectedColor}
+                                className="w-full cursor-default rounded bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 border sm:text-sm capitalize"
+                              >
+                                <option
+                                  value=""
+                                  className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
+                                >
+                                  Select Color
+                                </option>
+                                {item?.color?.length > 0 &&
+                                  item?.color?.map((options, inx) => (
+                                    <option
+                                      key={inx}
+                                      value={options}
+                                      className="cursor-default py-2 pl-10 pr-4 text-sm capitalize"
+                                    >
+                                      {options}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            {itemStates[item?._id]?.isShowErr && (
+                              <p className="text-sm font-medium py-1 bg-red-100 text-red-600 px-4 rounded mt-2 w-[250px]">
+                                Please choose color
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="xl:pr-0 lg:pr-5 md:pr-0 lg:block hidden">
+                        <button
+                          onClick={() => addToCart(item)}
+                          className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold bg-lightBlue-700 text-white border hover:bg-white hover:text-lightBlue-700 border-lightBlue-700 md:w-[250px] xl:w-[300px] lg:w-[200px] w-full"
+                        >
+                          Move to Cart
+                        </button>
+                        {/* } */}
+
+                        <button
+                          onClick={() => removeFromWishlist(item?._id)}
+                          className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold hover:bg-lightBlue-700 hover:text-white border bg-white text-lightBlue-700 border-lightBlue-700 md:w-[250px] xl:w-[300px] lg:w-[200px] w-full mt-4"
+                        >
+                          Remove
+                        </button>
                       </div>
                     </div>
-                    <div className="">
-                      {/* {
-                      isAddIntoCart ? 
-                     <Link href="/cart">
-                      <button
-                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold hover:bg-lightBlue-700 hover:text-white border bg-white text-lightBlue-700 border-lightBlue-700 lg:w-[300px] w-full"
-                    >
-                      Go to Cart
-                    </button>
-                     </Link> : */}
+                  </div>
+
+                  <div className=" flex lg:hidden justify-center gap-4">
+                    
                       <button
                         onClick={() => addToCart(item)}
-                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold bg-lightBlue-700 text-white border hover:bg-white hover:text-lightBlue-700 border-lightBlue-700 lg:w-[300px] w-full"
+                        className="px-4 lg:py-3 py- rounded-md flex justify-center items-center text-[16px] font-semibold bg-lightBlue-700 text-white border hover:bg-white hover:text-lightBlue-700 border-lightBlue-700 md:w-[250px] xl:w-[300px] lg:w-[200px] w-full"
                       >
                         Move to Cart
                       </button>
-                      {/* } */}
-
+                   
+                  
+                    
                       <button
                         onClick={() => removeFromWishlist(item?._id)}
-                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold hover:bg-lightBlue-700 hover:text-white border bg-white text-lightBlue-700 border-lightBlue-700 lg:w-[300px] w-full mt-4"
+                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold hover:bg-lightBlue-700 hover:text-white border bg-white text-lightBlue-700 border-lightBlue-700 md:w-[250px] xl:w-[300px] lg:w-[200px] w-full "
                       >
                         Remove
                       </button>
-                    </div>
+                   
                   </div>
                 </div>
               ))}
