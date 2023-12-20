@@ -717,8 +717,10 @@ console.log(productDetails?.category);
               </div>
             </div>
 
+
+
             {/*------ size  -----*/}
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <label htmlFor="" className="custom-input-label">
                 Product Sizes
               </label>
@@ -744,7 +746,9 @@ console.log(productDetails?.category);
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+
+
 
             {/*------ submit button -----*/}
             <div className="mt-8">
@@ -773,44 +777,3 @@ console.log(productDetails?.category);
 
 export default dynamic(() => Promise.resolve(AddProduct), { ssr: false });
 
-
-
-
-
-
-// components/CategorySelector.js
-// import React, { useState } from 'react';
-
-// const CategorySelector = () => {
-//   const [selectedCategory, setSelectedCategory] = useState('fruit');
-//   const [subCategories, setSubCategories] = useState({
-//     fruit: ['Apple', 'Banana', 'Orange'],
-//     vegetable: ['Carrot', 'Broccoli', 'Spinach'],
-//   });
-
-//   const handleCategoryChange = (event) => {
-//     const category = event.target.value;
-//     setSelectedCategory(category);
-//   };
-
-//   return (
-//     <div>
-//       <label htmlFor="category">Select Category:</label>
-//       <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
-//         <option value="fruit">Fruit</option>
-//         <option value="vegetable">Vegetable</option>
-//       </select>
-
-//       <label htmlFor="subCategory">Select Subcategory:</label>
-//       <select id="subCategory">
-//         {subCategories[selectedCategory].map((subCategory) => (
-//           <option key={subCategory} value={subCategory}>
-//             {subCategory}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   );
-// };
-
-// export default CategorySelector;

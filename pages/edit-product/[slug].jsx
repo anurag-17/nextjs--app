@@ -456,13 +456,13 @@ export default function EditProduct() {
                       .map((item) => (
                         <option
                         key={item.id}
-                        value={item.title}
+                        value={item.subCategory}
                         selected={
                           item.title ===
                           (editData?.category || productDetails.category)
                         }
                       >
-                        {item?.category?.subCategory}
+                        {item?.subCategory}
                       </option>
                       ))}
                   </select>
