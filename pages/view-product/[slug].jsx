@@ -90,7 +90,7 @@ const EditProduct = () => {
                         Category :
                       </div>
                       <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
-                        {productDetail?.category}
+                        {productDetail?.subCategory}
                       </div>
                     </div>
                     <div className="flex text-left mt-4">

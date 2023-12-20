@@ -10,7 +10,6 @@ import { BASE_URL } from "../utlis/config";
 import ProductAddForm from "../components/AdminModule/AddProduct/product-add";
 
 const AddProduct = () => {
-
   const { auth_token } = useSelector((state) => state.adminAuth || null);
   const [getallBrand, setGetallBrand] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
@@ -29,11 +28,12 @@ const AddProduct = () => {
     regPriceCurr: "",
     offerPriceCurr: "",
     category: "",
+    subCategory:"",
     brand: "",
     quantity: "",
     color: [],
     images: [],
-    sizeChart: []
+    sizeChart: [],
   });
 
   const [selectColor, setSelectColor] = useState([]);
@@ -46,6 +46,7 @@ const AddProduct = () => {
   });
   const [allSizes, setAllSizes] = useState([]);
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
+  const [allSubCategory, setAllSubCategory] = useState([]);
 
   const refreshData = () => {
     setProductDetails({
@@ -61,14 +62,13 @@ const AddProduct = () => {
       images: [],
       regPriceCurr: "",
       offerPriceCurr: "",
-      sizeChart: []
+      sizeChart: [],
     });
   };
 
   //---currency---
 
   useEffect(() => {
-
     defaultCurrency();
   }, []);
 
@@ -102,6 +102,29 @@ const AddProduct = () => {
       .request(option)
       .then((response) => {
         setGetallCategory(response?.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    defaultSubCategory();
+  }, []);
+
+  const defaultSubCategory = () => {
+    const options = {
+      method: "GET",
+      url: `${BASE_URL}/subCategory/getallSubCategory`,
+      headers: {
+        "content-type": "application/json",
+        authorization: auth_token,
+      },
+    };
+    axios
+      .request(options)
+      .then((response) => {
+        setAllSubCategory(response?.data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -159,7 +182,7 @@ const AddProduct = () => {
     } else if (name === "brand") {
       setProductDetails({
         ...productDetails,
-        ['brand']: value.toUpperCase(),
+        ["brand"]: value.toUpperCase(),
       });
     } else {
       setProductDetails({
@@ -168,8 +191,6 @@ const AddProduct = () => {
       });
     }
   };
-
-
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -247,16 +268,12 @@ const AddProduct = () => {
 
   const uploadImage = async (formData) => {
     try {
-      const response = await axios.post(
-        `${BASE_URL}/auth/upload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            authorization: token,
-          },
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/auth/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: token,
+        },
+      });
 
       return response;
     } catch (error) {
@@ -300,14 +317,11 @@ const AddProduct = () => {
     // productDetails.color.push(newColor)
   };
 
-
   useEffect(() => {
     getAllSizes();
   }, []);
 
-
   const getAllSizes = () => {
-
     const options = {
       method: "GET",
       url: "https://e-commerce-backend-brown.vercel.app/api/chart/getAllSizeCharts",
@@ -323,24 +337,21 @@ const AddProduct = () => {
       });
   };
 
-
   const sizeInputHandler = (size) => {
-
     const updatedSizes = productDetails.sizeChart.includes(size)
-    ? productDetails.sizeChart.filter((s) => s !== size)
-    : [...productDetails.sizeChart, size];
+      ? productDetails.sizeChart.filter((s) => s !== size)
+      : [...productDetails.sizeChart, size];
 
-  setProductDetails({
-    ...productDetails,
-    sizeChart: updatedSizes,
-  });
+    setProductDetails({
+      ...productDetails,
+      sizeChart: updatedSizes,
+    });
   };
 
+console.log(productDetails?.category);
   return (
     <>
-
       <section className="bg-gray-100 min-h-screen">
-
         <ToastContainer />
 
         <div className="h-[100px] ">
@@ -596,6 +607,39 @@ const AddProduct = () => {
               </div>
             </div>
 
+            {/*------sub category -----*/}
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <label htmlFor="" className="custom-input-label">
+                Product Sub Category
+              </label>
+              <div className="col-span-8 sm:col-span-4">
+                <select
+                  name="subCategory"
+                  placeholder="Add Sub Category"
+                  className="custom-input"
+                  value={productDetails.subCategory}
+                  onChange={inputHandler}
+                  required
+                  minLength={3}
+                  max={32}
+                >
+                  <option value="" disabled>
+                    Select Sub Category
+                  </option>
+                  {allSubCategory.filter((item,indr)=>{
+                    return item?.category?.title === productDetails?.category
+                  }).map((item) => (
+                    <option
+                      key={item.id}
+                      value={item.title}
+                      selected={item.title === productDetails.subCategory}
+                    >
+                      {item.subCategory}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
             {/*------ quantity -----*/}
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <label htmlFor="" className="custom-input-label">
@@ -675,31 +719,32 @@ const AddProduct = () => {
 
             {/*------ size  -----*/}
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-            <label htmlFor="" className="custom-input-label">
+              <label htmlFor="" className="custom-input-label">
                 Product Sizes
-            </label>
-            <div className="col-span-8 sm:col-span-4 flex gap-x-8">
+              </label>
+              <div className="col-span-8 sm:col-span-4 flex gap-x-8">
                 {allSizes?.map((size) => (
-                    <div className="">
-                        {
-                            size?.sizeChart?.map((items) => (
-
-                                <div key={size?._id} className="flex gap-x-5">
-                                    <input
-                                        type="checkbox"
-                                        id={items?._id}
-                                        checked={productDetails?.sizeChart.includes(items?.size)}
-                                        onChange={() => sizeInputHandler(items?.size)}
-                                        className="text-[20px]"
-                                    />
-                                    <label htmlFor={items._id} className="text-[20px]" >{items?.size}</label>
-                                </div>
-                            ))
-                        }
-                    </div>
+                  <div className="">
+                    {size?.sizeChart?.map((items) => (
+                      <div key={size?._id} className="flex gap-x-5">
+                        <input
+                          type="checkbox"
+                          id={items?._id}
+                          checked={productDetails?.sizeChart.includes(
+                            items?.size
+                          )}
+                          onChange={() => sizeInputHandler(items?.size)}
+                          className="text-[20px]"
+                        />
+                        <label htmlFor={items._id} className="text-[20px]">
+                          {items?.size}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 ))}
+              </div>
             </div>
-        </div>
 
             {/*------ submit button -----*/}
             <div className="mt-8">
@@ -727,3 +772,45 @@ const AddProduct = () => {
 };
 
 export default dynamic(() => Promise.resolve(AddProduct), { ssr: false });
+
+
+
+
+
+
+// components/CategorySelector.js
+// import React, { useState } from 'react';
+
+// const CategorySelector = () => {
+//   const [selectedCategory, setSelectedCategory] = useState('fruit');
+//   const [subCategories, setSubCategories] = useState({
+//     fruit: ['Apple', 'Banana', 'Orange'],
+//     vegetable: ['Carrot', 'Broccoli', 'Spinach'],
+//   });
+
+//   const handleCategoryChange = (event) => {
+//     const category = event.target.value;
+//     setSelectedCategory(category);
+//   };
+
+//   return (
+//     <div>
+//       <label htmlFor="category">Select Category:</label>
+//       <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
+//         <option value="fruit">Fruit</option>
+//         <option value="vegetable">Vegetable</option>
+//       </select>
+
+//       <label htmlFor="subCategory">Select Subcategory:</label>
+//       <select id="subCategory">
+//         {subCategories[selectedCategory].map((subCategory) => (
+//           <option key={subCategory} value={subCategory}>
+//             {subCategory}
+//           </option>
+//         ))}
+//       </select>
+//     </div>
+//   );
+// };
+
+// export default CategorySelector;

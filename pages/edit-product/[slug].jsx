@@ -14,6 +14,7 @@ export default function EditProduct() {
   const [editData, setEditData] = useState({});
   const [getCurrency, setGetCurrency] = useState([]);
   const [getallCategory, setGetallCategory] = useState([]);
+  const [getallSubCategory, setGetallSubCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
 
   const { auth_token } = useSelector((state) => state.adminAuth || null);
@@ -25,11 +26,11 @@ export default function EditProduct() {
     regPriceCurr: "",
     offerPriceCurr: "",
     category: "",
+    subCategory: "",
     brand: "",
     quantity: "",
     color: "",
   });
-
 
   const refreshData = () => {
     setRefresh(!isRefresh);
@@ -68,6 +69,26 @@ export default function EditProduct() {
       .request(option)
       .then((response) => {
         setGetallCategory(response?.data);
+        console.log("herry", response?.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    defaultSubCategory();
+  }, []);
+
+  const defaultSubCategory = () => {
+    const option = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/subCategory/getallSubCategory",
+    };
+    axios
+      .request(option)
+      .then((response) => {
+        setGetallSubCategory(response?.data);
         console.log("herry", response?.data);
       })
       .catch((error) => {
@@ -143,6 +164,9 @@ export default function EditProduct() {
         category: productDetails?.category
           ? productDetails?.category
           : editData?.category,
+        subCategory: productDetails?.subCategory
+          ? productDetails?.subCategory
+          : editData?.subCategory,
         brand: productDetails?.brand ? productDetails?.brand : editData?.brand,
         quantity: productDetails?.quantity
           ? productDetails?.quantity
@@ -207,8 +231,7 @@ export default function EditProduct() {
         <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
           <div className="">
             <h2 className="text-2xl font-semibold">Edit Product </h2>
-            <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
-            </p>
+            <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal"></p>
           </div>
           <h2 className="xl:text-[18px] lg:text-[16px] font-normal mt-8">
             Welcome Back, Admin
@@ -394,6 +417,54 @@ export default function EditProduct() {
                         {item.title}
                       </option>
                     ))}
+                  </select>
+                </div>
+              </div>
+
+              {/*------ sub category -----*/}
+
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <label htmlFor="" className="custom-input-label">
+                  Product Sub Category
+                </label>
+
+                <div className="col-span-8 sm:col-span-4">
+                  <select
+                    name="subCategory"
+                    className="custom-input"
+                    defaultValue={
+                      editData?.subCategory
+                        ? editData.subCategory
+                        : productDetails.subCategory
+                    }
+                    onChange={inputHandler}
+                    required
+                    minLength={3}
+                    maxLength={32}
+                  >
+                    <option value="" disabled>
+                      {editData?.subCategory
+                        ? editData.subCategory
+                        : productDetails.subCategory}
+                    </option>
+                    {getallSubCategory
+                      .filter((item, indr) => {
+                        return (
+                          item?.category?.title === productDetails.category
+                        );
+                      })
+                      .map((item) => (
+                        <option
+                        key={item.id}
+                        value={item.title}
+                        selected={
+                          item.title ===
+                          (editData?.category || productDetails.category)
+                        }
+                      >
+                        {item?.category?.subCategory}
+                      </option>
+                      ))}
                   </select>
                 </div>
               </div>

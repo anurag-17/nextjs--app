@@ -87,9 +87,9 @@ const ProductList = () => {
         if (response.status === 200) {
           setAllProduct(response?.data);
           setLoadingBtn(false)
-          const categories = response?.data?.map((product) => product.category);
-          const uniqueCategories = [...new Set(categories)];
-          setProductCategory(["All", ...uniqueCategories]);
+          // const categories = response?.data?.map((product) => product.category);
+          // const uniqueCategories = [...new Set(categories)];
+          // setProductCategory(["All", ...uniqueCategories]);
 
           const brands = response?.data?.map((product) => product.brand);
           const uniqueBrands = [...new Set(brands)];
@@ -420,7 +420,7 @@ const ProductList = () => {
                         Stock : {items?.quantity}
                       </p>
                       <p className="text-[18px]  capitalize my-2 ">
-                        Category : {items?.category}
+                        Category : {items?.subCategory}
                       </p>
                       <div className="flex">
                         {" "}
