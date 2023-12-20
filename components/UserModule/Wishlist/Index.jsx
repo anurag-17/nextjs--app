@@ -161,7 +161,7 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
 
   return (
     <>
-      <div className="px-20 ">
+      <div className="px-5 sm:px-20 ">
         {getWishProduct?.length > 0 ? (
           <div className="border rounded-lg bg-white p-5">
             <div className="flex justify-between">
@@ -184,8 +184,8 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
             <hr className="my-5" />
             <div className="flex flex-col-reverse">
               {getWishProduct?.map((item, inx) => (
-                <div className="border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer">
-                  <div className=" flex bg-white    " key={inx}>
+                <div className=" lg:pb-0 border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 cursor-pointer">
+                  <div className=" flex flex-col justify-center md:flex-row  bg-white " key={inx}>
                     <div>
                       <ProductDetailsCarousel
                         images={item?.images || []}
@@ -193,24 +193,24 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                         detailId={item?._id}
                       />
                     </div>
-                    <div className="flex lg:flex-row flex-col justify-around items-center w-[60%] lg:w-full lg:pb-0 ">
-                      <div className="bg-white px-10 pb-6 rounded-[20px] ">
+                    <div className="flex lg:flex-row flex-col justify-around items-center md:w-[60%] lg:w-full lg:pb-0 ">
+                      <div className="bg-white px-0 sm:px-10 pb-6 rounded-[20px] ">
                         <div className="flex justify-between items-center my-4">
                           <h6 className="text-[25px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden"></h6>
                         </div>
 
                         <Link href={`/product-details/${item?._id}`}>
                           <p className="text-[18px]  flex capitalize  ">
-                            <p className="font-semibold text-[26px]">
+                            <p className=" font-semibold text-[18px] sm:text-[26px]">
                               {item?.title}{" "}
                             </p>
                           </p>
                         </Link>
 
-                        <div className="flex text-md font-semibold capitalize my-2 text-lightBlue-600">
+                        <div className="flex text-[14px] sm:text-[16px] font-semibold capitalize my-2 text-lightBlue-600">
                           Price : <p className="pl-[73px]">₹{item?.price}</p>
                         </div>
-                        <p className="text-md  flex capitalize  ">
+                        <p className="text-[14px] sm:text-[16px]  flex capitalize  ">
                           Regular Price :
                           <p className="font-semibold px-2">
                             <del>₹{item?.discountedPrice}</del>
@@ -218,10 +218,10 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                         </p>
 
                         <div className="flex text-left my-4">
-                          <div className="w-[100px] text-md font-normal leading-[28px]">
+                          <div className=" sm:w-[100px] text-[14px] sm:text-[16px] font-normal leading-[28px]">
                             Quantity :
                           </div>
-                          <div className="pl-5 text-md xl:text-[20px] font-semibold leading-[28px] capitalize flex">
+                          <div className=" sm:pl-5 text-md xl:text-[20px] font-semibold leading-[28px] capitalize flex">
                             <p className="font-semibold px-2">
                               {itemQuantities[item?._id] || 1}
                             </p>
@@ -239,13 +239,13 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                             </button>
                           </div>
                         </div>
-                        <div className="flex">
+                        <div className="flex text-[14px] sm:text-[16px]">
                           <h1 className="mt-1  mr-1 text-md">Status : </h1>
                           <p className="ml-16 bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
                             Available
                           </p>
                         </div>
-                        <div className="flex text-left mt-4">
+                        <div className="flex text-left mt-4 text-[14px] sm:text-[16px]">
                           <div className="text-md font-normal leading-[28px]">
                             Colors :
                           </div>
@@ -304,20 +304,18 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
                     </div>
                   </div>
 
-                  <div className=" flex lg:hidden justify-center gap-4">
+                  <div className=" flex flex-col  sm:flex-row  lg:hidden justify-center gap-4 px-4 sm:px-24 my-4">
                     
                       <button
                         onClick={() => addToCart(item)}
-                        className="px-4 lg:py-3 py- rounded-md flex justify-center items-center text-[16px] font-semibold bg-lightBlue-700 text-white border hover:bg-white hover:text-lightBlue-700 border-lightBlue-700 md:w-[250px] xl:w-[300px] lg:w-[200px] w-full"
+                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold bg-lightBlue-700 text-white border hover:bg-white hover:text-lightBlue-700 border-lightBlue-700  xl:w-[300px] lg:w-[200px] w-full"
                       >
                         Move to Cart
                       </button>
-                   
-                  
                     
                       <button
                         onClick={() => removeFromWishlist(item?._id)}
-                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold hover:bg-lightBlue-700 hover:text-white border bg-white text-lightBlue-700 border-lightBlue-700 md:w-[250px] xl:w-[300px] lg:w-[200px] w-full "
+                        className="px-4 lg:py-3 py-2 rounded-md flex justify-center items-center text-[16px] font-semibold hover:bg-lightBlue-700 hover:text-white border bg-white text-lightBlue-700 border-lightBlue-700  xl:w-[300px] lg:w-[200px] w-full "
                       >
                         Remove
                       </button>
