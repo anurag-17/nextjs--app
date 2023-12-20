@@ -34,8 +34,6 @@ const SubCategoryPage = () => {
     const [editData, setEditData] = useState([]);
     const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
     const [isLoadingBtn, setLoadingBtn] = useState(false);
-  
-    
     const [allSubCategory, setAllCategory] = useState([]);
     const { auth_token } = useSelector((state) => state.adminAuth || null);
 
