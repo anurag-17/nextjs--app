@@ -9,6 +9,7 @@ import shoping from "../../public/shopingcart.svg";
 import { Dialog, Transition } from "@headlessui/react";
 import { fetchApi } from "../../utlis/api";
 import { setCartItems } from "../../redux/slices/orderSlice";
+import { setToken } from "../../redux/slices/authSlice";
 
 const menuList = [
   {
@@ -134,12 +135,7 @@ const UserNavbar = () => {
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("wishList");
-    localStorage.removeItem("cart_item");
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("user_number");
-    localStorage.removeItem("user_address");
-    localStorage.removeItem("user_mail");
+    dispatch(setToken(null));
     window.location.reload();
     // router.push("/login");
   };

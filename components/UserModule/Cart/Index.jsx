@@ -338,13 +338,13 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
 
                           <div className="grid grid-cols-2">
                             <div className=""></div>
-                            <div className="my-6">
-                              <div className="flex">
+                            <div className="">
+                              {/* <div className="flex ">
                                 <p className="w-[200px]">Subtotal : </p>
                                 <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
                                   ₹ {getCartProduct?.cartTotal}
                                 </p>
-                              </div>
+                              </div> */}
                             </div>
                             <div className=""></div>
                             <div className="">

@@ -13,10 +13,8 @@ import { getUserWishList } from "../../redux/slices/authSlice";
 
 import right from "/public/right-arrows.svg";
 
-
 const ProductGrid = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth.userDetails || null);
   const { userWishList } = useSelector((state) => state.auth || null);
   const [productCategory, setProductCategory] = useState("");
@@ -40,7 +38,6 @@ const ProductGrid = () => {
   const closeLoginModal = () => {
     setOpenLogin(false);
   };
-
 
   useEffect(() => {
     defaultBrand();
@@ -84,7 +81,6 @@ const ProductGrid = () => {
 
   const pageLimit = "15";
 
-
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -122,12 +118,11 @@ const ProductGrid = () => {
     try {
       const response = await addToWishlist(productId);
 
-      console.log(response)
+      console.log(response);
       if (response.status === 200) {
         if (response?.data?.message === "Product added to wishlist") {
           toast.success(response?.data?.message);
-        }
-        else {
+        } else {
           toast.warning(response?.data?.message);
         }
         setLoading(false);
@@ -161,18 +156,18 @@ const ProductGrid = () => {
   };
 
   const getAllProducts = async (page) => {
-    setLoadingBtn(true)
+    setLoadingBtn(true);
     const options = {
       method: "GET",
       url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
-    }
+    };
 
     axios
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
           setAllProduct(response?.data);
-          setLoadingBtn(false)
+          setLoadingBtn(false);
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
           setProductCategory([...uniqueCategories]);
@@ -184,14 +179,13 @@ const ProductGrid = () => {
           const fields = response?.data?.map((product) => product.title);
           const uniqueFields = [...new Set(fields)];
           ["All", ...uniqueFields];
-        }
-        else {
-          setLoadingBtn(false)
-          return
+        } else {
+          setLoadingBtn(false);
+          return;
         }
       })
       .catch(function (error) {
-        setLoadingBtn(false)
+        setLoadingBtn(false);
         console.error(error);
       });
   };
@@ -199,19 +193,18 @@ const ProductGrid = () => {
   // ------ search products ------ //
   const handleSearch = (e) => {
     const title = e.target.value.trim();
-    console.log(e.target.value.trim())
+    console.log(e.target.value.trim());
     if (title === "") {
-      getAllProducts()
+      getAllProducts();
     } else {
-      callFunction(title)
+      callFunction(title);
     }
-
   };
 
   const handleKeyDown = (e) => {
-    console.log('Pressed key:', e.key);
+    console.log("Pressed key:", e.key);
     if (e.key === "backspace") {
-      callFunction(e.target.value)
+      callFunction(e.target.value);
     }
   };
 
@@ -231,9 +224,7 @@ const ProductGrid = () => {
       .catch(function (error) {
         console.error(error);
       });
-  }
-
-
+  };
 
   // ------ filter products by brand ------ //
   const handleSearchBrand = (bnd) => {
@@ -296,7 +287,6 @@ const ProductGrid = () => {
   };
 
   const addToCart = (data) => {
-
     const options = {
       method: "POST",
       url: "https://e-commerce-backend-brown.vercel.app/api/auth/cart",
@@ -332,8 +322,8 @@ const ProductGrid = () => {
   };
 
   const refreshData = () => {
-    setRefresh(!isRefresh)
-  }
+    setRefresh(!isRefresh);
+  };
 
   useEffect(() => {
     // Initialize isWished state based on userWishList
@@ -344,13 +334,9 @@ const ProductGrid = () => {
     setIsWished(initialWishlistState);
   }, [userWishList]);
 
-
   return (
     <>
-      {
-        isLoadingBtn &&
-        <WebsiteLoader />
-      }
+      {isLoadingBtn && <WebsiteLoader />}
       <ToastContainer
         position="bottom-right"
         closeOnClick
@@ -358,7 +344,8 @@ const ProductGrid = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light" />
+        theme="light"
+      />
       <UserNavbar />
 
       <section className="bg-gray-00 min-h-screen  ">
@@ -366,10 +353,18 @@ const ProductGrid = () => {
           <div className="space-y-9 w-[20%]">
             {/*----- filter by category start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm  mr-4 ">
-              <p className="font-semibold 2xl:text-2xl lg:text-xl mb-4">Product Categories</p>
+              <p className="font-semibold 2xl:text-2xl lg:text-xl mb-4">
+                Product Categories
+              </p>
               <hr className="mb-2" />
               <div className="flex gap-x-2">
-                <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                <Image
+                  className="w-3"
+                  alt="loading"
+                  src={right}
+                  height={16}
+                  width={16}
+                />
                 <button
                   className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
                   onClick={getAllProducts}
@@ -380,7 +375,13 @@ const ProductGrid = () => {
               {productCategory?.length > 0 &&
                 productCategory.map((cate, index) => (
                   <div className="flex gap-x-2 my-2" key={index}>
-                    <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                    <Image
+                      className="w-3"
+                      alt="loading"
+                      src={right}
+                      height={16}
+                      width={16}
+                    />
                     <button
                       className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
                       onClick={handleSearchCategories}
@@ -394,10 +395,18 @@ const ProductGrid = () => {
 
             {/*----- filter by Brand start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm  mr-4">
-              <p className="font-semibold text-2xl mb-4 2xl:text-2xl lg:text-xl">Product Brands</p>
+              <p className="font-semibold text-2xl mb-4 2xl:text-2xl lg:text-xl">
+                Product Brands
+              </p>
               <hr className="mb-2" />
               <div className="flex gap-x-2">
-                <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                <Image
+                  className="w-3"
+                  alt="loading"
+                  src={right}
+                  height={16}
+                  width={16}
+                />
                 <p
                   className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
                   onClick={getAllProducts}
@@ -408,10 +417,16 @@ const ProductGrid = () => {
               {productBrands?.length > 0 &&
                 productBrands.map((bnd, index) => (
                   <div className="flex  gap-x-2 my-2" key={index}>
-                    <Image className="w-3" alt="loading" src={right} height={16} width={16} />
+                    <Image
+                      className="w-3"
+                      alt="loading"
+                      src={right}
+                      height={16}
+                      width={16}
+                    />
                     <p
                       className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
-                      onClick={()=>handleSearchBrand(bnd)}
+                      onClick={() => handleSearchBrand(bnd)}
                       value={bnd}
                     >
                       {bnd}
@@ -423,7 +438,9 @@ const ProductGrid = () => {
 
           <div className=" w-full md:w-[80%] mx-auto">
             <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
-              <h2 className="2xl:text-[30px] lg:text-[28px] font-semibold">All Product </h2>
+              <h2 className="2xl:text-[30px] lg:text-[28px] font-semibold">
+                All Product{" "}
+              </h2>
 
               <div className="2xl:w-[40%] md:w-[30%]">
                 <input
@@ -434,62 +451,59 @@ const ProductGrid = () => {
                   aria-describedby="button-addon1"
                   onChange={handleSearch}
                   onKeyDown={handleKeyDown}
-
                 />
               </div>
             </div>
 
             <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5  pt-[20px] ">
-              {allProduct?.length > 0 && allProduct?.map((items, ix) => (
-                <div
-                  className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] hover:border-lightBlue-600"
-                  key={ix}
-                >
-                  {items?.images?.length > 0 && (
-                    <div className="h-[300px] p-2 overflow-hidden">
-                      <Link href={`/product-details/${items?._id}`}>
-                        <Image
-                          src={items?.images[0]?.url[0]}
-                          alt="product"
-                          className=" mx-auto rounded-[5px] overflow-hidden  "
-                          width={200}
-                          height={300}
-                        />
-                      </Link>
-                    </div>
-                  )}
-                  <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
-                    <div className="flex justify-between items-center my-4">
-                      <p className="2xl:text-[25px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
-                        {items.title}
-                      </p>
-                      {!token || token === undefined ? (
-                        <div className="cursor-pointer" onClick={openLoginModal}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1}
-                            stroke="currentColor"
-                            className="w-6 h-6 "
+              {allProduct?.length > 0 &&
+                allProduct?.map((items, ix) => (
+                  <div
+                    className=" bg-white  border-[2px] border-gray  hover:rounded-[10px] hover:border-lightBlue-600"
+                    key={ix}
+                  >
+                    {items?.images?.length > 0 && (
+                      <div className="h-[300px] p-2 overflow-hidden relative">
+                        <Link href={`/product-details/${items?._id}`}>
+                          <Image
+                            src={items?.images[0]?.url[0]}
+                            alt="product"
+                            className=" mx-auto rounded-[5px] overflow-hidden  "
+                            width={200}
+                            height={300}
+                          />
+                        </Link>
+
+                        <p
+                          className={`absolute right-1 top-3 py-1 px-3 text-center text-[13px] font-medium rounded-xl 
+                            ${
+                              items.quantity < 1
+                                ? "text-red-600 bg-red-100 "
+                                : "text-green-600  bg-green-100"
+                            } 
+                            `}
+                        >
+                          {items.quantity < 1 ? " Out of stock" : "In stock"}
+                        </p>
+                      </div>
+                    )}
+                    <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
+                      <div className="flex justify-between items-center my-4">
+                        <p className="2xl:text-[25px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                          {items.title}
+                        </p>
+                        {!token || token === undefined ? (
+                          <div
+                            className="cursor-pointer"
+                            onClick={openLoginModal}
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                            />
-                          </svg>
-                        </div>
-                      ) : (
-                        <button onClick={() => toggleWishlist(items._id)}>
-                          {isWished[items._id] ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
                               strokeWidth={1}
                               stroke="currentColor"
-                              className="w-6 h-6 fill-[#f16e6e] "
+                              className="w-6 h-6 "
                             >
                               <path
                                 strokeLinecap="round"
@@ -497,61 +511,87 @@ const ProductGrid = () => {
                                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                               />
                             </svg>
-                          ) : (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1}
-                              stroke="currentColor"
-                              className="w-6 h-6 b"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                              />
-                            </svg>
-                          )}
-                        </button>
-                      )}
-                    </div>
+                          </div>
+                        ) : (
+                          <button onClick={() => toggleWishlist(items._id)}>
+                            {isWished[items._id] ? (
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1}
+                                stroke="currentColor"
+                                className="w-6 h-6 fill-[#f16e6e] "
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                                />
+                              </svg>
+                            ) : (
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1}
+                                stroke="currentColor"
+                                className="w-6 h-6 b"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                                />
+                              </svg>
+                            )}
+                          </button>
+                        )}
+                      </div>
 
-                    <div className="2xl:text-[18px] text-[15px]  flex justify-between capitalize  ">
-                      Brand :<p className="font-semibold px-2"> {items.brand} </p>
-                    </div>
-                    <div className="2xl:text-[18px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
-                      Offer price :
-                      <p className="text-lightBlue-800 px-2 font-bold">
-                        {items?.offerPriceCurr} {items.discountedPrice}
+                      <div className="2xl:text-[18px] text-[15px]  flex justify-between capitalize  ">
+                        Brand :
+                        <p className="font-semibold px-2"> {items.brand} </p>
+                      </div>
+
+                      <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
+                        Category :
+                        <p className="font-semibold px-2">{items.category}</p>
+                      </div>
+
+                      <div className="2xl:text-[18px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
+                        Offer price :
+                        <p className="text-lightBlue-800 px-2 font-bold">
+                          {items?.offerPriceCurr} {items.discountedPrice}
+                        </p>
+                      </div>
+
+                      <p className="2xl:text-[18px] text-[15px] capitalize my-2 flex justify-between">
+                        Regular Price :
+                        <del className="text-lightBlue-600">
+                          {items?.regPriceCurr} {items.price}
+                        </del>
                       </p>
-                    </div>
-                    <del className="2xl:text-[18px] text-[15px]  capitalize my-2 text-lightBlue-600">
-                      Regular Price : {items?.regPriceCurr} {items.price}
-                    </del>
 
-                    <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
-                      Stock :
-                      <p className="px-2 font-semibold">{items.quantity}</p>
-                    </div>
-                    <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
-                      Category :
-                      <p className="font-semibold px-2">{items.category}</p>
-                    </div>
-                    <div className="flex justify-between mt-3">
+                      <Link href={`/product-details/${items?._id}`}>
+                        <button className=" 2xl:text-[16px] md:text-[14px] w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
+                          View Details
+                        </button>
+                      </Link>
+                      
+                      {/* <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
+                        Stock :
+                        <p className="px-2 font-semibold">{items.quantity}</p>
+                      </div> */}
+                      {/* <div className="flex justify-between mt-3">
                       <h1 className="mt-1  mr-1 2xl:text-[18px] text-[15px]">Status : </h1>
                       <p className=" bg-lightBlue-100 p-1 text-center font-semibold rounded-xl text-lightBlue-700 w-20">
                         selling
                       </p>
+                    </div> */}
                     </div>
-                    <Link href={`/product-details/${items?._id}`}>
-                      <button className=" 2xl:text-[16px] md:text-[14px] w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
-                        View Details
-                      </button>
-                    </Link>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -610,8 +650,6 @@ const ProductGrid = () => {
           </div>
         </Dialog>
       </Transition>
-
-
     </>
   );
 };
