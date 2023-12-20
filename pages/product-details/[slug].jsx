@@ -14,16 +14,16 @@ import WebsiteLoader from "../../components/websiteLoader";
 
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Userdetail = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [isAddIntoCart, setAddIntoCart] = useState(false);
   const [isShowErr, setShowErr] = useState(false);
   const [productDetail, setProductDetail] = useState({});
   const [productColor, setProductColor] = useState("");
+  const [message, setMessage] = useState("");
   let [productQuantity, setProductQuantity] = useState(1);
   const [isSessionAdded, setSessionAdded] = useState(false);
   const [isLoadingBtn, setLoadingBtn] = useState(false);
@@ -57,7 +57,7 @@ const Userdetail = () => {
   }, [router?.query?.slug]);
 
   const getAllProducts = async () => {
-    setLoadingBtn(true)
+    setLoadingBtn(true);
     const options = {
       method: "GET",
     };
@@ -70,15 +70,15 @@ const Userdetail = () => {
           .then((response) => response.json())
           .then((response) => {
             setProductDetail(response);
-            setLoadingBtn(false)
+            setLoadingBtn(false);
           })
           .catch((err) => {
-            console.error(err)
-            setLoadingBtn(false)
+            console.error(err);
+            setLoadingBtn(false);
           });
       }
     } catch (error) {
-      setLoadingBtn(false)
+      setLoadingBtn(false);
       console.log(error);
     }
   };
@@ -112,12 +112,13 @@ const Userdetail = () => {
         setLoading(false);
       }
     } else {
-      const use_ID = JSON.parse(localStorage.getItem("userID"));
-
       setLoading(false);
       if (!productColor) {
         setShowErr(true);
+      } else if (productQuantity > produc.quantity) {
+        setMessage(" Sorry we have limited stock");
       } else {
+        return;
         setShowErr(false);
         const options = {
           method: "POST",
@@ -140,7 +141,7 @@ const Userdetail = () => {
         axios
           .request(options)
           .then(function (response) {
-            console.log(response)
+            console.log(response);
             if (response.status === 200) {
               toast.success("Product added into cart !!");
               dispatch(getCartProducts(response?.data?.cart));
@@ -174,28 +175,24 @@ const Userdetail = () => {
 
   return (
     <>
-      {
-        isLoadingBtn &&
-        <WebsiteLoader />
-      }
-  <ToastContainer  
-      position="bottom-right"
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"/>
+      {isLoadingBtn && <WebsiteLoader />}
+      <ToastContainer
+        position="bottom-right"
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <UserNavbar />
       <section className="bg-gray-100 min-h-screen">
         <div className="flex justify-between items-center px-20 border border-[#f3f3f3] rounded-lg bg-white h-[100px]">
           <div className="">
             <h2 className="text-2xl font-semibold"> Product Details </h2>
-            <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
-            </p>
+            <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal"></p>
           </div>
-          <h2 className="xl:text-[18px] lg:text-[16px] font-normal">
-          </h2>
+          <h2 className="xl:text-[18px] lg:text-[16px] font-normal"></h2>
         </div>
         <div className="container mx-auto">
           <main className="h-full overflow-y-auto pt-[40px]">
@@ -219,28 +216,37 @@ const Userdetail = () => {
                     </div>
 
                     <div className="flex text-left mt-4">
-                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="w-[160px] xl:text-[20px] font-normal leadinng-[28px]">
                         Brand :
                       </div>
-                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
+                      <div className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
                         {productDetail?.brand}
                       </div>
                     </div>
 
                     <div className="flex text-left mt-4">
-                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="w-[160px] xl:text-[20px] font-normal leadinng-[28px]">
                         Category :
                       </div>
-                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
+                      <div className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
                         {productDetail?.category}
                       </div>
                     </div>
 
                     <div className="flex text-left mt-4">
-                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="w-[160px] xl:text-[20px] font-normal leadinng-[28px]">
+                        Stock left:
+                      </div>
+                      <div className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] capitalize">
+                        {productDetail?.quantity}
+                      </div>
+                    </div>
+
+                    <div className="flex text-left mt-4">
+                      <div className="w-[160px] xl:text-[20px] font-normal leadinng-[28px]">
                         Quantity :
                       </div>
-                      <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
+                      <div className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
                         <p className="font-semibold px-2">{productQuantity}</p>
                         <button
                           onClick={handleMinusCounter}
@@ -262,13 +268,13 @@ const Userdetail = () => {
                         Price :
                       </div>
                       <div className="flex gap-x-5">
-                        <del className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
+                        <del className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
                           ₹{productDetail?.price}
                         </del>
-                        <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
+                        <div className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
                           ₹{productDetail?.discountedPrice}
                         </div>
-                        <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
+                        <div className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
                           <p className="ml-auto  font-medium text-green-500 whitespace-nowrap">
                             {getDiscountedPricePercentage(
                               productDetail?.price,
@@ -326,11 +332,15 @@ const Userdetail = () => {
                       <div className="w-[170px] text-[20px] font-normal leadinng-[28px]">
                         Summary :
                       </div>
-                      <div className="text-[18px] xl:text-[20px] font-medium leadinng-[28px] capitalize mt-2 pl-6">
+                      <div className="t font-[400] leadinng-[28px] capitalize mt-2 pl-6">
                         {productDetail?.description}
                       </div>
                     </div>
-
+                    {message && (
+                      <p className="py-1 px-2 rounded-md bg-red-100 text-red-600 font-medium text-[14px] text-center w-auto">
+                        {message}
+                      </p>
+                    )}
                     {isAddIntoCart && isSessionAdded ? (
                       <button
                         className="w-full border p-3 rounded-lg hover:text-white border-lightBlue-600 text-lightBlue-900   hover:bg-lightBlue-600 my-2 mt-4 items-end font-semibold"
