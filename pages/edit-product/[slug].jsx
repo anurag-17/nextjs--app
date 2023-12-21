@@ -2,7 +2,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,7 +15,7 @@ export default function EditProduct() {
   const [getallCategory, setGetallCategory] = useState([]);
   const [getallSubCategory, setGetallSubCategory] = useState([]);
   const [getallBrand, setGetallBrand] = useState([]);
-
+  const [allSizes, setAllSizes] = useState([]);
   const { auth_token } = useSelector((state) => state.adminAuth || null);
   const [productDetails, setProductDetails] = useState({
     title: "",
@@ -30,6 +29,7 @@ export default function EditProduct() {
     brand: "",
     quantity: "",
     color: "",
+    sizeChart: ["s", "m", "l"],
   });
 
   const refreshData = () => {
@@ -224,6 +224,36 @@ export default function EditProduct() {
       });
   };
 
+  useEffect(() => {
+    getAllSizes();
+  }, []);
+
+  const getAllSizes = () => {
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/chart/getAllSizeCharts",
+    };
+
+    axios
+      .request(options)
+      .then((response) => {
+        setAllSizes(response?.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    const sizeInputHandlers = (size) => {
+      const updatedSizes = productDetails.sizeChart.includes(size)
+        ? productDetails.sizeChart.filter((s) => s !== size)
+        : [...productDetails.sizeChart, size];
+
+      setProductDetails({
+        ...productDetails,
+        sizeChart: updatedSizes,
+      });
+    };
+  };
+
   return (
     <>
       <section className="bg-gray-100 min-h-screen">
@@ -237,7 +267,6 @@ export default function EditProduct() {
             Welcome Back, Admin
           </h2>
         </div>
-
         <div className=" mt-[44px] bg-white py-10 ">
           <div className="h-[100px] ">
             <h2 className="text-[25px] font-semibold text-green-600 leading-[30px] px-6">
@@ -247,7 +276,6 @@ export default function EditProduct() {
               <div className="border-b border-green-600 w-[160px]"></div>
             </div>
           </div>
-
           {/*---- form start here ----*/}
           <form action="" onSubmit={handleFormSubmit}>
             <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
@@ -455,15 +483,15 @@ export default function EditProduct() {
                       })
                       .map((item) => (
                         <option
-                        key={item.id}
-                        value={item.subCategory}
-                        selected={
-                          item.title ===
-                          (editData?.category || productDetails.category)
-                        }
-                      >
-                        {item?.subCategory}
-                      </option>
+                          key={item.id}
+                          value={item.subCategory}
+                          selected={
+                            item.title ===
+                            (editData?.category || productDetails.category)
+                          }
+                        >
+                          {item?.subCategory}
+                        </option>
                       ))}
                   </select>
                 </div>
@@ -553,6 +581,55 @@ export default function EditProduct() {
                     max={60}
                   />
                 </div>
+              </div>
+
+              <div className="">
+                {(productDetails.category === "Clothing" ||
+                  productDetails.category === "Women's Clothing" ||
+                  productDetails.category === "Men's Clothing") && (
+                  <>
+                    {isLoading ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <div className="w-full grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 ">
+                        <label htmlFor="" className="custom-input-label w-full">
+                          Product Sizes
+                        </label>
+
+                        <div className="col-span-8 sm:col-span-4 flex">
+                          {allSizes?.map((size) => (
+                            <div className="" key={size?._id}>
+                              {size?.sizeChart?.map((items) => (
+                                <div
+                                  key={items?._id}
+                                  className="flex gap-x-1 mx-3"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    id={items?._id}
+                                    checked={productDetails?.sizeChart.includes(
+                                      items?.size
+                                    )}
+                                    onChange={() =>
+                                      sizeInputHandlers(items?.size)
+                                    }
+                                    className="text-[20px] gap-5"
+                                  />
+                                  <label
+                                    htmlFor={items._id}
+                                    className="text-[20px]"
+                                  >
+                                    {items?.size}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
               {/*------ submit button -----*/}
               <div className="mt-8">
