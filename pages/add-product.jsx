@@ -28,14 +28,13 @@ const AddProduct = () => {
     regPriceCurr: "",
     offerPriceCurr: "",
     category: "",
-    subCategory:"",
+    subCategory: "",
     brand: "",
     quantity: "",
     color: [],
     images: [],
     sizeChart: [],
   });
-
   const [selectColor, setSelectColor] = useState([]);
   const [allColors, setColors] = useState([]);
   const [imgFiles, setImageFiles] = useState([]);
@@ -62,7 +61,7 @@ const AddProduct = () => {
       images: [],
       regPriceCurr: "",
       offerPriceCurr: "",
-      sizeChart: [],
+      sizeChart:  ["s", "m", "l"],
     });
   };
 
@@ -234,10 +233,6 @@ const AddProduct = () => {
 
   //----- color -------
 
-  const handleImageUpload = async (event) => {
-    setImageFiles([...imgFiles, event.target.files[0]]);
-  };
-
   const imageUploader = async () => {
     const formData = new FormData();
 
@@ -348,7 +343,21 @@ const AddProduct = () => {
     });
   };
 
-console.log(productDetails?.category);
+  // -----image validation----
+
+  const MAX_IMAGES = 5;
+  const handleImageUpload = (event) => {
+    const files = event.target.files;
+
+    if (imgFiles.length + files.length > MAX_IMAGES) {
+      alert(`You can upload a maximum of ${MAX_IMAGES} images.`);
+      return;
+    }
+    setImageFiles([...imgFiles, event.target.files[0]]);
+    setUploadingImg(true);
+    setUploadingImg(false);
+  };
+
   return (
     <>
       <section className="bg-gray-100 min-h-screen">
@@ -626,17 +635,19 @@ console.log(productDetails?.category);
                   <option value="" disabled>
                     Select Sub Category
                   </option>
-                  {allSubCategory.filter((item,indr)=>{
-                    return item?.category?.title === productDetails?.category
-                  }).map((item) => (
-                    <option
-                      key={item.id}
-                      value={item.title}
-                      selected={item.title === productDetails.subCategory}
-                    >
-                      {item.subCategory}
-                    </option>
-                  ))}
+                  {allSubCategory
+                    .filter((item, indr) => {
+                      return item?.category?.title === productDetails?.category;
+                    })
+                    .map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.title}
+                        selected={item.title === productDetails.subCategory}
+                      >
+                        {item.subCategory}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
@@ -717,38 +728,53 @@ console.log(productDetails?.category);
               </div>
             </div>
 
-
-
             {/*------ size  -----*/}
-            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <label htmlFor="" className="custom-input-label">
-                Product Sizes
-              </label>
-              <div className="col-span-8 sm:col-span-4 flex gap-x-8">
-                {allSizes?.map((size) => (
-                  <div className="">
-                    {size?.sizeChart?.map((items) => (
-                      <div key={size?._id} className="flex gap-x-5">
-                        <input
-                          type="checkbox"
-                          id={items?._id}
-                          checked={productDetails?.sizeChart.includes(
-                            items?.size
-                          )}
-                          onChange={() => sizeInputHandler(items?.size)}
-                          className="text-[20px]"
-                        />
-                        <label htmlFor={items._id} className="text-[20px]">
-                          {items?.size}
-                        </label>
+            <div className="">
+              {(productDetails.category === "Clothing" ||
+                productDetails.category === "Women's Clothing" ||
+                productDetails.category === "Men's Clothing") && (
+                <>
+                  {isLoading ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <div className="w-full grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 ">
+                      <label htmlFor="" className="custom-input-label w-full">
+                        Product Sizes
+                      </label>
+
+                      <div className="col-span-8 sm:col-span-4 flex">
+                        {allSizes?.map((size) => (
+                          <div className="" key={size?._id}>
+                            {size?.sizeChart?.map((items) => (
+                              <div
+                                key={items?._id}
+                                className="flex gap-x-1 mx-3"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id={items?._id}
+                                  checked={productDetails?.sizeChart.includes(
+                                    items?.size
+                                  )}
+                                  onChange={() => sizeInputHandler(items?.size)}
+                                  className="text-[20px] gap-5"
+                                />
+                                <label
+                                  htmlFor={items._id}
+                                  className="text-[20px]"
+                                >
+                                  {items?.size}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div> */}
-
-
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
 
             {/*------ submit button -----*/}
             <div className="mt-8">
@@ -776,4 +802,3 @@ console.log(productDetails?.category);
 };
 
 export default dynamic(() => Promise.resolve(AddProduct), { ssr: false });
-
