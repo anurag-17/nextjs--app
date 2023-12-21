@@ -163,17 +163,17 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
     <>
       <div className="px-5 sm:px-20 ">
         {getWishProduct?.length > 0 ? (
-          <div className="border rounded-lg bg-white p-5">
+          <div className="border rounded-lg bg-white p-1 sm:p-5">
             <div className="flex justify-between">
               <div>
-                <h1 className="2xl:text-[35px] lg:text-[28px ] font-semibold px-2">
+                <h1 className="2xl:text-[35px] lg:text-[28px] text-[22px] font-semibold px-2">
                   Your Wishlist
                 </h1>
               </div>
 
               <button
                 onClick={handleDelete}
-                className=" border p-1  rounded-lg hover:bg-[#F3F4F9] px-6 cursor-pointer"
+                className=" border p-1  rounded-lg hover:bg-[#F3F4F9] px-1 sm:px-6 cursor-pointer"
               >
                 <p className=" text-[16px] mx-1 flex gap-x-2">
                   Clear
