@@ -350,10 +350,10 @@ const ProductGrid = () => {
 
       <section className="bg-gray-00 min-h-screen  ">
         <div className="px-[15px] flex gap-x-10  md:flex-row flex-col justify-between">
-          <div className="space-y-9 w-[20%]">
+          <div className="space-y-9 md:w-[20%]">
             {/*----- filter by category start ------- */}
-            <div className="bg-white p-5 py-9 rounded-sm  mr-4 ">
-              <p className="font-semibold 2xl:text-2xl lg:text-xl mb-4">
+            <div className="bg-white p-5 py-9 rounded-sm  md:mr-4 ">
+              <p className="font-semibold 2xl:text-2xl lg:text-xl md:text-[16px] text-[21px] mb-4">
                 Product Categories
               </p>
               <hr className="mb-2" />
@@ -394,8 +394,8 @@ const ProductGrid = () => {
             </div>
 
             {/*----- filter by Brand start ------- */}
-            <div className="bg-white p-5 py-9 rounded-sm  mr-4">
-              <p className="font-semibold text-2xl mb-4 2xl:text-2xl lg:text-xl">
+            <div className="bg-white p-5 py-9 rounded-sm  md:mr-4 ">
+              <p className="font-semibold text-2xl mb-4 2xl:text-2xl lg:text-xl md:text-[16px] text-[21px]">
                 Product Brands
               </p>
               <hr className="mb-2" />
@@ -436,10 +436,10 @@ const ProductGrid = () => {
             </div>
           </div>
 
-          <div className=" w-full md:w-[80%] mx-auto">
+          <div className=" w-full md:w-[80%] mx-auto mt-7 md:mt-0">
             <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
-              <h2 className="2xl:text-[30px] lg:text-[28px] font-semibold">
-                All Product{" "}
+              <h2 className="2xl:text-[30px] lg:text-[28px] md:text-[16px] text-[21px] font-semibold">
+                All Product
               </h2>
 
               <div className="2xl:w-[40%] md:w-[30%]">
@@ -455,7 +455,7 @@ const ProductGrid = () => {
               </div>
             </div>
 
-            <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5  pt-[20px] ">
+            <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px] ">
               {allProduct?.length > 0 &&
                 allProduct?.map((items, ix) => (
                   <div
@@ -475,7 +475,7 @@ const ProductGrid = () => {
                         </Link>
 
                         <p
-                          className={`absolute right-1 top-3 py-1 px-3 text-center text-[13px] font-medium rounded-xl 
+                          className={`absolute right-1 top-3 py-1 lg:py-1  2xl:py-1 px-4 md:px-3 lg:px-2 2xl:px-3 text-center md:text-[13px] lg:text-[10px] xl:text-[13px] font-medium rounded-xl 
                             ${
                               items.quantity < 1
                                 ? "text-red-600 bg-red-100 "
@@ -487,7 +487,7 @@ const ProductGrid = () => {
                         </p>
                       </div>
                     )}
-                    <div className="bg-white px-10 pb-6 rounded-[20px] mt-3">
+                    <div className="bg-white px-5 xl:px-10 pb-6 rounded-[20px] mt-3">
                       <div className="flex justify-between items-center my-4">
                         <p className="2xl:text-[25px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                           {items.title}
