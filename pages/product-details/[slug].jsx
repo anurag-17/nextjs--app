@@ -264,10 +264,10 @@ const Userdetail = () => {
                     </div>
 
                     <div className="flex items-center text-left mt-3">
-                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="w-[160px] xl:text-[20px] font-normal leadinng-[28px]">
                         Price :
                       </div>
-                      <div className="flex gap-x-5">
+                      <div className="flex flex-wrap  sm:gap-x-5 gap-2">
                         <del className="text-[16px] xl:text-[20px] font-semibold leadinng-[28px] uppercase">
                           ₹{productDetail?.price}
                         </del>
@@ -287,11 +287,11 @@ const Userdetail = () => {
                     </div>
 
                     <div className="flex text-left mt-4">
-                      <div className="w-[160px] text-[20px] font-normal leadinng-[28px]">
+                      <div className="w-[160px] xl:text-[20px] font-normal leadinng-[28px]">
                         Colors :
                       </div>
                       <div className="">
-                        <div className="w-[250px]">
+                        <div className="w-[150px] sm:w-[250px]">
                           <select
                             onChange={(e) =>
                               handleColorChange(
