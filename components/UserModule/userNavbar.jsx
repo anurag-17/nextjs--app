@@ -152,7 +152,11 @@ const UserNavbar = () => {
 
   const defaultCustomer = async () => {
     try {
-      const response = await fetchApi("/auth/getUserCart", token);
+      const response = await fetchApi("/auth/getUserCart", { 
+        headers : {
+        "Content-Type": "application/json",
+        authorization: token,
+      }});
       if (response?.status === 200) {
         const data = await response.json();
         setCartItems(dispatch(data?.cart?.products))

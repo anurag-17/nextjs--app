@@ -32,6 +32,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [isLoading, setLoading] = useState(false);
   const [paymentOption, setPaymentOption] = useState("COD");
   const [activeIndex, setActiveIndex] = useState(1);
+  const [limitExceed, setLimitExceed] = useState([]);
 
   useEffect(() => {
     if (getCartProduct?.cartTotal < 500) setShippingCharge(75);
@@ -190,10 +191,15 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   };
 
   const handleCartOrder = () => {
-    setActiveIndex(2);
-    const newArr = getCartProduct?.products?.map((items)=>(
-      items.product.quantity > 1
-    ))
+    const newArr = getCartProduct?.products?.filter((items)=>{
+      return(
+        items.count !== items.product.quantity 
+        )
+      })
+      setLimitExceed(newArr)
+      console.log(newArr)
+      return
+      setActiveIndex(2);
   };
 
   const handleQtyCounter = async (action, products) => {
@@ -220,11 +226,12 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         refreshData()
       }
       else{
-        
+
       }
     } catch (error) {
       setLoading(false);
       console.error(error);
+      toast.error(error?.response?.data?.error);
     }
   };
 
@@ -353,7 +360,16 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                 </p>
                               </div> */}
                             </div>
-                            <div className=""></div>
+                            <div className="">
+                              {
+                                limitExceed?.map((items=>{
+                                  console.log(items)
+                                  return(
+                                    <></>
+                                  )
+                                }))
+                              }
+                            </div>
                             <div className="">
                               <button
                                 className={`px-5 py-2 rounded bg-lightBlue-700 text-white font-semibold hover:bg-lightBlue-600 w-[100%] ${isCartUpdated ? "bg-lightBlue-200" : ""

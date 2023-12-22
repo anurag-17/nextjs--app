@@ -66,7 +66,6 @@ const Cart = () => {
         getCartProduct={getCartProduct}
         sessionCartProduct={sessionCartProduct || []}
         refreshData={refreshData}
-        setGetCartProduct={setGetCartProduct}
       />
     </>
   );
