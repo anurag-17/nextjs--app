@@ -174,3 +174,51 @@ html {
 .carousel .control-prev.control-arrow:before{
   border-right: 8px solid #0284C7 !important;
 }
+
+
+
+@media (min-width:1024px){
+  .nav-input::placeholder{
+    font-size: 12px !important;
+  }
+  .nav-input{
+    font-size: 12px !important;
+  }
+}
+@media (min-width:1280px){
+  .nav-input::placeholder{
+    font-size: 12px !important;
+  }
+  .nav-input{
+    font-size: 12px !important;
+  }
+}
+@media (min-width:1536px){
+  .nav-input::placeholder{
+    font-size: 20px !important;
+  }
+  .nav-input{
+    font-size: 20px !important;
+  }
+}
+
+
+/* -----------Edit Product-------------- */
+
+@media (max-width:640px){
+
+
+  /* ---------Navbar--------- */
+  .edit-p-nav{
+  margin-top: 15px;
+  padding:15px 7px ;
+  }
+
+  .edit-product{
+    font-size: 14px;
+  }
+  .edit-welcome{
+    font-size: 12px;
+
+  }
+}

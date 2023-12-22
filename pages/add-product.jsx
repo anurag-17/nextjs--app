@@ -231,7 +231,6 @@ const AddProduct = () => {
     }
   };
 
-  //----- color -------
 
   const imageUploader = async () => {
     const formData = new FormData();
@@ -276,6 +275,10 @@ const AddProduct = () => {
       throw error;
     }
   };
+
+
+  //----- color -------
+
 
   const getAllColors = () => {
     const option = {
