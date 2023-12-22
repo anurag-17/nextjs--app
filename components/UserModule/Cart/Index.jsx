@@ -342,7 +342,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           >
                             <img
                               src="cross.svg"
-                              className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
+                              className=" w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
                             />
                           </div>
                         </div>
@@ -401,7 +401,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           height={400}
                         />
                       </div>
-                    </div>
+                    </div>  
                     <Link href="/user-product">
                       <div className="mb-6 mt-14">
                         <button className="px-6 py-3 flex justify-center items-center rounded-md bg-black text-white font-medium mx-auto ">
@@ -419,7 +419,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         <>
           {getCartProduct?.products?.length > 0 ? (
             <>
-              <div className="container mx-auto">
+              <div className="lg:container lg:mx-auto mx-4 ">
                 <div className="grid grid-cols-1 md:grid-cols-4 justify-center gap-x-10 mt-[20px]">
                   <div className="md:col-span-3 ">
                     {/*----------- Accordian 1---------*/}
@@ -427,11 +427,11 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                     {activeIndex === 1 && (
                       <div className="mb-4">
                         <div
-                          className="flex justify-between items-center bg-white cursor-pointer rounded p-5"
+                          className="flex flex-col sm:flex-row justify-between items-center bg-white cursor-pointer rounded p-5"
                           onClick={() => handleClick(1)}
                         >
                           <div>
-                            <h1 className="text-[28px] font-semibold">
+                            <h1 className="text-[24px] sm:text-[28px] font-semibold">
                               Your cart ( {getCartProduct?.products?.length}{" "}
                               items )
                             </h1>
@@ -458,7 +458,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                   return (
                                     <div
                                       key={index}
-                                      className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-20  hover:border-lightBlue-600 "
+                                      className="flex bg-white py-4 2xl:py-0  border-[2px] border-gray  hover:rounded-[10px] lg:gap-20  hover:border-lightBlue-600 "
                                     >
                                       {item?.product?.images?.length > 0 &&
                                         item?.product?.images?.map(
@@ -483,50 +483,50 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                           )
                                         )}
 
-                                      <div className="grid grid-cols-3 items-center justify-center w-[80%] gap-x-[20px] ">
+                                      <div className="grid  sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  items-center justify-center w-[80%] gap-x-[20px] ">
                                         <div className="">
                                           <Link
                                             href={`/product-details/${item?.product?._id}`}
                                           >
-                                            <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
+                                            <p className="flex capitalize cursor-pointer font-semibold text-[20px] sm:text-[22px] md:text-[24px] ">
                                               {item?.product?.title}
                                             </p>
                                           </Link>
 
-                                          <p className=" text-[18px]">
+                                          <p className=" text-[16px] sm:text-[16px] xl:text-[18px] mt-3 sm:mt-0 ">
                                             Brand : {item?.product?.brand}
                                           </p>
 
                                           <div className="flex mt-2">
-                                            <h1 className=" mr-1 text-[18px]">
+                                            <h1 className=" mr-1 text-[16px] sm:text-[16px] xl:text-[18px]">
                                               Status :
                                             </h1>
-                                            <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
+                                            <p className=" bg-green-200 p-1 px-1 sm:px-2 text-center font-semibold rounded-md text-green-600 ">
                                               Available
                                             </p>
                                           </div>
 
-                                          <div className="text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                          <div className="text-[16px] sm:text-[16px] xl:text-[18px]  capitalize mt-2  flex gap-x-5 ">
                                             Colors : {item?.color}
                                             <p className="font-medium"> </p>
                                           </div>
                                         </div>
 
-                                        <div className="flex text-left mt-4 gap-2">
-                                          <div className="flex text-[20px] font-normal leadinng-[28px]">
+                                        <div className="flex text-left mt-4 gap-0 sm:gap-2">
+                                          <div className="flex text-[16px] sm:text-[20px] font-normal leadinng-[28px]">
                                             Qty :
                                           </div>
                                           <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
-                                            <p className="font-semibold px-2 ml-3">{item?.count} </p>
+                                            <p className="font-semibold px-2 ml-0 sm:ml-3">{item?.count} </p>
                                             <button
                                               onClick={() => handleQtyCounter("decrease", item)}
-                                              className="border border-black px-3 ml-3"
+                                              className="border border-black px-3 ml-1 sm:ml-3"
                                             >
                                               -
                                             </button>
                                             <button
                                               onClick={() => handleQtyCounter("increase", item)}
-                                              className="border border-black px-3 ml-3"
+                                              className="border border-black px-3 ml-1 sm:ml-3"
                                             >
                                               +
                                             </button>
@@ -534,11 +534,11 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                         </div>
 
                                         <div className="">
-                                          <p className="text-md font-semibold capitalize mt-2">
+                                          <p className="text-md font-semibold capitalize mt-3 sm:mt-2">
                                             Price : ₹ {item?.price}
                                           </p>
 
-                                          <p className="text-md font-semibold capitalize mt-2 text-lightBlue-600">
+                                          <p className="text-md font-semibold capitalize mt-3 sm:mt-2 text-lightBlue-600">
                                             Total Price : ₹
                                             {item?.price * item?.count}
                                           </p>
@@ -552,7 +552,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                       >
                                         <img
                                           src="cross.svg"
-                                          className="w-10 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-4 mr-4 cursor-pointer"
+                                          className="w-6 sm:w-8 md:w-8 border p-1 rounded-xl hover:bg-[#F3F4F9] mt-0 sm:mt-4 md:mt-0 lg:mt-0 xl:mt-4 mr-4 cursor-pointer"
                                         />
                                       </div>
                                     </div>
@@ -804,9 +804,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                         PRICE DETAILS
                       </p>
                       <div className="text-[16px] font-normal flex flex-col gap-5 ">
-                        <div className="flex justify-between">
+                        <div className="flex md:flex-col lg:flex-row justify-between">
                           <p className="">Subtotal : </p>
-                          <p className="text-right w-[150px]  bg-lightBlue-50 px-2  py-1 rounded">
+                          <p className="text-right sm:w-[150px] md:w-[120px] lg:w-[150px]  bg-lightBlue-50 sm:px-2  py-1 rounded">
                             ₹ {getCartProduct?.cartTotal}
                           </p>
                         </div>
@@ -817,9 +817,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           </p>
                         </div>
                         <div className="h-[1px] bg-[#f3f3f3] my-4"></div>
-                        <div className="flex justify-between text-[18px]  font-semibold">
+                        <div className="flex md:flex-col lg:flex-row  justify-between text-[18px]  font-semibold">
                           <p className=""> Grand Total : </p>
-                          <p className="text-right w-[150px] bg-lightBlue-50 px-2  py-1 rounded overflow-x">
+                          <p className="text-right sm:w-[150px] md:w-[120px] lg:w-[150px] bg-lightBlue-50 sm:px-2  py-1 rounded overflow-x">
                             ₹ {getCartProduct?.cartTotal + shippingCharge}
                           </p>
                         </div>

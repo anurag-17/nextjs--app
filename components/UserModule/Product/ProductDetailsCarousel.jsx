@@ -20,8 +20,8 @@ const ProductDetailsCarousel = ({ images, productColor, detailId }) => {
 
   return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
-      <div className="flex justify-between h-auto py-[8px] gap-5">
-        <div className="h-[300px]  overflow-y-scroll">
+      <div className="flex flex-col-reverse sm:flex-row justify-between items-center h-auto px-1 sm:px-0 py-[8px] gap-5">
+        <div className="flex flex-row sm:flex-col h-[100px] sm:h-[300px]  sm:overflow-y-scroll">
           {productColor === "" ? (
             <>
               {images?.length > 0 &&
