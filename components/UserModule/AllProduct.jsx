@@ -30,6 +30,9 @@ const ProductGrid = () => {
 
   const [productColorsArray, setProductColorsArray] = useState([]);
   const [isOpenLogin, setOpenLogin] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [brandFilter,setBrandFilter]=useState("");
+  const [catagoryFilter,setCatagoryFilter]=useState("");
 
   const openLoginModal = () => {
     setOpenLogin(true);
@@ -159,7 +162,7 @@ const ProductGrid = () => {
     setLoadingBtn(true);
     const options = {
       method: "GET",
-      url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
+      url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct`,
     };
 
     axios
@@ -170,7 +173,7 @@ const ProductGrid = () => {
           setLoadingBtn(false);
           const categories = response?.data?.map((product) => product.category);
           const uniqueCategories = [...new Set(categories)];
-          setProductCategory([...uniqueCategories]);
+          setProductCategory([ ...uniqueCategories]);
 
           const brands = response?.data?.map((product) => product.brand);
           const uniqueBrands = [...new Set(brands)];
@@ -229,11 +232,13 @@ const ProductGrid = () => {
   // ------ filter products by brand ------ //
   const handleSearchBrand = (bnd) => {
     if (bnd === "All") {
+      setBrandFilter("")
       refreshData();
-    } else {
+    } else { 
+      setBrandFilter(bnd)
       const options = {
         method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?brand=${bnd}`,
+        url: catagoryFilter == "" ? `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?brand=${bnd}`:`https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${catagoryFilter}&brand=${bnd}`,
       };
       axios
         .request(options)
@@ -247,16 +252,20 @@ const ProductGrid = () => {
         });
     }
   };
-
+  console.log(brandFilter !== "");
   // ------ filter products by category ------ //
   const handleSearchCategories = (e) => {
     const cate = e.target.value;
     if (cate === "All") {
+      setCatagoryFilter("")
+      getAllProducts();
       refreshData();
+      setSelectedCategory(cate);
     } else {
+      setCatagoryFilter(e.target.value)
       const options = {
         method: "GET",
-        url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${cate}`,
+        url:brandFilter == "" ? `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${cate}`:`https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${cate}&brand=${brandFilter}`,
       };
       axios
         .request(options)
@@ -264,6 +273,7 @@ const ProductGrid = () => {
           console.log("hell", response.data);
           if (response.status === 200) {
             setAllProduct(response.data);
+            setSelectedCategory(cate);
           }
         })
         .catch(function (error) {
@@ -352,46 +362,50 @@ const ProductGrid = () => {
         <div className="px-[15px] flex gap-x-10  md:flex-row flex-col justify-between">
           <div className="space-y-9 md:w-[20%]">
             {/*----- filter by category start ------- */}
-            <div className="bg-white p-5 py-9 rounded-sm  md:mr-4 ">
-              <p className="font-semibold 2xl:text-2xl lg:text-xl md:text-[16px] text-[21px] mb-4">
-                Product Categories
-              </p>
-              <hr className="mb-2" />
-              <div className="flex gap-x-2">
-                <Image
-                  className="w-3"
-                  alt="loading"
-                  src={right}
-                  height={16}
-                  width={16}
-                />
-                <button
-                  className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
-                  onClick={getAllProducts}
-                >
-                  All
-                </button>
-              </div>
-              {productCategory?.length > 0 &&
-                productCategory.map((cate, index) => (
-                  <div className="flex gap-x-2 my-2" key={index}>
-                    <Image
-                      className="w-3"
-                      alt="loading"
-                      src={right}
-                      height={16}
-                      width={16}
-                    />
-                    <button
-                      className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
-                      onClick={handleSearchCategories}
-                      value={cate}
-                    >
-                      {cate}
-                    </button>
-                  </div>
-                ))}
-            </div>
+            <div className="bg-white p-5 py-9 rounded-sm md:mr-4">
+      <p className="font-semibold 2xl:text-2xl lg:text-xl md:text-[16px] text-[21px] mb-4">
+        Product Categories
+      </p>
+      <hr className="mb-2" />
+      <div className="flex gap-x-2">
+        <Image
+          className="w-3"
+          alt="loading"
+          src={right}
+          height={16}
+          width={16}
+        />
+        <button
+          className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px] ${
+            selectedCategory === 'All' && 'font-bold text-[#0284C7]'
+          }`}
+          onClick={() => handleSearchCategories({ target: { value: 'All' } })}
+        >
+          All
+        </button>
+      </div>
+      {productCategory?.length > 0 &&
+        productCategory.map((cate, index) => (
+          <div className="flex gap-x-2 my-2" key={index}>
+            <Image
+              className="w-3"
+              alt="loading"
+              src={right}
+              height={16}
+              width={16}
+            />
+            <button
+              className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px] ${
+                selectedCategory === cate && 'font-bold text-[#0284C7]'
+              }`}
+              onClick={() => handleSearchCategories({ target: { value: cate } })}
+              value={cate}
+            >
+              {cate}
+            </button>
+          </div>
+        ))}
+    </div>
 
             {/*----- filter by Brand start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm  md:mr-4 ">
@@ -578,7 +592,7 @@ const ProductGrid = () => {
                           View Details
                         </button>
                       </Link>
-                      
+
                       {/* <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
                         Stock :
                         <p className="px-2 font-semibold">{items.quantity}</p>
