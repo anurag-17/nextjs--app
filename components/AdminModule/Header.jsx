@@ -3,22 +3,24 @@ import { useRouter } from "next/router";
 
 const Header = ({ headTitle, subTitle }) => {
   const router = useRouter();
-
   const handleGoBack = () => {
     router.back();
   };
 
   return (
-    <div className="flex justify-between items-center px-10 border  border-[#f3f3f3] rounded-lg bg-white  py-6">
-    <div className="">
-    <h2 className="xl:text-2xl text-lg font-semibold mb-1"> {headTitle}</h2>
-      <p className="xl:text-[18px] lg:text-[16px] pt-1 font-normal">
-        {subTitle}
-      </p>
-    </div>
+    <div className="flex justify-between items-center border border-[#f3f3f3] rounded-lg bg-white 2xl:px-10 2xl:py-6 xl:px-7 xl:py-4 lg:px-4 lg:py-2">
+      <div className="">
+        <h2 className="2xl:text-[30px] xl:text-[18px] lg:text-[14px]  font-semibold 2xl:mb-1">
+          {" "}
+          {headTitle}
+        </h2>
+        <p className="2xl:text-[16px] xl:text-[16px] lg:text-[14px] 2xl:pt-1 font-normal">
+          {subTitle}
+        </p>
+      </div>
       <div className="">
         <p
-          className="cursor-pointer flex gap-3 items-center mb-2"
+          className="cursor-pointer flex  items-center 2xl:gap-3 2xl:mb-2 2xl:text-[20px] xl:text-[13px] xl:gap-2 xl:mb-1 lg:text-[12px] lg:gap-1 lg:mb-[1px]"
           onClick={handleGoBack}
         >
           <svg
@@ -27,7 +29,7 @@ const Header = ({ headTitle, subTitle }) => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="2xl:w-6 2xl:h-6 xl:w-4  xl:h-4 lg:w-3 lg:h-3 "
           >
             <path
               strokeLinecap="round"
@@ -37,7 +39,7 @@ const Header = ({ headTitle, subTitle }) => {
           </svg>
           Go Back
         </p>
-        <h2 className="xl:text-[18px] lg:text-[16px] font-normal">
+        <h2 className="2xl:text-[20px] xl:text-[13px] lg:text-[12px] font-normal">
           Welcome Back, Admin
         </h2>
       </div>

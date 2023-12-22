@@ -294,10 +294,13 @@ const ProductList = () => {
         {selected?.length > 0 ? (
           <EnhancedTableToolbar numLength={selected?.length} />
         ) : (
-          <div className="flex justify-between items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[80px] mt-4">
+          <div className="flex justify-between items-center  border border-[#f3f3f3] rounded-lg bg-white 
+          2xl:px-10 2xl:h-[100px] 2xl:mt-5
+          xl:px-10 xl:h-[80px] xl:mt-4 
+          lg:px-5 lg:h-[65px] lg:mt-4">
             <div className="flex justify-center items-end gap-x-3 mr-3">
               <div
-                className={`cursor-pointer border h-[30px] w-[30px] flex justify-center items-center 
+                className={`cursor-pointer border flex justify-center items-center 2xl:h-[40px] 2xl:w-[40px]
                 ${isShowComponent === "grid"
                     ? "border-lightBlue-300"
                     : "border-transparent"
@@ -307,7 +310,7 @@ const ProductList = () => {
                 <Grid />
               </div>
               <div
-                className={`cursor-pointer border-2 h-[30px] w-[30px] flex justify-center items-center 
+                className={`cursor-pointer border-2  flex justify-center items-center 2xl:h-[40px] 2xl:w-[40px]
                 ${isShowComponent === "list"
                     ? "border-lightBlue-300 "
                     : "border-transparent"
@@ -321,23 +324,26 @@ const ProductList = () => {
               <input
                 type="search"
                 placeholder="Search Product"
-                className=" border border-gray-500  p-3 rounded-xl focus:border-none w-1/3 "
+                className=" border bg-gray-200 active:border outline-none rounded-lg  2xl:w-1/3 2xl:py-[10px] 2xl:px-[10px]  xl:w-1/3 xl:py-[10px] xl:px-[7px]  lg:w-1/3 lg:py-[5px] lg:px-[7px] nav-input"
                 onChange={handleSearch} //search input
               ></input>
             </div>
 
-            <div className=" flex  gap-x-3">
+            <div className=" flex  2xl:gap-5  xl:gap-4 lg:gap-3">
               {/*----- filter by Brand start ------- */}
 
               <div className="w-auto flex flex-col  gap-1">
-                <label className="whitespace-nowrap text-start text-[14px]">
+                <label className="whitespace-nowrap text-start 2xl:text-[18px] xl:text-[13px] lg:text-[12px]">
                   Filter by Brand
                 </label>
                 <select
                   name="brand"
                   id="brand"
                   placeholder="Brand"
-                  className="border border-gray-400 px-2 py-1 rounded-md w-12/12 bg-white cursor-pointer "
+                  className="border border-gray-400  rounded-md w-12/12 bg-white cursor-pointer
+                  2xl:px-3 2xl:py-[5px]
+                  xl:px-1 xl:py-[0px] 
+                  lg:px-[2px] lg:py-[0px] "
                   onChange={handleSearchBrand}
                 >
                   {productBrands?.length > 0 &&
@@ -349,13 +355,16 @@ const ProductList = () => {
 
               {/*----- filter by category start ------- */}
               <div className="w-auto flex flex-col items-center gap-1">
-                <label htmlFor="" className="whitespace-nowrap text-[14px]">
+                <label htmlFor="" className="whitespace-nowrap  2xl:text-[18px] xl:text-[13px] lg:text-[12px]">
                   Filter by Category
                 </label>
                 <select
                   name="category"
                   placeholder="Category"
-                  className="border border-gray-400 px-2 py-1 rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer "
+                  className="border border-gray-400 rounded-md bg-white lg:w-12/12 md:w-full cursor-pointer
+                  2xl:px-3 2xl:py-[5px]
+                  xl:px-1 xl:py-[0px] 
+                  lg:px-[2px] lg:py-[0px] "
                   onChange={handleSearchCategories}
                 >
                   {productCategory?.length > 0 &&
@@ -371,23 +380,23 @@ const ProductList = () => {
 
         {isShowComponent === "grid" ? (
           <>
-            <div className=" w-full md:w-[85%] mx-auto">
+            <div className=" w-full  mx-auto">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {allProduct?.map((items, ix) => (
                   <div
                     className=" bg-white  border-[2px] border-gray rounded-[10px] m-4 hover:border-lightBlue-600"
                     key={ix}
                   >
-                    <div className="h-[400px] p-2 overflow-hidden">
+                    <div className="flex mx-auto items-center 2xl:h-[340px] 2xl:w-[340px] p-2 overflow-hidden">
                       <Link href={`/view-product/${items?._id}`}>
                         {items?.images?.length > 0 && (
-                          <div className="h-[400px] p-2 overflow-hidden">
+                          <div className="flex items-center p-2 overflow-hidden">
                             <Image
                               src={items?.images[0]?.url[0]}
                               alt=""
-                              className=" mx-auto rounded-[20px] overflow-hidden  "
-                              width={300}
-                              height={300}
+                              className="flex mx-auto my-auto rounded-[20px] overflow-hidden "
+                              width={260}
+                              height={260}
                             />
                           </div>
                         )}

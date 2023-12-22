@@ -197,7 +197,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         )
       })
       setLimitExceed(newArr)
-      console.log(newArr)
+      console.log("hmm",newArr)
       return
       setActiveIndex(2);
   };

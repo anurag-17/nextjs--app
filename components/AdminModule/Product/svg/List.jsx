@@ -8,7 +8,7 @@ const List = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6"
+      className="2xl:w-12 2xl:h-12 xl:w-7 xl:h-7  lg:w-5 lg:h-5 "
     >
       <path
         strokeLinecap="round"
