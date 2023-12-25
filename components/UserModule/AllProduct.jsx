@@ -12,6 +12,8 @@ import WebsiteLoader from "../websiteLoader";
 import { getUserWishList } from "../../redux/slices/authSlice";
 
 import right from "/public/right-arrows.svg";
+import Pagination from "./Pagination";
+import { current } from "@reduxjs/toolkit";
 
 const ProductGrid = () => {
   const dispatch = useDispatch();
@@ -33,6 +35,8 @@ const ProductGrid = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [brandFilter,setBrandFilter]=useState("");
   const [catagoryFilter,setCatagoryFilter]=useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const openLoginModal = () => {
     setOpenLogin(true);
@@ -55,12 +59,17 @@ const ProductGrid = () => {
       .request(option)
       .then((response) => {
         setGetallBrand(response?.data);
-        // console.log(response.data);
+        // console.log("abc",response?.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+
+  
+
+
+
 
   const options = {
     method: "GET",
@@ -76,17 +85,21 @@ const ProductGrid = () => {
       .request(options)
       .then((response) => {
         setGetallCategory(response.data);
+        // console.log("qqq",response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
 
-  const pageLimit = "15";
+  
 
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  
+
 
   const addToWishlist = async (id) => {
     const prodId = id;
@@ -115,7 +128,7 @@ const ProductGrid = () => {
   const toggleWishlist = async (productId) => {
     setIsWished((prevIsWished) => ({
       ...prevIsWished,
-      [productId]: !prevIsWished[productId], // Toggle the state for the specified product
+      [productId]: !prevIsWished[productId], 
     }));
 
     try {
@@ -123,6 +136,7 @@ const ProductGrid = () => {
 
       console.log(response);
       if (response.status === 200) {
+        // console.log("ressss",response.data.products)  
         if (response?.data?.message === "Product added to wishlist") {
           toast.success(response?.data?.message);
         } else {
@@ -158,40 +172,140 @@ const ProductGrid = () => {
     }
   };
 
-  const getAllProducts = async (page) => {
-    setLoadingBtn(true);
-    const options = {
-      method: "GET",
-      url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct`,
-    };
+// ---------page limit--------
+// const getAllProducts = async (page) => {
+//   setLoadingBtn(true);
+//   const options = {
+//     method: "GET",
+//     url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
+//   };
 
-    axios
-      .request(options)
-      .then(function (response) {
-        if (response.status === 200) {
-          setAllProduct(response?.data);
-          setLoadingBtn(false);
-          const categories = response?.data?.map((product) => product.category);
-          const uniqueCategories = [...new Set(categories)];
-          setProductCategory([ ...uniqueCategories]);
+//   axios
+//     .request(options)
+//     .then(function (response) {
+//       if (response.status === 200) {
+//         setAllProduct(response?.data);
+//         setLoadingBtn(false);
+//         const categories = response?.data?.map((product) => product.category);
+//         const uniqueCategories = [...new Set(categories)];
+//         setProductCategory([...uniqueCategories]);
 
-          const brands = response?.data?.map((product) => product.brand);
-          const uniqueBrands = [...new Set(brands)];
-          setProductBrands([...uniqueBrands]);
+//         const brands = response?.data?.map((product) => product.brand);
+//         const uniqueBrands = [...new Set(brands)];
+//         setProductBrands([...uniqueBrands]);
 
-          const fields = response?.data?.map((product) => product.title);
-          const uniqueFields = [...new Set(fields)];
-          ["All", ...uniqueFields];
-        } else {
-          setLoadingBtn(false);
-          return;
-        }
-      })
-      .catch(function (error) {
-        setLoadingBtn(false);
-        console.error(error);
-      });
+//         const fields = response?.data?.map((product) => product.title);
+//         const uniqueFields = [...new Set(fields)];
+//         ["All", ...uniqueFields];
+//       } else {
+//         setLoadingBtn(false);
+//         return;
+//       }
+//     })
+//     .catch(function (error) {
+//       setLoadingBtn(false);
+//       console.error(error);
+//     });
+// };
+
+// const pageLimit = 10;
+
+// const getAllProducts = async (page, limit) => {
+//   setLoadingBtn(true);
+//   const options = {
+//     method: 'GET',
+//     url: 'https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct',
+//     params: {
+//       page: page,
+//       limit: limit,
+//     },
+//   };
+
+//   try {
+//     const response = await axios.request(options);
+
+//     if (response.status === 200) {
+//       setAllProduct(response?.data);
+//       setLoadingBtn(false);
+//       const categories = response?.data?.map((product) => product.category);
+//       const uniqueCategories = [...new Set(categories)];
+//       setProductCategory([...uniqueCategories]);
+
+//       const brands = response?.data?.map((product) => product.brand);
+//       const uniqueBrands = [...new Set(brands)];
+//       setProductBrands([...uniqueBrands]);
+
+//       const fields = response?.data?.map((product) => product.title);
+//       const uniqueFields = [...new Set(fields)];
+//       ['All', ...uniqueFields];
+
+//       // Assuming your API provides total pages information
+//       setTotalPages(response?.data?.totalPages || 1);
+//     } else {
+//       setLoadingBtn(false);
+//     }
+//   } catch (error) {
+//     setLoadingBtn(false);
+//     console.error(error);
+//   }
+// }; 
+
+
+
+
+
+const pageLimit = 10;
+const getAllProducts = async (page, limit) => {
+  setLoadingBtn(true);
+  const options = {
+    method: "GET",
+    url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct`,
+    params: {
+      page: page,
+      limit: limit,
+    },
   };
+
+  try {
+    const response = await axios.request(options);
+
+    if (response.status === 200) {
+
+      setAllProduct(response.data.products);
+      setLoadingBtn(false);
+      const categories = response?.data?.products.map((product) => product.category);
+      const uniqueCategories = [...new Set(categories)];
+      setProductCategory([...uniqueCategories]);
+
+      const brands = response?.data?.products.map((product) => product.brand);
+      const uniqueBrands = [...new Set(brands)];
+      setProductBrands([...uniqueBrands]);
+
+      const fields = response?.data?.products.map((product) => product.title);
+      const uniqueFields = [...new Set(fields)];
+      ["All", ...uniqueFields];
+      setTotalPages(response?.data?.totalPages || 1);
+    } else {
+      setLoadingBtn(false);
+    }
+  } catch (error) {
+    setLoadingBtn(false);
+    console.error(error);
+  }
+};
+
+const handlePageChange = (newPage) => {
+  setCurrentPage(newPage);
+};
+
+useEffect(() => {
+  getAllProducts(currentPage, pageLimit);
+}, [currentPage]);
+
+// useEffect(() => {
+//   getAllProducts(1, 10); 
+// }, []);
+
 
   // ------ search products ------ //
   const handleSearch = (e) => {
@@ -220,7 +334,9 @@ const ProductGrid = () => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
-          setAllProduct(response?.data);
+          console.log("sasa",response.data.products);
+          setAllProduct(response?.data?.products);
+
           refreshData();
         }
       })
@@ -244,7 +360,7 @@ const ProductGrid = () => {
         .request(options)
         .then(function (response) {
           if (response.status === 200) {
-            setAllProduct(response?.data);
+            setAllProduct(response?.data?.products);
           }
         })
         .catch(function (error) {
@@ -272,7 +388,7 @@ const ProductGrid = () => {
         .then(function (response) {
           console.log("hell", response.data);
           if (response.status === 200) {
-            setAllProduct(response.data);
+            setAllProduct(response.data?.products);
             setSelectedCategory(cate);
           }
         })
@@ -451,8 +567,8 @@ const ProductGrid = () => {
           </div>
 
           <div className=" w-full md:w-[80%] mx-auto mt-7 md:mt-0">
-            <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
-              <h2 className="2xl:text-[30px] lg:text-[28px] md:text-[16px] text-[21px] font-semibold">
+            <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4 xl:py-3 2xl:py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
+              <h2 className="2xl:text-[30px] xl:text-[22px] lg:text-[28px] md:text-[16px] text-[21px] font-semibold">
                 All Product
               </h2>
 
@@ -469,7 +585,7 @@ const ProductGrid = () => {
               </div>
             </div>
 
-            <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px] ">
+            <div className="grid 2xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px] ">
               {allProduct?.length > 0 &&
                 allProduct?.map((items, ix) => (
                   <div
@@ -477,12 +593,12 @@ const ProductGrid = () => {
                     key={ix}
                   >
                     {items?.images?.length > 0 && (
-                      <div className="h-[300px] p-2 overflow-hidden relative">
+                      <div className="h-[276px] 2xl:h-[300px] p-2 overflow-hidden relative">
                         <Link href={`/product-details/${items?._id}`}>
                           <Image
                             src={items?.images[0]?.url[0]}
                             alt="product"
-                            className=" mx-auto rounded-[5px] overflow-hidden  "
+                              className=" mx-auto rounded-[5px] overflow-hidden  "
                             width={200}
                             height={300}
                           />
@@ -501,9 +617,9 @@ const ProductGrid = () => {
                         </p>
                       </div>
                     )}
-                    <div className="bg-white px-5 xl:px-10 pb-6 rounded-[20px] mt-3">
+                    <div className="bg-white px-5  xl:px-3 2xl:px-10 pb-6 rounded-[20px] mt-3">
                       <div className="flex justify-between items-center my-4">
-                        <p className="2xl:text-[25px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                        <p className="2xl:text-[25px] xl:text-[16px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                           {items.title}
                         </p>
                         {!token || token === undefined ? (
@@ -563,24 +679,24 @@ const ProductGrid = () => {
                         )}
                       </div>
 
-                      <div className="2xl:text-[18px] text-[15px]  flex justify-between capitalize  ">
+                      <div className="2xl:text-[18px] xl:text-[14px] text-[15px]  flex justify-between capitalize  ">
                         Brand :
                         <p className="font-semibold px-2"> {items.brand} </p>
                       </div>
 
-                      <div className="2xl:text-[18px] text-[15px] flex justify-between capitalize my-2 ">
+                      <div className="2xl:text-[18px]  xl:text-[14px] text-[15px] flex justify-between capitalize my-2 ">
                         Category :
                         <p className="font-semibold px-2">{items.category}</p>
                       </div>
 
-                      <div className="2xl:text-[18px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
+                      <div className="2xl:text-[18px]  xl:text-[14px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
                         Offer price :
                         <p className="text-lightBlue-800 px-2 font-bold">
                           {items?.offerPriceCurr} {items.discountedPrice}
                         </p>
                       </div>
 
-                      <p className="2xl:text-[18px] text-[15px] capitalize my-2 flex justify-between">
+                      <p className="2xl:text-[18px]  xl:text-[14px] text-[15px] capitalize my-2 flex justify-between">
                         Regular Price :
                         <del className="text-lightBlue-600">
                           {items?.regPriceCurr} {items.price}
@@ -607,6 +723,14 @@ const ProductGrid = () => {
                   </div>
                 ))}
             </div>
+    {/* ----------pagination----------- */}
+    <Pagination
+    totalPages={totalPages} 
+    currentPage={currentPage}
+    onPageChange={handlePageChange}/>
+
+
+
           </div>
         </div>
       </section>
