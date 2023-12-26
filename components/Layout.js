@@ -66,7 +66,7 @@ export default function Layout({ children }) {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <SideBar showNav={showNav} />
+            <SideBar showNav={showNav}/>
           </Transition>
         </>
       )}
@@ -124,7 +124,7 @@ export default function Layout({ children }) {
               ||
               router.pathname.includes("password") 
             )
-              ? "pl-4 md:pl-16 pr-4"
+              ? "pl-4 2xl:pl-16 pr-4"
               : ""
           }
         >

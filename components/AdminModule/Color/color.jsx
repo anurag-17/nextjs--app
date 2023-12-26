@@ -59,7 +59,7 @@ const Color = () => {
   };
   function openModal(_id) {
     setColorID(_id);
-    console.log("hhhh",_id)
+    console.log("hhhh", _id);
     setOpenDelete(true);
   }
   function closeModal() {
@@ -73,20 +73,19 @@ const Color = () => {
     setIsDrawerOpenO(false);
   };
 
+  useEffect(() => {
+    defaultColor();
+  }, [isRefresh]);
   const options = {
     method: "GET",
     url: "https://e-commerce-backend-brown.vercel.app/api/color/getColors",
   };
-  useEffect(() => {
-    defaultColor();
-  }, [isRefresh]);
 
   const defaultColor = () => {
     axios
       .request(options)
       .then((response) => {
         setGetallColor(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -95,7 +94,7 @@ const Color = () => {
 
   return (
     <div>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
         <h2 className="text-2xl font-semibold pb-4">Color List </h2>
 

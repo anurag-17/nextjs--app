@@ -169,17 +169,17 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   return (
     <div
       ref={ref}
-      className="fixed h-screen overflow-y-auto w-[270px] bg-white shadow-sm  "
+      className="fixed h-screen overflow-y-auto 2xl:w-[270px] xl:w-[220px] bg-white shadow-sm  "
     >
       <img
         src="/log.png"
         width={400}
         height={350}
         alt="login_img"
-        className="mx-auto py-2"
+        className="mx-auto 2xl:py-3 xl:py-2 "
       />
       <div className="flex justify-center items-center whitespace-pre-wrap h-[100px]">
-        <h1 className="text-2xl font-bold mx-5 text-lightBlue-600">
+        <h1 className="2xl:text-2xl xl:text-[20px]  font-bold mx-5 text-lightBlue-600">
           Admin Dashboard
         </h1>
       </div>
@@ -189,7 +189,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
           <Fragment key={inx}>
             <Link href={items.path ? items.path : "#"}>
               <div
-                className={`pl-6 py-3 ml-5 rounded-l-full justify-center cursor-pointer mb-3 flex items-center transition-colors font-semibold
+                className={`2xl:pl-6 2xl:py-3 2xl:ml-5 xl:pl-5 xl:py-2 xl:ml-6 lg:pl-4 lg:py-1 lg:ml-7 rounded-l-full justify-center cursor-pointer 2xl:mb-3 xl:mb-2 lg:mb-1 flex items-center transition-colors font-semibold
                  ${
                    items?.id === labelId
                      ? "bg-lightBlue-600 text-white"
@@ -197,7 +197,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                  }`}
                 onClick={() => handleClick(items.label, items.id)}
               >
-                <div className="w-full">
+                <div className="w-full text-[10px] xl:text-[14px] 2xl:text-[22px]">
                   {items.submenu ? (
                     <p
                       className=" capitalize whitespace-nowrap flex gap-5 "
@@ -243,7 +243,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         ))}
 
         <div
-          className={`pl-6 py-3 ml-5 rounded text-center rounded-l-full  cursor-pointer mb-3 flex items-center transition-colors mt-[144px] font-semibold 
+          className={`pl-6 py-3 ml-5 rounded text-center rounded-l-full  cursor-pointer mb-3 flex items-center transition-colors 2xl:mt-[100px] font-semibold 
             ${
               router.pathname == "/admin-login"
                 ? "bg-lightBlue-600 text-white"
@@ -255,7 +255,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             <CreditCardIcon className="h-5 w-5" />
           </div>
           <div>
-            <p>Log Out </p>
+            <p className="text-[10px] xl:text-[14px] 2xl:text-[22px]">Log Out </p>
           </div>
         </div>
       </div>

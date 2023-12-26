@@ -85,7 +85,7 @@ const ProductList = () => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
-          setAllProduct(response?.data);
+          setAllProduct(response?.data?.products);
           setLoadingBtn(false)
           // const categories = response?.data?.map((product) => product.category);
           // const uniqueCategories = [...new Set(categories)];
@@ -124,7 +124,7 @@ const ProductList = () => {
         .request(options)
         .then(function (response) {
           if (response.status === 200) {
-            setAllProduct(response.data);
+            setAllProduct(response.data.products);
           }
         })
         .catch(function (error) {
@@ -382,7 +382,8 @@ const ProductList = () => {
           <>
             <div className=" w-full  mx-auto">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                {allProduct?.map((items, ix) => (
+              {Array.isArray(allProduct) && allProduct.map((items, ix) => (
+            
                   <div
                     className=" bg-white  border-[2px] border-gray rounded-[10px] m-4 hover:border-lightBlue-600"
                     key={ix}
@@ -490,6 +491,7 @@ const ProductList = () => {
                     </div>
                   </div>
                 ))}
+                
               </div>
             </div>
           </>

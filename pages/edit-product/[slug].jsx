@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import cut from "../../public/cross.svg";
-
+import cutss from "../../public/cross.svg";
 
 export default function EditProduct() {
   const router = useRouter();
@@ -46,7 +45,7 @@ export default function EditProduct() {
     brand: "",
     quantity: "",
     color: "",
-    sizeChart: ["s", "m", "l"],
+    sizeChart: ["xs", "s", "m", "l", "xl"],
   });
 
   const refreshData = () => {
@@ -281,14 +280,14 @@ export default function EditProduct() {
     };
   };
 
-  const handleImageDelete = (indexToDelete) => {
-    const updatedImgFiles = imgFiles.filter(
-      (_, index) => index !== indexToDelete
-    );
-    console.log(updatedImgFiles, "image");
+  // const handleImageDelete = (indexToDelete) => {
+  //   const updatedImgFiles = imgFiles.filter(
+  //     (_, index) => index !== indexToDelete
+  //   );
+  //   console.log(updatedImgFiles, "image");
 
-    setImageFiles(updatedImgFiles);
-  };
+  //   setImageFiles(updatedImgFiles);
+  // };
 
   const MAX_IMAGES = 5;
   const handleImageUpload = (event) => {
@@ -335,12 +334,15 @@ export default function EditProduct() {
 
   const uploadImage = async (formData) => {
     try {
-      const response = await axios.post("https://e-commerce-backend-brown.vercel.app/api/auth/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        
-        },
-      });
+      const response = await axios.post(
+        "https://e-commerce-backend-brown.vercel.app/api/auth/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       return response;
     } catch (error) {
@@ -375,13 +377,11 @@ export default function EditProduct() {
     setSelectColor(e?.value);
     setImgBycolor({ ...imgByColor, ["color"]: e?.value });
   };
-  // const handleImageDelete =(ind)=>{
-  //   const newData = editData.images.filter((iyems, index)=>{
-  //     return index !== ind
-  //   })
-  //   console.log(newData);
-  //   editData.images = newData
-  // }
+
+  const handleImageDelete = (ind) => {
+    const newData = editData.images.filter((item, index) => index !== ind);
+    editData.images = newData;
+  };
 
   return (
     <>
@@ -398,32 +398,32 @@ export default function EditProduct() {
             Welcome Back, Admin
           </h2>
         </div>
-        <div className="  bg-white 2xl:py-10 2xl:mt-[44px] xl:py-5 xl:mt-[24px] ">
+        <div className="bg-white 2xl:py-10 2xl:mt-[44px] xl:py-5 xl:mt-[24px] lg:mt-[20px] md:mt-[20px] mt-[20px]  lg:py-4 md:py-3 py-2 ">
           <div className="2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[50px] ">
-            <h2 className=" font-semibold text-green-600 2xl:text-[30px] 2xl:leading-[30px] 2xl:px-6 xl:text-[25px] xl:leading-[30px] xl:px-6">
+            <h2 className=" font-semibold text-green-600 2xl:text-[30px] 2xl:leading-[30px] 2xl:px-6 xl:text-[20px] xl:leading-[25px] xl:px-5 lg:text-[20px] lg:leading-[25px] lg:px-5 md:px-3  px-2">
               Edit Basic Info
             </h2>
             <div className="border-b border-[#f3f3f3] 2xl:mt-6 w-full">
-              <div className="border-b border-green-600 2xl:w-[250px]"></div>
+              <div className="border-b border-green-600 2xl:w-[250px] xl:w-[170px] lg:w-[170px] md:w-[130px] w-[130px]"></div>
             </div>
           </div>
           {/*---- form start here ----*/}
           <form action="" onSubmit={handleFormSubmit}>
             <div className=" flex-grow w-full h-full max-h-full 2xl:px-6 2xl:pt-8 2xl:pb-40  md:pb-32 lg:pb-32 xl:pb-32">
               {/*------ title -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 2xl:mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6  mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6 ">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Title/Name
                 </label>
-                <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0 ">
                   <input
                     type="text"
                     name="title"
                     placeholder="Product Title/Name"
-                    className="custom-input 2xl:text-[20px] xl:text-[18px] lg:text-[16px] "
+                    className="custom-input 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                     defaultValue={
                       editData?.title ? editData?.title : productDetails.title
                     }
@@ -437,17 +437,17 @@ export default function EditProduct() {
               </div>
 
               {/*------ Description -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Description
                 </label>
-                <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0">
                   <textarea
                     rows="6"
-                    className="custom-input h-[100px] 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                    className="custom-input 2xl:text-[20px] 2xl:leading-[30px]  xl:text-[14px] xl:leading-[22px] lg:text-[12px] lg:leading-[20px] md:text-[10px] md:leading-[16px] text-[8px] leading-[14px]"
                     name="description"
                     placeholder="Product Description"
                     spellCheck="false"
@@ -465,14 +465,14 @@ export default function EditProduct() {
               </div>
 
               {/*------ images -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Images
                 </label>
-                <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0">
                   <div className=" gap-x-2 justify-center items-center">
                     <p className="whitespace-nowrap text-ellipsis overflow-hidden"></p>
                     {imageUrls === "" ? (
@@ -483,12 +483,12 @@ export default function EditProduct() {
                           </button>
                         ) : (
                           <label
-                            className="w-full text-center custom-input flex justify-center items-center"
+                            className=" custom-input flex justify-center items-center  2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] "
                             htmlFor="fileUpload"
                           >
                             <input
                               type="file"
-                              className="hidden my-auto"
+                              className="hidden my-auto  md:text-[12px] text-[10px]"
                               multiple
                               id="fileUpload"
                               onChange={handleImageUpload}
@@ -499,7 +499,6 @@ export default function EditProduct() {
                                   : productDetails.images
                               }
                             />
-                            <br />
                             Upload product image
                           </label>
                         )}
@@ -515,7 +514,9 @@ export default function EditProduct() {
                     <div className="flex flex-wrap gap-5"></div>
 
                     <div className="my-2">
-                      <label className="my-1 font-semibold">
+                      <label
+                        className="custom-input-label font-semibol 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px] my-1 ml-2"
+                      >
                         Uploaded Images :
                       </label>
 
@@ -523,13 +524,18 @@ export default function EditProduct() {
                         <div className="flex gap-5">
                           {editData.images.map((image, ind) => (
                             <div key={ind} className="flex items-center">
-                              <div className="w-20 mx-auto">
+                              <div className="xl:w-20 2xl:w-40 mx-auto text-center ">
                                 <img
                                   src={image?.url[0]}
                                   alt={`Image ${ind}`}
-                                  className=" h-auto cursor-pointer w-20"
+                                  className="h-auto my-1 cursor-pointer w-20 sm:w-12 md:w-14 lg:w-16 xl:w-20 2xl:w-40 ml-2"
                                 />
-                                <img src={cut}  alt="cut" className="m-2 cursor-pointer" onClick={()=>handleImageDelete(ind)}/>
+                                <button
+                                  onClick={() => handleImageDelete(ind)}
+                                  className="my-1 xl:text-[20px] lg:text-[16px] 2xl:text-[25px]"
+                                >
+                                  X
+                                </button>
                               </div>
                             </div>
                           ))}
@@ -538,7 +544,9 @@ export default function EditProduct() {
 
                       {imgFiles.length > 0 && (
                         <div className="mt-5 font-semibold">
-                          <label className="">New Images :</label>
+                          <label className="custom-input-label font-semibold 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] my-1">
+                            New Images :
+                          </label>
                           <div className="text-center bg-gray-300 text-black font-medium mt-1 rounded grid grid-cols-3 px-2 py-4 gap-x-3">
                             {imgFiles.map((file, index) => (
                               <div
@@ -567,22 +575,21 @@ export default function EditProduct() {
                           // isMulti
                           isSearchable
                           name="colors"
-                          className="basic-multi-select capitalize my-3"
+                          className="basic-multi-select capitalize my-3 h-[20px] 2xl:text-[20px] xl:text-[16px] lg:text-[14px]  md:text-[12px] text-[10px]"
                           classNamePrefix="select"
                           options={getallColor.map((item) => ({
                             value: item.color,
                             label: item.color,
                           }))}
                           onChange={handleWarnaChange}
-                  placeholder="Select color"
-                  value={selectedColor}
-                        
+                          placeholder="Select color"
+                          value={selectedColor}
                         />
 
                         <div className="col-span-1 sm:col-span-1 my-3 ">
                           <button
                             type="button"
-                            className="px-4 py-2 rounded-lg font-medium text-[15px] bg-black text-white flex justify-center items-center "
+                            className="xl:px-4 xl:py-1 xl:text-[15px] md:px-3 md:py-1 md:text-[12px] px-3 py-1 text-[10px] rounded-lg font-medium  bg-black text-white flex justify-center items-center "
                             onClick={imageUploader}
                           >
                             Upload
@@ -595,15 +602,16 @@ export default function EditProduct() {
               </div>
 
               {/*----- Regular price -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6 w-11/12 sm:w-full">
+                <label className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0">
                   Product Price
                 </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <div className="flex flex-row">
-                    <span className="inline-flex items-center px-1 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600">
+                <div className="col-span-8 sm:col-span-4 ">
+                  <div className="flex flex-row ml-2 sm:ml-0">
+                    <span className="inline-flex items-center  pl-1 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px]">
                       <select
-                        className="bg-white list-none outline-none "
+                        className="bg-white list-none outline-none 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
+                        
                         name="regPriceCurr"
                         defaultValue={
                           editData?.regPriceCurr
@@ -623,7 +631,7 @@ export default function EditProduct() {
                       type="number"
                       name="price"
                       placeholder="OriginalPrice"
-                      className="custom-input 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                      className="custom-input rounded rounded-l-none 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                       defaultValue={
                         editData?.price ? editData?.price : productDetails.price
                       }
@@ -636,16 +644,16 @@ export default function EditProduct() {
               </div>
 
               {/*------offer price -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <label className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6 w-11/12 sm:w-full">
+                <label className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0">
                   Offer Price
                 </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <div className="flex flex-row">
-                    <span className="inline-flex items-center px-1 rounded rounded-r-none border border-r-0 border-gray-300  text-sm focus:bg-white  dark:border dark:border-gray-600">
+                <div className="col-span-8 sm:col-span-4 ">
+                  <div className="flex flex-row ml-2 sm:ml-0">
+                    <span className="inline-flex items-center  px-1 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] ">
                       <select
-                        className="bg-white list-none outline-none "
-                        name="offerPriceCurr"
+                        className="bg-white list-none outline-none 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
+                        name="regPriceCurr"
                         defaultValue={
                           editData?.regPriceCurr
                             ? editData?.regPriceCurr
@@ -664,7 +672,7 @@ export default function EditProduct() {
                       type="number"
                       name="discountedPrice"
                       placeholder="OfferPrice"
-                      className="custom-input 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                      className="custom-input rounded rounded-l-none 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px] "
                       defaultValue={
                         editData?.discountedPrice
                           ? editData?.discountedPrice
@@ -679,18 +687,18 @@ export default function EditProduct() {
               </div>
 
               {/*------ category -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Category
                 </label>
 
-                <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0">
                   <select
                     name="category"
-                    className="custom-input 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                    className="custom-input 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                     defaultValue={
                       editData?.category
                         ? editData.category
@@ -708,7 +716,7 @@ export default function EditProduct() {
                     </option>
                     {getallCategory.map((item) => (
                       <option
-                        className="2xl:text-[14px] xl:text-[12px] lg:text-[10px]"
+                        className="2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                         key={item.id}
                         value={item.title}
                         selected={
@@ -725,18 +733,18 @@ export default function EditProduct() {
 
               {/*------ sub category -----*/}
 
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Sub Category
                 </label>
 
-                <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0">
                   <select
                     name="subCategory"
-                    className="custom-input 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                    className="custom-input 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                     defaultValue={
                       editData?.subCategory
                         ? editData.subCategory
@@ -760,7 +768,7 @@ export default function EditProduct() {
                       })
                       .map((item) => (
                         <option
-                          className="2xl:text-[14px] xl:text-[12px] lg:text-[10px]"
+                          className="2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                           key={item.id}
                           value={item.title}
                           selected={
@@ -776,19 +784,19 @@ export default function EditProduct() {
               </div>
 
               {/*------ quantity -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Quantity
                 </label>
-                <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0">
                   <input
                     type="number"
                     name="quantity"
                     placeholder="Add quantity"
-                    className="custom-input"
+                    className="custom-input 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                     defaultValue={
                       editData?.quantity
                         ? editData?.quantity
@@ -802,20 +810,20 @@ export default function EditProduct() {
               </div>
 
               {/*------ brand -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
                 <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Brand
                 </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <div className="col-span-8 sm:col-span-4">
+                <div className="col-span-8 sm:col-span-4 ">
+                  <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0">
                     <select
                       type="text"
                       name="brand"
                       placeholder="Add Brand Name"
-                      className="custom-input uppercase"
+                      className="custom-input uppercase 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                       defaultValue={
                         editData?.brand ? editData.brand : productDetails.brand
                       }
@@ -845,52 +853,30 @@ export default function EditProduct() {
               </div>
 
               {/*------ color -----*/}
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                {/* <label
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
+                <label
                   htmlFor=""
-                  className="custom-input-label 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                  className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
                 >
                   Product Color
                 </label>
-                <div className="col-span-8 sm:col-span-4">
-                  <input
-                    type="text"
-                    name="color"
-                    placeholder="Enter colors separated by commas"
-                    className="custom-input"
-                    defaultValue={
-                      editData?.color ? editData?.color : productDetails.color
-                    }
-                    onChange={inputHandler}
-                    required
-                    minLength={3}
-                    max={60}
+                <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0 w-11/12 sm:w-full h-[20px]">
+                  <Select
+                    id="selectWarna"
+                    instanceId="selectWarna"
+                    isMulti
+                    isSearchable
+                    name="colors"
+                    className="basic-multi-select capitalize 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
+                    classNamePrefix="select"
+                    options={getallColor.map((item) => ({
+                      value: item.color,
+                      label: item.color,
+                    }))}
+                    onChange={handleMultiSelect}
+                    placeholder="Select color"
                   />
-                </div> */}
-
-
-                <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <label htmlFor="" className="custom-input-label">
-                Product Colour
-              </label>
-              <div className="col-span-8 sm:col-span-4">
-                <Select
-                  id="selectWarna"
-                  instanceId="selectWarna"
-                  isMulti
-                  isSearchable
-                  name="colors"
-                  className="basic-multi-select capitalize "
-                  classNamePrefix="select"
-                  options={getallColor.map((item) => ({
-                    value: item.color,
-                    label: item.color,
-                  }))}
-                  onChange={handleMultiSelect}
-                  placeholder="Select color"
-                />
-              </div>
-            </div>
+                </div>
               </div>
 
               <div className="">
@@ -901,12 +887,12 @@ export default function EditProduct() {
                     {isLoading ? (
                       <p>Loading...</p>
                     ) : (
-                      <div className="w-full grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 ">
+                      <div className="w-full grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6 ">
                         <label htmlFor="" className="custom-input-label w-full">
                           Product Sizes
                         </label>
 
-                        <div className="col-span-8 sm:col-span-4 flex">
+                        <div className="col-span-8 sm:col-span-4 ml-2 sm:ml-0 flex">
                           {allSizes?.map((size) => (
                             <div className="" key={size?._id}>
                               {size?.sizeChart?.map((items) => (
@@ -942,11 +928,11 @@ export default function EditProduct() {
                 )}
               </div>
               {/*------ submit button -----*/}
-              <div className="mt-8">
+              <div className="xl:mt-14 lg:mt-10 md:mt-8 sm:mt-6 mt-5">
                 {isLoading ? (
                   <button
                     type="button"
-                    className="w-full  text-cyan-600 py-3 text-center bg-white mb-2 border border-cyan-600 font-semibold 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                    className="w-full  text-cyan-600 xl:py-3  md:py-2  py-1 text-center bg-white mb-2 border border-cyan-600 font-semibold xl:text-[16px] lg:text-[14px]"
                   >
                     Loading...
                   </button>
@@ -954,7 +940,7 @@ export default function EditProduct() {
                   <button
                     type="submit"
                     // onClick={handlesubmit}
-                    className="w-full bg-cyan-600 py-3 text-center text-white mb-2 font-semibold 2xl:text-[20px] xl:text-[18px] lg:text-[16px]"
+                    className="w-full bg-cyan-600 xl:py-3  md:py-2  py-[6px] text-center text-white mb-2 font-semibold xl:text-[16px] lg:text-[14px] sm:text-[12px] text-[10px]"
                   >
                     Update Product
                   </button>
