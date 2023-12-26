@@ -5,17 +5,17 @@ const BASE_URL = "https://e-commerce-backend-brown.vercel.app/api";
 
 export const fetchApi = async (url, options = {}) => {
   try {
-    const accessToken = JSON.parse(localStorage.getItem("userToken"));
+    // const accessToken = JSON.parse(localStorage.getItem("userToken"));
     // const token = useSelector((state) => state);
-
+    const { token } = useSelector((state) => state.auth.userDetails || null);
     const headers = {
       "Content-Type": "application/json",
-      "User-Agent": "PostmanRuntime/7.33.0",
+     "authorization":token
     };
 
-    if (accessToken) {
-      headers["authorization"] = accessToken;
-    }
+    // if (token) {
+    //   headers["authorization"] = token;
+    // }    
 
     
     const response = await fetch(`${BASE_URL}${url}`, {
