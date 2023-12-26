@@ -148,7 +148,8 @@ const UserWishlist = ({ getWishProduct, refreshData }) => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
-          dispatch(getUserWishList(response?.data?.wishlist));
+          dispatch(getUserWishList(response?.data?.products?.wishlist));
+          console.log("wish",response?.data?.wishlist);
           refreshData();
         } else {
           return;

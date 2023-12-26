@@ -36,7 +36,7 @@ const ProductGrid = () => {
   const [brandFilter,setBrandFilter]=useState("");
   const [catagoryFilter,setCatagoryFilter]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const openLoginModal = () => {
     setOpenLogin(true);
@@ -85,6 +85,7 @@ const ProductGrid = () => {
       .request(options)
       .then((response) => {
         setGetallCategory(response.data);
+        setTotalPages(response?.data?.totalPages);
         // console.log("qqq",response.data);
       })
       .catch((error) => {
@@ -173,88 +174,7 @@ const ProductGrid = () => {
   };
 
 // ---------page limit--------
-// const getAllProducts = async (page) => {
-//   setLoadingBtn(true);
-//   const options = {
-//     method: "GET",
-//     url: `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?page=${page}&limit=${pageLimit}`,
-//   };
-
-//   axios
-//     .request(options)
-//     .then(function (response) {
-//       if (response.status === 200) {
-//         setAllProduct(response?.data);
-//         setLoadingBtn(false);
-//         const categories = response?.data?.map((product) => product.category);
-//         const uniqueCategories = [...new Set(categories)];
-//         setProductCategory([...uniqueCategories]);
-
-//         const brands = response?.data?.map((product) => product.brand);
-//         const uniqueBrands = [...new Set(brands)];
-//         setProductBrands([...uniqueBrands]);
-
-//         const fields = response?.data?.map((product) => product.title);
-//         const uniqueFields = [...new Set(fields)];
-//         ["All", ...uniqueFields];
-//       } else {
-//         setLoadingBtn(false);
-//         return;
-//       }
-//     })
-//     .catch(function (error) {
-//       setLoadingBtn(false);
-//       console.error(error);
-//     });
-// };
-
-// const pageLimit = 10;
-
-// const getAllProducts = async (page, limit) => {
-//   setLoadingBtn(true);
-//   const options = {
-//     method: 'GET',
-//     url: 'https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct',
-//     params: {
-//       page: page,
-//       limit: limit,
-//     },
-//   };
-
-//   try {
-//     const response = await axios.request(options);
-
-//     if (response.status === 200) {
-//       setAllProduct(response?.data);
-//       setLoadingBtn(false);
-//       const categories = response?.data?.map((product) => product.category);
-//       const uniqueCategories = [...new Set(categories)];
-//       setProductCategory([...uniqueCategories]);
-
-//       const brands = response?.data?.map((product) => product.brand);
-//       const uniqueBrands = [...new Set(brands)];
-//       setProductBrands([...uniqueBrands]);
-
-//       const fields = response?.data?.map((product) => product.title);
-//       const uniqueFields = [...new Set(fields)];
-//       ['All', ...uniqueFields];
-
-//       // Assuming your API provides total pages information
-//       setTotalPages(response?.data?.totalPages || 1);
-//     } else {
-//       setLoadingBtn(false);
-//     }
-//   } catch (error) {
-//     setLoadingBtn(false);
-//     console.error(error);
-//   }
-// }; 
-
-
-
-
-
-const pageLimit = 10;
+const pageLimit = 12;
 const getAllProducts = async (page, limit) => {
   setLoadingBtn(true);
   const options = {
@@ -284,7 +204,7 @@ const getAllProducts = async (page, limit) => {
       const fields = response?.data?.products.map((product) => product.title);
       const uniqueFields = [...new Set(fields)];
       ["All", ...uniqueFields];
-      setTotalPages(response?.data?.totalPages || 1);
+      setTotalPages(response?.data?.totalPages);
     } else {
       setLoadingBtn(false);
     }
@@ -301,10 +221,6 @@ const handlePageChange = (newPage) => {
 useEffect(() => {
   getAllProducts(currentPage, pageLimit);
 }, [currentPage]);
-
-// useEffect(() => {
-//   getAllProducts(1, 10); 
-// }, []);
 
 
   // ------ search products ------ //
@@ -336,7 +252,7 @@ useEffect(() => {
         if (response.status === 200) {
           console.log("sasa",response.data.products);
           setAllProduct(response?.data?.products);
-
+          setTotalPages(response?.data?.totalPages);
           refreshData();
         }
       })
@@ -361,6 +277,7 @@ useEffect(() => {
         .then(function (response) {
           if (response.status === 200) {
             setAllProduct(response?.data?.products);
+            setTotalPages(response.data?.totalPages);
           }
         })
         .catch(function (error) {
@@ -390,6 +307,8 @@ useEffect(() => {
           if (response.status === 200) {
             setAllProduct(response.data?.products);
             setSelectedCategory(cate);
+            setTotalPages(response.data?.totalPages);
+
           }
         })
         .catch(function (error) {
@@ -435,6 +354,7 @@ useEffect(() => {
       .request(options)
       .then(function (response) {
         if (response.status === 200) {
+          console.log(response);
           sessionStorage.removeItem("addToCart");
           // setCartItems(dispatch(data?.cart?.products))
           refreshData();
@@ -724,11 +644,12 @@ useEffect(() => {
                 ))}
             </div>
     {/* ----------pagination----------- */}
+   {totalPages >1 && (
     <Pagination
     totalPages={totalPages} 
     currentPage={currentPage}
     onPageChange={handlePageChange}/>
-
+   )}
 
 
           </div>
