@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../utlis/config";
 
-const EditSubCategory = ({ editData, cateEdit, closeDrawer, refreshData }) => {
+const EditSubCategory = ({ editData, cateEdit, closeDrawer }) => {
   const [isLoading, setLoading] = useState(false);
   const [categoryDetails, setCategoryDetails] = useState();
-
-
   const { auth_token } = useSelector((state) => state.adminAuth || null);
+  const [getallCategory, setGetallCategory] = useState();
+  const [isLoadingBtn, setLoadingBtn] = useState(false);
+  const [isRefresh, setRefresh] = useState(false);
+
+  const refreshData = () => {
+    setRefresh(!isRefresh);
+  };
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
@@ -31,7 +37,7 @@ const EditSubCategory = ({ editData, cateEdit, closeDrawer, refreshData }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            "authorization": auth_token,
+            authorization: auth_token,
           },
         }
       );
@@ -50,6 +56,29 @@ const EditSubCategory = ({ editData, cateEdit, closeDrawer, refreshData }) => {
     }
   };
 
+  useEffect(() => {
+    defaultCategory();
+  }, [isRefresh]);
+
+  const defaultCategory = () => {
+    setLoadingBtn(true);
+    const options = {
+      method: "GET",
+      url: "https://e-commerce-backend-brown.vercel.app/api/category/getallCategory",
+    };
+
+    axios
+      .request(options)
+      .then((response) => {
+        setGetallCategory(response?.data);
+        console.log("hell", response?.data);
+        setLoadingBtn(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoadingBtn(false);
+      });
+  };
 
   return (
     <>
@@ -57,12 +86,10 @@ const EditSubCategory = ({ editData, cateEdit, closeDrawer, refreshData }) => {
         <h2 className="text-2xl font-semibold pb-4">Edit Category </h2>
         <div className="mb-3 w-[40%]"></div>
       </div>
-      
+
       <div className="bg-white border rounded-lg p-2 mx-auto">
         <form onSubmit={handleUpdateCategory}>
-
           <div className="mt-2">
-
             <label className="absolute bg-white ml-14 z-20 text-[18px] text-gray-800 ">
               Sub category
             </label>
@@ -81,17 +108,27 @@ const EditSubCategory = ({ editData, cateEdit, closeDrawer, refreshData }) => {
               Category:
             </label>
 
-            <input
+            <select
               type="text"
               name="category"
-              className="px-3 py-2 rounded m-10 border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white        dark:border dark:border-gray-600 focus:outline-none h-[50px] relative w-8/12"
-              defaultValue={editData?.category}
+              className="px-3 py-2 rounded m-10 border border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white dark:border dark:border-gray-600 focus:outline-none h-[50px] relative w-8/12"
+              value={editData?.category}
               onChange={inputHandler}
               required
-              disabled
               minLength={3}
               max={84}
-            />
+            >
+              <option value="" disabled>
+                Select Category
+              </option>
+              {getallCategory?.map((item, index) => (
+                <option 
+              value={editData?.category}
+                >
+                  <p>{item?.title}</p>
+                </option>
+              ))}
+            </select>
           </div>
 
           <button

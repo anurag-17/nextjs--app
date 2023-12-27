@@ -875,6 +875,7 @@ export default function EditProduct() {
                     }))}
                     onChange={handleMultiSelect}
                     placeholder="Select color"
+                    required
                   />
                 </div>
               </div>

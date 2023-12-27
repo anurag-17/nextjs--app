@@ -18,8 +18,6 @@ import DeleteModuleB from "../Brand/deleteMudule";
 import CreateBrand from "../Brand/create-brand";
 import Pagination from "../../UserModule/Pagination";
 
-
-const headItems = ["NAME", "PUBLISHED", "ACTION"];
 const brandlist = () => {
   const [getallBrand, setGetallBrand] = useState([]);
   const [isChecked, setisChecked] = useState([]);
@@ -36,14 +34,13 @@ const brandlist = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoadingBtn, setLoadingBtn] = useState(false);
 
-
   const openDrawerO = async (_id) => {
     setBrandEdit(_id);
     try {
       const options = {
         method: "POST",
         url: "https://e-commerce-backend-brown.vercel.app/api/brand/getBrand",
-     
+
         data: {
           id: _id,
         },
@@ -98,11 +95,8 @@ const brandlist = () => {
     defaultBrand();
   }, [isRefresh]);
 
-
- 
-
-    const pageLimit = 10;
-    const defaultBrand = async (page, limit) => {
+  const pageLimit = 10;
+  const defaultBrand = async (page, limit) => {
     setLoadingBtn(true);
     const options = {
       method: "GET",
@@ -144,7 +138,6 @@ const brandlist = () => {
         .then(function (response) {
           if (response.status === 200) {
             setGetallBrand(response.data);
-
           }
         })
         .catch(function (error) {
@@ -230,14 +223,15 @@ const brandlist = () => {
   };
   return (
     <>
-    <ToastContainer/>
-      <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-        <h2 className="text-2xl font-semibold pb-4">Brand List </h2>
+      <div className="px-3 lg:px-0"></div>
+      <ToastContainer />
+      <div className="flex justify-between items-center 2xl:pt-4 2xl:px-10 mt-2 border border-[#f3f3f3] rounded-lg bg-white 2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[45px] h-[45px]  xl:px-8 lg:px-5 md:px-4 sm:px-4 px-4 2xl:text-2xl xl:text-[18px] lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px]">
+        <h2 className="font-semibold">Brand List </h2>
 
-        <div className="mb-3 w-[40%]">
+        <div className="flex items-center w-[40%]">
           <input
             type="search"
-            className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+            className=" border border-gray-500 p-[2px] lg:p-[4px] 2xl:p-3 rounded-lg  w-11/12 focus:outline-none "
             placeholder="Search"
             aria-label="Search"
             aria-describedby="button-addon1"
@@ -250,12 +244,12 @@ const brandlist = () => {
       {selected?.length > 0 ? (
         <EnhancedTableToolbar numLength={selected?.length} />
       ) : (
-        <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
-          <div className="flex  justify-end mt-7 ">
+        <div className=" flex justify-end  items-center 2xl:px-10 xl:px-8 lg:px-5 md:px-4 sm:px-3 px-2 border border-[#f3f3f3] rounded-lg bg-white w-full 2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[45px] lg:mt-5 sm:mt-3 mt-2 h-[45px]">
+          <div className="">
             <Link href="/create-brand"></Link>
             <button
               onClick={openDrawer}
-              className="rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer"
+              className=" rounded-md my-auto bg-lightBlue-600 text-white cursor-pointer 2xl:p-3  2xl:text-[18px] xl:p-2 xl:text-[14px] lg:p-[6px] lg:text-[12px] md:text-[10px] md:p-1 sm:text-[10px] sm:p-1 p-[3px] text-[10px]"
             >
               + Add Brand
             </button>
@@ -265,17 +259,17 @@ const brandlist = () => {
       {isDrawerOpen && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white w-4/12   border rounded-lg"
+          className="fixed content-center mb-5 right-5 z-40 h-[50%] lg:h-[45%] lg:w-4/12 w-6/12  p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white    border rounded-lg"
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >
           <button
             type="button"
             onClick={closeDrawer}
-            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+            className="text-gray-400  shadow-2xl text-sm lg:w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
-              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              className="2xl:w-9 2xl:h-9 xl:w-9 xl:h-9 lg:w-9 lg:h-9 md:w-7 md:h-7 sm:w-6  sm:h-6 w-5 h-5 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -293,17 +287,17 @@ const brandlist = () => {
       {isDrawerOpenO && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+          className="fixed content-center mb-5 right-5 z-40 h-[50%] lg:h-[45%] lg:w-4/12 w-6/12 p-4 overflow-y-auto transition-transform -translate-x-0 bg-white "
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >
           <button
             type="button"
             onClick={closeDrawerO}
-            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+            className="text-gray-400  shadow-2xl text-sm lg:w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
-              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              className="2xl:w-9 2xl:h-9 xl:w-9 xl:h-9 lg:w-9 lg:h-9 md:w-7 md:h-7 sm:w-6  sm:h-6 w-5 h-5 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -323,22 +317,36 @@ const brandlist = () => {
           </div>
         </div>
       )}
-      <table className="table-auto bg-white rounded-md mt-5  relative  ">
+      <table className="table-auto bg-white rounded-md mt-5  relative w-full lg:w-8/12 xl:w-8/12">
         <thead className="">
-          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex gap-48 items-center ">
-            <input
-              type="checkbox"
-              className="mx-3  cursor-pointer "
-              onChange={handleSelectAllClick}
-              inputProps={{
-                "aria-label": "select all desserts",
-              }}
-            />
-            {headItems.map((items, inx) => (
-              <th className="text-start py-5 text-[14px] font-medium" key={inx}>
-                {items}
-              </th>
-            ))}
+          <tr
+            className="bg-coolGray-200 text-gray-400 text-start flex w-full 
+          2xl:text-[20px] 
+          xl:text-[14px]
+           lg:text-[12px] 
+           md:text-[12px] 
+           sm:text-[12px] 
+           text-[10px]"
+          >
+            <th className="mx-4 my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 text-start w-2/12">
+              <input
+                type="checkbox"
+                className="mx-3  cursor-pointer "
+                onChange={handleSelectAllClick}
+                inputProps={{
+                  "aria-label": "select all desserts",
+                }}
+              />
+            </th>
+            <th className="text-start my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 w-4/12 ">
+              NAME
+            </th>
+            <th className="text-start my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 w-3/12 ">
+              PUBLISHED
+            </th>
+            <th className="text-start my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 w-3/12 ">
+              ACTION
+            </th>
           </tr>
         </thead>
         {getallBrand.map((items, index) => {
@@ -346,14 +354,14 @@ const brandlist = () => {
           const labelId = `enhanced-table-checkbox-${index}`;
           return (
             <tbody>
-              <tr
-                className="flex gap-48 cursor-pointer"
-                role="checkbox"
-                onClick={(event) => handleClick(event, items?._id)}
-                aria-checked={isItemSelected}
-                selected={isItemSelected}
-              >
-                <td className="">
+              <tr className="text-start flex w-full 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[14px] sm:text-[13px] text-[10px]">
+                <td
+                  className="mx-5 my-auto w-2/12"
+                  role="checkbox"
+                  onClick={(event) => handleClick(event, items?._id)}
+                  aria-checked={isItemSelected}
+                  selected={isItemSelected}
+                >
                   <input
                     type="checkbox"
                     className="mx-3 mt-5 cursor-pointer "
@@ -364,22 +372,23 @@ const brandlist = () => {
                     }}
                   />
                 </td>
-                <td className="py-5 text-[18px] w-[2%]">
+                <td className=" my-auto w-4/12">
                   {" "}
                   {items?.brand ? items?.brand : "-"}
                 </td>
-                <td className="py-5 text-[18px] tex">
+                <td className=" my-auto w-3/12">
                   <p className=" bg-green-100 p-1 text-center rounded-xl text-green-700 w-20">
                     selling
                   </p>
                 </td>
 
-                <td className=" flex">
-                  <button className="flex">
-                    <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
-
+                <td className="w-3/12 ">
+                  <div className="flex my-3">
+                    {/* <button className="flex">
+                      <MagnifyingGlassPlusIcon className="cursor-pointer h-6 w-6 text-gray-500 m-2" />
+                    </button> */}
                     <button onClick={() => openDrawerO(items?._id)}>
-                      <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
+                      <PencilSquareIcon className="cursor-pointer 2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 md:h-6 md:w-6 h-5 w-5  text-lightBlue-600 m-2 " />
                     </button>
 
                     <button
@@ -387,9 +396,9 @@ const brandlist = () => {
                       onClick={() => openModal(items?._id)}
                       className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                     >
-                      <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
+                      <TrashIcon className="cursor-pointer 2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 md:h-6 md:w-6 h-5 w-5 text-red-800" />
                     </button>
-                  </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -397,10 +406,10 @@ const brandlist = () => {
         })}
       </table>
       <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       <Transition appear show={isOpenDelete} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
