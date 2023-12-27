@@ -16,6 +16,8 @@ import { ToastContainer } from "react-toastify";
 import Editbrand from "../Brand/edit-brand";
 import DeleteModuleB from "../Brand/deleteMudule";
 import CreateBrand from "../Brand/create-brand";
+import Pagination from "../../UserModule/Pagination";
+
 
 const headItems = ["NAME", "PUBLISHED", "ACTION"];
 const brandlist = () => {
@@ -30,6 +32,10 @@ const brandlist = () => {
   const [isRefresh, setRefresh] = useState(false);
   const [editData, setEditData] = useState([]);
   const [brandEdit, setBrandEdit] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoadingBtn, setLoadingBtn] = useState(false);
+
 
   const openDrawerO = async (_id) => {
     setBrandEdit(_id);
@@ -65,8 +71,6 @@ const brandlist = () => {
   const closeDrawerO = () => {
     setIsDrawerOpenO(false);
   };
-
-  const pageLimit = "15";
   function closeModal() {
     setOpenDelete(false);
   }
@@ -94,21 +98,38 @@ const brandlist = () => {
     defaultBrand();
   }, [isRefresh]);
 
-  const defaultBrand = () => {
+
+ 
+
+    const pageLimit = 10;
+    const defaultBrand = async (page, limit) => {
+    setLoadingBtn(true);
     const options = {
       method: "GET",
       url: "https://e-commerce-backend-brown.vercel.app/api/brand/getallBrand",
+      params: {
+        page: page,
+        limit: limit,
+      },
     };
     axios
       .request(options)
       .then((response) => {
         setGetallBrand(response.data);
+        setTotalPages(response?.data?.totalPages || 1);
+
         console.log("dddd", response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  useEffect(() => {
+    defaultBrand(currentPage, pageLimit);
+  }, [currentPage]);
 
   // -------------search product----------
   const handleSearch = (e) => {
@@ -123,6 +144,7 @@ const brandlist = () => {
         .then(function (response) {
           if (response.status === 200) {
             setGetallBrand(response.data);
+
           }
         })
         .catch(function (error) {
@@ -374,6 +396,11 @@ const brandlist = () => {
           );
         })}
       </table>
+      <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       <Transition appear show={isOpenDelete} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
