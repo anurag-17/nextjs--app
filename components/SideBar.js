@@ -155,7 +155,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   return (
     <div
       ref={ref}
-      className="fixed h-screen overflow-y-auto 2xl:w-[310px] xl:w-[220px] lg:w-[220px] bg-white shadow-sm  "
+      className="fixed h-screen overflow-y-auto 2xl:w-[310px] xl:w-[220px] lg:w-[220px] w-[100px] bg-white shadow-sm  "
     >
       <img
         src="/log.png"

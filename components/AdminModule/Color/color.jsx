@@ -93,18 +93,18 @@ const Color = () => {
   };
 
   return (
-    <div>
+    <div className="px-3 lg:px-0">
       <ToastContainer />
-      <div className="flex justify-between items-center pt-4  px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-        <h2 className="text-2xl font-semibold pb-4">Color List </h2>
+      <div className="flex justify-between items-center 2xl:pt-4 2xl:px-10 mt-2 border border-[#f3f3f3] rounded-lg bg-white 2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[45px] h-[45px]  xl:px-8 lg:px-5 md:px-4 sm:px-4 px-4 2xl:text-2xl xl:text-[18px] lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px]">
+        <h2 className=" font-semibold ">Color List </h2>
 
         <h2>Welcome Back, Admin</h2>
       </div>
-      <div className="  items-center px-10 border border-[#f3f3f3] rounded-lg bg-white w-full h-[100px] mt-5">
-        <div className="flex justify-end mt-7 ">
+      <div className=" flex justify-end  items-center 2xl:px-10 xl:px-8 lg:px-5 md:px-4 sm:px-3 px-2 border border-[#f3f3f3] rounded-lg bg-white w-full 2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[45px] lg:mt-5 sm:mt-3 mt-2 h-[45px]">
+        <div className=" ">
           <button
             onClick={openDrawer}
-            className="rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer"
+            className=" rounded-md my-auto bg-lightBlue-600 text-white cursor-pointer 2xl:p-3  2xl:text-[18px] xl:p-2 xl:text-[14px] lg:p-[6px] lg:text-[12px] md:text-[10px] md:p-1 sm:text-[10px] sm:p-1 p-[3px] text-[10px]"
           >
             + Add Color
           </button>
@@ -114,17 +114,17 @@ const Color = () => {
       {isDrawerOpen && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white w-4/12   border rounded-lg"
+          className="fixed content-center mb-5 right-5 z-40 h-[50%] lg:h-[45%] lg:w-4/12 w-6/12 p-4 overflow-y-auto  transition-transform -translate-x-0 bg-white border rounded-lg"
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >
           <button
             type="button"
             onClick={closeDrawer}
-            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+            className="text-gray-400  shadow-2xl text-sm lg:w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
-              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              className="2xl:w-9 2xl:h-9 xl:w-9 xl:h-9 lg:w-9 lg:h-9 md:w-7 md:h-7 sm:w-6  sm:h-6 w-5 h-5 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -142,17 +142,17 @@ const Color = () => {
       {isDrawerOpenO && (
         <div
           id="drawer-form"
-          className="fixed content-center mb-5 right-5 z-40 h-[45%] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+          className="fixed content-center mb-5 right-5 z-40 h-[50%] lg:h-[45%] lg:w-4/12 w-6/12 p-4 overflow-y-auto transition-transform -translate-x-0 bg-white "
           tabIndex={-1}
           aria-labelledby="drawer-form-label"
         >
           <button
             type="button"
             onClick={closeDrawerO}
-            className="text-gray-400  shadow-2xl text-sm w-14  top-2  inline-flex items-center justify-center "
+            className="text-gray-400  shadow-2xl text-sm lg:w-14  top-2  inline-flex items-center justify-center "
           >
             <svg
-              className="w-9 h-9 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
+              className="2xl:w-9 2xl:h-9 xl:w-9 xl:h-9 lg:w-9 lg:h-9 md:w-7 md:h-7 sm:w-6  sm:h-6 w-5 h-5 bg-white border  rounded-lg p-1 hover:bg-orange-100 hover:text-black"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -173,66 +173,65 @@ const Color = () => {
           </div>
         </div>
       )}
-      <table className="table-auto bg-white rounded-md mt-5  relative w-6/12">
+      <table className="table-auto bg-white rounded-md mt-5  relative w-full lg:w-8/12 xl:w-8/12">
         <thead className="">
-          <tr className="bg-coolGray-200 text-gray-400 text-sm text-start flex justify-between gap-28 ">
-            <input
-              type="checkbox"
-              className="mx-3  cursor-pointer "
-              // onChange={handleSelectAllClick}
-              inputProps={{
-                "aria-label": "select all desserts",
-              }}
-            />
-            {headItems.map((items, inx) => (
-              <th
-                className="text-start py-5 text-[16px] font-medium w-4/12 "
-                key={inx}
-              >
-                {items}
-              </th>
-            ))}
+          <tr className="bg-coolGray-200 text-gray-400 text-start flex w-full 
+          2xl:text-[20px] 
+          xl:text-[14px]
+           lg:text-[12px] 
+           md:text-[12px] 
+           sm:text-[12px] 
+           text-[10px]">
+            <th className="mx-4 my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 text-start w-2/12">
+              S.NO
+            </th>
+
+            <th className="text-start my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 w-4/12 ">
+              NAME
+            </th>
+
+            <th className="text-start my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 w-3/12 ">
+              COLOR
+            </th>
+            <th className="text-start my-auto py-2 sm:py-2 md:py-2 lg:py-3 xl:py-4 2xl:py-5 w-3/12 ">
+              ACTION
+            </th>
           </tr>
         </thead>
-        {getallColor.map((item) => (
+        {getallColor.map((item, index) => (
           <tbody>
-            <label>
-              <tr className="text-start flex justify-between gap-28">
-                <td className="my-auto">
-                  <input type="checkbox" className="mx-3  cursor-pointer " />
-                </td>
-                <td className="text-[18px] w-3/12 my-auto">{item.color}</td>
-                <td className="text-[18px] w-3/12 my-auto ml-3 ">
-                  <div
-                    className="border w-2/12 p-4 rounded-full"
-                    style={{
-                      marginTop: "20px",
-                      width: "30px",
-                      height: "30px",
-                      backgroundColor: item.color || "",
-                    }}
-                  ></div>
-                </td>
-                <td className=" text-[18px] w-3/12 ">
-                  <div className="flex my-3">
-                    <div>
-                      <button onClick={() => openDrawerO(item?._id)}>
-                        <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
-                      </button>
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => openModal(item?._id)}
-                        className="rounded-md bg-gray-300 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                      >
-                        <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
-                      </button>
-                    </div>
+            <tr className="text-start flex w-full 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[14px] sm:text-[13px] text-[10px]">
+              <td className="mx-5 my-auto w-2/12">{index + 1 + "."}</td>
+
+              <td className=" my-auto w-4/12">{item.color}</td>
+              <td className="flex my-auto w-3/12">
+                <div
+                  className=" border 2xl:p-5 xl:p-4 lg:p-3 md:p-3 sm:p-3 p-3 rounded-full   2xl:w-30px xl:w-25px lg:w-20px md:w-30px  sm:w-30px w-18px  2xl:h-30px xl:h-25px lg:h-20px md:h-20px sm:h-20px h-20px"
+                  style={{
+                    marginTop: "0px",
+                    backgroundColor: item.color || "",
+                  }}
+                ></div>
+              </td>
+              <td className="w-3/12 ">
+                <div className="flex my-3">
+                  <div>
+                    <button onClick={() => openDrawerO(item?._id)}>
+                      <PencilSquareIcon className="cursor-pointer 2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 md:h-6 md:w-6 h-5 w-5  text-lightBlue-600 m-2 " />
+                    </button>
                   </div>
-                </td>
-              </tr>
-            </label>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => openModal(item?._id)}
+                      className="rounded-md  bg-opacity-20 px-2 py-2 md:px-2 md:py-2 lg:px-4 lg:py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    >
+                      <TrashIcon className="cursor-pointer 2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 md:h-6 md:w-6 h-5 w-5 text-red-800" />
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         ))}
       </table>

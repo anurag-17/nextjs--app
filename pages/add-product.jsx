@@ -727,6 +727,7 @@ const AddProduct = () => {
                   }))}
                   onChange={handleMultiSelect}
                   placeholder="Select color"
+                  required
                 />
               </div>
             </div>
