@@ -11,6 +11,8 @@ const Cart = () => {
   const [getCartProduct, setGetCartProduct] = useState([]);
   const [isRefresh, setRefresh] = useState(false);
   const { token } = useSelector((state) => state?.auth?.userDetails || null);
+  console.log(token);
+  
 
   const refreshData = () => {
     setRefresh(!isRefresh);
@@ -20,12 +22,13 @@ const Cart = () => {
     try {
       const response = await fetchApi("/auth/getUserCart", { 
         headers : {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", 
         authorization: token,
       }},);
       if (response?.status === 200) {
         const data = await response.json();
-        setGetCartProduct(data?.cart);
+        setGetCartProduct(data?.cart?.products);
+      console.log(data?.cart?.products);
       } else if (response.status === 202) {
         setGetCartProduct([])
         toast.warning("Your cart is empty!");
@@ -35,7 +38,7 @@ const Cart = () => {
       console.error(error);
     }
   };
-
+ 
   const [sessionCartProduct, setsessionCartProduct] = useState([]);
 
   const updateCart = () => {
@@ -46,8 +49,10 @@ const Cart = () => {
     if (!token || token == undefined) {
       updateCart();
       // sessionCartProduct;
-    } else {
+    } 
+    else {
       defaultCustomer();
+      
     }
   }, [isRefresh]);
 
