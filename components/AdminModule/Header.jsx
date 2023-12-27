@@ -8,7 +8,7 @@ const Header = ({ headTitle, subTitle }) => {
   };
 
   return (
-    <div className="flex justify-between items-center border border-[#f3f3f3] rounded-lg bg-white 2xl:px-10 2xl:py-6 xl:px-7 xl:py-4 lg:px-4 lg:py-2">
+    <div className="flex justify-between items-center border border-[#f3f3f3] rounded-lg bg-white 2xl:px-10 2xl:py-6 xl:px-8 xl:py-4 lg:px-4 lg:py-2">
       <div className="">
         <h2 className="2xl:text-[30px] xl:text-[18px] lg:text-[14px]  font-semibold 2xl:mb-1">
           {" "}
@@ -20,7 +20,7 @@ const Header = ({ headTitle, subTitle }) => {
       </div>
       <div className="">
         <p
-          className="cursor-pointer flex  items-center 2xl:gap-3 2xl:mb-2 2xl:text-[20px] xl:text-[13px] xl:gap-2 xl:mb-1 lg:text-[12px] lg:gap-1 lg:mb-[1px]"
+          className="cursor-pointer flex  items-center 2xl:mt-5 2xl:gap-3 2xl:mb-0 2xl:text-[20px] xl:text-[13px] xl:gap-2 xl:mb-1 lg:text-[12px] lg:gap-1 lg:mb-[1px]"
           onClick={handleGoBack}
         >
           <svg

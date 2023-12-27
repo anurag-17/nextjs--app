@@ -124,7 +124,7 @@ export default function Layout({ children }) {
               ||
               router.pathname.includes("password") 
             )
-              ? "pl-4 2xl:pl-16 pr-4"
+              ? "lg:pl-2 lg:pr-2 xl:pl-6 xl:pr-6 2xl:pl-24 "
               : ""
           }
         >

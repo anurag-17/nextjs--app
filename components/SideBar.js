@@ -5,13 +5,15 @@ import { useRouter } from "next/router";
 import New from "../components/New";
 import Customers from "../pages/customers";
 import { setAdminToken } from "../redux/slices/adminAuthSlice";
+import Image from "next/image";
+// import down from "../public/down-arrow.svg"
+
 
 const menuList = [
   {
     id: 1,
     label: "Dashboard",
     component: "",
-    icon: `fa fa-home`,
     path: "/admin-dashboard",
   },
   {
@@ -20,6 +22,7 @@ const menuList = [
     component: "",
     submenu: true,
     path: "/admin-product",
+    image: "public/flag-1.png",
     subData: [
       {
         id: "01",
@@ -50,13 +53,11 @@ const menuList = [
         id: "07",
         label: "main Category",
         path: "/categories",
-        icon: `fa fa-usd`,
       },
       {
         id: "08",
         label: "sub Category",
         path: "/sub-categories",
-        icon: `fa fa-usd`,
       },
       {
         id: "09",
@@ -65,21 +66,20 @@ const menuList = [
         path: "/color",
       },
     ],
-    icon: `fa fa-usd`,
   },
 
   {
     id: 4,
     label: "orders",
     component: "",
-    icon: `fa fa-users`,
+
     path: "/admin-orders",
   },
   {
     id: "",
     label: "Vendor",
     component: "",
-    icon: `fa fa-users`,
+
     submenu: true,
     path: "/admin-vendor",
     subData: [
@@ -87,21 +87,14 @@ const menuList = [
         id: "1",
         label: "All Vendors",
         component: "",
-        icon: `fa fa-users`,
+
         path: "/admin-vendor",
       },
-      // {
-      //   id: "2",
-      //   label: "Vendor Grid",
-      //   component: "",
-      //   icon: `fa fa-users`,
-      //   path: "/vendor-grid",
-      // },
       {
         id: "3",
         label: "Vendor Profile",
         component: "",
-        icon: `fa fa-users`,
+
         path: "vendor-profile",
       },
     ],
@@ -110,7 +103,7 @@ const menuList = [
     id: 5,
     label: "customers",
     component: <Customers />,
-    icon: `fa fa-phone-square`,
+
     path: "/customers",
   },
 
@@ -118,21 +111,15 @@ const menuList = [
     id: 7,
     label: "Language",
     component: <language />,
-    icon: `fa fa-phone-square`,
+
     path: "/language",
   },
-  // {
-  //   id: 9,
-  //   label: "Currency",
-  //   component: <language />,
-  //   icon: `fa fa-phone-square`,
-  //   path: "/currency",
-  // },
+
   {
     id: 8,
     label: "settings",
     component: "",
-    icon: `fa fa-phone-square`,
+
     path: "/profilesidebar",
   },
 ];
@@ -161,15 +148,14 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   const handleSignout = () => {
     console.log("Logging out...");
     setUserToken(null);
-    // dispatch(setAdminToken(null));
     localStorage.removeItem("adminToken");
-    router.push("/login");
+    router.push("/admin-login");
   };
 
   return (
     <div
       ref={ref}
-      className="fixed h-screen overflow-y-auto 2xl:w-[270px] xl:w-[220px] bg-white shadow-sm  "
+      className="fixed h-screen overflow-y-auto 2xl:w-[310px] xl:w-[220px] lg:w-[220px] bg-white shadow-sm  "
     >
       <img
         src="/log.png"
@@ -179,7 +165,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         className="mx-auto 2xl:py-3 xl:py-2 "
       />
       <div className="flex justify-center items-center whitespace-pre-wrap h-[100px]">
-        <h1 className="2xl:text-2xl xl:text-[20px]  font-bold mx-5 text-lightBlue-600">
+        <h1 className="2xl:text-2xl xl:text-[20px] lg:text-[18px]  font-bold mx-5 text-lightBlue-600">
           Admin Dashboard
         </h1>
       </div>
@@ -193,11 +179,13 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                  ${
                    items?.id === labelId
                      ? "bg-lightBlue-600 text-white"
-                     : "text-black-400  hover:bg-lightBlue-600 hover:rounded-l-full  hover:text-white"
+                     : "text-black-400  hover:bg-lightBlue-600 hover:rounded-l-full hover:text-white"
                  }`}
                 onClick={() => handleClick(items.label, items.id)}
               >
-                <div className="w-full text-[10px] xl:text-[14px] 2xl:text-[22px]">
+                {/* {items.label === "products" && <img src="/public/down-arrow.svg" className="mr-2" />} */}
+
+                <div className="w-full text-[12px] xl:text-[14px] 2xl:text-[22px]">
                   {items.submenu ? (
                     <p
                       className=" capitalize whitespace-nowrap flex gap-5 "
@@ -224,7 +212,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
                   {items.subData.map((subOpt, subInx) => (
                     <Link href={subOpt.path ? subOpt.path : "#"} key={subInx}>
                       <div
-                        className={`ml-12 py-3 pl-5 rounded-l-full max-w-[230px] justify-start text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium
+                        className={`ml-12 xl:py-3 xl:pl-5 lg:py-[2px] lg:pl-3 rounded-l-full max-w-[230px] justify-start text-left cursor-pointer mb-3 flex items-center transition-colors capitalize font-medium text-[12px] xl:text-[14px] 2xl:text-[22px]
                          ${
                            subOpt?.id === labelId
                              ? "bg-lightBlue-600 text-white"
@@ -243,7 +231,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         ))}
 
         <div
-          className={`pl-6 py-3 ml-5 rounded text-center rounded-l-full  cursor-pointer mb-3 flex items-center transition-colors 2xl:mt-[100px] font-semibold 
+          className={`pl-6 py-3 ml-5 rounded text-center rounded-l-full  cursor-pointer mb-3 flex items-center transition-colors 2xl:mt-[100px] xl:mt-[180px]  lg:mt-[70px] font-semibold 
             ${
               router.pathname == "/admin-login"
                 ? "bg-lightBlue-600 text-white"
@@ -255,7 +243,9 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             <CreditCardIcon className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-[10px] xl:text-[14px] 2xl:text-[22px]">Log Out </p>
+            <p className="text-[12px] xl:text-[14px] 2xl:text-[22px]">
+              Log Out{" "}
+            </p>
           </div>
         </div>
       </div>

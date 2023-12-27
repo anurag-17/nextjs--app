@@ -198,8 +198,8 @@ const getAllProducts = async (page, limit) => {
       setProductCategory([...uniqueCategories]);
 
       const brands = response?.data?.products.map((product) => product.brand);
-      const uniqueBrands = [...new Set(brands)];
-      setProductBrands([...uniqueBrands]);
+        const uniqueBrands = [...new Set(brands)];
+        setProductBrands([...uniqueBrands]);
 
       const fields = response?.data?.products.map((product) => product.title);
       const uniqueFields = [...new Set(fields)];
@@ -252,7 +252,7 @@ useEffect(() => {
         if (response.status === 200) {
           console.log("sasa",response.data.products);
           setAllProduct(response?.data?.products);
-          setTotalPages(response?.data?.totalPages);
+
           refreshData();
         }
       })
