@@ -681,7 +681,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                           <div className="flex mt-2">
                                             <h1 className=" mr-1 text-[18px]">
                                               Status :{" "}
-                                            </h1>
+                                            </h1>   
                                             <p className=" bg-green-200 p-1 px-2 text-center font-semibold rounded-md text-green-600 ">
                                               Available
                                             </p>
@@ -836,7 +836,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
             <div className="2xl:py-5">
               <div className="flex flex-col justify-center items-center">
                 <p className="2xl:text-[30px] md:text-[25px] font-semibold 2xl:mt-5">
-                  Your cart is empty
+                  Your cart is empty 
                 </p>
                 <div className="mt-2">
                   <Image
@@ -852,7 +852,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                       Continue Shopping
                     </button>
                   </div>
-                </Link>
+                </Link> 
               </div>
             </div>
           )}

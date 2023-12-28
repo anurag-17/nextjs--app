@@ -185,11 +185,11 @@ const UserNavbar = () => {
                 :
                 <div className="text-center flex">
                   <button 
-                    className="w-36 focus-visible:outline-none"
+                    className="w-16 xl:w-20  2xl:w-16 focus-visible:outline-none"
                     type="button"
                     onClick={openDrawer} // Open the drawer when this button is clicked
                   >
-                    <div className="2xl:w-[30%] w-[25%]">
+                    <div className="2xl:w-[80%] w-[52%]">
                       <div className="bg-black 2xl:p-[3px] p-[2px] my-1  2xl:my-2"></div>
                       <div className="bg-black 2xl:p-[3px] p-[2px] my-1  2xl:my-2"></div>
                       <div className="bg-black 2xl:p-[3px] p-[2px] my-1  2xl:my-2"></div>
@@ -225,7 +225,7 @@ const UserNavbar = () => {
                         viewBox="0 0 24 24"
                         strokeWidth={1}
                         stroke="currentColor"
-                        className="w-[35px] h-[35px] font-bold "
+                        className="sm:w-[35px] w-[30px]  h-[30px] sm:h-[35px] font-bold "
                       >
                         <path
                           strokeLinecap="round"
@@ -236,12 +236,12 @@ const UserNavbar = () => {
                     </div>
                   {/* </Link> */}
                   <Link href="/user-cart">
-                    <div className="py-6 ">
+                    <div className="py-6 w-max">
                       <Image src={shoping} className="relative" width={35} height={35} alt="cart" />
                     </div>
                     {
                       cart?.length > 0 &&
-                    <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white w-[30px] h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cart?.length}  </div>
+                    <div className=" absolute top-[6px] right-[36px] bg-[#d91919]  text-white sm:w-[30px] w-[25px] h-[25px] sm:h-[30px] rounded-[50%] font-bold flex flex-col justify-center items-center">{cart?.length}  </div>
                     }
                   </Link>
                 </>
@@ -254,7 +254,7 @@ const UserNavbar = () => {
           {isDrawerOpen && (
             <div
               id="drawer-form"
-              className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto  border transition-transform -translate-x-0  w-2/12 bg-lightBlue-50"
+              className="fixed top-0 left-0 z-40 h-screen p-2  md:p-4 overflow-y-auto  border transition-transform -translate-x-0 w-[120px] sm:w-[20%] lg:w-2/12 bg-lightBlue-50"
               tabIndex={-1}
               aria-labelledby="drawer-form-label"
             >
@@ -264,7 +264,7 @@ const UserNavbar = () => {
                 onClick={closeDrawer}
                 className="text-gray-400  shadow-2xl text-sm  h-12  top-3 float-right inline-flex items-center justify-center   "
               >
-                <ArrowLeftIcon className="w-12 h-12 bg-white border rounded-xl p-1 hover:bg-orange-100 " />
+                <ArrowLeftIcon className="lg:w-12 sm:w-9 w-6  lg:h-12 sm:h-9 h-6 bg-white border rounded-xl p-1 hover:bg-orange-100 " />
 
                 <span className="sr-only bg-black">Close menu</span>
               </button>
@@ -278,7 +278,7 @@ const UserNavbar = () => {
                       {item.id === 7 ? (
                         !token || token === undefined ? null : (
                           <li
-                            className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] text-[15px] font-semibold   hover:text-white hover:bg-lightBlue-600
+                            className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] md:text-[10px] text-[10px] font-semibold   hover:text-white hover:bg-lightBlue-600
                             ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                             onClick={() => handleSignOut(item.path)}
                           >
@@ -291,7 +291,7 @@ const UserNavbar = () => {
                             (!token || token === undefined ? null : (
                               <Link href={item.path ? item.path : "#"}>
                                 <li
-                                  className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] text-[15px] font-semibold  hover:text-white hover:bg-lightBlue-600
+                                  className={`list-none cursor-pointer border 2xl:px-10 px-1  sm:px-4 2xl:py-4 py-2 my-2 lg:my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] md:text-[12px] text-[10px] font-semibold  hover:text-white hover:bg-lightBlue-600
                                  ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                                 >
                                   {item.label}
@@ -301,7 +301,7 @@ const UserNavbar = () => {
                           {!item.show && (
                             <Link href={item.path ? item.path : "#"}>
                               <li
-                                className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] text-[15px] font-semibold  hover:text-white hover:bg-lightBlue-500
+                                className={`list-none cursor-pointer border 2xl:px-10 px-4 2xl:py-4 py-2 my-4 rounded-md hover:border-lightBlue-600  2xl:text-[18px] md:text-[15px] text-[10px] font-semibold  hover:text-white hover:bg-lightBlue-500
                                ${item.path === router.pathname ? "bg-lightBlue-500 text-white" : "bg-lightBlue-100 text-[#3c3939]"}`}
                               >
                                 {item.label}
