@@ -17,6 +17,8 @@ import Payment from "../payment-integration";
 
 
 const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
+  console.log('Cart Products:', getCartProduct);
+
 
   const dispatch = useDispatch();
   const { token,address,email,number } = useSelector((state) => state.auth.userDetails || {});
@@ -33,7 +35,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
   const [paymentOption, setPaymentOption] = useState("COD");
   const [activeIndex, setActiveIndex] = useState(1);
   const [limitExceed, setLimitExceed] = useState([]);
-
+  console.log(getCartProduct);
   useEffect(() => {
     if (getCartProduct?.cartTotal < 500) setShippingCharge(75);
   }, []);
@@ -240,7 +242,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
       {/* <TextLoader text="ctrlF5..."/>; */}
      
       <UserNavbar />
-
+ 
       {!token || token == undefined ? (
         <div className=" px-20">
           <div className="border rounded-lg bg-white p-5">
@@ -419,6 +421,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
         <>
           {getCartProduct?.products?.length > 0 ? (
             <>
+          
               <div className="lg:container lg:mx-auto mx-4 ">
                 <div className="grid grid-cols-1 md:grid-cols-4 justify-center gap-x-10 mt-[20px]">
                   <div className="md:col-span-3 ">
@@ -427,11 +430,11 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                     {activeIndex === 1 && (
                       <div className="mb-4">
                         <div
-                          className="flex flex-col sm:flex-row justify-between items-center bg-white cursor-pointer rounded p-5"
+                          className="flex flex-col sm:flex-row justify-between items-center bg-white cursor-pointer rounded p-4 2xl:p-5"
                           onClick={() => handleClick(1)}
                         >
                           <div>
-                            <h1 className="text-[24px] sm:text-[28px] font-semibold">
+                            <h1 className="2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[20px] sm:text-[28px] font-semibold">
                               Your cart ( {getCartProduct?.products?.length}{" "}
                               items )
                             </h1>
@@ -439,7 +442,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           <div className="flex justify-between items-center py-2">
                             <button
                               onClick={removeWishlist}
-                              className=" border p-1 rounded-lg hover:bg-[#F3F4F9] mr-4 cursor-pointer h-[48px] px-6"
+                              className=" border p-1 rounded-lg hover:bg-[#F3F4F9] mr-4 cursor-pointer h-[35px] 2xl:h-[40px] px-3 2xl:px-6"
                             >
                               <p className="text-[16px] mx-1 flex font-semibold">
                                 Clear Cart
@@ -454,7 +457,7 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           <>
                             <div className="flex flex-col gap-3 mt-[20px]">
                               {getCartProduct?.products?.length > 0 &&
-                                getCartProduct?.products?.map((item, index) => {
+                                getCartProduct?.products.map((item, index) => {
                                   return (
                                     <div
                                       key={index}
@@ -488,17 +491,17 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                           <Link
                                             href={`/product-details/${item?.product?._id}`}
                                           >
-                                            <p className="flex capitalize cursor-pointer font-semibold text-[20px] sm:text-[22px] md:text-[24px] ">
+                                            <p className="flex capitalize cursor-pointer font-semibold text-[20px] sm:text-[22px] md:text-[22px] lg:text-[20px] xl:text-[22px] ">
                                               {item?.product?.title}
                                             </p>
                                           </Link>
 
-                                          <p className=" text-[16px] sm:text-[16px] xl:text-[18px] mt-3 sm:mt-0 ">
+                                          <p className=" text-[16px] sm:text-[16px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px] mt-3 sm:mt-0 ">
                                             Brand : {item?.product?.brand}
                                           </p>
 
                                           <div className="flex mt-2">
-                                            <h1 className=" mr-1 text-[16px] sm:text-[16px] xl:text-[18px]">
+                                            <h1 className=" mr-1 text-[16px] sm:text-[16px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px]">
                                               Status :
                                             </h1>
                                             <p className=" bg-green-200 p-1 px-1 sm:px-2 text-center font-semibold rounded-md text-green-600 ">
@@ -506,39 +509,39 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                             </p>
                                           </div>
 
-                                          <div className="text-[16px] sm:text-[16px] xl:text-[18px]  capitalize mt-2  flex gap-x-5 ">
+                                          <div className="text-[16px] sm:text-[16px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px]  capitalize mt-2  flex gap-x-5 ">
                                             Colors : {item?.color}
                                             <p className="font-medium"> </p>
                                           </div>
                                         </div>
 
                                         <div className="flex text-left mt-4 gap-0 sm:gap-2">
-                                          <div className="flex text-[16px] sm:text-[20px] font-normal leadinng-[28px]">
+                                          <div className="flex text-[16px] sm:text-[20px] lg:text-[17px] xl:text-[18px] font-normal leadinng-[28px]">
                                             Qty :
                                           </div>
                                           <div className="text-[18px] xl:text-[20px] font-semibold leadinng-[28px] capitalize flex">
                                             <p className="font-semibold px-2 ml-0 sm:ml-3">{item?.count} </p>
                                             <button
                                               onClick={() => handleQtyCounter("decrease", item)}
-                                              className="border border-black px-3 ml-1 sm:ml-3"
+                                              className="border border-black  px-2 xl:px-3 ml-1 sm:ml-3"
                                             >
                                               -
                                             </button>
                                             <button
                                               onClick={() => handleQtyCounter("increase", item)}
-                                              className="border border-black px-3 ml-1 sm:ml-3"
+                                              className="border border-black px-2 xl:px-3 ml-1 sm:ml-3"
                                             >
                                               +
-                                            </button>
+                                            </button> 
                                           </div>
                                         </div>
 
                                         <div className="">
-                                          <p className="text-md font-semibold capitalize mt-3 sm:mt-2">
+                                          <p className="text-[16px] font-semibold capitalize mt-3 sm:mt-2">
                                             Price : ₹ {item?.price}
                                           </p>
 
-                                          <p className="text-md font-semibold capitalize mt-3 sm:mt-2 text-lightBlue-600">
+                                          <p className="text-[16px] font-semibold capitalize mt-3 sm:mt-2 text-lightBlue-600">
                                             Total Price : ₹
                                             {item?.price * item?.count}
                                           </p>
@@ -646,8 +649,8 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                       key={inx}
                                       className="flex bg-white  border-[2px] border-gray  hover:rounded-[10px] gap-3  hover:border-lightBlue-600 "
                                     >
-                                      {item?.product?.images?.length > 0 &&
-                                        item?.product?.images?.map(
+                                      {item?.products?.images?.length > 0 &&
+                                        item?.products?.images?.map(
                                           (img, inx) => (
                                             <Fragment key={inx}>
                                               {item?.color == img?.color && (
@@ -697,11 +700,11 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                                               {item?.count}
                                             </p>
                                           </div>
-                                          <p className="text-md font-semibold capitalize mt-2">
+                                          <p className="text-[16px] font-semibold capitalize mt-2">
                                             Price : ₹ {item?.price}
                                           </p>
 
-                                          <p className="text-md font-semibold capitalize mt-2 text-lightBlue-600">
+                                          <p className="text-[16px] font-semibold capitalize mt-2 text-lightBlue-600">
                                             Total Price : ₹{" "}
                                             {item?.price * item?.count}
                                           </p>
@@ -799,14 +802,14 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                   {/*--------------------- right section ---------------------*/}
 
                   <div className="md:col-span-1  ">
-                    <div className="pt-2 rounded-lg bg-white px-5 pb-[40px] ">
+                   <div className="pt-2 rounded-lg bg-white px-5 pb-[40px] ">
                       <p className="py-4 text-[20px] font-semibold border-b mb-8 ">
                         PRICE DETAILS
                       </p>
                       <div className="text-[16px] font-normal flex flex-col gap-5 ">
                         <div className="flex md:flex-col lg:flex-row justify-between">
                           <p className="">Subtotal : </p>
-                          <p className="text-right sm:w-[150px] md:w-[120px] lg:w-[150px]  bg-lightBlue-50 sm:px-2  py-1 rounded">
+                          <p className="text-right sm:w-[150px] md:w-[120px] lg:w-[100px]  bg-lightBlue-50 sm:px-2  py-1 rounded">
                             ₹ {getCartProduct?.cartTotal}
                           </p>
                         </div>
@@ -817,9 +820,9 @@ const Usercart = ({ getCartProduct, sessionCartProduct, refreshData }) => {
                           </p>
                         </div>
                         <div className="h-[1px] bg-[#f3f3f3] my-4"></div>
-                        <div className="flex md:flex-col lg:flex-row  justify-between text-[18px]  font-semibold">
+                        <div className="flex md:flex-col lg:flex-row  justify-between text-[16px] 2xl:text-[18px]  font-semibold">
                           <p className=""> Grand Total : </p>
-                          <p className="text-right sm:w-[150px] md:w-[120px] lg:w-[150px] bg-lightBlue-50 sm:px-2  py-1 rounded overflow-x">
+                          <p className="text-right sm:w-[150px] md:w-[120px] lg:w-[100px] bg-lightBlue-50 sm:px-2  py-1 rounded overflow-x">
                             ₹ {getCartProduct?.cartTotal + shippingCharge}
                           </p>
                         </div>
