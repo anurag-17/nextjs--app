@@ -93,14 +93,9 @@ const ProductGrid = () => {
       });
   };
 
-  
-
   useEffect(() => {
     getAllProducts();
   }, []);
-
-  
-
 
   const addToWishlist = async (id) => {
     const prodId = id;
@@ -252,7 +247,7 @@ useEffect(() => {
         if (response.status === 200) {
           console.log("sasa",response.data.products);
           setAllProduct(response?.data?.products);
-
+          setTotalPages(response.data?.totalPages);
           refreshData();
         }
       })
@@ -263,6 +258,7 @@ useEffect(() => {
 
   // ------ filter products by brand ------ //
   const handleSearchBrand = (bnd) => {
+    
     if (bnd === "All") {
       setBrandFilter("")
       refreshData();
@@ -395,8 +391,8 @@ useEffect(() => {
       <UserNavbar />
 
       <section className="bg-gray-00 min-h-screen">
-        <div className="px-[15px] flex gap-x-10  md:flex-row flex-col justify-between">
-          <div className="space-y-9 md:w-[20%]">
+        <div className="px-[15px] flex gap-x-5 lg:gap-x-10  md:flex-row flex-col justify-between">
+          <div className="space-y-9 md:w-[25%] lg:w-[20%]">
             {/*----- filter by category start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm md:mr-4">
       <p className="font-semibold 2xl:text-2xl lg:text-[16px] md:text-[16px] text-[21px] mb-4">
@@ -412,7 +408,7 @@ useEffect(() => {
           width={16}
         />
         <button
-          className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] text-[14px] ${
+          className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] text-[13px] ${
             selectedCategory === 'All' && 'font-bold text-[#0284C7]'
           }`}
           onClick={() => handleSearchCategories({ target: { value: 'All' } })}
@@ -475,7 +471,7 @@ useEffect(() => {
                       width={16}
                     />
                     <p
-                      className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] lg:text-[13px] text-[14px]"
+                      className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] lg:text-[13px] text-[13px]"
                       onClick={() => handleSearchBrand(bnd)}
                       value={bnd}
                     >
@@ -505,7 +501,7 @@ useEffect(() => {
               </div>
             </div>
 
-            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px] ">
+            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:px-24 md:px-0 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px]">
               {allProduct?.length > 0 &&
                 allProduct?.map((items, ix) => (
                   <div

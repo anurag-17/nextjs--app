@@ -68,12 +68,12 @@ const userOrder = () => {
               allOrders?.products?.length > 0 &&
               <>
                 <div className="p-5 bg-white border rounded-md w-full">
-                  <h1 className="text-[30px] font-medium my-5 w-full mx-4">Order History</h1>
+                  <h1 className="text-[22px] xl:text-[25px] 2xl:text-[30px] font-medium my-5 w-full mx-4">Order History</h1>
                   {allOrders?.products?.map((item, inx) => {
                     return (
                       <div
                         key={inx}
-                        className="flex gap-x-20 justify-center bg-white  border-[2px] border-gray  hover:rounded-[10px] m-4 my-7 hover:border-lightBlue-600 "
+                        className="flex gap-x-10   lg:gap-x-20 justify-between xl:justify-center bg-white  border-[2px] border-gray  hover:rounded-[10px] m-0 lg:m-4 my-7 hover:border-lightBlue-600 "
                       >
                         {item?.product?.images?.length > 0 &&
                           item?.product?.images?.map((img, inx) => (
@@ -87,7 +87,7 @@ const userOrder = () => {
                                       key={inx}
                                       src={img?.url[0]}
                                       alt=""
-                                      className="rounded-[20px] "
+                                      className="rounded-[20px] w-20 xl:w-20 2xl:w-28 "
                                       width={150}
                                       height={300}
                                     />
@@ -97,43 +97,44 @@ const userOrder = () => {
                             </>
                           ))}
 
-                        <div className="grid grid-cols-3 items-center justify-center w-[70%] ">
+                        <div className="grid grid-cols-3 items-center justify-center w-[85%] xl:w-[70%] ">
                           <div className="">
                             <Link href={`/product-details/${item?.product?._id}`}>
-                              <p className="flex capitalize cursor-pointer font-semibold text-[24px] ">
+                              <p className="flex capitalize cursor-pointer font-semibold text-[16px]  lg:text-[20px] xl:text-[22px] 2xl:text-[24px] ">
                                 {item?.product?.title}
                               </p>
                             </Link>
 
-                            <p className="text-md font-normal  capitalize mt-2  flex gap-x-5 ">
+                            <p className="text-[14px] xl:text-[14px] 2xl:text-[16px] font-normal  capitalize mt-2  flex gap-x-5 ">
                               Colors : {item?.color}
                               <p className="font-medium"> </p>
                             </p>
                           </div>
 
                           <div className="">
-                            <p className="text-md font-normal  flex capitalize  mt-2">
+                            <p className="text-[14px] xl:text-[14px] 2xl:text-[16px] font-normal  flex capitalize  mt-2">
                               Qty:
                               <p className="px-2">{item?.count}</p>
                             </p>
-                            <p className="text-md capitalize mt-2">
+                            <p className="text-[14px] xl:text-[14px] 2xl:text-[16px] capitalize mt-2">
                               Price : ₹ {item?.product?.price}
                             </p>
                           </div>
 
                           <div className="flex flex-col gap-3">
-                            <p className="text-md font-normal">Delivered by:</p>
-                            <p className="text-md">
+                            <p className="text-[14px] xl:text-[14px] 2xl:text-[16px] font-normal">Delivered by:</p>
+                            <p className="text-[14px] xl:text-[14px] 2xl:text-[16px]">
                               Payment Method : {allOrders?.paymentIntent?.status}
                             </p>
 
                             <div
-                              className="text-md flex font-semibold gap-x-3 text-[#2874f0] cursor-pointer"
+                              className="text-[14px] xl:text-[14px] 2xl:text-[16px] flex font-semibold gap-x-3 text-[#2874f0] cursor-pointer"
                               onClick={() => handleOpen(item)}
                             >
                               <Image
                                 src="/svg/star.svg"
                                 alt="star"
+
                                 height={20}
                                 width={20}
                               />
