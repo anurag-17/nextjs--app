@@ -394,12 +394,12 @@ useEffect(() => {
       />
       <UserNavbar />
 
-      <section className="bg-gray-00 min-h-screen  ">
+      <section className="bg-gray-00 min-h-screen">
         <div className="px-[15px] flex gap-x-10  md:flex-row flex-col justify-between">
           <div className="space-y-9 md:w-[20%]">
             {/*----- filter by category start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm md:mr-4">
-      <p className="font-semibold 2xl:text-2xl lg:text-xl md:text-[16px] text-[21px] mb-4">
+      <p className="font-semibold 2xl:text-2xl lg:text-[16px] md:text-[16px] text-[21px] mb-4">
         Product Categories
       </p>
       <hr className="mb-2" />
@@ -412,7 +412,7 @@ useEffect(() => {
           width={16}
         />
         <button
-          className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px] ${
+          className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] text-[14px] ${
             selectedCategory === 'All' && 'font-bold text-[#0284C7]'
           }`}
           onClick={() => handleSearchCategories({ target: { value: 'All' } })}
@@ -431,7 +431,7 @@ useEffect(() => {
               width={16}
             />
             <button
-              className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px] ${
+              className={`text-[#645D64] flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[13px] ${
                 selectedCategory === cate && 'font-bold text-[#0284C7]'
               }`}
               onClick={() => handleSearchCategories({ target: { value: cate } })}
@@ -445,7 +445,7 @@ useEffect(() => {
 
             {/*----- filter by Brand start ------- */}
             <div className="bg-white p-5 py-9 rounded-sm  md:mr-4 ">
-              <p className="font-semibold text-2xl mb-4 2xl:text-2xl lg:text-xl md:text-[16px] text-[21px]">
+              <p className="font-semibold text-2xl mb-4 2xl:text-2xl xl:text-[16px] lg:text-[16px] md:text-[16px] text-[21px]">
                 Product Brands
               </p>
               <hr className="mb-2" />
@@ -458,7 +458,7 @@ useEffect(() => {
                   width={16}
                 />
                 <p
-                  className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
+                  className="text-[#645D64]  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] lg:text-[13px] text-[14px]"
                   onClick={getAllProducts}
                 >
                   All
@@ -475,7 +475,7 @@ useEffect(() => {
                       width={16}
                     />
                     <p
-                      className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] text-[14px]"
+                      className="text-[#645D64] uppercase  flex hover:text-[#0284C7] text-start cursor-pointer no-underline hover:underline 2xl:text-[18px] xl:text-[13px] lg:text-[13px] text-[14px]"
                       onClick={() => handleSearchBrand(bnd)}
                       value={bnd}
                     >
@@ -487,8 +487,8 @@ useEffect(() => {
           </div>
 
           <div className=" w-full md:w-[80%] mx-auto mt-7 md:mt-0">
-            <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4 xl:py-3 2xl:py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
-              <h2 className="2xl:text-[30px] xl:text-[22px] lg:text-[28px] md:text-[16px] text-[21px] font-semibold">
+            <div className="flex md:flex-row flex-col gap-y-5 md:justify-between justify-center items-center py-4 lg:py-2 xl:py-3 2xl:py-4  px-10 rounded-lg bg-lightBlue-50 border border-gray-300 2xl:h-[100px] h-auto">
+              <h2 className="2xl:text-[30px] xl:text-[22px] lg:text-[25px] md:text-[16px] text-[21px] font-semibold">
                 All Product
               </h2>
 
@@ -505,7 +505,7 @@ useEffect(() => {
               </div>
             </div>
 
-            <div className="grid 2xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px] ">
+            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 2xl:gap-5 md:gap-5 my-5 md:space-y-0 space-y-8 pt-[20px] ">
               {allProduct?.length > 0 &&
                 allProduct?.map((items, ix) => (
                   <div
@@ -539,7 +539,7 @@ useEffect(() => {
                     )}
                     <div className="bg-white px-5  xl:px-3 2xl:px-10 pb-6 rounded-[20px] mt-3">
                       <div className="flex justify-between items-center my-4">
-                        <p className="2xl:text-[25px] xl:text-[16px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
+                        <p className="2xl:text-[25px] xl:text-[14px] text-[18px] font-semibold capitalize mb-0 whitespace-nowrap w-[90%] text-ellipsis overflow-hidden">
                           {items.title}
                         </p>
                         {!token || token === undefined ? (
@@ -599,24 +599,24 @@ useEffect(() => {
                         )}
                       </div>
 
-                      <div className="2xl:text-[18px] xl:text-[14px] text-[15px]  flex justify-between capitalize  ">
+                      <div className="2xl:text-[18px] xl:text-[13px] text-[15px]  flex justify-between capitalize  ">
                         Brand :
                         <p className="font-semibold px-2"> {items.brand} </p>
                       </div>
 
-                      <div className="2xl:text-[18px]  xl:text-[14px] text-[15px] flex justify-between capitalize my-2 ">
+                      <div className="2xl:text-[18px]  xl:text-[13px] text-[15px] flex justify-between capitalize my-2 ">
                         Category :
                         <p className="font-semibold px-2">{items.category}</p>
                       </div>
 
-                      <div className="2xl:text-[18px]  xl:text-[14px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
+                      <div className="2xl:text-[18px]  xl:text-[13px] text-[15px] flex justify-between font-semibold capitalize my-2 text-lightBlue-700">
                         Offer price :
                         <p className="text-lightBlue-800 px-2 font-bold">
                           {items?.offerPriceCurr} {items.discountedPrice}
                         </p>
                       </div>
 
-                      <p className="2xl:text-[18px]  xl:text-[14px] text-[15px] capitalize my-2 flex justify-between">
+                      <p className="2xl:text-[18px]  xl:text-[13px] text-[15px] capitalize my-2 flex justify-between">
                         Regular Price :
                         <del className="text-lightBlue-600">
                           {items?.regPriceCurr} {items.price}
@@ -624,7 +624,7 @@ useEffect(() => {
                       </p>
 
                       <Link href={`/product-details/${items?._id}`}>
-                        <button className=" 2xl:text-[16px] md:text-[14px] w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
+                        <button className=" 2xl:text-[16px] md:text-[13px] w-full border p-3 rounded-lg text-white bg-lightBlue-600 hover:bg-lightBlue-500 my-2 font-semibold mt-4 items-end">
                           View Details
                         </button>
                       </Link>
