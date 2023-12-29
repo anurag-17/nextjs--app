@@ -156,7 +156,9 @@ const ProductList = () => {
   };
 
   // ------ filter products by brand ------ //
-  const handleSearchBrand = (bnd) => {
+  const handleSearchBrand = (e) => {
+    const bnd = e.target.value;
+
     if (bnd === "All") {
       setBrandFilter("");
       refreshData();
@@ -167,13 +169,14 @@ const ProductList = () => {
         url:
           catagoryFilter == ""
             ? `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?brand=${bnd}`
-            : `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?category=${catagoryFilter}&brand=${bnd}`,
+            : `https://e-commerce-backend-brown.vercel.app/api/product/getAllProduct?brand=${bnd}&category=${catagoryFilter}`,
       };
       axios
         .request(options)
         .then(function (response) {
           if (response.status === 200) {
             setAllProduct(response?.data?.products);
+            console.log(response?.data?.products,"jj")
           }
         })
         .catch(function (error) {
@@ -526,7 +529,7 @@ const ProductList = () => {
                           title="Delete "
                           type="button"
                           onClick={() => openModal(items?._id)}
-                          className="rounded-md bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                          className="rounded-md bg-opacity-20  text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                         >
                           <TrashIcon className="cursor-pointer lg:h-5 lg:w-5 2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-red-800   " />
                         </button>

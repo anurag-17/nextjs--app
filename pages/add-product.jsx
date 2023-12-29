@@ -61,7 +61,7 @@ const AddProduct = () => {
       images: [],
       regPriceCurr: "",
       offerPriceCurr: "",
-      sizeChart:  ["s", "m", "l"],
+      sizeChart: ["s", "m", "l"],
     });
   };
 
@@ -231,7 +231,6 @@ const AddProduct = () => {
     }
   };
 
-
   const imageUploader = async () => {
     const formData = new FormData();
 
@@ -276,9 +275,7 @@ const AddProduct = () => {
     }
   };
 
-
   //----- color -------
-
 
   const getAllColors = () => {
     const option = {
@@ -312,7 +309,7 @@ const AddProduct = () => {
   const handleMultiSelect = async (e) => {
     let newColor = e.map((item) => item?.value);
     setProductDetails({ ...productDetails, ["color"]: newColor });
-    // productDetails.color.push(newColor)
+    productDetails.color.push(newColor);
   };
 
   useEffect(() => {
@@ -480,7 +477,7 @@ const AddProduct = () => {
                 <Select
                   id="selectWarna"
                   instanceId="selectWarna"
-                  // isMulti
+                  isMulti
                   isSearchable
                   name="colors"
                   className="basic-multi-select capitalize "
@@ -727,6 +724,7 @@ const AddProduct = () => {
                   }))}
                   onChange={handleMultiSelect}
                   placeholder="Select color"
+                  // value={selectedColor}
                   required
                 />
               </div>

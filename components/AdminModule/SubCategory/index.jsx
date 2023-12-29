@@ -113,31 +113,55 @@ const SubCategoryPage = () => {
     setIsDrawerOpenO(false);
   };
 
+  // -------------search Sub Category----------
+
+  const handleSearch = (e) => {
+    const search = e.target.value;
+    if (e.target.value !== "") {
+      const option = {
+        method: "GET",
+        url: `http://e-commerce-backend-brown.vercel.app/api/subCategory/getallSubCategory?search=${e.target.value}`,
+      };
+      axios
+        .request(option)
+        .then((response) => {
+          setAllCategory(response?.data);
+          console.log(response?.data, "jj");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      defaultCategory();
+    }
+  };
+
   return (
     <>
       {isLoadingBtn && <WebsiteLoader />}
       <ToastContainer />
 
       <section>
-        <div className="flex justify-between items-center pt-4 px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] ">
-          <h2 className="text-2xl font-semibold pb-4"> Sub Category List </h2>
-          <div className="mb-3 w-[40%]">
+      <div className="flex justify-between items-center 2xl:pt-4 2xl:px-10 mt-2 border border-[#f3f3f3] rounded-lg bg-white 2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[45px] h-[45px]  xl:px-8 lg:px-5 md:px-4 sm:px-4 px-4 2xl:text-2xl xl:text-[18px] lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px]">
+          <h2 className="font-semibold "> Sub Category List </h2>
+          <div className="w-[40%]">
             <input
               type="search"
-              className=" border border-gray-500 p-3 rounded-xl focus:border-none w-11/12 "
+              className=" border border-gray-500 p-[2px] lg:p-[4px] 2xl:p-3 rounded-lg  w-11/12 focus:outline-none "
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon1"
+              onChange={handleSearch}
             />
           </div>
           <h2>Welcome Back, Admin</h2>
         </div>
 
-        <div className="flex justify-end items-center px-10 border border-[#f3f3f3] rounded-lg bg-white h-[100px] mt-5">
+        <div className=" flex justify-end  items-center 2xl:px-10 xl:px-8 lg:px-5 md:px-4 sm:px-3 px-2 border border-[#f3f3f3] rounded-lg bg-white w-full 2xl:h-[100px] xl:h-[80px] lg:h-[60px] md:h-[50px] sm:h-[45px] lg:mt-5 sm:mt-3 mt-2 h-[45px]">
           <div className="flex justify-around">
             <button
               onClick={openSubCategory}
-              className=" rounded-md p-2 bg-lightBlue-600 text-white cursor-pointer mr-4"
+              className=" rounded-md my-auto bg-lightBlue-600 text-white cursor-pointer 2xl:p-3  2xl:text-[18px] xl:p-2 xl:text-[14px] lg:p-[6px] lg:text-[12px] md:text-[10px] md:p-1 sm:text-[10px] sm:p-1 p-[3px] text-[10px]" 
             >
               + Add Sub category
             </button>
@@ -147,7 +171,7 @@ const SubCategoryPage = () => {
         {issubCateDrwaer && (
           <div
             id="drawer-form"
-            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white lg:w-4/12 w-6/12 "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >
@@ -179,7 +203,7 @@ const SubCategoryPage = () => {
         {isDrawerOpenO && (
           <div
             id="drawer-form"
-            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white w-4/12  "
+            className="fixed content-center mb-5 right-5 z-40 h-[500px] p-4 overflow-y-auto transition-transform -translate-x-0 bg-white lg:w-4/12  w-6/12  "
             tabIndex={-1}
             aria-labelledby="drawer-form-label"
           >
