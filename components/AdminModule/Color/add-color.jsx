@@ -46,7 +46,7 @@ const AddColor = ({ closeDrawer, refreshData }) => {
         sm:px-1 sm:h-[25px] sm:my-2
         px-1 h-[25px] my-2
          ">
-          <h2 className="2xl:text-2xl xl:text-[16px] lg:text-[14px] md:text-[14px] sm:text-[10px] text-[9px] font-semibold ">Add New Color </h2>
+          <h2 className="2xl:text-2xl xl:text-[16px] lg:text-[14px] md:text-[14px] sm:text-[10px] text-[9px] font-semibold">Add New Color </h2>
           <div className="mb-3 w-[40%]"></div>
         </div>
         <form

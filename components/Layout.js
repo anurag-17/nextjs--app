@@ -13,7 +13,7 @@ export default function Layout({ children }) {
   
 
   function handleResize() {
-    if (innerWidth <= 640) {
+    if (innerWidth <= 1024) {
       setShowNav(false);
       setIsMobile(true);
     } else {

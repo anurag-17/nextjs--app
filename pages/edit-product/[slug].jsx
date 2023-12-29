@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import cutss from "../../public/cross.svg";
 
 export default function EditProduct() {
   const router = useRouter();
@@ -158,6 +157,7 @@ export default function EditProduct() {
       .then((response) => response.json())
       .then((response) => {
         setEditData(response);
+        console.log(response, "jjj");
         // setImageFiles(response.images)
       })
       .catch((err) => console.error(err));
@@ -514,9 +514,7 @@ export default function EditProduct() {
                     <div className="flex flex-wrap gap-5"></div>
 
                     <div className="my-2">
-                      <label
-                        className="custom-input-label font-semibol 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px] my-1 ml-2"
-                      >
+                      <label className="custom-input-label font-semibol 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px] my-1 ml-2">
                         Uploaded Images :
                       </label>
 
@@ -611,7 +609,6 @@ export default function EditProduct() {
                     <span className="inline-flex items-center  pl-1 rounded rounded-r-none border border-r-0 border-gray-300 text-sm focus:bg-white dark:border dark:border-gray-600 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px]">
                       <select
                         className="bg-white list-none outline-none 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
-                        
                         name="regPriceCurr"
                         defaultValue={
                           editData?.regPriceCurr
@@ -853,7 +850,7 @@ export default function EditProduct() {
               </div>
 
               {/*------ color -----*/}
-              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6">
+              <div className="grid grid-cols-6 gap-1 sm:gap-3 md:gap-5 xl:gap-6 lg:gap-6 mt-4 sm:mt-0  sm:mb-2 md:mb-3 lg:mb-4  xl:mb-6"> 
                 <label
                   htmlFor=""
                   className="custom-input-label 2xl:text-[20px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[10px] text-[12px] px-2 md:px-3 lg:px-4 xl:px-5 2xl:px-0"
@@ -866,7 +863,10 @@ export default function EditProduct() {
                     instanceId="selectWarna"
                     isMulti
                     isSearchable
-                    name="colors"
+                    defaultValue={
+                      editData?.color ? editData.color : productDetails.color
+                    }
+                    name="color"
                     className="basic-multi-select capitalize 2xl:text-[20px] xl:text-[14px] lg:text-[12px] md:text-[10px] text-[8px]"
                     classNamePrefix="select"
                     options={getallColor.map((item) => ({
@@ -876,7 +876,11 @@ export default function EditProduct() {
                     onChange={handleMultiSelect}
                     placeholder="Select color"
                     required
-                  />
+                  >
+                    {editData &&
+                      Array.isArray(editData) &&
+                      editData.map((item) => <p key={item.id}>{item.images.color}</p>)}
+                  </Select>
                 </div>
               </div>
 

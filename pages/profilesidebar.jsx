@@ -83,7 +83,7 @@ const profilesideBar = ({ showNav }) => {
               : "Setting/Profile"}
           </h1>
         </h2>
-        <h2>Welcome Back, Client</h2>
+        <h2>Welcome Back, Admin</h2>
       </div>
 
       <div className="flex ">

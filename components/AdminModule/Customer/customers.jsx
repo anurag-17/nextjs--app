@@ -23,6 +23,7 @@ const headItems = [
   "PHONE NO.",
   "COUNTRY",
   "ACTION",
+  "BLOCK/UNBLOCK",
 ];
 
 const Customers = () => {
@@ -30,51 +31,42 @@ const Customers = () => {
   const [customerID, setCustomerID] = useState("");
   const [isRefresh, setRefresh] = useState(false);
   const [getallCustomer, setGetallCustomer] = useState([]);
-  const [searchCustomer, setSearchCustomer] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editData, setEditData] = useState({});
-  const [customerEID,setCustomerEID]=useState("")
-  // const getTokenFromLocalStorage = () => {
-  //   if (typeof window !== "undefined") {
-  //     return localStorage.getItem("accessToken") || null;
-  //   }
-  //   return null;
-  // };
+  const [customerEID, setCustomerEID] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+
   const openDrawer = async (_id) => {
     setCustomerEID(_id);
     try {
-      const token = JSON.parse(localStorage.getItem("accessToken"));  
+      const token = JSON.parse(localStorage.getItem("accessToken"));
       if (token) {
         console.log("Token:", token);
         const option = {
           method: "POST",
           url: "https://e-commerce-backend-brown.vercel.app/api/auth/getUserById",
           headers: {
-           
             "Content-Type": "application/json",
             "User-Agent": "PostmanRuntime/7.35.0",
-            "authorization": token,
+            authorization: token,
           },
           data: {
             _id: _id,
           },
         };
-  
+
         const response = await axios.request(option);
-        if(response.status==200){
+        if (response.status == 200) {
           setEditData(response?.data?.user);
 
           setIsDrawerOpen(true);
-          console.log("aaaa",response?.data?.user);
-  
-        }else{
+          console.log("aaaa", response?.data?.user);
+        } else {
           console.log("error:unexpected response");
         }
       } else {
         console.log("Token not found in local storage");
       }
-      
-     
     } catch (error) {
       console.error(error);
     }
@@ -114,14 +106,17 @@ const Customers = () => {
     axios
       .request(options)
       .then((response) => {
-        setGetallCustomer(response.data);
-        
+        setGetallCustomer(response.data.users);
+        // console.log(response.data.users, "jjjj")
+
         console.log(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+
+  // -------------search costomer----------
 
   const handleSearch = (e) => {
     const search = e.target.value;
@@ -134,7 +129,7 @@ const Customers = () => {
         .request(option)
         .then(function (response) {
           if (response.status === 200) {
-            setGetallCustomer(response?.data);
+            setGetallCustomer(response?.data?.users);
           }
         })
         .catch(function (error) {
@@ -145,31 +140,9 @@ const Customers = () => {
     }
   };
 
-  // const removeCustomer = async (_id) => {
-  //   console.log(_id);
-  //   await fetch(
-  //     `https://e-commerce-backend-brown.vercel.app/api/auth/deleteaUser/${_id}`,
-  //     {
-  //       method: "DELETE",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   )
-  //     .then((res) => {
-  //       if (res.ok) {
-  //         defaultCustomer();
-  //         toast.success("User Delete Successfully !");
-  //         refreshData();
-  //       } else {
-  //         throw new Error("failed to create");
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   return (
     <div>
@@ -180,7 +153,7 @@ const Customers = () => {
         <div className="mb-3 w-[40%]">
           <input
             type="search"
-            className=" border border-gray-500  p-3 rounded-xl focus:border-none w-11/12 "
+            className=" border border-gray-500  p-3 rounded-xl  w-11/12 outline-none "
             placeholder="Search"
             aria-label="Search"
             aria-describedby="button-addon1"
@@ -215,12 +188,11 @@ const Customers = () => {
             </button>
             <div className="overflow-y-auto ">
               <EditCustomer
-              editData={editData}
+                editData={editData}
                 customerEID={customerEID}
                 closeDrawer={closeDrawer}
                 refreshData={refreshData}
                 // token={getTokenFromLocalStorage}
-
               />
             </div>
           </div>
@@ -240,7 +212,9 @@ const Customers = () => {
             ))}
           </tr>
         </thead>
-        {getallCustomer?.length < 1 && getallCustomer?.map((items) => (
+        {/* {getallCustomer?.length < 1 && getallCustomer?.map((items) => ( */}
+
+        {getallCustomer?.map((items) => (
           <tbody>
             {/* <label> */}
             <tr className="">
@@ -263,7 +237,7 @@ const Customers = () => {
               </td>
               <td className="py-5 text-[18px] mx-auto flex  px-10">
                 {/* <Link href={`/editCustomer`}></Link> */}
-                <button onClick={()=> openDrawer(items?._id)}>
+                <button onClick={() => openDrawer(items?._id)}>
                   <PencilSquareIcon className="cursor-pointer h-6 w-6  text-lightBlue-600 m-2 " />
                 </button>
                 <button
@@ -273,52 +247,24 @@ const Customers = () => {
                 >
                   <TrashIcon className="cursor-pointer h-6 w-6 text-red-800   " />
                 </button>
-                {/* <Popover className="">
-                  <Popover.Button className="outline-none mx-auto  cursor-pointer text-gray-700">
-                    <TrashIcon className="cursor-pointer h-6 w-6 m-2 text-red-800   " />
-                  </Popover.Button>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform scale-95"
-                    enterTo="transform scale-100"
-                    leave="transition ease-in duration=75"
-                    leaveFrom="transform scale-100"
-                    leaveTo="transform scale-95"
-                  >
-                    <Popover.Panel  className="absolute top-20 z-10 bg-white shadow-2xl border-2 rounded-lg border-gray p-3  w-4/12 right-[40%]  ">
-                      <div className="relative  p-3">
-                        <div className="flex justify-center items-center w-full">
-                          <TrashIcon className="cursor-pointer h-9 w-9 text-red-800 mb-3 " />
-                        </div>
-                        <p>Are You Sure! Want to Delete?</p>
-                        <p className="text-sm text-gray-500 my-3">
-                          Do you really want to delete these records? You cant't
-                          view this in your list anymore if you delete!
-                        </p>
-                        <div className="flex justify-around">
-                          <button
-                            className="border border-1 rounded-md border-green-400 text-green-700 hover:bg-green-200 text-sm  p-1
-                              hover:border-none"
-                          >
-                            No, Keep It
-                          </button>
-                          <button
-                            onClick={() => {
-                              removeCustomer(items?._id);
-                            }}
-                            className="border border-1 rounded-md 
-                              text-sm 
-                              border-red-400 text-red-700 hover:bg-red-200  p-1
-                              hover:border-none"
-                          >
-                            Yes, Delete It
-                          </button>
-                        </div>
-                      </div>
-                    </Popover.Panel>
-                  </Transition>
-                </Popover> */}
+              </td>
+              <td className="py-5 text-[18px] text-start w-[232px] px-10">
+                <label className="relative inline-flex items-center me-5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    value=""
+                    className="sr-only peer"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                  />
+                  <div className="w-11 h-[25px] bg-gray-200 rounded-full peer  dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                  <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {isChecked ? "Unblock" : "Block"}
+                  </span>
+
+                  <br />
+                  <span className="ml-2"></span>
+                </label>
               </td>
             </tr>
           </tbody>
@@ -361,7 +307,7 @@ const Customers = () => {
                     closeModal={closeModal}
                     refreshData={refreshData}
                   />
-                 </Dialog.Panel>
+                </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>

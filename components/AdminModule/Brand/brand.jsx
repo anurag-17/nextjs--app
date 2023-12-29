@@ -125,7 +125,7 @@ const brandlist = () => {
     defaultBrand(currentPage, pageLimit);
   }, [currentPage]);
 
-  // -------------search product----------
+  // -------------search brand----------
   const handleSearch = (e) => {
     const search = e.target.value;
     if (e.target.value !== "") {
